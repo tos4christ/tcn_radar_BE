@@ -17,8 +17,7 @@ current.post = (req, res, next) => {
     const { query } = req;
     // check if the data exists then switch between posting and updating    
     db.query(model.get, [query["current_id"]])
-        .then(resp => {
-            
+        .then(resp => {            
             if(resp.rowCount > 0) {
                 db.query(model.update, [data, query["current_id"]]);
             } else {
@@ -37,7 +36,6 @@ current.profile = (req, res, next) => {
     const feeder_name = query["feeder_name"];
     db.query(model.profile, [feeder_name, Date().split(' ').slice(0, 4).join(' ')])
         .then(resp => {
-            console.log(resp.rows[0],'this are the row')
             res.send({res: resp.rows[0] })
         });        
 }
