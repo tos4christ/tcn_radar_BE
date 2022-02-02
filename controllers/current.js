@@ -7,9 +7,9 @@ const current = {};
 current.get = (req, res, next) => {
     // use current_id, equipment_name and level to recognize a current item
     const { query } = req;
-    const { current_id, date } = query;
+    const { current_id, date, level, type } = query;
     // Add date query to this in order to select other days
-    db.query(model.get, [current_id, date])
+    db.query(model.get, [current_id, date, Number(level), type])
         .then(resp => {
             res.send({res: resp.rows[0] })
         }).catch(err => console);        
@@ -19,16 +19,16 @@ current.post = (req, res, next) => {
     // In order to recognize other category of current, add equipment_name, level and type to what to extract from query and add to database
     const { data } = req.body;
     const { query } = req;
-    const { current_id,  station, feeder_name, type, level } = query;
+    const { current_id,  station, feeder_name, type, level, date } = query;
     // check if the data exists then switch between posting and updating    
-    db.query(model.get, [current_id])
+    db.query(model.get, [current_id, date, level, type])
         .then(resp => {            
             if(resp.rowCount > 0) {
                 db.query(model.update, [data, current_id]);
             } else {
                 const hour = current_id.split('-').pop();
                 const equipment_id = 3;                
-                db.query(model.create, [Date().split(' ').slice(0, 4).join(' '), hour, data, equipment_id, feeder_name, current_id, station, level, feeder_name, type]);
+                db.query(model.create, [date, hour, data, equipment_id, feeder_name, current_id, station, Number(level), feeder_name, type]);
             }
         })
         .then(respo => res.send({res: respo}))
