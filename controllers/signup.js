@@ -25,7 +25,6 @@ const signup = (req, res,next) => {
       }
     })  
     .then((result) => {
-      console.log(result.rows, 'this is the result')
       const { id: userId } = result.rows[0];
       // create a token to send back to the user
       const token = jwt.sign({
