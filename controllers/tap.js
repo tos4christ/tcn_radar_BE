@@ -1,6 +1,5 @@
-
 var model = require('../models/tap');
-const db = require('../database/db');
+var db = require('../database/db');
 
 const tap = {};
 // Controller first checks to see if the particular row exists or not, this determines

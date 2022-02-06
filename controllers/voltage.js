@@ -1,5 +1,5 @@
 var model = require('../models/voltage');
-const db = require('../database/db');
+var db = require('../database/db');
 
 const voltage = {};
 // Controller first checks to see if the particular row exists or not, this determines

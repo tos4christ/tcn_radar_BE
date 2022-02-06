@@ -1,5 +1,5 @@
 var model = require('../models/power');
-const db = require('../database/db');
+var db = require('../database/db');
 
 const power = {};
 // Controller first checks to see if the particular row exists or not, this determines

@@ -1,5 +1,5 @@
 var model = require('../models/equipment');
-const db = require('../database/db');
+var db = require('../database/db');
 
 const equipment = {};
 // Controller first checks to see if the particular row exists or not, this determines
@@ -12,7 +12,6 @@ equipment.get = (req, res, next) => {
     // Add date query to this in order to select other days
     db.query(model.get, [Number(station_id), Number(level), type])
         .then(resp => {
-            console.log(resp.rows)
             res.send({res: resp.rows })
         }).catch(err => console);        
 }

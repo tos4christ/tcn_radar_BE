@@ -1,5 +1,5 @@
 var model = require('../models/reactor');
-const db = require('../database/db');
+var db = require('../database/db');
 
 const reactor = {};
 // Controller first checks to see if the particular row exists or not, this determines

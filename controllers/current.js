@@ -1,5 +1,5 @@
 var model = require('../models/current');
-const db = require('../database/db');
+var db = require('../database/db');
 
 const current = {};
 // Controller first checks to see if the particular row exists or not, this determines
@@ -18,6 +18,8 @@ current.get = (req, res, next) => {
 current.post = (req, res, next) => {
     // In order to recognize other category of current, add equipment_name, level and type to what to extract from query and add to database
     const { data } = req.body;
+    // const { data } = bodyData;
+    console.log(req.body,'the body data')
     const { query } = req;
     const { current_id,  station, feeder_name, type, level, date } = query;
     // check if the data exists then switch between posting and updating    
