@@ -21,6 +21,8 @@ var subregionsRouter = require('./routes/subregions');
 var transformersRouter = require('./routes/transformers');
 var voltageRouter = require('./routes/voltage');
 var reportsRouter = require('./routes/reports');
+var equipmentRouter = require('./routes/equipment');
+var tapRouter = require('./routes/tap');
 
 
 var app = express();
@@ -44,6 +46,8 @@ app.use('/subregions', subregionsRouter);
 app.use('/transformers', transformersRouter);
 app.use('/voltage', voltageRouter);
 app.use('/reports', reportsRouter);
+app.use('/equipment', equipmentRouter);
+app.use('/tap', tapRouter);
 
 
 
