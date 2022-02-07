@@ -5,7 +5,7 @@
 -- Dumped from database version 14.1
 -- Dumped by pg_dump version 14.1
 
--- Started on 2022-02-05 07:33:26
+-- Started on 2022-02-06 22:56:10
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -20,11 +20,11 @@ SET row_security = off;
 
 DROP DATABASE postgres;
 --
--- TOC entry 3355 (class 1262 OID 13754)
+-- TOC entry 3390 (class 1262 OID 13754)
 -- Name: postgres; Type: DATABASE; Schema: -; Owner: postgres
 --
 
-CREATE DATABASE postgres WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'English_Nigeria.1252';
+CREATE DATABASE postgres WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'English_United States.1252';
 
 
 ALTER DATABASE postgres OWNER TO postgres;
@@ -43,12 +43,29 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 3356 (class 0 OID 0)
--- Dependencies: 3355
+-- TOC entry 3391 (class 0 OID 0)
+-- Dependencies: 3390
 -- Name: DATABASE postgres; Type: COMMENT; Schema: -; Owner: postgres
 --
 
 COMMENT ON DATABASE postgres IS 'default administrative connection database';
+
+
+--
+-- TOC entry 2 (class 3079 OID 16384)
+-- Name: adminpack; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS adminpack WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 3392 (class 0 OID 0)
+-- Dependencies: 2
+-- Name: EXTENSION adminpack; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION adminpack IS 'administrative functions for PostgreSQL';
 
 
 SET default_tablespace = '';
@@ -56,7 +73,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 210 (class 1259 OID 16385)
+-- TOC entry 211 (class 1259 OID 16395)
 -- Name: current_table; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -64,21 +81,21 @@ CREATE TABLE public.current_table (
     id bigint NOT NULL,
     date date NOT NULL,
     hour integer NOT NULL,
-    equipment_id integer NOT NULL,
-    feeder_name text,
-    current_id text,
-    amp double precision DEFAULT 4,
-    level integer,
-    station text,
+    amp double precision NOT NULL,
+    equipment_id integer,
+    feeder_name text NOT NULL,
+    current_id text NOT NULL,
     equipment_name text,
-    equipment_type text DEFAULT 'feeder'::text
+    equipment_type text,
+    station text,
+    level integer
 );
 
 
 ALTER TABLE public.current_table OWNER TO postgres;
 
 --
--- TOC entry 209 (class 1259 OID 16384)
+-- TOC entry 210 (class 1259 OID 16394)
 -- Name: current_table_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -93,8 +110,8 @@ CREATE SEQUENCE public.current_table_id_seq
 ALTER TABLE public.current_table_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3357 (class 0 OID 0)
--- Dependencies: 209
+-- TOC entry 3393 (class 0 OID 0)
+-- Dependencies: 210
 -- Name: current_table_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -102,29 +119,70 @@ ALTER SEQUENCE public.current_table_id_seq OWNED BY public.current_table.id;
 
 
 --
--- TOC entry 216 (class 1259 OID 24587)
+-- TOC entry 223 (class 1259 OID 16456)
+-- Name: equipment_table; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.equipment_table (
+    id bigint NOT NULL,
+    type text,
+    level integer,
+    station_id integer,
+    name text,
+    maker text
+);
+
+
+ALTER TABLE public.equipment_table OWNER TO postgres;
+
+--
+-- TOC entry 222 (class 1259 OID 16455)
+-- Name: equipment_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.equipment_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.equipment_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3394 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: equipment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.equipment_id_seq OWNED BY public.equipment_table.id;
+
+
+--
+-- TOC entry 217 (class 1259 OID 16428)
 -- Name: power_table; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.power_table (
-    date date NOT NULL,
     id bigint NOT NULL,
+    date date NOT NULL,
     hour integer NOT NULL,
     mw double precision NOT NULL,
     equipment_id integer,
     feeder_name text NOT NULL,
     power_id text NOT NULL,
-    station text,
-    level integer,
-    equipment_name text,
-    equipment_type text
+    equipment_name text NOT NULL,
+    equipment_type text NOT NULL,
+    station text NOT NULL,
+    level integer NOT NULL
 );
 
 
 ALTER TABLE public.power_table OWNER TO postgres;
 
 --
--- TOC entry 215 (class 1259 OID 24586)
+-- TOC entry 216 (class 1259 OID 16427)
 -- Name: power_table_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -139,8 +197,8 @@ CREATE SEQUENCE public.power_table_id_seq
 ALTER TABLE public.power_table_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3358 (class 0 OID 0)
--- Dependencies: 215
+-- TOC entry 3395 (class 0 OID 0)
+-- Dependencies: 216
 -- Name: power_table_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -148,7 +206,7 @@ ALTER SEQUENCE public.power_table_id_seq OWNED BY public.power_table.id;
 
 
 --
--- TOC entry 218 (class 1259 OID 24601)
+-- TOC entry 218 (class 1259 OID 16436)
 -- Name: reactor_table; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -170,7 +228,7 @@ CREATE TABLE public.reactor_table (
 ALTER TABLE public.reactor_table OWNER TO postgres;
 
 --
--- TOC entry 212 (class 1259 OID 16394)
+-- TOC entry 213 (class 1259 OID 16404)
 -- Name: reports; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -182,18 +240,23 @@ CREATE TABLE public.reports (
     event text NOT NULL,
     comment text NOT NULL,
     status "char",
-    date text NOT NULL,
-    dateout text NOT NULL,
-    timeout text NOT NULL,
+    date text,
+    dateout text,
     datein text,
-    timein text
+    timeout text,
+    timein text,
+    station text,
+    level integer,
+    document_id text,
+    equipment_type text,
+    equipment_name text
 );
 
 
 ALTER TABLE public.reports OWNER TO postgres;
 
 --
--- TOC entry 211 (class 1259 OID 16393)
+-- TOC entry 212 (class 1259 OID 16403)
 -- Name: reports_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -208,8 +271,8 @@ CREATE SEQUENCE public.reports_id_seq
 ALTER TABLE public.reports_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3359 (class 0 OID 0)
--- Dependencies: 211
+-- TOC entry 3396 (class 0 OID 0)
+-- Dependencies: 212
 -- Name: reports_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -217,7 +280,47 @@ ALTER SEQUENCE public.reports_id_seq OWNED BY public.reports.id;
 
 
 --
--- TOC entry 217 (class 1259 OID 24596)
+-- TOC entry 221 (class 1259 OID 16447)
+-- Name: station_table; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.station_table (
+    id smallint NOT NULL,
+    name text,
+    acc_id integer,
+    region_id integer
+);
+
+
+ALTER TABLE public.station_table OWNER TO postgres;
+
+--
+-- TOC entry 220 (class 1259 OID 16446)
+-- Name: station_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.station_id_seq
+    AS smallint
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.station_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3397 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: station_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.station_id_seq OWNED BY public.station_table.id;
+
+
+--
+-- TOC entry 219 (class 1259 OID 16441)
 -- Name: tap_table; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -239,29 +342,95 @@ CREATE TABLE public.tap_table (
 ALTER TABLE public.tap_table OWNER TO postgres;
 
 --
--- TOC entry 214 (class 1259 OID 24577)
+-- TOC entry 224 (class 1259 OID 16472)
+-- Name: tap_table_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.tap_table_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tap_table_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3398 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: tap_table_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.tap_table_id_seq OWNED BY public.tap_table.id;
+
+
+--
+-- TOC entry 226 (class 1259 OID 16482)
+-- Name: users_table; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users_table (
+    id bigint NOT NULL,
+    name text,
+    staff_id text,
+    station text,
+    email text,
+    password text,
+    creation_date date
+);
+
+
+ALTER TABLE public.users_table OWNER TO postgres;
+
+--
+-- TOC entry 225 (class 1259 OID 16481)
+-- Name: users_table_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_table_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_table_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3399 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: users_table_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_table_id_seq OWNED BY public.users_table.id;
+
+
+--
+-- TOC entry 215 (class 1259 OID 16419)
 -- Name: voltage_table; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.voltage_table (
-    equipment_type text,
-    equipment_name text,
-    level integer,
-    station text,
-    voltage_id text NOT NULL,
-    feeder_name text NOT NULL,
-    equipment_id integer,
-    kv double precision NOT NULL,
-    hour integer NOT NULL,
+    id bigint NOT NULL,
     date date NOT NULL,
-    id bigint NOT NULL
+    hour integer NOT NULL,
+    kv double precision NOT NULL,
+    equipment_id integer,
+    feeder_name text NOT NULL,
+    voltage_id text NOT NULL,
+    equipment_name text NOT NULL,
+    equipment_type text NOT NULL,
+    station text NOT NULL,
+    level integer
 );
 
 
 ALTER TABLE public.voltage_table OWNER TO postgres;
 
 --
--- TOC entry 213 (class 1259 OID 24576)
+-- TOC entry 214 (class 1259 OID 16418)
 -- Name: voltage_table_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -276,8 +445,8 @@ CREATE SEQUENCE public.voltage_table_id_seq
 ALTER TABLE public.voltage_table_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3360 (class 0 OID 0)
--- Dependencies: 213
+-- TOC entry 3400 (class 0 OID 0)
+-- Dependencies: 214
 -- Name: voltage_table_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -285,7 +454,7 @@ ALTER SEQUENCE public.voltage_table_id_seq OWNED BY public.voltage_table.id;
 
 
 --
--- TOC entry 3187 (class 2604 OID 16388)
+-- TOC entry 3204 (class 2604 OID 16398)
 -- Name: current_table id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -293,7 +462,15 @@ ALTER TABLE ONLY public.current_table ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 3192 (class 2604 OID 24590)
+-- TOC entry 3210 (class 2604 OID 16459)
+-- Name: equipment_table id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.equipment_table ALTER COLUMN id SET DEFAULT nextval('public.equipment_id_seq'::regclass);
+
+
+--
+-- TOC entry 3207 (class 2604 OID 16431)
 -- Name: power_table id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -301,7 +478,7 @@ ALTER TABLE ONLY public.power_table ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
--- TOC entry 3190 (class 2604 OID 16397)
+-- TOC entry 3205 (class 2604 OID 16407)
 -- Name: reports id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -309,7 +486,31 @@ ALTER TABLE ONLY public.reports ALTER COLUMN id SET DEFAULT nextval('public.repo
 
 
 --
--- TOC entry 3191 (class 2604 OID 24580)
+-- TOC entry 3209 (class 2604 OID 16450)
+-- Name: station_table id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.station_table ALTER COLUMN id SET DEFAULT nextval('public.station_id_seq'::regclass);
+
+
+--
+-- TOC entry 3208 (class 2604 OID 16473)
+-- Name: tap_table id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tap_table ALTER COLUMN id SET DEFAULT nextval('public.tap_table_id_seq'::regclass);
+
+
+--
+-- TOC entry 3211 (class 2604 OID 16485)
+-- Name: users_table id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_table ALTER COLUMN id SET DEFAULT nextval('public.users_table_id_seq'::regclass);
+
+
+--
+-- TOC entry 3206 (class 2604 OID 16422)
 -- Name: voltage_table id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -317,120 +518,243 @@ ALTER TABLE ONLY public.voltage_table ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 3341 (class 0 OID 16385)
--- Dependencies: 210
+-- TOC entry 3369 (class 0 OID 16395)
+-- Dependencies: 211
 -- Data for Name: current_table; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (30, '2022-01-20', 1, 3, 'Agungi', 'agungi-2022-01-20-01', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (68, '2022-02-01', 2, 3, 'Lekki', 'lekki-2022-01-21-02', 6, 33, 'Lekki', 'Lekki', 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (37, '2022-01-20', 6, 3, 'Waterfront', 'waterfront-2022-01-20-06', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (24, '2022-01-20', 3, 3, '21st Cent', '21st cent-2022-01-20-03', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (14, '2022-01-20', 3, 3, 'Lekki', 'lekki-2022-01-20-03', 12, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (44, '2022-01-20', 4, 3, 'Elegushi', 'elegushi-2022-01-20-04', 20, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (16, '2022-01-20', 2, 3, 'Elegushi', 'elegushi-2022-01-20-02', 24, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (17, '2022-01-20', 1, 3, 'Maroko', 'maroko-2022-01-20-01', 5, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (21, '2022-01-20', 3, 3, 'Maroko', 'maroko-2022-01-20-03', 2, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (31, '2022-01-20', 1, 3, 'Igbo Efon', 'igbo efon-2022-01-20-01', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (32, '2022-01-20', 1, 3, 'Oniru', 'oniru-2022-01-20-01', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (33, '2022-01-20', 2, 3, 'Oniru', 'oniru-2022-01-20-02', 23, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (22, '2022-01-20', 1, 3, '21st Cent', '21st cent-2022-01-20-01', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (38, '2022-01-20', 5, 3, 'Waterfront', 'waterfront-2022-01-20-05', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (46, '2022-01-20', 5, 3, 'Maroko', 'maroko-2022-01-20-05', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (12, '2022-01-20', 2, 3, 'Lekki', 'lekki-2022-01-20-02', 32, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (52, '2022-01-20', 8, 3, 'Oniru', 'oniru-2022-01-20-08', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (36, '2022-01-20', 6, 3, '21st Cent', '21st cent-2022-01-20-06', 4, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (54, '2022-01-20', 10, 3, 'Waterfront', 'waterfront-2022-01-20-010', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (64, '2022-01-20', 7, 3, '21st Cent', '21st cent-2022-01-20-07', 52, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (25, '2022-01-20', 3, 3, 'Oniru', 'oniru-2022-01-20-03', 235, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (66, '2022-01-20', 9, 3, '21st Cent', '21st cent-2022-01-20-09', 25, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (26, '2022-01-20', 1, 3, 'Waterfront', 'waterfront-2022-01-20-01', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (69, '2022-02-01', 3, 3, 'Lekki', 'lekki-2022-01-21-03', 0, 33, 'Lekki', 'Lekki', 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (39, '2022-01-20', 4, 3, 'Waterfront', 'waterfront-2022-01-20-04', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (65, '2022-01-20', 8, 3, '21st Cent', '21st cent-2022-01-20-08', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (73, '2022-02-01', 2, 3, 'Lekki', 'lekki-2022-02-01-02', 6, 33, 'Lekki', 'Lekki', 'line');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (18, '2022-01-20', 1, 3, 'Maroko', 'maroko-2022-01-20-01', 5, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (40, '2022-01-20', 3, 3, 'Waterfront', 'waterfront-2022-01-20-03', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (29, '2022-01-20', 2, 3, 'Agungi', 'agungi-2022-01-20-02', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (23, '2022-01-20', 2, 3, '21st Cent', '21st cent-2022-01-20-02', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (59, '2022-01-20', 12, 3, 'Oniru', 'oniru-2022-01-20-012', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (50, '2022-01-20', 6, 3, 'Maroko', 'maroko-2022-01-20-06', 202, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (58, '2022-01-20', 7, 3, 'Maroko', 'maroko-2022-01-20-07', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (41, '2022-01-20', 3, 3, 'Elegushi', 'elegushi-2022-01-20-03', 21, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (42, '2022-01-20', 4, 3, 'Oniru', 'oniru-2022-01-20-04', 21, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (45, '2022-01-20', 5, 3, 'Oniru', 'oniru-2022-01-20-05', 21, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (47, '2022-01-20', 5, 3, 'Lekki', 'lekki-2022-01-20-05', 17, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (48, '2022-01-20', 5, 3, 'Elegushi', 'elegushi-2022-01-20-05', 2, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (15, '2022-01-20', 3, 3, 'Lekki', 'lekki-2022-01-20-03', 12, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (27, '2022-01-20', 2, 3, 'Waterfront', 'waterfront-2022-01-20-02', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (2, '2022-01-15', 5, 43, 'Lekki 33kv', 'lekki-2022-01-15-05', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (51, '2022-01-20', 6, 3, 'Oniru', 'oniru-2022-01-20-06', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (56, '2022-01-20', 7, 3, 'Waterfront', 'waterfront-2022-01-20-07', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (57, '2022-01-20', 8, 3, 'Waterfront', 'waterfront-2022-01-20-08', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (60, '2022-01-20', 12, 3, 'Maroko', 'maroko-2022-01-20-012', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (61, '2022-01-20', 11, 3, 'Maroko', 'maroko-2022-01-20-011', 2, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (63, '2022-01-20', 9, 3, 'Maroko', 'maroko-2022-01-20-09', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (74, '2022-02-01', 3, 3, 'Lekki', 'lekki-2022-02-01-03', 6, 33, 'Lekki', 'Lekki', 'line');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (72, '2022-02-01', 1, 3, 'Lekki', 'lekki-2022-02-01-01', 5, 33, 'Lekki', 'Lekki', 'line');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (67, '2022-02-01', 1, 3, 'Lekki', 'lekki-2022-01-21-01', 7, 33, 'Lekki', 'Lekki', 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (75, '2022-02-01', 4, 3, 'Lekki', 'lekki-2022-02-01-04', 0, 33, 'Lekki', 'Lekki', 'line');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (70, '2022-02-01', 1, 3, 'Lekki', 'lekki-2022-02-1-01', 5, 33, 'Lekki', 'Lekki', 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (76, '2022-02-01', 1, 3, 'Lekki', 'lekki-2022-02-1-01', 5, 132, 'Lekki', 'Lekki', 'line');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (71, '2022-02-01', 2, 3, 'Lekki', 'lekki-2022-02-1-02', 6, 33, 'Lekki', 'Lekki', 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (77, '2022-02-01', 2, 3, 'Lekki', 'lekki-2022-02-1-02', 6, 132, 'Lekki', 'Lekki', 'line');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (78, '2022-02-01', 3, 3, 'Lekki', 'lekki-2022-02-1-03', 7, 132, 'Lekki', 'Lekki', 'line');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (79, '2022-02-01', 4, 3, 'Lekki', 'lekki-2022-02-1-04', 0, 132, 'Lekki', 'Lekki', 'line');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (3, '2022-01-15', 9, 3, 'Lekki', 'lekki-2022-01-15-09', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (4, '2022-01-15', 10, 3, 'Lekki', 'lekki-2022-01-15-010', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (5, '2022-01-15', 8, 3, 'Lekki', 'lekki-2022-01-15-08', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (7, '2022-01-16', 1, 3, 'Elegushi', 'elegushi-2022-01-16-01', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (8, '2022-01-16', 2, 3, 'Elegushi', 'elegushi-2022-01-16-02', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (9, '2022-01-16', 3, 3, 'Elegushi', 'elegushi-2022-01-16-03', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (10, '2022-01-20', 1, 3, 'Lekki', 'lekki-2022-01-20-01', 25, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (11, '2022-01-20', 1, 3, 'Elegushi', 'elegushi-2022-01-20-01', 21, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (6, '2022-01-15', 1, 3, 'Elegushi', 'elegushi-2022-01-15-01', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (13, '2022-01-20', 2, 3, 'Lekki', 'lekki-2022-01-20-02', 32, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (19, '2022-01-20', 2, 3, 'Maroko', 'maroko-2022-01-20-02', 2, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (20, '2022-01-20', 2, 3, 'Maroko', 'maroko-2022-01-20-02', 2, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (28, '2022-01-20', 2, 3, 'Igbo Efon', 'igbo efon-2022-01-20-02', NULL, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (34, '2022-01-20', 4, 3, '21st Cent', '21st cent-2022-01-20-04', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (35, '2022-01-20', 5, 3, '21st Cent', '21st cent-2022-01-20-05', 45, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (43, '2022-01-20', 4, 3, 'Maroko', 'maroko-2022-01-20-04', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (49, '2022-01-20', 4, 3, 'Lekki', 'lekki-2022-01-20-04', 1, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (53, '2022-01-20', 7, 3, 'Oniru', 'oniru-2022-01-20-07', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (55, '2022-01-20', 10, 3, '21st Cent', '21st cent-2022-01-20-010', 0, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (62, '2022-01-20', 10, 3, 'Maroko', 'maroko-2022-01-20-010', 2, 33, 'Lekki', NULL, 'feeder');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (80, '2022-02-01', 1, 3, 'Lekki', 'lekki-2022-02-01-01', 5, 132, 'Lekki', 'Lekki', 'line');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (81, '2022-02-01', 2, 3, 'Lekki', 'lekki-2022-02-01-02', 6, 132, 'Lekki', 'Lekki', 'line');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (82, '2022-02-01', 3, 3, 'Lekki', 'lekki-2022-02-01-03', 6, 132, 'Lekki', 'Lekki', 'line');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (83, '2022-02-01', 4, 3, 'Lekki', 'lekki-2022-02-01-04', 0, 132, 'Lekki', 'Lekki', 'line');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (84, '2022-02-02', 1, 3, 'Lekki', 'lekki-2022-02-02-01', 20, 132, 'Lekki', 'Lekki', 'line');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (85, '2022-02-02', 2, 3, 'Lekki', 'lekki-2022-02-02-02', 25, 132, 'Lekki', 'Lekki', 'line');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (86, '2022-02-02', 3, 3, 'Lekki', 'lekki-2022-02-02-03', 23, 132, 'Lekki', 'Lekki', 'line');
-INSERT INTO public.current_table (id, date, hour, equipment_id, feeder_name, current_id, amp, level, station, equipment_name, equipment_type) VALUES (87, '2022-02-02', 4, 3, 'Lekki', 'lekki-2022-02-02-04', 0, 132, 'Lekki', 'Lekki', 'line');
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (169, '2022-02-02', 1, 50, 3, 'Lekki', 'lekki-2022-02-2-01', 'Lekki', 'line', 'Lekki', 330);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (170, '2022-02-02', 2, 20, 3, 'Lekki', 'lekki-2022-02-2-02', 'Lekki', 'line', 'Lekki', 330);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (171, '2022-02-02', 3, 0, 3, 'Lekki', 'lekki-2022-02-2-03', 'Lekki', 'line', 'Lekki', 330);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (172, '2022-02-06', 1, 2, 3, 'Lekki', 'lekki-2022-02-6-01', 'Lekki', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (173, '2022-02-06', 2, 3, 3, 'Lekki', 'lekki-2022-02-6-02', 'Lekki', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (177, '2022-02-06', 3, 0, 3, 'Adelabu_2', 'adelabu_2-2022-02-6-03', 'Adelabu_2', 'feeder', 'Akangba', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (174, '2022-02-06', 3, 0, 3, 'Lekki', 'lekki-2022-02-6-03', 'Lekki', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (101, '2022-01-18', 10, 23, 3, 'Maroko', 'maroko-2022-01-18-010', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (102, '2022-01-18', 9, 23, 3, 'Oniru', 'oniru-2022-01-18-09', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (103, '2022-01-18', 10, 23, 3, 'Oniru', 'oniru-2022-01-18-010', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (104, '2022-01-18', 1, 34, 3, 'Waterfront', 'waterfront-2022-01-18-01', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (105, '2022-01-18', 2, 12, 3, 'Waterfront', 'waterfront-2022-01-18-02', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (106, '2022-01-18', 3, 13, 3, 'Waterfront', 'waterfront-2022-01-18-03', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (107, '2022-01-18', 4, 34, 3, 'Waterfront', 'waterfront-2022-01-18-04', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (1, '2022-01-16', 1, 1, 3, 'Elegushi', 'elegushi-2022-01-16-01', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (3, '2022-01-16', 4, 7, 3, 'Elegushi', 'elegushi-2022-01-16-04', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (4, '2022-01-16', 5, 8, 3, 'Elegushi', 'elegushi-2022-01-16-05', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (6, '2022-01-16', 4, 8, 3, 'Lekki', 'lekki-2022-01-16-04', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (7, '2022-01-16', 2, 3, 3, 'Lekki', 'lekki-2022-01-16-02', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (8, '2022-01-16', 1, 2, 3, 'Lekki', 'lekki-2022-01-16-01', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (9, '2022-01-16', 6, 6, 3, 'Lekki', 'lekki-2022-01-16-06', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (10, '2022-01-16', 2, 4, 3, 'Elegushi', 'elegushi-2022-01-16-02', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (94, '2022-01-18', 10, 23, 3, 'Lekki', 'lekki-2022-01-18-010', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (11, '2022-01-16', 6, 67, 3, 'Elegushi', 'elegushi-2022-01-16-06', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (12, '2022-01-16', 7, 89, 3, 'Elegushi', 'elegushi-2022-01-16-07', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (13, '2022-01-16', 8, 0, 3, 'Elegushi', 'elegushi-2022-01-16-08', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (14, '2022-01-16', 1, 5, 3, 'Maroko', 'maroko-2022-01-16-01', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (15, '2022-01-16', 2, 67, 3, 'Maroko', 'maroko-2022-01-16-02', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (16, '2022-01-16', 3, 8, 3, 'Maroko', 'maroko-2022-01-16-03', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (5, '2022-01-16', 3, 8, 3, 'Lekki', 'lekki-2022-01-16-03', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (17, '2022-01-16', 5, 9, 3, 'Lekki', 'lekki-2022-01-16-05', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (18, '2022-01-16', 4, 78, 3, 'Maroko', 'maroko-2022-01-16-04', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (19, '2022-01-16', 2, 6, 3, '21st Cent', '21st cent-2022-01-16-02', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (20, '2022-01-16', 4, 79, 3, '21st Cent', '21st cent-2022-01-16-04', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (21, '2022-01-16', 8, 56, 3, 'Lekki', 'lekki-2022-01-16-08', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (22, '2022-01-16', 9, 78, 3, 'Lekki', 'lekki-2022-01-16-09', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (23, '2022-01-16', 10, 99, 3, 'Lekki', 'lekki-2022-01-16-010', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (2, '2022-01-16', 3, 6, 3, 'Elegushi', 'elegushi-2022-01-16-03', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (24, '2022-01-16', 2, 5, 3, 'Igbo Efon', 'igbo efon-2022-01-16-02', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (25, '2022-01-16', 3, 6, 3, 'Igbo Efon', 'igbo efon-2022-01-16-03', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (26, '2022-01-16', 1, 6, 3, 'Oniru', 'oniru-2022-01-16-01', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (27, '2022-01-16', 5, 5, 3, 'Oniru', 'oniru-2022-01-16-05', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (28, '2022-01-16', 6, 6, 3, 'Oniru', 'oniru-2022-01-16-06', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (29, '2022-01-16', 4, 7, 3, 'Oniru', 'oniru-2022-01-16-04', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (30, '2022-01-16', 3, 6, 3, 'Oniru', 'oniru-2022-01-16-03', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (31, '2022-01-16', 1, 5, 3, 'Waterfront', 'waterfront-2022-01-16-01', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (32, '2022-01-16', 2, 78, 3, 'Waterfront', 'waterfront-2022-01-16-02', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (33, '2022-01-16', 3, 90, 3, 'Waterfront', 'waterfront-2022-01-16-03', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (34, '2022-01-16', 4, 0, 3, 'Waterfront', 'waterfront-2022-01-16-04', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (35, '2022-01-16', 1, 7, 3, 'Agungi', 'agungi-2022-01-16-01', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (36, '2022-01-16', 2, 8, 3, 'Agungi', 'agungi-2022-01-16-02', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (37, '2022-01-16', 3, 8, 3, 'Agungi', 'agungi-2022-01-16-03', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (38, '2022-01-17', 1, 34, 3, 'Lekki', 'lekki-2022-01-17-01', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (39, '2022-01-17', 2, 53, 3, 'Lekki', 'lekki-2022-01-17-02', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (40, '2022-01-17', 3, 55, 3, 'Lekki', 'lekki-2022-01-17-03', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (55, '2022-01-18', 2, 12, 3, 'Lekki', 'lekki-2022-01-18-02', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (42, '2022-01-17', 2, 90, 3, 'Agungi', 'agungi-2022-01-17-02', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (43, '2022-01-17', 3, 100, 3, 'Agungi', 'agungi-2022-01-17-03', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (52, '2022-01-17', 10, 200, 3, 'Agungi', 'agungi-2022-01-17-010', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (44, '2022-01-17', 4, 120, 3, 'Agungi', 'agungi-2022-01-17-04', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (45, '2022-01-17', 5, 130, 3, 'Agungi', 'agungi-2022-01-17-05', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (56, '2022-01-18', 3, 34, 3, 'Lekki', 'lekki-2022-01-18-03', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (46, '2022-01-17', 6, 140, 3, 'Agungi', 'agungi-2022-01-17-06', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (47, '2022-01-17', 7, 160, 3, 'Agungi', 'agungi-2022-01-17-07', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (65, '2022-01-18', 4, 12, 3, 'Lekki', 'lekki-2022-01-18-04', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (48, '2022-01-17', 8, 180, 3, 'Agungi', 'agungi-2022-01-17-08', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (49, '2022-01-17', 9, 190, 3, 'Agungi', 'agungi-2022-01-17-09', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (53, '2022-01-17', 11, 799, 3, 'Agungi', 'agungi-2022-01-17-011', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (50, '2022-01-17', 2, 400, 3, '21st Cent', '21st cent-2022-01-17-02', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (51, '2022-01-17', 1, 3, 3, 'Elegushi', 'elegushi-2022-01-17-01', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (41, '2022-01-17', 1, 800, 3, 'Agungi', 'agungi-2022-01-17-01', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (54, '2022-01-18', 1, 5, 3, 'Lekki', 'lekki-2022-01-18-01', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (66, '2022-01-18', 5, 67, 3, 'Lekki', 'lekki-2022-01-18-05', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (67, '2022-01-18', 6, 1, 3, 'Lekki', 'lekki-2022-01-18-06', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (75, '2022-01-18', 1, 22, 3, 'Elegushi', 'elegushi-2022-01-18-01', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (57, '2022-01-18', 2, 59, 3, 'Elegushi', 'elegushi-2022-01-18-02', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (58, '2022-01-18', 3, 5, 3, 'Elegushi', 'elegushi-2022-01-18-03', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (59, '2022-01-18', 3, 7, 3, 'Maroko', 'maroko-2022-01-18-03', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (60, '2022-01-18', 4, 88, 3, 'Maroko', 'maroko-2022-01-18-04', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (61, '2022-01-18', 1, 1, 3, 'Oniru', 'oniru-2022-01-18-01', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (62, '2022-01-18', 2, 12, 3, 'Oniru', 'oniru-2022-01-18-02', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (63, '2022-01-18', 3, 34, 3, 'Oniru', 'oniru-2022-01-18-03', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (64, '2022-01-18', 4, 22, 3, 'Oniru', 'oniru-2022-01-18-04', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (68, '2022-01-18', 7, 23, 3, 'Lekki', 'lekki-2022-01-18-07', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (69, '2022-01-18', 8, 22, 3, 'Lekki', 'lekki-2022-01-18-08', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (70, '2022-01-18', 9, 22, 3, 'Lekki', 'lekki-2022-01-18-09', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (71, '2022-01-18', 4, 2, 3, 'Elegushi', 'elegushi-2022-01-18-04', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (72, '2022-01-18', 5, 3, 3, 'Elegushi', 'elegushi-2022-01-18-05', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (73, '2022-01-18', 6, 44, 3, 'Elegushi', 'elegushi-2022-01-18-06', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (74, '2022-01-18', 7, 14, 3, 'Elegushi', 'elegushi-2022-01-18-07', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (76, '2022-01-18', 1, 34, 3, 'Maroko', 'maroko-2022-01-18-01', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (77, '2022-01-18', 2, 23, 3, 'Maroko', 'maroko-2022-01-18-02', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (78, '2022-01-18', 5, 23, 3, 'Maroko', 'maroko-2022-01-18-05', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (79, '2022-01-18', 6, 44, 3, 'Maroko', 'maroko-2022-01-18-06', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (80, '2022-01-18', 5, 56, 3, 'Oniru', 'oniru-2022-01-18-05', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (81, '2022-01-18', 6, 23, 3, 'Oniru', 'oniru-2022-01-18-06', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (82, '2022-01-18', 7, 45, 3, 'Oniru', 'oniru-2022-01-18-07', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (83, '2022-01-18', 8, 34, 3, 'Oniru', 'oniru-2022-01-18-08', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (84, '2022-01-18', 1, 23, 3, '21st Cent', '21st cent-2022-01-18-01', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (85, '2022-01-18', 2, 43, 3, '21st Cent', '21st cent-2022-01-18-02', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (86, '2022-01-18', 3, 35, 3, '21st Cent', '21st cent-2022-01-18-03', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (87, '2022-01-18', 4, 54, 3, '21st Cent', '21st cent-2022-01-18-04', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (88, '2022-01-18', 5, 34, 3, '21st Cent', '21st cent-2022-01-18-05', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (89, '2022-01-18', 6, 23, 3, '21st Cent', '21st cent-2022-01-18-06', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (90, '2022-01-18', 7, 34, 3, '21st Cent', '21st cent-2022-01-18-07', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (91, '2022-01-18', 8, 43, 3, '21st Cent', '21st cent-2022-01-18-08', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (92, '2022-01-18', 9, 34, 3, '21st Cent', '21st cent-2022-01-18-09', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (93, '2022-01-18', 10, 23, 3, '21st Cent', '21st cent-2022-01-18-010', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (95, '2022-01-18', 8, 45, 3, 'Elegushi', 'elegushi-2022-01-18-08', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (96, '2022-01-18', 9, 34, 3, 'Elegushi', 'elegushi-2022-01-18-09', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (97, '2022-01-18', 10, 45, 3, 'Elegushi', 'elegushi-2022-01-18-010', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (98, '2022-01-18', 7, 34, 3, 'Maroko', 'maroko-2022-01-18-07', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (99, '2022-01-18', 8, 23, 3, 'Maroko', 'maroko-2022-01-18-08', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (100, '2022-01-18', 9, 33, 3, 'Maroko', 'maroko-2022-01-18-09', 'MBH', 'feeder', 'Lekki', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (108, '2022-01-18', 5, 12, 3, 'Waterfront', 'waterfront-2022-01-18-05', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (109, '2022-01-18', 6, 23, 3, 'Waterfront', 'waterfront-2022-01-18-06', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (135, '2022-01-21', 6, 0, 3, 'Maroko', 'maroko-2022-01-21-06', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (136, '2022-01-21', 7, 0, 3, 'Maroko', 'maroko-2022-01-21-07', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (110, '2022-01-18', 7, 32, 3, 'Waterfront', 'waterfront-2022-01-18-07', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (111, '2022-01-18', 8, 32, 3, 'Waterfront', 'waterfront-2022-01-18-08', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (112, '2022-01-18', 9, 12, 3, 'Waterfront', 'waterfront-2022-01-18-09', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (113, '2022-01-18', 10, 34, 3, 'Waterfront', 'waterfront-2022-01-18-010', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (114, '2022-01-18', 1, 12, 3, 'Igbo Efon', 'igbo efon-2022-01-18-01', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (115, '2022-01-18', 2, 23, 3, 'Igbo Efon', 'igbo efon-2022-01-18-02', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (137, '2022-01-21', 8, 0, 3, 'Maroko', 'maroko-2022-01-21-08', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (116, '2022-01-18', 3, 456, 3, 'Igbo Efon', 'igbo efon-2022-01-18-03', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (138, '2022-01-21', 9, 0, 3, 'Maroko', 'maroko-2022-01-21-09', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (117, '2022-01-18', 4, 767, 3, 'Igbo Efon', 'igbo efon-2022-01-18-04', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (118, '2022-01-18', 5, 87, 3, 'Igbo Efon', 'igbo efon-2022-01-18-05', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (139, '2022-01-21', 9, 0, 3, 'Agungi', 'agungi-2022-01-21-09', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (119, '2022-01-18', 6, 756, 3, 'Igbo Efon', 'igbo efon-2022-01-18-06', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (120, '2022-01-19', 1, 1, 3, 'Lekki', 'lekki-2022-01-19-01', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (151, '2022-01-21', 8, 0, 3, 'Waterfront', 'waterfront-2022-01-21-08', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (128, '2022-01-21', 6, 0, 3, 'Waterfront', 'waterfront-2022-01-21-06', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (131, '2022-01-21', 4, 32, 3, 'Agungi', 'agungi-2022-01-21-04', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (140, '2022-01-21', 8, 0, 3, 'Agungi', 'agungi-2022-01-21-08', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (141, '2022-01-21', 7, 0, 3, 'Agungi', 'agungi-2022-01-21-07', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (129, '2022-01-21', 6, 0, 3, 'Agungi', 'agungi-2022-01-21-06', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (159, '2022-01-21', 3, 36, 3, 'Maroko', 'maroko-2022-01-21-03', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (130, '2022-01-21', 5, 0, 3, 'Agungi', 'agungi-2022-01-21-05', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (143, '2022-01-21', 1, 5, 3, 'Lekki', 'lekki-2022-01-21-01', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (144, '2022-01-21', 2, 5, 3, 'Lekki', 'lekki-2022-01-21-02', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (123, '2022-01-21', 3, 5, 3, 'Lekki', 'lekki-2022-01-21-03', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (145, '2022-01-21', 4, 5, 3, 'Lekki', 'lekki-2022-01-21-04', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (146, '2022-01-21', 5, 5, 3, 'Lekki', 'lekki-2022-01-21-05', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (121, '2022-01-21', 2, 21, 3, 'Elegushi', 'elegushi-2022-01-21-02', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (152, '2022-01-21', 7, 0, 3, 'Waterfront', 'waterfront-2022-01-21-07', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (127, '2022-01-21', 6, 55, 3, 'Lekki', 'lekki-2022-01-21-06', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (122, '2022-01-21', 3, 21, 3, 'Elegushi', 'elegushi-2022-01-21-03', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (147, '2022-01-21', 7, 56, 3, 'Lekki', 'lekki-2022-01-21-07', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (134, '2022-01-21', 5, 0, 3, 'Maroko', 'maroko-2022-01-21-05', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (148, '2022-01-21', 8, 242, 3, 'Lekki', 'lekki-2022-01-21-08', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (124, '2022-01-21', 4, 2, 3, 'Elegushi', 'elegushi-2022-01-21-04', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (165, '2022-01-22', 4, 0, 3, 'Elegushi', 'elegushi-2022-01-22-04', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (158, '2022-01-21', 1, 214, 3, 'Agungi', 'agungi-2022-01-21-01', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (125, '2022-01-21', 5, 22, 3, 'Elegushi', 'elegushi-2022-01-21-05', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (163, '2022-01-22', 2, 5, 3, 'Elegushi', 'elegushi-2022-01-22-02', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (126, '2022-01-21', 6, 33, 3, 'Elegushi', 'elegushi-2022-01-21-06', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (157, '2022-01-21', 2, 56, 3, 'Agungi', 'agungi-2022-01-21-02', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (150, '2022-01-21', 7, 55, 3, 'Elegushi', 'elegushi-2022-01-21-07', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (149, '2022-01-21', 8, 0, 3, 'Elegushi', 'elegushi-2022-01-21-08', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (133, '2022-01-21', 4, 0, 3, 'Maroko', 'maroko-2022-01-21-04', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (161, '2022-01-21', 1, 25, 3, 'Maroko', 'maroko-2022-01-21-01', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (156, '2022-01-21', 3, 633, 3, 'Agungi', 'agungi-2022-01-21-03', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (142, '2022-01-21', 1, 0, 3, 'Elegushi', 'elegushi-2022-01-21-01', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (162, '2022-01-21', 1, 0, 3, 'Waterfront', 'waterfront-2022-01-21-01', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (160, '2022-01-21', 2, 65, 3, 'Maroko', 'maroko-2022-01-21-02', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (155, '2022-01-21', 2, 125, 3, 'Waterfront', 'waterfront-2022-01-21-02', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (154, '2022-01-21', 3, 23, 3, 'Waterfront', 'waterfront-2022-01-21-03', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (132, '2022-01-21', 4, 366, 3, 'Waterfront', 'waterfront-2022-01-21-04', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (153, '2022-01-21', 5, 336, 3, 'Waterfront', 'waterfront-2022-01-21-05', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (166, '2022-01-22', 1, 52, 3, 'Lekki', 'lekki-2022-01-22-01', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (164, '2022-01-22', 3, 66, 3, 'Elegushi', 'elegushi-2022-01-22-03', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (167, '2022-01-22', 2, 522, 3, 'Lekki', 'lekki-2022-01-22-02', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (168, '2022-01-22', 3, 3, 3, 'Lekki', 'lekki-2022-01-22-03', 'MBH', 'line', 'Lekki', 132);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (175, '2022-02-06', 1, 2, 3, 'Adelabu_2', 'adelabu_2-2022-02-6-01', 'Adelabu_2', 'feeder', 'Akangba', 33);
+INSERT INTO public.current_table (id, date, hour, amp, equipment_id, feeder_name, current_id, equipment_name, equipment_type, station, level) VALUES (176, '2022-02-06', 2, 3, 3, 'Adelabu_2', 'adelabu_2-2022-02-6-02', 'Adelabu_2', 'feeder', 'Akangba', 33);
 
 
 --
--- TOC entry 3347 (class 0 OID 24587)
--- Dependencies: 216
+-- TOC entry 3381 (class 0 OID 16456)
+-- Dependencies: 223
+-- Data for Name: equipment_table; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (1, 'feeder', 33, 2, 'Lekki', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (2, 'feeder', 33, 2, 'Agungi', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (3, 'feeder', 33, 2, 'Igbo Efon', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (4, 'feeder', 33, 2, 'Oniru', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (5, 'feeder', 33, 2, '21st Cent', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (6, 'feeder', 33, 2, 'Maroko', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (7, 'feeder', 33, 2, 'Waterfront', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (8, 'feeder', 33, 2, 'Elegushi', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (9, 'txfr', 132, 2, 'T2', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (10, 'txfr', 132, 2, 'T3', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (11, 'txfr', 330, 2, 'T1', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (12, 'feeder', 33, 1, 'Adelabu_2', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (13, 'feeder', 33, 1, 'Adelabu_1', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (14, 'feeder', 33, 1, 'Iganmu_1', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (15, 'feeder', 33, 1, 'Iganmu_2', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (16, 'feeder', 33, 1, 'NRC', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (17, 'feeder', 33, 1, 'Luth', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (18, 'feeder', 33, 1, 'Sanya', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (19, 'feeder', 33, 1, 'New Yaba', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (20, 'feeder', 33, 1, 'Amuwo', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (21, 'txfr', 132, 1, '10T1A', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (22, 'txfr', 132, 1, '10T1B', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (23, 'txfr', 132, 1, '10T2A', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (24, 'txfr', 132, 1, '10T2B', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (25, 'txfr', 132, 1, '10T3A', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (26, 'txfr', 330, 1, '5T1A', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (27, 'txfr', 330, 1, '5T2A', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (28, 'txfr', 330, 1, '5T2B', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (29, 'txfr', 330, 1, '5T4A', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (30, 'txfr', 330, 1, '5T4B', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (31, 'line', 330, 1, 'WL3', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (32, 'line', 330, 1, 'WL4', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (33, 'line', 330, 2, 'LK1', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (34, 'line', 330, 2, 'LK2', 'MBH');
+INSERT INTO public.equipment_table (id, type, level, station_id, name, maker) VALUES (35, 'reactor', 330, 2, 'LKMX1', 'MBH');
+
+
+--
+-- TOC entry 3375 (class 0 OID 16428)
+-- Dependencies: 217
 -- Data for Name: power_table; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.power_table (date, id, hour, mw, equipment_id, feeder_name, power_id, station, level, equipment_name, equipment_type) VALUES ('2022-02-01', 1, 1, 5, 3, 'Lekki', 'lekki-2022-02-1-01', 'Lekki', 33, 'Lekki', 'feeder');
-INSERT INTO public.power_table (date, id, hour, mw, equipment_id, feeder_name, power_id, station, level, equipment_name, equipment_type) VALUES ('2022-02-01', 2, 2, 6, 3, 'Lekki', 'lekki-2022-02-1-02', 'Lekki', 33, 'Lekki', 'feeder');
-INSERT INTO public.power_table (date, id, hour, mw, equipment_id, feeder_name, power_id, station, level, equipment_name, equipment_type) VALUES ('2022-02-01', 4, 1, 7, 3, 'Elegushi', 'elegushi-2022-02-1-01', 'Lekki', 33, 'Elegushi', 'feeder');
-INSERT INTO public.power_table (date, id, hour, mw, equipment_id, feeder_name, power_id, station, level, equipment_name, equipment_type) VALUES ('2022-02-01', 5, 2, 6, 3, 'Elegushi', 'elegushi-2022-02-1-02', 'Lekki', 33, 'Elegushi', 'feeder');
-INSERT INTO public.power_table (date, id, hour, mw, equipment_id, feeder_name, power_id, station, level, equipment_name, equipment_type) VALUES ('2022-02-01', 6, 3, 0, 3, 'Elegushi', 'elegushi-2022-02-1-03', 'Lekki', 33, 'Elegushi', 'feeder');
-INSERT INTO public.power_table (date, id, hour, mw, equipment_id, feeder_name, power_id, station, level, equipment_name, equipment_type) VALUES ('2022-02-01', 8, 2, 8, 3, 'Lekki', 'lekki-2022-02-1-02', 'Lekki', 132, 'Lekki', 'line');
-INSERT INTO public.power_table (date, id, hour, mw, equipment_id, feeder_name, power_id, station, level, equipment_name, equipment_type) VALUES ('2022-02-01', 3, 3, 8, 3, 'Lekki', 'lekki-2022-02-1-03', 'Lekki', 33, 'Lekki', 'feeder');
-INSERT INTO public.power_table (date, id, hour, mw, equipment_id, feeder_name, power_id, station, level, equipment_name, equipment_type) VALUES ('2022-02-01', 9, 3, 8, 3, 'Lekki', 'lekki-2022-02-1-03', 'Lekki', 132, 'Lekki', 'line');
-INSERT INTO public.power_table (date, id, hour, mw, equipment_id, feeder_name, power_id, station, level, equipment_name, equipment_type) VALUES ('2022-02-01', 7, 4, 9, 3, 'Lekki', 'lekki-2022-02-1-04', 'Lekki', 33, 'Lekki', 'feeder');
-INSERT INTO public.power_table (date, id, hour, mw, equipment_id, feeder_name, power_id, station, level, equipment_name, equipment_type) VALUES ('2022-02-01', 10, 4, 9, 3, 'Lekki', 'lekki-2022-02-1-04', 'Lekki', 132, 'Lekki', 'line');
-INSERT INTO public.power_table (date, id, hour, mw, equipment_id, feeder_name, power_id, station, level, equipment_name, equipment_type) VALUES ('2022-02-01', 11, 5, 0, 3, 'Lekki', 'lekki-2022-02-1-05', 'Lekki', 132, 'Lekki', 'line');
 
 
 --
--- TOC entry 3349 (class 0 OID 24601)
+-- TOC entry 3376 (class 0 OID 16436)
 -- Dependencies: 218
 -- Data for Name: reactor_table; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -438,81 +762,145 @@ INSERT INTO public.power_table (date, id, hour, mw, equipment_id, feeder_name, p
 
 
 --
--- TOC entry 3343 (class 0 OID 16394)
--- Dependencies: 212
+-- TOC entry 3371 (class 0 OID 16404)
+-- Dependencies: 213
 -- Data for Name: reports; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, timeout, datein, timein) VALUES (1, 'Lekki', 'FORCED', 'TCN', 'OC AND EF', 'TRIAL', 'O', '2022-0-20', '2022-0-20', '08:22', '2022-0-20', '10:40');
-INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, timeout, datein, timein) VALUES (2, '', 'FORCED', 'TCN', 'OC AND EF', '', 'O', '2022-0-20', '', '', '', '');
-INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, timeout, datein, timein) VALUES (3, 'Igbo Efon', 'FORCED', 'TCN', 'OC AND EF', '', 'O', '2022-0-20', '', '', '', '');
+INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, datein, timeout, timein, station, level, document_id, equipment_type, equipment_name) VALUES (15, 'Oniru', 'FORCED', 'TCN', 'OC AND EF', 'the feeder is ready', 'O', '2022-0-18', '2022-01-09', '2022-01-17', '07:22', '07:26', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, datein, timeout, timein, station, level, document_id, equipment_type, equipment_name) VALUES (16, '', 'FORCED', 'DISCO', 'EMERGENCY TCN', 'Trial', 'O', '2022-0-18', '2022-01-05', '2022-01-17', '09:54', '09:56', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, datein, timeout, timein, station, level, document_id, equipment_type, equipment_name) VALUES (17, 'Agungi', 'FORCED', 'DISCO', 'EMERGENCY TCN', 'Trial', 'O', '2022-0-18', '2022-01-05', '2022-01-17', '09:54', '09:56', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, datein, timeout, timein, station, level, document_id, equipment_type, equipment_name) VALUES (18, 'Elegushi', 'FORCED', 'TCN', 'OC AND EF', 'Yellow phase cut jumper amended', 'O', '2022-0-18', '2022-01-04', '2022-01-17', '00:02', '02:04', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, datein, timeout, timein, station, level, document_id, equipment_type, equipment_name) VALUES (19, 'Maroko', 'LOAD SHEDDING', 'DISCO', 'EMERGENCY DISCO', 'Yellow phase cut jumper amended', 'O', '2022-0-18', '2022-01-04', '2022-01-16', '02:04', '05:09', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, datein, timeout, timein, station, level, document_id, equipment_type, equipment_name) VALUES (20, 'Elegushi', 'FORCED', 'TCN', 'EMERGENCY TCN', '', 'O', '2022-0-21', '2022-01-11', '', '15:23', '', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, datein, timeout, timein, station, level, document_id, equipment_type, equipment_name) VALUES (21, 'Elegushi', 'FORCED', 'TCN', 'EMERGENCY TCN', 'Yellow phase cut jumper amended', 'O', '2022-0-21', '2022-01-11', '2022-01-24', '15:23', '18:26', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, datein, timeout, timein, station, level, document_id, equipment_type, equipment_name) VALUES (22, '', 'FORCED', 'TCN', 'OC AND EF', 'Yellow phase cut jumper amended', 'O', '2022-0-22', '2022-01-12', '2022-01-25', '18:33', '18:35', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, datein, timeout, timein, station, level, document_id, equipment_type, equipment_name) VALUES (23, 'Agungi', 'FORCED', 'TCN', 'OC AND EF', 'Yellow phase cut jumper amended', 'O', '2022-0-22', '2022-01-12', '2022-01-25', '18:33', '18:35', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, datein, timeout, timein, station, level, document_id, equipment_type, equipment_name) VALUES (24, 'Agungi', 'FORCED', 'TCN', 'OC AND EF', 'Trial', 'O', '2022-0-22', '2022-01-12', '2022-01-25', '18:33', '18:35', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, datein, timeout, timein, station, level, document_id, equipment_type, equipment_name) VALUES (25, 'Agungi', 'FORCED', 'TCN', 'OC AND EF', 'Trial', 'O', '2022-0-22', '2022-01-12', '2022-01-25', '18:33', '18:35', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, datein, timeout, timein, station, level, document_id, equipment_type, equipment_name) VALUES (26, 'Waterfront', 'FORCED', 'TCN', 'OC AND EF', 'Trial', 'O', '2022-0-22', '2022-01-12', '2022-01-25', '18:33', '18:35', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, datein, timeout, timein, station, level, document_id, equipment_type, equipment_name) VALUES (27, 'Oniru', 'FORCED', 'TCN', 'OC AND EF', 'Trial', 'O', '2022-0-22', '2022-01-12', '2022-01-25', '18:33', '18:35', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.reports (id, feedername, reporttype, partyresponsible, event, comment, status, date, dateout, datein, timeout, timein, station, level, document_id, equipment_type, equipment_name) VALUES (28, 'Oniru', 'FORCED', 'TCN', 'OC AND EF', '', 'O', '2022-0-22', '', '', '', '', NULL, NULL, NULL, NULL, NULL);
 
 
 --
--- TOC entry 3348 (class 0 OID 24596)
--- Dependencies: 217
+-- TOC entry 3379 (class 0 OID 16447)
+-- Dependencies: 221
+-- Data for Name: station_table; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.station_table (id, name, acc_id, region_id) VALUES (1, 'Akangba', 5, 3);
+INSERT INTO public.station_table (id, name, acc_id, region_id) VALUES (2, 'Lekki', 4, 3);
+
+
+--
+-- TOC entry 3377 (class 0 OID 16441)
+-- Dependencies: 219
 -- Data for Name: tap_table; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO public.tap_table (equipment_type, equipment_name, level, station, tap_id, feeder_name, equipment_id, tap, hour, date, id) VALUES ('txfr', 'T2', 132, 'Lekki', 't2-2022-02-6-01', 'T2', 3, 5, 1, '2022-02-06', 1);
+INSERT INTO public.tap_table (equipment_type, equipment_name, level, station, tap_id, feeder_name, equipment_id, tap, hour, date, id) VALUES ('txfr', 'T2', 132, 'Lekki', 't2-2022-02-6-02', 'T2', 3, 6, 2, '2022-02-06', 2);
+INSERT INTO public.tap_table (equipment_type, equipment_name, level, station, tap_id, feeder_name, equipment_id, tap, hour, date, id) VALUES ('txfr', 'T2', 132, 'Lekki', 't2-2022-02-6-03', 'T2', 3, 5, 3, '2022-02-06', 3);
+INSERT INTO public.tap_table (equipment_type, equipment_name, level, station, tap_id, feeder_name, equipment_id, tap, hour, date, id) VALUES ('txfr', 'T2', 132, 'Lekki', 't2-2022-02-6-04', 'T2', 3, 0, 4, '2022-02-06', 4);
 
 
 --
--- TOC entry 3345 (class 0 OID 24577)
--- Dependencies: 214
+-- TOC entry 3384 (class 0 OID 16482)
+-- Dependencies: 226
+-- Data for Name: users_table; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.users_table (id, name, staff_id, station, email, password, creation_date) VALUES (3, 'femi silas', '6544332', 'Ajah', 'olatunjifaith32@gmail.com', '$2b$09$DPfU6Ad/zvV/V0Jgcv4cx.W5kL9o8j3Yw0GTNgykEEcGKAhG9wOhi', '2022-02-06');
+INSERT INTO public.users_table (id, name, staff_id, station, email, password, creation_date) VALUES (4, 'tt', '232', 'Sapele', 'gnztrades244@gmail.com', '$2b$09$wxzpkIfP38.pTbxiZnqQc.rt9uMCdsHZAAc3OS46j0qtUd1ratQem', '2022-02-06');
+INSERT INTO public.users_table (id, name, staff_id, station, email, password, creation_date) VALUES (5, 'trt', '123', 'Sapele', 'gnztrades786@gmail.com', '$2b$09$HtpWSDtN.aPYG7cnVjntW.flNnkdscJhACaId.CszP76hqYGgRn/O', '2022-02-06');
+INSERT INTO public.users_table (id, name, staff_id, station, email, password, creation_date) VALUES (6, 'rtyy', '902307', 'Ayede', 'gnztradesert@gmail.com', '$2b$09$NpktTVbO1BusuKJbterpP.hiFRpRsTWqEPj9b4islk7ZgDvCChj/m', '2022-02-06');
+INSERT INTO public.users_table (id, name, staff_id, station, email, password, creation_date) VALUES (1, 'tosin fetuga', '902307', 'Lekki', 'gnztrades@gmail.com', '$2b$09$C6QNWYC/LA7Op6Urw9W3VuC7RGOot/1rodvFzAtBiSGYA2EpItAIG', '2022-02-06');
+INSERT INTO public.users_table (id, name, staff_id, station, email, password, creation_date) VALUES (7, 'bimbo fetuga', '6544332', 'Akangba', 'gnztrades2022@gmail.com', '$2b$09$wfDPlfkoKPMLHA4Phb0vRuTed2C0H.fmejxhpaw/TjDv/Tow6VbES', '2022-02-06');
+
+
+--
+-- TOC entry 3373 (class 0 OID 16419)
+-- Dependencies: 215
 -- Data for Name: voltage_table; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.voltage_table (equipment_type, equipment_name, level, station, voltage_id, feeder_name, equipment_id, kv, hour, date, id) VALUES ('feeder', 'Lekki', 33, 'Lekki', 'lekki-2022-02-1-02', 'Lekki', 3, 3, 2, '2022-02-01', 1);
-INSERT INTO public.voltage_table (equipment_type, equipment_name, level, station, voltage_id, feeder_name, equipment_id, kv, hour, date, id) VALUES ('txfr', 'Lekki', 33, 'Lekki', 'lekki-2022-02-01-01', 'Lekki', 3, 2, 1, '2022-02-01', 2);
-INSERT INTO public.voltage_table (equipment_type, equipment_name, level, station, voltage_id, feeder_name, equipment_id, kv, hour, date, id) VALUES ('txfr', 'Lekki', 33, 'Lekki', 'lekki-2022-02-01-02', 'Lekki', 3, 0, 2, '2022-02-01', 3);
-INSERT INTO public.voltage_table (equipment_type, equipment_name, level, station, voltage_id, feeder_name, equipment_id, kv, hour, date, id) VALUES ('txfr', 'Lekki', 132, 'Lekki', 'lekki-2022-02-2-01', 'Lekki', 3, 20, 1, '2022-02-02', 4);
-INSERT INTO public.voltage_table (equipment_type, equipment_name, level, station, voltage_id, feeder_name, equipment_id, kv, hour, date, id) VALUES ('txfr', 'Lekki', 132, 'Lekki', 'lekki-2022-02-2-02', 'Lekki', 3, 520, 2, '2022-02-02', 5);
-INSERT INTO public.voltage_table (equipment_type, equipment_name, level, station, voltage_id, feeder_name, equipment_id, kv, hour, date, id) VALUES ('txfr', 'Lekki', 132, 'Lekki', 'lekki-2022-02-2-03', 'Lekki', 3, 300, 3, '2022-02-02', 6);
-INSERT INTO public.voltage_table (equipment_type, equipment_name, level, station, voltage_id, feeder_name, equipment_id, kv, hour, date, id) VALUES ('txfr', 'Lekki', 132, 'Lekki', 'lekki-2022-02-2-04', 'Lekki', 3, 0, 4, '2022-02-02', 7);
-INSERT INTO public.voltage_table (equipment_type, equipment_name, level, station, voltage_id, feeder_name, equipment_id, kv, hour, date, id) VALUES ('txfr', 'Elegushi', 132, 'Lekki', 'elegushi-2022-02-2-01', 'Elegushi', 3, 5, 1, '2022-02-02', 8);
-INSERT INTO public.voltage_table (equipment_type, equipment_name, level, station, voltage_id, feeder_name, equipment_id, kv, hour, date, id) VALUES ('txfr', 'Elegushi', 132, 'Lekki', 'elegushi-2022-02-2-02', 'Elegushi', 3, 20, 2, '2022-02-02', 9);
-INSERT INTO public.voltage_table (equipment_type, equipment_name, level, station, voltage_id, feeder_name, equipment_id, kv, hour, date, id) VALUES ('txfr', 'Elegushi', 132, 'Lekki', 'elegushi-2022-02-2-03', 'Elegushi', 3, 20, 3, '2022-02-02', 10);
-INSERT INTO public.voltage_table (equipment_type, equipment_name, level, station, voltage_id, feeder_name, equipment_id, kv, hour, date, id) VALUES ('txfr', 'Elegushi', 132, 'Lekki', 'elegushi-2022-02-2-04', 'Elegushi', 3, 0, 4, '2022-02-02', 11);
 
 
 --
--- TOC entry 3361 (class 0 OID 0)
--- Dependencies: 209
+-- TOC entry 3401 (class 0 OID 0)
+-- Dependencies: 210
 -- Name: current_table_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.current_table_id_seq', 87, true);
+SELECT pg_catalog.setval('public.current_table_id_seq', 177, true);
 
 
 --
--- TOC entry 3362 (class 0 OID 0)
--- Dependencies: 215
+-- TOC entry 3402 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: equipment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.equipment_id_seq', 35, true);
+
+
+--
+-- TOC entry 3403 (class 0 OID 0)
+-- Dependencies: 216
 -- Name: power_table_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.power_table_id_seq', 11, true);
+SELECT pg_catalog.setval('public.power_table_id_seq', 1, false);
 
 
 --
--- TOC entry 3363 (class 0 OID 0)
--- Dependencies: 211
+-- TOC entry 3404 (class 0 OID 0)
+-- Dependencies: 212
 -- Name: reports_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.reports_id_seq', 3, true);
+SELECT pg_catalog.setval('public.reports_id_seq', 28, true);
 
 
 --
--- TOC entry 3364 (class 0 OID 0)
--- Dependencies: 213
+-- TOC entry 3405 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: station_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.station_id_seq', 2, true);
+
+
+--
+-- TOC entry 3406 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: tap_table_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tap_table_id_seq', 4, true);
+
+
+--
+-- TOC entry 3407 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: users_table_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_table_id_seq', 7, true);
+
+
+--
+-- TOC entry 3408 (class 0 OID 0)
+-- Dependencies: 214
 -- Name: voltage_table_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.voltage_table_id_seq', 11, true);
+SELECT pg_catalog.setval('public.voltage_table_id_seq', 1, false);
 
 
 --
--- TOC entry 3194 (class 2606 OID 16390)
+-- TOC entry 3213 (class 2606 OID 16402)
 -- Name: current_table current_table_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -521,7 +909,16 @@ ALTER TABLE ONLY public.current_table
 
 
 --
--- TOC entry 3200 (class 2606 OID 24594)
+-- TOC entry 3225 (class 2606 OID 16463)
+-- Name: equipment_table equipment_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.equipment_table
+    ADD CONSTRAINT equipment_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3219 (class 2606 OID 16435)
 -- Name: power_table power_table_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -530,7 +927,7 @@ ALTER TABLE ONLY public.power_table
 
 
 --
--- TOC entry 3196 (class 2606 OID 16401)
+-- TOC entry 3215 (class 2606 OID 16411)
 -- Name: reports reports_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -539,7 +936,34 @@ ALTER TABLE ONLY public.reports
 
 
 --
--- TOC entry 3198 (class 2606 OID 24584)
+-- TOC entry 3223 (class 2606 OID 16454)
+-- Name: station_table station_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.station_table
+    ADD CONSTRAINT station_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3221 (class 2606 OID 16480)
+-- Name: tap_table tap_table_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tap_table
+    ADD CONSTRAINT tap_table_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3227 (class 2606 OID 16489)
+-- Name: users_table users_table_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_table
+    ADD CONSTRAINT users_table_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3217 (class 2606 OID 16426)
 -- Name: voltage_table voltage_table_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -547,7 +971,16 @@ ALTER TABLE ONLY public.voltage_table
     ADD CONSTRAINT voltage_table_pkey PRIMARY KEY (id);
 
 
--- Completed on 2022-02-05 07:33:26
+--
+-- TOC entry 3228 (class 2606 OID 16465)
+-- Name: equipment_table station_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.equipment_table
+    ADD CONSTRAINT station_id FOREIGN KEY (station_id) REFERENCES public.station_table(id) NOT VALID;
+
+
+-- Completed on 2022-02-06 22:56:12
 
 --
 -- PostgreSQL database dump complete
