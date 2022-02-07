@@ -19,6 +19,7 @@ var equipmentRouter = require('./routes/equipment');
 var tapRouter = require('./routes/tap');
 var signupRouter = require('./routes/signup');
 var signinRouter = require('./routes/signin');
+var mxRouter = require('./routes/mx');
 
 
 var app = express();
@@ -30,7 +31,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Functional routes
-
 app.use('/reactor', reactorRouter);
 app.use('/current', currentRouter);
 app.use('/power', powerRouter);
@@ -40,7 +40,6 @@ app.use('/equipment', equipmentRouter);
 app.use('/tap', tapRouter);
 app.use('/signin', signinRouter);
 app.use('/signup', signupRouter);
-
-
+app.use('/mx', mxRouter);
 
 module.exports = app;
