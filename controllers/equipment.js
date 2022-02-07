@@ -7,10 +7,10 @@ const equipment = {};
 equipment.get = (req, res, next) => {
     // use current_id, equipment_name and level to recognize a current item
     const { query } = req;
-    const { station_id, level, type } = query;
+    const { station_id } = query;
     
     // Add date query to this in order to select other days
-    db.query(model.get, [Number(station_id), Number(level), type])
+    db.query(model.get, [Number(station_id)])
         .then(resp => {
             res.send({res: resp.rows })
         }).catch(err => console);        

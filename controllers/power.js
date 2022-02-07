@@ -11,7 +11,6 @@ power.get = (req, res, next) => {
     // Add date query to this in order to select other days
     db.query(model.get, [power_id, date, level, type])
         .then(resp => {
-            console.log(resp.rows[0], 'the rows')
             res.send({res: resp.rows[0] })
         }).catch(err => console);        
 }

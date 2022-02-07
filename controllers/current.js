@@ -19,7 +19,6 @@ current.post = (req, res, next) => {
     // In order to recognize other category of current, add equipment_name, level and type to what to extract from query and add to database
     const { data } = req.body;
     // const { data } = bodyData;
-    console.log(req.body,'the body data')
     const { query } = req;
     const { current_id,  station, feeder_name, type, level, date } = query;
     // check if the data exists then switch between posting and updating    
