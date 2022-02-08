@@ -7,9 +7,7 @@ var logger = require('morgan');
 
 dotenv.config();
 
-
 // Import routers
-
 var currentRouter = require('./routes/current');
 var powerRouter = require('./routes/power');
 var reactorRouter = require('./routes/reactor');
@@ -20,7 +18,6 @@ var tapRouter = require('./routes/tap');
 var signupRouter = require('./routes/signup');
 var signinRouter = require('./routes/signin');
 var mxRouter = require('./routes/mx');
-
 
 var app = express();
 
