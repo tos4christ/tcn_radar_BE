@@ -18,6 +18,7 @@ var tapRouter = require('./routes/tap');
 var signupRouter = require('./routes/signup');
 var signinRouter = require('./routes/signin');
 var mxRouter = require('./routes/mx');
+var sllRouter = require('./routes/station_line_load');
 
 var app = express();
 
@@ -38,5 +39,6 @@ app.use('/tap', tapRouter);
 app.use('/signin', signinRouter);
 app.use('/signup', signupRouter);
 app.use('/mx', mxRouter);
+app.use('/sll', sllRouter);
 
 module.exports = app;
