@@ -20,22 +20,34 @@ sll.get = async (req, res, next) => {
                     db.query(model.get_lines, [station.id, 330, 'line'])
                         .then(equipment_response => {
                             const equipments = equipment_response.rows;
-
-                            equipments.map((equipment, equipmentIndex, equipmentArray) => {                                
-                            // get_line_load
-                            // equipment_name, level=330, equipment_type=line
-                            // get the power details for the specified date
-                            db.query(model.get_line_load, [equipment.name, 330, 'line', '2022-02-19'])
+                            // equipments.map((equipment, equipmentIndex, equipmentArray) => {                                
+                            // // get_line_load
+                            // // equipment_name, level=330, equipment_type=line
+                            // // get the power details for the specified date
+                            // db.query(model.get_line_load, [equipment.name, 330, 'line', '2022-02-19'])
+                            //     .then( linePower => {
+                            //         return station_data[station.name][equipment.name] = linePower.rows;                                
+                            //     })
+                            //     .then( (lastRes) => {
+                            //         console.log(lastRes, 'last res')             
+                            //         const theEnd = stationArray.length === stationIndex + 1 && equipmentArray.length === equipmentIndex + 1;
+                            //         if (theEnd) {
+                            //             res.send({data: station_data});
+                            //         }                            
+                            //     })
+                            // }); 
+                            for (let equipment of equipments) {
+                                db.query(model.get_line_load, [equipment.name, 330, 'line', '2022-02-19'])
                                 .then( linePower => {
                                     return station_data[station.name][equipment.name] = linePower.rows;                                
                                 })
-                                .then( () => {                   
-                                    const theEnd = stationArray.length === stationIndex + 1 && equipmentArray.length === equipmentIndex + 1;
+                                .then( () => {    
+                                    const theEnd = stationArray.length === stationIndex + 1 && equipments[equipments.length - 1] === equipment;
                                     if (theEnd) {
                                         res.send({data: station_data});
                                     }                            
                                 })
-                            });             
+                            }                                    
                         });
                 });
                 // return;
