@@ -22,7 +22,8 @@ power.post = (req, res, next) => {
     const { power_id,  station, feeder_name, type, level, date } = query;
     // check if the data exists then switch between posting and updating    
     db.query(model.get, [power_id, date, level, type])
-        .then(resp => {            
+        .then(resp => {          
+            console.log(resp.rowCount, 'the row count')  
             if(resp.rowCount > 0) {
                 db.query(model.update, [data, power_id]);
             } else {

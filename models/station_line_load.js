@@ -6,7 +6,7 @@
 var sll = {
     get_stations: 'SELECT * FROM station_table',
     get_lines: 'SELECT * FROM equipment_table where station_id=$1 AND level=$2 AND type=$3',
-    get_line_load: 'SELECT mw, hour FROM power_table WHERE equipment_name=$1 AND level=330 AND type=line ORDER BY hour'
+    get_line_load: 'SELECT mw, hour FROM power_table WHERE equipment_name=$1 AND level=$2 AND equipment_type=$3 AND date=$4 ORDER BY hour'
 }
 
 module.exports = sll;
