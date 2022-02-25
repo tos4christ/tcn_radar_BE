@@ -24,7 +24,7 @@ current.post = (req, res, next) => {
     // check if the data exists then switch between posting and updating    
     db.query(model.get, [current_id, date, level, type])
         .then(resp => {            
-            if(resp.rowCount > 0) {
+            if(resp.rowCount >= 0) {
                 db.query(model.update, [data, current_id]);
             } else {
                 const hour = current_id.split('-').pop();
