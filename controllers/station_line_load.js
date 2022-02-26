@@ -16,9 +16,9 @@ sll.get = async (req, res, next) => {
                     // Get the lines for each station and store the key pair of the line and arrays
                     // of the 24hours power in the value of the key for the equipment
                     station_data[station.name] = {};
-                    // this returns all the  lines belonging  to a station
+                    // this returns all the  lines belonging  to a station                    
                     db.query(model.get_lines, [station.id, 330, 'line'])
-                        .then(equipment_response => {
+                        .then(async equipment_response => {
                             const equipments = equipment_response.rows;
                             // equipments.map((equipment, equipmentIndex, equipmentArray) => {                                
                             // // get_line_load
@@ -37,7 +37,7 @@ sll.get = async (req, res, next) => {
                             //     })
                             // }); 
                             for (let equipment of equipments) {
-                                db.query(model.get_line_load, [equipment.name, 330, 'line', '2022-02-19'])
+                                await db.query(model.get_line_load, [equipment.name, 330, 'line', '2022-02-19'])
                                 .then( linePower => {
                                     return station_data[station.name][equipment.name] = linePower.rows;                                
                                 })

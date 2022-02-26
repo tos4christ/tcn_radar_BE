@@ -15,15 +15,15 @@ mx.get = (req, res, next) => {
         }).catch(err => console);        
 }
 
-mx.post = (req, res, next) => {
+mx.post = async (req, res, next) => {
     // In order to recognize other category of current, add equipment_name, level and type to what to extract from query and add to database
     const { data } = req.body;
     const { query } = req;
     const { mx_id,  station, feeder_name, type, level, date } = query;
     // check if the data exists then switch between posting and updating    
-    db.query(model.get, [mx_id, date, level, type])
+    await db.query(model.get, [mx_id, date, level, type])
         .then(resp => {            
-            if(resp.rowCount >= 0) {
+            if(resp.rowCount > 0) {
                 db.query(model.update, [data, mx_id]);
             } else {
                 const hour = mx_id.split('-').pop();

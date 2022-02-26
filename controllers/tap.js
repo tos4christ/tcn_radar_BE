@@ -15,15 +15,15 @@ tap.get = (req, res, next) => {
         }).catch(err => console(err));        
 }
 
-tap.post = (req, res, next) => {
+tap.post = async (req, res, next) => {
     // In order to recognize other category of current, add equipment_name, level and type to what to extract from query and add to database
     const { data } = req.body;
     const { query } = req;
     const { tap_id,  station, feeder_name, type, level, date } = query;
     // check if the data exists then switch between posting and updating    
-    db.query(model.get, [tap_id, date, level, type])
+    await db.query(model.get, [tap_id, date, level, type])
         .then(resp => {            
-            if(resp.rowCount >= 0) {
+            if(resp.rowCount > 0) {
                 db.query(model.update, [data, tap_id]);
             } else {
                 const hour = tap_id.split('-').pop();

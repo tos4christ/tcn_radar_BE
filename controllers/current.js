@@ -15,16 +15,17 @@ current.get = (req, res, next) => {
         }).catch(err => console);        
 }
 
-current.post = (req, res, next) => {
+current.post = async (req, res, next) => {
     // In order to recognize other category of current, add equipment_name, level and type to what to extract from query and add to database
     const { data } = req.body;
     // const { data } = bodyData;
     const { query } = req;
     const { current_id,  station, feeder_name, type, level, date } = query;
-    // check if the data exists then switch between posting and updating    
-    db.query(model.get, [current_id, date, level, type])
+    // check if the data exists then switch between posting and updating   
+    await db.query(model.get, [current_id, date, level, type])
         .then(resp => {            
-            if(resp.rowCount >= 0) {
+            console.log(resp.rowCount, 'the row count')
+            if(resp.rowCount > 0) {
                 db.query(model.update, [data, current_id]);
             } else {
                 const hour = current_id.split('-').pop();
