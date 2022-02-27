@@ -6,7 +6,7 @@ const sll = {};
 // If the row will be created or displayed.
 sll.get = async (req, res, next) => {
     const { query } = req;
-    const { date } = query;    
+    const { date } = query;
     const queryFunction = async () => {
         await db.query(model.get_stations)
             .then(response => {
@@ -37,7 +37,7 @@ sll.get = async (req, res, next) => {
                             //     })
                             // }); 
                             for (let equipment of equipments) {
-                                await db.query(model.get_line_load, [equipment.name, 330, 'line', '2022-02-19'])
+                                await db.query(model.get_line_load, [equipment.name, 330, 'line', date])
                                 .then( linePower => {
                                     return station_data[station.name][equipment.name] = linePower.rows;                                
                                 })
