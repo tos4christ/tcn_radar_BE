@@ -14,20 +14,19 @@ const options = {
     clientId: '',
     username: process.env.MQTT_USER,
     password: process.env.MQTT_PASS,
-    clean: false
+    clean: true
 }
 const client = mqtt.connect(host, options);
 client.on('connect', () => {
     client.subscribe('afam6ts/tv', (err) => {
-        if(!err) {
+        if(err) {
             console.log('this is the error', err);
         }
     })
 });
 client.on('message', (topic, message) => {
     console.log(message.toString(), 'then the topic', topic);
-    client.end();
-});
+}); 
 
 // Import routers
 var currentRouter = require('./routes/current');
