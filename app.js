@@ -4,8 +4,30 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mqtt = require("mqtt");
 
 dotenv.config();
+
+// Testing the MQTT service
+const host = 'mqtt://127.0.0.1';
+const options = {
+    clientId: '',
+    username: process.env.MQTT_USER,
+    password: process.env.MQTT_PASS,
+    clean: false
+}
+const client = mqtt.connect(host, options);
+client.on('connect', () => {
+    client.subscribe('afam6ts/tv', (err) => {
+        if(!err) {
+            console.log('this is the error', err);
+        }
+    })
+});
+client.on('message', (topic, message) => {
+    console.log(message.toString(), 'then the topic', topic);
+    client.end();
+});
 
 // Import routers
 var currentRouter = require('./routes/current');
