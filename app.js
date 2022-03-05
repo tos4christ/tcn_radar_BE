@@ -4,32 +4,13 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var mqtt = require("mqtt");
 
 dotenv.config();
 
-// Testing the MQTT service
-const host = 'mqtt://127.0.0.1';
-const options = {
-    clientId: '',
-    username: process.env.MQTT_USER,
-    password: process.env.MQTT_PASS,
-    clean: false
-}
-const client = mqtt.connect(host, options);
-client.on('connect', () => {
-    client.subscribe('afam6ts/tv', (err) => {
-        if(!err) {
-            console.log('this is the error', err);
-        }
-    })
-});
-client.on('message', (topic, message) => {
-    console.log(message.toString(), 'then the topic', topic);
-    client.end();
-});
+// Start the MQTT client service
+require('./utility/mqtt_services');
 
-// Import routers
+// Import routers for tcn radar
 var currentRouter = require('./routes/current');
 var powerRouter = require('./routes/power');
 var reactorRouter = require('./routes/reactor');
@@ -41,6 +22,9 @@ var signupRouter = require('./routes/signup');
 var signinRouter = require('./routes/signin');
 var mxRouter = require('./routes/mx');
 var sllRouter = require('./routes/station_line_load');
+
+
+// Import routers for tcn iot db
 
 var app = express();
 
