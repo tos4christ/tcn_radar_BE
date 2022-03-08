@@ -1,7 +1,6 @@
 var dotenv = require('dotenv');
 var express = require('express');
 var path = require('path');
-var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mqtt = require("mqtt");
@@ -35,16 +34,13 @@ client.on('connect', () => {
         }
     })
 });
-try {
-    client.on('message', (topic, message) => {
-        // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
-        let data;
-        // try block not needed here.
-        try {
-            data = JSON.parse(message.toString());
-        } catch(err) {
-            console.error(err)
-        }    
+client.on('message', (topic, message) => {
+    // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
+    let data;
+    // console.log(message.toString())
+    // try block needed here.
+    try {
+        data = JSON.parse(message.toString());     
         const station = data.id;
         const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
         const { lines, units } = data;
@@ -54,6 +50,9 @@ try {
         const minute = time.split(':')[1]
         const seconds = time.split(':')[2]
         const level = 330;
+        const dateTemp = date.split('-');
+        const epoch_time = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
+        // console.log(epoch_time.getTime(), epoch_time, 'the epoch')
         let kv, mw, mvar, amp, equipment_id, line_name, variant;
         // loop over the lines or units array
         const equip = lines ? lines : units ? units : undefined
@@ -74,17 +73,18 @@ try {
             } else if (variant === undefined) {
                 return;
             }
-            db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant])
+            db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
                 .then( response => {
                     // console.log(response.rows)
                 })
                 .catch(err => console.log(err))
         })   
-        // client.end()
-    }); 
-} catch(err) {
-    console.error(err)
-}
+    // client.end()
+    } catch(err) {
+        console.error(err)
+    }
+});
+
 
 // Add methods to accepts wide range of requests for the API
 
@@ -100,11 +100,12 @@ var signupRouter = require('./routes/signup');
 var signinRouter = require('./routes/signin');
 var mxRouter = require('./routes/mx');
 var sllRouter = require('./routes/station_line_load');
+var linesRouter = require('./routes/lines');
 
 var app = express();
 
 app.use(logger('dev'));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -121,7 +122,22 @@ app.use('/signin', signinRouter);
 app.use('/signup', signupRouter);
 app.use('/mx', mxRouter);
 app.use('/sll', sllRouter);
+app.use('/lines', linesRouter);
 
-// Handle 404 and other errors
+// Handle 404 and forward to error handler
+app.use(function(req, res, next) {
+    next(createError(404));
+  });
+  
+// error handler
+app.use(function(err, req, res, next) {
+// set locals, only providing error in development
+res.locals.message = err.message;
+res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+// send the error
+res.status(err.status || 500);
+res.end({error: err});
+});
 
 module.exports = app;
