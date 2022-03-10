@@ -3,7 +3,20 @@ const lines = {
     get: 'SELECT * FROM lines_table where equipment_id=$1 and date=$2 and level=$3 and station=$4',
     get_line: 'select * from lines_table where line_name=$1 order by hour, minute, seconds',
     get_uptime: 'select * from lines_table where time between $1 and $2',
+    get_downtime: 'select * from lines_table where time between $1 and $2',
+    get_profile_max: (parameter, station, line, start, end) => {
+        return `select hour, minute, seconds, ${parameter}, date from lines_table where station='${station}' and line_name='${line}' and time between ${start} and ${end} and 
+        ${parameter}=(select MAX(${parameter}) from lines_table where station='${station}' and line_name='${line}' and time between ${start} and ${end})`
+        },
+    get_profile_min: (parameter, station, line, start, end) => {
+        return `select hour, minute, seconds, ${parameter}, date from lines_table where station='${station}' and line_name='${line}' and time between ${start} and ${end} and 
+        ${parameter}=(select MIN(${parameter}) from lines_table where station='${station}' and line_name='${line}' and time between ${start} and ${end})`
+        },
+    get_average: 'select * from lines_table where time between $1 and $2',
     get_history: 'select * from lines_table where station=$1 and line_name=$2 and time between $3 and $4 order by time'
 }
 
+// Todo list
+// add one to the month and check if needed in the hour in order to make 
+// the month and hour correspond in the view
 module.exports =  lines;

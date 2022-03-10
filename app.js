@@ -1,4 +1,5 @@
 var dotenv = require('dotenv');
+var cors = require('cors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -37,7 +38,7 @@ client.on('connect', () => {
 client.on('message', (topic, message) => {
     // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
     let data;
-    // console.log(message.toString())
+    //console.log(message.toString())
     // try block needed here.
     try {
         data = JSON.parse(message.toString());     
@@ -85,7 +86,6 @@ client.on('message', (topic, message) => {
     }
 });
 
-
 // Add methods to accepts wide range of requests for the API
 
 // Import routers
@@ -104,11 +104,27 @@ var linesRouter = require('./routes/lines');
 
 var app = express();
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'public')));
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Private-Network', true);
+    res.header('Access-Control-Allow-Private-Network', 'true');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+    res.header('Access-Control-Expose-Headers', 'Content-Length');
+    res.header('Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, X-Requested-With, Range');
+    if (req.method === 'OPTIONS') {
+      res.send(200);
+    } else {
+      next();
+    }
+  });
 
 // Functional routes
 app.use('/reactor', reactorRouter);
@@ -137,7 +153,7 @@ res.locals.error = req.app.get('env') === 'development' ? err : {};
 
 // send the error
 res.status(err.status || 500);
-res.end({error: err});
+res.send({error: err});
 });
 
 module.exports = app;
