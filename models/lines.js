@@ -3,7 +3,8 @@ const lines = {
     get: 'SELECT * FROM lines_table where equipment_id=$1 and date=$2 and level=$3 and station=$4',
     get_line: 'select * from lines_table where line_name=$1 order by hour, minute, seconds',
     get_uptime: 'select * from lines_table where time between $1 and $2',
-    get_downtime: 'select * from lines_table where time between $1 and $2',
+    get_all: 'select station, max(kv) as kv, sum(abs(mw)) as mw from lines_table where date=$1 and hour=$2 and minute=$3 and seconds=$4 group by station',
+    get_downtime: 'select * from lines_table where mw=0 and kv=0 and time between $1 and $2 and line_name=$3 and station=$4 order by time',
     get_profile_max: (parameter, station, line, start, end) => {
         return `select hour, minute, seconds, ${parameter}, date from lines_table where station='${station}' and line_name='${line}' and time between ${start} and ${end} and 
         ${parameter}=(select MAX(${parameter}) from lines_table where station='${station}' and line_name='${line}' and time between ${start} and ${end})`

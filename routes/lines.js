@@ -13,4 +13,6 @@ router.post('/average', controller.average);
 
 router.post('/profile', controller.profile);
 
+router.get('/all', controller.all);
+
 module.exports = router;
