@@ -41,9 +41,10 @@ client.on('connect', () => {
             'afam6ts/tv', 'gereguGs/pv', 'odukpanits/tv', 
             'omotoso2ts/tv', 'riversIppPs/pr', 'sapelets/pv',
             'omotoso11ts/pv', 'omotoso12ts/pv', 'delta3gs/pv',
-            'phmains/tv', 'lokojats/tv',
+            'phmains/tv', 'lokojats/tv', 'azuraIppGs/tr',
             'ikotekpene/tv', 'gwagwaladats/tv', 'gereguGs/tv',
-            'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 'riversIppPs/pv', 'afam6ts/tv'
+            'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 
+            'riversIppPs/pv', 'afam6ts/tv', 'omokugs/pv', 'ihovborts/tv'
         ],
      (err) => {
         if(err) {
@@ -52,6 +53,9 @@ client.on('connect', () => {
     })
 });
 client.on('message', (topic, message) => {
+  // if(topic === "omokugs/pv" ) {
+  //   console.log(message.toString(), 'omoku topic')
+  // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
   // io.on('connection', (socket) => {

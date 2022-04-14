@@ -9,6 +9,7 @@ const webSocket =  (expressServer) => {
 
   // console.log(websocketServer, 'the websocket server'); 
   expressServer.on("upgrade", (request, socket, head) => {
+      console.log('its upgraded')
     websocketServer.handleUpgrade(request, socket, head, (websocket) => {
         websocketServer.emit("connection", websocket, request);
     });
