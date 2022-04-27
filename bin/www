@@ -121,7 +121,7 @@ client.on('message', (topic, message) => {
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(port, "172.16.200.3");
 server.on('error', onError);
 server.on('listening', onListening);
 

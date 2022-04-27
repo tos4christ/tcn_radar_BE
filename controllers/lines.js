@@ -94,7 +94,7 @@ lines.history = (req, res, next) => {
     // check if the data exists then switch between posting and updating    
     db.query(model.get_history, [station, equipment, start.getTime(), end.getTime()])
         .then(respo => {
-            console.log(respo.rows)
+            // console.log(respo.rows)
             return res.send({res: respo.rows})
         })
         .catch(err => console.log(err))
@@ -152,10 +152,12 @@ lines.all = (req, res, next) => {
     const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');    
     const Hour = time.split(':')[0];
     const Minute = time.split(':')[1];
-    /// const Seconds = time.split(':')[2];
+    const Seconds = time.split(':')[2];
+
+    // console.log(time, 'the data')
 
     // get all the data for the given time and order them by station   
-    db.query(model.get_all, [date, Number(Hour), Number(Minute), Number(Minute)])
+    db.query(model.get_all, [ date, Number(Hour), Number(Minute), Number(Seconds) -1, Number(Seconds) + 1 ])
         .then(respo => {
             const data = respo.rows;
             // console.log(data, 'the data')
