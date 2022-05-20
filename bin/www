@@ -7,6 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('tcn-radar:server');
 var http = require('http');
+const fs = require('fs');
+var https = require('https');
 var mqtt = require("mqtt");
 var webSocket = require("../utility/websockets")
 var db = require("../database/db");
@@ -21,10 +23,27 @@ var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Create HTTPS server.
  */
 
-var server = http.createServer(app);
+const cert = fs.readFileSync('./ssl/tcnnas.org.crt');
+const key = fs.readFileSync('./ssl/tcnnas.org.key');
+const ca = fs.readFileSync('./ssl/tcnnas.org.ca-bundle');
+
+// const cert = fs.readFileSync('./ssl/cert.pem');
+// const key = fs.readFileSync('./ssl/key.pem');
+
+// console.log(cert, 'the cert')
+
+const httpsOptions = {
+  cert: cert,
+  key: key,
+  ca: ca
+}
+
+var server = https.createServer(httpsOptions, app);
+
+// var server = http.createServer(app);
 
 // Testing the MQTT service
 const host = 'mqtt://127.0.0.1';
@@ -41,10 +60,13 @@ client.on('connect', () => {
             'afam6ts/tv', 'gereguGs/pv', 'odukpanits/tv', 
             'omotoso2ts/tv', 'riversIppPs/pr', 'sapelets/pv',
             'omotoso11ts/pv', 'omotoso12ts/pv', 'delta3gs/pv',
-            'phmains/tv', 'lokojats/tv', 'azuraIppGs/tr',
+            'phmains/tv', 'lokojats/tv', 'ihovborts/tv',
             'ikotekpene/tv', 'gwagwaladats/tv', 'gereguGs/tv',
             'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 
-            'riversIppPs/pv', 'afam6ts/tv', 'omokugs/pv', 'ihovborts/tv'
+            'riversIppPs/pv', 'omokugs/pv', 'markudits/tv',
+            'dadinkowags/tv', 'ugwuajits/tv', 'delta2gs/pv',
+            'gbaraints/pv', 'olorunsogo1ts/pv', 'parasenergyPs/pv',
+            'asabats/tv'
         ],
      (err) => {
         if(err) {
@@ -53,8 +75,8 @@ client.on('connect', () => {
     })
 });
 client.on('message', (topic, message) => {
-  // if(topic === "omokugs/pv" ) {
-  //   console.log(message.toString(), 'omoku topic')
+  // if(topic === "asabats/tv") {
+  //   console.log(message.toString(), 'the topic')
   // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
@@ -181,6 +203,7 @@ function onError(error) {
  */
 
 function onListening() {
+  console.log('listening')
   var addr = server.address();
   console.log(addr.port, 'the port', addr)
   var bind = typeof addr === 'string'

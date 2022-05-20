@@ -15,4 +15,6 @@ router.post('/profile', controller.profile);
 
 router.get('/all', controller.all);
 
+router.get('/nsong', controller.nsong);
+
 module.exports = router;

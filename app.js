@@ -5,6 +5,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var mssqlServer = require('./database/nsongdb')
+
 dotenv.config();
 
 
@@ -25,6 +27,17 @@ var sllRouter = require('./routes/station_line_load');
 var linesRouter = require('./routes/lines');
 
 var app = express();
+var http_app = express();
+
+// Redirect unsecured http requests to the secured https redirect
+http_app.use(function(req, res, next) {
+  if (req.secure){
+    return next();
+  }
+  res.redirect("https://" + req.headers.host + req.url);
+});
+
+http_app.listen(80, "172.16.200.3");
 
 app.use(cors());
 app.use(logger('dev'));
@@ -48,7 +61,6 @@ app.use((req, res, next) => {
     }
   });
 
-
 // Functional routes
 app.use('/reactor', reactorRouter);
 app.use('/current', currentRouter);
@@ -62,6 +74,10 @@ app.use('/signup', signupRouter);
 app.use('/mx', mxRouter);
 app.use('/sll', sllRouter);
 app.use('/lines', linesRouter);
+
+// app.get('/.well-known/pki-validation/F7E918FEFBA46C9E95A10FC7F19D183C.txt', (req, res) => {
+//   res.sendFile(path.join(__dirname, "ssl", "F7E918FEFBA46C9E95A10FC7F19D183C.txt"))
+// })
 
 // Function to serve static react resources
 app.get('/*', (req, res) => {

@@ -166,4 +166,24 @@ lines.all = (req, res, next) => {
         .catch(err => console.log(err))
 }
 
+lines.nsong = (req, res, next) => {
+    const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
+    var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');    
+    const Hour = time.split(':')[0];
+    // const Minute = time.split(':')[1];
+    const Seconds = time.split(':')[2];
+
+    console.log(time, Hour, 'the data')
+
+    // get all the data for the given time and order them by station   
+    db.query(model.get_nsong, [ date, Number(Hour), 0, 0, 10])
+        .then(respo => {
+            const data = respo.rows;
+            // console.log(data, 'the data')
+            return res.send({res: data});
+        })
+        .catch(err => console.log(err))
+}
+
 module.exports =  lines;

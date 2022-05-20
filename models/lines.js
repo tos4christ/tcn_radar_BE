@@ -14,7 +14,9 @@ const lines = {
         ${parameter}=(select MIN(${parameter}) from lines_table where station='${station}' and line_name='${line}' and time between ${start} and ${end})`
         },
     get_average: 'select * from lines_table where time between $1 and $2',
-    get_history: 'select * from lines_table where station=$1 and line_name=$2 and time between $3 and $4 order by time'
+    get_history: 'select * from lines_table where station=$1 and line_name=$2 and time between $3 and $4 order by time',
+    get_nsong: 'select station, max(kv) as kv, sum(abs(mw)) as mw, sum(abs(amp)) as amp, time, seconds, mvar from lines_table where date=$1 and hour=$2 and minute=$3 and seconds between $4 and $5 group by station, mvar, time, seconds',
+
 }
 
 // Todo list
