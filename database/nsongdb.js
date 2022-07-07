@@ -54,6 +54,8 @@ mssql.connect(config, err => {
                     const value = obj[1]               
                     tempArr.push(value)
                 })  
+                const finalArray = tempArr.filter( tar => tar.seconds !== null)
+                console.log(finalArray, 'the final array without null')
                 console.log(tempArr, 'the filtered temp Arr station');
                 tempArr.forEach(dt => {
                     const { station, kv, mw, amp, time, seconds, mvar } = dt;

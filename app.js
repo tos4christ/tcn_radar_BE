@@ -10,7 +10,6 @@ var mssqlServer = require('./database/nsongdb');
 
 dotenv.config();
 
-
 // Add methods to accepts wide range of requests for the API
 
 // Import routers
