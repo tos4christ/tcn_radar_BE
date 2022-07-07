@@ -13,7 +13,8 @@ var mqtt = require("mqtt");
 var webSocket = require("../utility/websockets")
 var db = require("../database/db");
 var linesModel = require("../models/lines");
-require('events').EventEmitter.defaultMaxListeners = 250;
+// var os = require('node:os');
+// os.setPriority(process.pid, os.constants.priority.PRIORITY_HIGHEST);
 
 /**
  * Get port from environment and store in Express.
@@ -66,7 +67,7 @@ client.on('connect', () => {
             'riversIppPs/pv', 'omokugs/pv', 'markudits/tv',
             'dadinkowags/tv', 'ugwuajits/tv', 'delta2gs/pv',
             'gbaraints/pv', 'olorunsogo1ts/pv', 'parasenergyPs/pv',
-            'asabats/tv'
+            'asabats/tv', 'olorunsogo2ts/tv'
         ],
      (err) => {
         if(err) {
@@ -75,7 +76,7 @@ client.on('connect', () => {
     })
 });
 client.on('message', (topic, message) => {
-  // if(topic === "asabats/tv") {
+  // if(topic === "omotoso2ts/tv") {
   //   console.log(message.toString(), 'the topic')
   // }
   // broadcast the message to the client that are connected
@@ -211,3 +212,6 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+const {exec} = require('child_process');
+exec('wmic process where "ProcessId=' + process.pid + '" CALL setpriority 256');

@@ -15,6 +15,6 @@ router.post('/profile', controller.profile);
 
 router.get('/all', controller.all);
 
-router.get('/nsong', controller.nsong);
+router.get('/getdaily', controller.getdaily);
 
 module.exports = router;

@@ -4,8 +4,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-var mssqlServer = require('./database/nsongdb')
+var mssqlServer = require('./database/nsongdb');
+// var os = require('node:os'); 
+// os.setPriority(process.pid, os.constants.priority.PRIORITY_HIGHEST);
 
 dotenv.config();
 
@@ -79,15 +80,17 @@ app.use('/lines', linesRouter);
 //   res.sendFile(path.join(__dirname, "ssl", "F7E918FEFBA46C9E95A10FC7F19D183C.txt"))
 // })
 
-// Function to serve static react resources
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"))
-})
 
 // Handle 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
   });
+
+// Function to serve static react resources
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"))
+})
+
   
 // error handler
 app.use(function(err, req, res, next) {
