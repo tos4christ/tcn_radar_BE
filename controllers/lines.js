@@ -107,6 +107,7 @@ lines.history = (req, res, next) => {
 
 lines.average = (req, res, next) => {
     console.log('i got here')
+    return;
     const { body } = req;
     let { station, equipment, checkDate} = body;
     // console.log(station, equipment, checkDate, 'the station')
