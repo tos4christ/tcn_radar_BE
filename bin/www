@@ -48,6 +48,7 @@ var server = https.createServer(httpsOptions, app);
 
 // Testing the MQTT service
 const host = 'mqtt://127.0.0.1';
+const host_2 = 'http://ec2-3-88-196-213.compute-1.amazonaws.com';
 const options = {
     clientId: '',
     username: process.env.MQTT_USER,
@@ -55,6 +56,24 @@ const options = {
     clean: true
 }
 const client = mqtt.connect(host, options);
+const client_2 = mqtt.connect(host_2, options);
+client_2.on('connect', () => {
+  client_2.subscribe(
+    [
+      'asabats/tv'
+    ],
+    err => err ? console.log('this is the error', err) : null
+  )
+});
+client_2.on('message', (topic, message) => {
+  try {
+    message = JSON.parse(message.toString())
+    console.log(topic, message);
+  }
+  catch(err) {
+    console.error(err, 'the error from the message');
+  }
+})
 client.on('connect', () => {
     client.subscribe(
         [
