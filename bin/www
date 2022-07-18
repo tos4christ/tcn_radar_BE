@@ -68,7 +68,7 @@ client_2.on('connect', () => {
 client_2.on('message', (topic, message) => {
   try {
     message = JSON.parse(message.toString())
-    console.log(topic, message);
+    // console.log(topic, message);
   }
   catch(err) {
     console.error(err, 'the error from the message');
