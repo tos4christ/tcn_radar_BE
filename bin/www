@@ -61,7 +61,7 @@ const client_2 = mqtt.connect(host_2, options);
 client_2.on('connect', () => {
   client_2.subscribe(
     [
-      'asabats/tv'
+      'asabats/tv', 'delta4gs/tv', 'OkpaiippGs/tv'
     ],
     err => err ? console.log('this is the error', err) : null
   )
@@ -138,9 +138,9 @@ client.on('connect', () => {
     })
 });
 client.on('message', (topic, message) => {
-  // if(topic === "omotoso2ts/tv") {
-  //   console.log(message.toString(), 'the topic')
-  // }
+  if(topic === "delta4gs/tv" || topic === "OkpaiippGs/tv") {
+    console.log(message.toString(), 'the topic')
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
   // io.on('connection', (socket) => {
