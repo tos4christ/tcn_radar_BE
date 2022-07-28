@@ -2,6 +2,26 @@ module.exports = ( data ) => {
 
     const station_array = [
         {
+            okpaiGs: [
+                {
+                    k1t: []
+                },
+                {
+                    k2t: []
+                }
+            ]  
+        },
+        {
+            deltaGs: [
+                {
+                    g3b: []
+                },
+                {
+                    s4g: []
+                }
+            ]
+        },
+        {
             omotosho2: [
                 {
                     tr3: []
@@ -338,9 +358,10 @@ function Equipment_Sorter(equipment_array) {
 
 function Station_Adder(station_array) {
     const res_data = [
-        'AFAM VI (GAS|STEAM)', 'ALAOJI NIPP (GAS)', 'SAPELE NIPP (GAS)', 'SAPELE (STEAM)', 'ODUKPANI NIPP (GAS)', 'OMOTOSHO (GAS)', 'DELTA 3 (GAS)',
-        'RIVERS IPP (GAS)', 'OMOKU (GAS)', 'IHOVBOR NIPP (GAS)', 'OLORUNSOGO NIPP', 'DELTA 2 (GAS)', 'PARAS ENERGY (GAS)', 'OMOTOSHO NIPP (GAS)',
-        'GEREGU NIPP (GAS)', 'AZURA-EDO IPP (GAS)', 'TRANS-AMADI (GAS)', 'IBOM POWER (GAS)', 'OLORUNSOGO (GAS)', 'GBARAIN NIPP (GAS)', 'GEREGU (GAS)', 'DADINKOWA G.S (HYDRO)'
+        'AFAM VI (GAS|STEAM)', 'ALAOJI NIPP (GAS)', 'SAPELE NIPP (GAS)', 'SAPELE (STEAM)', 'ODUKPANI NIPP (GAS)', 'OMOTOSHO (GAS)',
+         'DELTA 3 (GAS)', 'RIVERS IPP (GAS)', 'OMOKU (GAS)', 'IHOVBOR NIPP (GAS)', 'OLORUNSOGO NIPP', 'DELTA 2 (GAS)', 'DELTA (GAS)',
+         'PARAS ENERGY (GAS)', 'OMOTOSHO NIPP (GAS)', 'GEREGU NIPP (GAS)', 'AZURA-EDO IPP (GAS)', 'TRANS-AMADI (GAS)', 
+         'IBOM POWER (GAS)', 'OLORUNSOGO (GAS)', 'GBARAIN NIPP (GAS)', 'GEREGU (GAS)', 'DADINKOWA G.S (HYDRO)', 'OKPAI (GAS/STEAM)'
     ];
     const final_array = [];
     // replace the mw, amp, mvar

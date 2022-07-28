@@ -128,7 +128,8 @@ client.on('connect', () => {
             'riversIppPs/pv', 'omokugs/pv', 'markudits/tv',
             'dadinkowags/tv', 'ugwuajits/tv', 'delta2gs/pv',
             'gbaraints/pv', 'olorunsogo1ts/pv', 'parasenergyPs/pv',
-            'asabats/tv', 'olorunsogo2ts/tv'
+            'asabats/tv', 'olorunsogo2ts/tv', 'delta4gs/tv',
+            'OkpaiippGs/tv'
         ],
      (err) => {
         if(err) {
