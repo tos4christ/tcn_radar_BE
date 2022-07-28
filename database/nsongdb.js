@@ -59,29 +59,31 @@ mssql.connect(config, err => {
                 finalArray.forEach(dt => {
                     const { station, kv, mw, amp, time, seconds, mvar } = dt;
                     // match the station name to the station id
-                    const stations = {                        
-                        "AFAM VI (GAS/STEAM)" : 2,
-                        "ALAOJI NIPP (GAS)" : 21,                        
-                        "SAPELE NIPP (GAS)" : 7,
-                        "SAPELE (STEAM)" : 19,
-                        "OMOTOSHO NIPP (GAS)" : 5,
-                        "ODUKPANI NIPP (GAS)" : 20,
-                        "OMOTOSHO (GAS)" : 4,
-                        "DELTA 3 (GAS)" : 6,                        
-                        "GEREGU (GAS)" : 3,                        
-                        "RIVERS IPP (GAS)" : 1,                        
-                        "OMOKU (GAS)" : 8,
-                        "IHOVBOR NIPP (GAS)" : 22,
-                        "OLORUNSOGO (GAS)": 17,
-                        "OLORUNSOGO NIPP": 18,                        
-                        "AZURA-EDO IPP (GAS)" : 9,
-                        "GEREGU NIPP (GAS)" : 11,
-                        "GBARAIN NIPP (GAS)" : 12,
+                    const stations = {
+                        "RIVERS IPP (GAS)" :       1,
+                        "AFAM VI (GAS/STEAM)" :    2,
+                        "GEREGU (GAS)" :           3,
+                        "OMOTOSHO (GAS)" :         4,
+                        "OMOTOSHO NIPP (GAS)" :    5,
+                        "DELTA 3 (GAS)" :          6,                         
+                        "SAPELE NIPP (GAS)" :      7,
+                        "OMOKU (GAS)" :            8,
+                        "AZURA-EDO IPP (GAS)" :    9,
+                        "OKPAI (GAS/STEAM)" :     10,
+                        "GEREGU NIPP (GAS)" :     11,
+                        "GBARAIN NIPP (GAS)" :    12,                        
                         "DADINKOWA G.S (HYDRO)" : 13,
-                        "PARAS ENERGY (GAS)" : 14,
-                        "IBOM POWER (GAS)" : 15,
-                        "DELTA 2 (GAS)" : 16,
-                        "TRANS-AMADI (GAS)" : 23
+                        "PARAS ENERGY (GAS)" :    14,
+                        "IBOM POWER (GAS)" :      15,
+                        "DELTA 2 (GAS)" :         16,
+                        "OLORUNSOGO (GAS)":       17,
+                        "OLORUNSOGO NIPP":        18, 
+                        "SAPELE (STEAM)" :        19,                        
+                        "ODUKPANI NIPP (GAS)" :   20,
+                        "ALAOJI NIPP (GAS)" :     21, 
+                        "IHOVBOR NIPP (GAS)" :    22,
+                        "TRANS-AMADI (GAS)" :     23,
+                        "DELTA (GAS)" :           24, 
                     }
                     // Create a temporary table
                     const table = new mssql.Table('generation');
