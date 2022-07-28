@@ -128,8 +128,7 @@ client.on('connect', () => {
             'riversIppPs/pv', 'omokugs/pv', 'markudits/tv',
             'dadinkowags/tv', 'ugwuajits/tv', 'delta2gs/pv',
             'gbaraints/pv', 'olorunsogo1ts/pv', 'parasenergyPs/pv',
-            'asabats/tv', 'olorunsogo2ts/tv', 'delta4gs/tv',
-            'OkpaiippGs/tv'
+            'asabats/tv', 'olorunsogo2ts/tv'
         ],
      (err) => {
         if(err) {
@@ -138,9 +137,9 @@ client.on('connect', () => {
     })
 });
 client.on('message', (topic, message) => {
-  if(topic === "delta4gs/tv" || topic === "OkpaiippGs/tv") {
-    console.log(message.toString(), 'the topic')
-  }
+  // if(topic === "delta4gs/tv" || topic === "OkpaiippGs/tv") {
+  //   console.log(message.toString(), 'the topic')
+  // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
   // io.on('connection', (socket) => {

@@ -13,14 +13,12 @@ module.exports = (data) => {
         'SAPELE NIPP (GAS)' : {mw: null, kv: null, station: 'SAPELE NIPP (GAS)', amp: null, time: null, seconds: null, mvar:null},
         'SAPELE (STEAM)' : {mw: null, kv: null, station: 'SAPELE (STEAM)', amp: null, time: null, seconds: null, mvar:null},
         'ODUKPANI NIPP (GAS)' : {mw: null, kv: null, station: 'ODUKPANI NIPP (GAS)', amp: null, time: null, seconds: null, mvar:null},
-        'OMOTOSHO (GAS)' : {mw: null, kv: null, station: 'OMOTOSHO (GAS)', amp: null, time: null, seconds: null, mvar:null},
-        'DELTA 3 (GAS)' : {mw: null, kv: null, station: 'DELTA 3 (GAS)', amp: null, time: null, seconds: null, mvar:null},        
+        'OMOTOSHO (GAS)' : {mw: null, kv: null, station: 'OMOTOSHO (GAS)', amp: null, time: null, seconds: null, mvar:null},      
         'GEREGU (GAS)' : {mw: null, kv: null, station: 'GEREGU (GAS)', amp: null, time: null, seconds: null, mvar:null},        
         'RIVERS IPP (GAS)' : {mw: null, kv: null, station: 'RIVERS IPP (GAS)', amp: null, time: null, seconds: null, mvar:null},       
         'OMOKU (GAS)' : {mw: null, kv: null, station: 'OMOKU (GAS)', amp: null, time: null, seconds: null, mvar:null}, 
         'IHOVBOR NIPP (GAS)' : {mw: null, kv: null, station: 'IHOVBOR NIPP (GAS)', amp: null, time: null, seconds: null, mvar:null},
-        'OLORUNSOGO NIPP' : {mw: null, kv: null, station: 'OLORUNSOGO NIPP', amp: null, time: null, seconds: null, mvar:null},
-        'DELTA 2 (GAS)' : {mw: null, kv: null, station: 'DELTA 2 (GAS)', amp: null, time: null, seconds: null, mvar:null},        
+        'OLORUNSOGO NIPP' : {mw: null, kv: null, station: 'OLORUNSOGO NIPP', amp: null, time: null, seconds: null, mvar:null},     
         'PARAS ENERGY (GAS)': {mw: null, kv: null, station: 'PARAS ENERGY (GAS)', amp: null, time: null, seconds: null, mvar:null},
         'OMOTOSHO NIPP (GAS)' : {mw: null, kv: null, station: 'OMOTOSHO NIPP (GAS)', amp: null, time: null, seconds: null, mvar:null},
         'GEREGU NIPP (GAS)' : {mw: null, kv: null, station: 'GEREGU NIPP (GAS)', amp: null, time: null, seconds: null, mvar:null},
@@ -337,9 +335,9 @@ module.exports = (data) => {
                 res_data['ODUKPANI NIPP (GAS)'].mw = res_data['ODUKPANI NIPP (GAS)'].mw + mw_sum;                
                 res_data['ODUKPANI NIPP (GAS)'].amp = res_data['ODUKPANI NIPP (GAS)'].amp + amp_sum;
                 res_data['ODUKPANI NIPP (GAS)'].mvar = res_data['ODUKPANI NIPP (GAS)'].mvar + mvar_sum;
-                res_data['ODUKPANI NIPP (GAS)'].kv =  max_voltage;
-                res_data['ODUKPANI NIPP (GAS)'].time = time;
-                res_data['ODUKPANI NIPP (GAS)'].seconds = seconds;
+                res_data['ODUKPANI NIPP (GAS)'].kv = res_data['ODUKPANI NIPP (GAS)'].kv ? res_data['ODUKPANI NIPP (GAS)'].kv : max_voltage
+                res_data['ODUKPANI NIPP (GAS)'].time = res_data['ODUKPANI NIPP (GAS)'].time ? res_data['ODUKPANI NIPP (GAS)'].time : time
+                res_data['ODUKPANI NIPP (GAS)'].seconds = res_data['ODUKPANI NIPP (GAS)'].seconds ? res_data['ODUKPANI NIPP (GAS)'].seconds : seconds
             }   
             if (filtered_station[0].station === 'ikotEkpene') {
                 let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
@@ -418,6 +416,28 @@ module.exports = (data) => {
                 res_data['OMOTOSHO (GAS)'].time = res_data['OMOTOSHO (GAS)'].time ? res_data['OMOTOSHO (GAS)'].time : time;
                 res_data['OMOTOSHO (GAS)'].seconds = res_data['OMOTOSHO (GAS)'].seconds ? res_data['OMOTOSHO (GAS)'].seconds : seconds;
             }
+            if (filtered_station[0].station === 'deltaGs') {
+                let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
+                const mw_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.mw);
+                    max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
+                    return sum;
+                },0)
+                const amp_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.amp);
+                    return sum;
+                },0)
+                const mvar_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.mvar);
+                    return sum;
+                },0)
+                res_data['DELTA (GAS)'].mw = res_data['DELTA (GAS)'].mw + mw_sum;
+                res_data['DELTA (GAS)'].amp = res_data['DELTA (GAS)'].amp + amp_sum;
+                res_data['DELTA (GAS)'].mvar = res_data['DELTA (GAS)'].mvar + mvar_sum;
+                res_data['DELTA (GAS)'].kv = res_data['DELTA (GAS)'].kv ? res_data['DELTA (GAS)'].kv : max_voltage
+                res_data['DELTA (GAS)'].time = res_data['DELTA (GAS)'].time ? res_data['DELTA (GAS)'].time : time
+                res_data['DELTA (GAS)'].seconds = res_data['DELTA (GAS)'].seconds ? res_data['DELTA (GAS)'].seconds : seconds
+            }
             if (filtered_station[0].station === 'delta3') {
                 let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
                 const mw_sum = filtered_station.reduce((acc, curr) => {
@@ -433,12 +453,12 @@ module.exports = (data) => {
                     const sum = acc + Math.abs(curr.mvar);
                     return sum;
                 },0)
-                res_data['DELTA 3 (GAS)'].mw = mw_sum;
-                res_data['DELTA 3 (GAS)'].kv = max_voltage;
-                res_data['DELTA 3 (GAS)'].amp = amp_sum;
-                res_data['DELTA 3 (GAS)'].mvar = mvar_sum;
-                res_data['DELTA 3 (GAS)'].time = time;
-                res_data['DELTA 3 (GAS)'].seconds = seconds;
+                res_data['DELTA (GAS)'].mw = res_data['DELTA (GAS)'].mw + mw_sum;
+                res_data['DELTA (GAS)'].amp = res_data['DELTA (GAS)'].amp + amp_sum;
+                res_data['DELTA (GAS)'].mvar = res_data['DELTA (GAS)'].mvar + mvar_sum;
+                res_data['DELTA (GAS)'].kv = res_data['DELTA (GAS)'].kv ? res_data['DELTA (GAS)'].kv : max_voltage
+                res_data['DELTA (GAS)'].time = res_data['DELTA (GAS)'].time ? res_data['DELTA (GAS)'].time : time
+                res_data['DELTA (GAS)'].seconds = res_data['DELTA (GAS)'].seconds ? res_data['DELTA (GAS)'].seconds : seconds
             }
             if (filtered_station[0].station === 'delta2') {
                 let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
@@ -455,35 +475,13 @@ module.exports = (data) => {
                     const sum = acc + Math.abs(curr.mvar);
                     return sum;
                 },0)
-                res_data['DELTA 2 (GAS)'].mw = mw_sum;
-                res_data['DELTA 2 (GAS)'].amp = amp_sum;
-                res_data['DELTA 2 (GAS)'].mvar = mvar_sum;
-                res_data['DELTA 2 (GAS)'].time = time;
-                res_data['DELTA 2 (GAS)'].seconds = seconds;
-                res_data['DELTA 2 (GAS)'].kv = max_voltage;
-            }
-            if (filtered_station[0].station === 'deltaGs') {
-                let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
-                const mw_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + Math.abs(curr.mw);
-                    max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
-                    return sum;
-                },0)
-                const amp_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + Math.abs(curr.amp);
-                    return sum;
-                },0)
-                const mvar_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + Math.abs(curr.mvar);
-                    return sum;
-                },0)
-                res_data['DELTA (GAS)'].mw = mw_sum;
-                res_data['DELTA (GAS)'].amp = amp_sum;
-                res_data['DELTA (GAS)'].mvar = mvar_sum;
-                res_data['DELTA (GAS)'].time = time;
-                res_data['DELTA (GAS)'].seconds = seconds;
-                res_data['DELTA (GAS)'].kv = max_voltage;
-            }
+                res_data['DELTA (GAS)'].mw = res_data['DELTA (GAS)'].mw + mw_sum;
+                res_data['DELTA (GAS)'].amp = res_data['DELTA (GAS)'].amp + amp_sum;
+                res_data['DELTA (GAS)'].mvar = res_data['DELTA (GAS)'].mvar + mvar_sum;
+                res_data['DELTA (GAS)'].kv = res_data['DELTA (GAS)'].kv ? res_data['DELTA (GAS)'].kv : max_voltage
+                res_data['DELTA (GAS)'].time = res_data['DELTA (GAS)'].time ? res_data['DELTA (GAS)'].time : time
+                res_data['DELTA (GAS)'].seconds = res_data['DELTA (GAS)'].seconds ? res_data['DELTA (GAS)'].seconds : seconds
+            }            
             if (filtered_station[0].station === 'okpaiGs') {
                 let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
                 const mw_sum = filtered_station.reduce((acc, curr) => {
