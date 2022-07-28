@@ -1,8 +1,3 @@
-var fs = require('fs');
-var path = require('path');
-
-const baseUrl = path.join(__dirname, '../data');
-
 module.exports = ( data ) => {
 
     const station_array = [
