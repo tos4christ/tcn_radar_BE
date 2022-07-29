@@ -361,7 +361,7 @@ function Station_Adder(station_array) {
         'AFAM VI (GAS|STEAM)', 'ALAOJI NIPP (GAS)', 'SAPELE NIPP (GAS)', 'SAPELE (STEAM)', 'ODUKPANI NIPP (GAS)', 
          'RIVERS IPP (GAS)', 'OMOKU (GAS)', 'IHOVBOR NIPP (GAS)', 'OLORUNSOGO NIPP', 'DELTA (GAS)', 'OMOTOSHO (GAS)',
          'PARAS ENERGY (GAS)', 'OMOTOSHO NIPP (GAS)', 'GEREGU NIPP (GAS)', 'AZURA-EDO IPP (GAS)', 'TRANS-AMADI (GAS)', 
-         'IBOM POWER (GAS)', 'OLORUNSOGO (GAS)', 'GBARAIN NIPP (GAS)', 'GEREGU (GAS)', 'DADINKOWA G.S (HYDRO)', 'OKPAI (GAS/STEAM)'
+         'IBOM POWER (GAS)', 'OLORUNSOGO (GAS)', 'GBARAIN NIPP (GAS)', 'GEREGU (GAS)', 'DADINKOWA G.S (HYDRO)', 'OKPAI (GAS|STEAM)'
     ];
     const final_array = [];
     // replace the mw, amp, mvar
