@@ -7,7 +7,7 @@ const station_keys1 = [
 module.exports = (data) => {
     let res_data = {
         'OKPAI (GAS/STEAM)' : {mw: null, kv: null, station: 'OKPAI (GAS/STEAM)', amp: null, time: null, seconds: null, mvar:null},
-        'DELTA (GAS)' : {mw: null, kv: null, station: 'DELTA (GAS)', amp: null, time: null, seconds: null, mvar:null},
+        // 'DELTA (GAS)' : {mw: null, kv: null, station: 'DELTA (GAS)', amp: null, time: null, seconds: null, mvar:null},
         'AFAM VI (GAS/STEAM)' : {mw: null, kv: null, station: 'AFAM VI (GAS/STEAM)', amp: null, time: null, seconds: null, mvar:null},
         'ALAOJI NIPP (GAS)' : {mw: null, kv: null, station: 'ALAOJI NIPP (GAS)', amp: null, time: null, seconds: null, mvar:null},
         'SAPELE NIPP (GAS)' : {mw: null, kv: null, station: 'SAPELE NIPP (GAS)', amp: null, time: null, seconds: null, mvar:null},
