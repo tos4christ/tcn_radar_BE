@@ -1,7 +1,7 @@
 const station_keys1 = [
     'omotosho2', 'eket', 'phMain', 'afamViTs', 'alaoji', 'sapeleNippPs', 'omotoshoNippPs', 'okpaiGs',
-    'odukpaniGs', 'omotosho1', 'delta3', 'ekim', 'gereguPs', 'ikotEkpene', 'riversIppPs', 'gbarain', 'deltaGs',
-    'omokuPs1', 'ihovborNippPs', 'olorunsogo1', 'delta2', 'parasEnergyPs', 'olorunsogoPhase1Gs', 'dadinKowaGs'
+    'odukpaniGs', 'omotosho1', 'ekim', 'gereguPs', 'ikotEkpene', 'riversIppPs', 'gbarain',
+    'omokuPs1', 'ihovborNippPs', 'olorunsogo1', 'parasEnergyPs', 'olorunsogoPhase1Gs', 'dadinKowaGs'
 ]; 
 
 module.exports = (data) => {
