@@ -304,16 +304,16 @@ function Equipment_Sorter(equipment_array) {
         // Iterate over the filtered data to recaliberate
         if (pres_min && pres_min.length > 0) {
             const mw_sum = pres_min.reduce((acc, curr) => {
-                const sum = acc + Math.abs(curr.mw);
+                const sum = acc + curr.mw;
                 max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
                 return sum;
             },0)
             const amp_sum = pres_min.reduce((acc, curr) => {
-                const sum = acc + Math.abs(curr.amp);
+                const sum = acc + curr.amp;
                 return sum;
             },0)
             const mvar_sum = pres_min.reduce((acc, curr) => {
-                const sum = acc + Math.abs(curr.mvar);
+                const sum = acc + curr.mvar;
                 return sum;
             },0);
             // replace the mw, amp, mvar
