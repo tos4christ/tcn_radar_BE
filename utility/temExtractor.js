@@ -1593,7 +1593,7 @@ function Station_Adder(station_array) {
                             // Iterate over the equipment for insertion into the temphold, this serves as the maximum amount of item that will be used
                             // for the station for this day, any time not here will not be accepted
                             equip[key].forEach( (e) => {
-                                temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: Math.abs(e.mw), mvar: Math.abs(e.mvar), amp: Math.abs(e.amp), station: 'GEREGU NIPP (GAS)'})                                
+                                temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: e.mw, mvar: e.mvar, amp: e.amp, station: 'GEREGU NIPP (GAS)'})                                
                             })
                         } else {
                             // Get the key for the next elements
@@ -1611,9 +1611,9 @@ function Station_Adder(station_array) {
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
                                 if(temp_hold_item_to_add  && temp_hold[chosen_index]) {
-                                    temp_hold[chosen_index].mw += Math.abs(e.mw);
-                                    temp_hold[chosen_index].amp += Math.abs(e.amp);
-                                    temp_hold[chosen_index].mvar += Math.abs(e.mvar);
+                                    temp_hold[chosen_index].mw += e.mw;
+                                    temp_hold[chosen_index].amp += e.amp;
+                                    temp_hold[chosen_index].mvar += e.mvar;
                                     temp_hold[chosen_index].kv = temp_hold[chosen_index].kv > e.kv ? temp_hold[chosen_index].kv : e.kv;
                                 }
                             })
@@ -1631,7 +1631,7 @@ function Station_Adder(station_array) {
                             // Iterate over the equipment for insertion into the temphold, this serves as the maximum amount of item that will be used
                             // for the station for this day, any time not here will not be accepted
                             equip[key].forEach( (e) => {
-                                temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: Math.abs(e.mw), mvar: Math.abs(e.mvar), amp: Math.abs(e.amp), station: 'GEREGU NIPP (GAS)'})                                
+                                temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: e.mw, mvar: e.mvar, amp: e.amp, station: 'GEREGU NIPP (GAS)'})                                
                             })
                         } else {
                             // Get the key for the next elements
@@ -1649,9 +1649,9 @@ function Station_Adder(station_array) {
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
                                 if(temp_hold_item_to_add  && temp_hold[chosen_index]) {
-                                    temp_hold[chosen_index].mw -= Math.abs(e.mw);
-                                    temp_hold[chosen_index].amp -= Math.abs(e.amp);
-                                    temp_hold[chosen_index].mvar -= Math.abs(e.mvar);
+                                    temp_hold[chosen_index].mw -= e.mw;
+                                    temp_hold[chosen_index].amp -= e.amp;
+                                    temp_hold[chosen_index].mvar -= e.mvar;
                                     temp_hold[chosen_index].kv = temp_hold[chosen_index].kv > e.kv ? temp_hold[chosen_index].kv : e.kv;
                                 }
                             })
