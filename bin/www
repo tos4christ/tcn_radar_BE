@@ -68,9 +68,9 @@ client_2.on('connect', () => {
 });
 client_2.on('message', (topic, message) => {
   let data;
-  if(topic === "jebbaTs/tv") {
-    console.log(message.toString(), topic,  'the message')
-  }
+  // if(topic === "jebbaTs/tv") {
+  //   console.log(message.toString(), topic,  'the message')
+  // }
   // try block needed here.
   try {
       data = JSON.parse(message.toString());     
