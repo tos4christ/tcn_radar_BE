@@ -61,14 +61,16 @@ const client_2 = mqtt.connect(host_2, options);
 client_2.on('connect', () => {
   client_2.subscribe(
     [
-      'asabats/tv', 'delta4gs/tv', 'OkpaiippGs/tv'
+      'asabats/tv', 'delta4gs/tv', 'OkpaiippGs/tv', 'jebbaTs/tv'
     ],
     err => err ? console.log('this is the error', err) : null
   )
 });
 client_2.on('message', (topic, message) => {
   let data;
-  // console.log([message.toString(), topic, 'the message'])
+  if(topic === "jebbaTs/tv") {
+    console.log(message.toString(), topic,  'the message')
+  }
   // try block needed here.
   try {
       data = JSON.parse(message.toString());     
