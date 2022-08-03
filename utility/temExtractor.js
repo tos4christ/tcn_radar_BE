@@ -556,7 +556,7 @@ function Station_Adder(station_array) {
                     final_array.push(obj)
                 }
             }
-            if (station_name === 'OKPAI (GAS/STEAM)') {
+            if (station_name === 'OKPAI (GAS|STEAM)') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'okpaiGs');
                 // Get the list of equipment objects from the stations
@@ -573,7 +573,7 @@ function Station_Adder(station_array) {
                             // Iterate over the equipment for insertion into the temphold, this serves as the maximum amount of item that will be used
                             // for the station for this day, any time not here will not be accepted
                             equip[key].forEach( (e) => {
-                                temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: Math.abs(e.mw), mvar: Math.abs(e.mvar), amp: Math.abs(e.amp), station: 'OKPAI (GAS/STEAM)'})                                
+                                temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: Math.abs(e.mw), mvar: Math.abs(e.mvar), amp: Math.abs(e.amp), station: 'OKPAI (GAS|STEAM)'})                                
                             })
                         } else {
                             // Get the key for the next elements
