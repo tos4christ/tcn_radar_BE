@@ -566,11 +566,11 @@ module.exports = (data) => {
                 const mw_sum = filtered_station.reduce((acc, curr) => {
                     max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
                     if (curr.line_name === 'gt11' || curr.line_name === 'gt12' || curr.line_name === 'gt13') {
-                        const sum = acc - curr.mw;
+                        const sum = acc - Math.abs(curr.mw);
                         return sum;
                     }
                     if (curr.line_name === 'r1j' || curr.line_name === 'r2j') {
-                        const sum = acc + curr.mw;
+                        const sum = acc + Math.abs(curr.mw);
                         return sum;
                     }else {
                         return acc
@@ -578,11 +578,11 @@ module.exports = (data) => {
                 },0)
                 const amp_sum = filtered_station.reduce((acc, curr) => {
                     if (curr.line_name === 'gt11' || curr.line_name === 'gt12' || curr.line_name === 'gt13') {
-                        const sum = acc - curr.amp;
+                        const sum = acc - Math.abs(curr.amp);
                         return sum;
                     }
                     if (curr.line_name === 'r1j' || curr.line_name === 'r2j') {
-                        const sum = acc + curr.amp;
+                        const sum = acc + Math.abs(curr.amp);
                         return sum;
                     }else {
                         return acc
@@ -590,11 +590,11 @@ module.exports = (data) => {
                 },0)
                 const mvar_sum = filtered_station.reduce((acc, curr) => {
                     if (curr.line_name === 'gt11' || curr.line_name === 'gt12' || curr.line_name === 'gt13') {
-                        const sum = acc - curr.mvar;
+                        const sum = acc - Math.abs(curr.mvar);
                         return sum;
                     }
                     if (curr.line_name === 'r1j' || curr.line_name === 'r2j') {
-                        const sum = acc + curr.mvar;
+                        const sum = acc + Math.abs(curr.mvar);
                         return sum;
                     }else {
                         return acc
