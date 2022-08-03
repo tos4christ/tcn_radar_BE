@@ -381,7 +381,6 @@ function Station_Adder(station_array) {
             if (station_name === 'JEBBA (HYDRO)') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'jebbaTs');
-                console.log(station_to_add, 'the jebba stations')
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['jebbaTs'];                
