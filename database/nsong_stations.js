@@ -570,7 +570,7 @@ module.exports = (data) => {
                         return sum;
                     }
                     if (curr.line_name === 'r1j' || curr.line_name === 'r2j') {
-                        const sum = acc + Math.abs(curr.mw);
+                        const sum = acc + -(curr.mw);
                         return sum;
                     }else {
                         return acc
@@ -582,7 +582,7 @@ module.exports = (data) => {
                         return sum;
                     }
                     if (curr.line_name === 'r1j' || curr.line_name === 'r2j') {
-                        const sum = acc + Math.abs(curr.amp);
+                        const sum = acc + -(curr.amp);
                         return sum;
                     }else {
                         return acc
@@ -594,7 +594,7 @@ module.exports = (data) => {
                         return sum;
                     }
                     if (curr.line_name === 'r1j' || curr.line_name === 'r2j') {
-                        const sum = acc + Math.abs(curr.mvar);
+                        const sum = acc + -(curr.mvar);
                         return sum;
                     }else {
                         return acc
@@ -691,7 +691,7 @@ module.exports = (data) => {
                 const mw_sum = filtered_station.reduce((acc, curr) => {
                     max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;                    
                     if (curr.line_name === 'ohl1' || curr.line_name === 'ohl2') {
-                        const sum = acc + Math.abs(curr.mw);
+                        const sum = acc + -(curr.mw);
                         return sum;
                     }else {
                         return acc
@@ -699,7 +699,7 @@ module.exports = (data) => {
                 },0)
                 const amp_sum = filtered_station.reduce((acc, curr) => {
                     if (curr.line_name === 'ohl1' || curr.line_name === 'ohl2') {
-                        const sum = acc + Math.abs(curr.amp);
+                        const sum = acc + -(curr.amp);
                         return sum;
                     }else {
                         return acc
@@ -707,7 +707,7 @@ module.exports = (data) => {
                 },0)
                 const mvar_sum = filtered_station.reduce((acc, curr) => {
                     if (curr.line_name === 'ohl1' || curr.line_name === 'ohl2') {
-                        const sum = acc + Math.abs(curr.mvar);
+                        const sum = acc + -(curr.mvar);
                         return sum;
                     }else {
                         return acc
@@ -745,16 +745,16 @@ module.exports = (data) => {
             if (filtered_station[0].station === 'eket') {
                 let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
                 const mw_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + curr.mw;
+                    const sum = acc + -(curr.mw);
                     max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
                     return sum;
                 },0)
                 const amp_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + curr.amp;
+                    const sum = acc + -(curr.amp);
                     return sum;
                 },0)
                 const mvar_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + curr.mvar;
+                    const sum = acc + -(curr.mvar);
                     return sum;
                 },0)
                 res_data['IBOM POWER (GAS)'].mw = res_data['IBOM POWER (GAS)'].mw  + mw_sum;
@@ -767,16 +767,16 @@ module.exports = (data) => {
             if (filtered_station[0].station === 'ekim') {
                 let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
                 const mw_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + curr.mw;
+                    const sum = acc + -(curr.mw);
                     max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
                     return sum;
                 },0)
                 const amp_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + curr.amp;
+                    const sum = acc + -(curr.amp);
                     return sum;
                 },0)
                 const mvar_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + curr.mvar;
+                    const sum = acc + -(curr.mvar);
                     return sum;
                 },0)
                 res_data['IBOM POWER (GAS)'].mw = res_data['IBOM POWER (GAS)'].mw  - mw_sum;
