@@ -1827,44 +1827,6 @@ function Station_Adder(station_array) {
                 const equipment_to_subtract = station_to_subtract[0]['ekim'];
                 const equipment_to_sum = station_to_add_2[0]['eket'];
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_subtract.length > 0) {
-                    equipment_to_subtract.forEach((equip, index) => {
-                        // Insert all the first items into the temp hold container, 
-                        // Then on the next iteration start adding to it
-                        if(index == 0 && temp_hold.length == 0) {
-                            // Get the key of the first item
-                            const key = Object.keys(equip)[0];
-                            // Iterate over the equipment for insertion into the temphold, this serves as the maximum amount of item that will be used
-                            // for the station for this day, any time not here will not be accepted
-                            equip[key].forEach( (e) => {
-                                temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: -(e.mw), mvar: -(e.mvar), amp: -(e.amp), station: 'IBOM POWER (GAS)'})                                
-                            })
-                        } else {
-                            // Get the key for the next elements
-                            const key = Object.keys(equip)[0];
-                            let chosen_index;
-                            equip[key].forEach( (e) => {
-                                // Get the hour and minute for each of this equipment item, this would be used to filter for a matching hour
-                                // and minute inside the temphold array
-                                const temp_hold_item_to_add = temp_hold.filter( (th, ind) => {
-                                    const check = e.hour === th.hour && e.minute === th.minute;
-                                    if (check) {
-                                        chosen_index = ind;
-                                    }
-                                    return check;
-                                });
-                                // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
-                                    temp_hold[chosen_index].mw = temp_hold[chosen_index].mw - -(e.mw);
-                                    temp_hold[chosen_index].amp = temp_hold[chosen_index].amp - -(e.amp);
-                                    temp_hold[chosen_index].mvar = temp_hold[chosen_index].mvar - -(e.mvar);
-                                    temp_hold[chosen_index].kv = temp_hold[chosen_index].kv > e.kv ? temp_hold[chosen_index].kv : e.kv;
-                                }
-                            })
-                        }
-                    })
-                }                
-                // run logic only if there is an equipment to iterate
                 if (equipment_to_sum.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
@@ -1902,6 +1864,44 @@ function Station_Adder(station_array) {
                         }
                     })
                 }
+                // run logic only if there is an equipment to iterate
+                if (equipment_to_subtract.length > 0) {
+                    equipment_to_subtract.forEach((equip, index) => {
+                        // Insert all the first items into the temp hold container, 
+                        // Then on the next iteration start adding to it
+                        if(index == 0 && temp_hold.length == 0) {
+                            // Get the key of the first item
+                            const key = Object.keys(equip)[0];
+                            // Iterate over the equipment for insertion into the temphold, this serves as the maximum amount of item that will be used
+                            // for the station for this day, any time not here will not be accepted
+                            equip[key].forEach( (e) => {
+                                temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: -(e.mw), mvar: -(e.mvar), amp: -(e.amp), station: 'IBOM POWER (GAS)'})                                
+                            })
+                        } else {
+                            // Get the key for the next elements
+                            const key = Object.keys(equip)[0];
+                            let chosen_index;
+                            equip[key].forEach( (e) => {
+                                // Get the hour and minute for each of this equipment item, this would be used to filter for a matching hour
+                                // and minute inside the temphold array
+                                const temp_hold_item_to_add = temp_hold.filter( (th, ind) => {
+                                    const check = e.hour === th.hour && e.minute === th.minute;
+                                    if (check) {
+                                        chosen_index = ind;
+                                    }
+                                    return check;
+                                });
+                                // if there is a temp hold item to add, then add this items to the temp hold
+                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                    temp_hold[chosen_index].mw = temp_hold[chosen_index].mw - -(e.mw);
+                                    temp_hold[chosen_index].amp = temp_hold[chosen_index].amp - -(e.amp);
+                                    temp_hold[chosen_index].mvar = temp_hold[chosen_index].mvar - -(e.mvar);
+                                    temp_hold[chosen_index].kv = temp_hold[chosen_index].kv > e.kv ? temp_hold[chosen_index].kv : e.kv;
+                                }
+                            })
+                        }
+                    })
+                }                
                 if (temp_hold.length > 0) {
                     const obj = {};
                     obj[station_name] = temp_hold;
