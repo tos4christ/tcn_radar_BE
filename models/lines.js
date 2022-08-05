@@ -6,7 +6,7 @@ const lines = {
         'omotosho2', 'eket', 'phMain', 'afamViTs', 'alaoji', 'sapeleNippPs', 'omotoshoNippPs', 'odukpaniGs',
         'omotosho1', 'delta3', 'ekim', 'gereguPs', 'ikotEkpene', 'riversIppPs', 'gbarain', 'dadinKowaGs',
         'omokuPs1', 'ihovborNippPs', 'olorunsogo1', 'delta2', 'parasEnergyPs', 'olorunsogoPhase1Gs',
-        'jebbaTs', 'okpaiGs', 'deltaGs'
+        'jebbaTs', 'okpaiGs', 'deltaGs', 'kainjiTs', 'egbinPs'
     ) 
     group by station, line_name, id order by station, line_name, time`,
     get_my_line: 'SELECT * FROM lines_table where station=$1 and date=$2 and hour=$3 and minute between $4 and $5 order by line_name, time',
