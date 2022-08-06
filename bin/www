@@ -10,7 +10,7 @@ var http = require('http');
 const fs = require('fs');
 var https = require('https');
 var mqtt = require("mqtt");
-var webSocket = require("../utility/websockets")
+// var webSocket = require("../utility/websockets")
 var db = require("../database/db");
 var linesModel = require("../models/lines");
 // var os = require('node:os');
@@ -211,7 +211,8 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 // Instantiation of the websocket on the server
-webSocket(server);
+// Use socket.Io for this implementation
+// webSocket(server);
 
 /**
  * Normalize a port into a number, string, or false.
