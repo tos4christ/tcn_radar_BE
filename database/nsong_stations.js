@@ -189,11 +189,11 @@ module.exports = (data) => {
                 const mw_sum = filtered_station.reduce((acc, curr) => {
                     max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
                     if (curr.line_name === 'r1w' || curr.line_name === 'r2a') {
-                        const sum = acc + Math.abs(curr.mw);
+                        const sum = acc + curr.mw;
                         return sum;
                     }
                     if (curr.line_name === 'tr1' || curr.line_name === 'tr2' || curr.line_name === 'tr3' || curr.line_name === 'tr4') {
-                        const sum = acc - Math.abs(curr.mw);
+                        const sum = acc - curr.mw;
                         return sum;
                     }else {
                         return acc
@@ -201,11 +201,11 @@ module.exports = (data) => {
                 },0)
                 const amp_sum = filtered_station.reduce((acc, curr) => {
                     if (curr.line_name === 'r1w' || curr.line_name === 'r2a') {
-                        const sum = acc + Math.abs(curr.mw);
+                        const sum = acc + curr.mw;
                         return sum;
                     }
                     if (curr.line_name === 'tr1' || curr.line_name === 'tr2' || curr.line_name === 'tr3' || curr.line_name === 'tr4') {
-                        const sum = acc - Math.abs(curr.amp);
+                        const sum = acc - curr.amp;
                         return sum;
                     }else {
                         return acc
@@ -213,19 +213,19 @@ module.exports = (data) => {
                 },0)
                 const mvar_sum = filtered_station.reduce((acc, curr) => {
                     if (curr.line_name === 'r1w' || curr.line_name === 'r2a') {
-                        const sum = acc + Math.abs(curr.mw);
+                        const sum = acc + curr.mw;
                         return sum;
                     }
                     if (curr.line_name === 'tr1' || curr.line_name === 'tr2' || curr.line_name === 'tr3' || curr.line_name === 'tr4') {
-                        const sum = acc - Math.abs(curr.mvar);
+                        const sum = acc - curr.mvar;
                         return sum;
                     }else {
                         return acc
                     }
                 },0)
-                res_data['OLORUNSOGO NIPP'].mw = res_data['OLORUNSOGO NIPP'].mw + mw_sum <= 0 ? 0 : mw_sum;
-                res_data['OLORUNSOGO NIPP'].amp = res_data['OLORUNSOGO NIPP'].amp + amp_sum <= 0 ? 0 : amp_sum;
-                res_data['OLORUNSOGO NIPP'].mvar = res_data['OLORUNSOGO NIPP'].mvar + mvar_sum <= 0 ? 0 : mvar_sum;
+                res_data['OLORUNSOGO NIPP'].mw = res_data['OLORUNSOGO NIPP'].mw + mw_sum;
+                res_data['OLORUNSOGO NIPP'].amp = res_data['OLORUNSOGO NIPP'].amp + amp_sum;
+                res_data['OLORUNSOGO NIPP'].mvar = res_data['OLORUNSOGO NIPP'].mvar + mvar_sum;
                 res_data['OLORUNSOGO NIPP'].time = res_data['OLORUNSOGO NIPP'].time ? res_data['OLORUNSOGO NIPP'].time : time;
                 res_data['OLORUNSOGO NIPP'].seconds = res_data['OLORUNSOGO NIPP'].seconds ? res_data['OLORUNSOGO NIPP'].seconds : seconds;
                 res_data['OLORUNSOGO NIPP'].kv = res_data['OLORUNSOGO NIPP'].kv ? res_data['OLORUNSOGO NIPP'].kv : max_voltage;
