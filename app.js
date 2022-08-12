@@ -63,7 +63,6 @@ app.use((req, res, next) => {
   });
 
   app.use('/lines', linesRouter);
-  
   app.use('/home', jwtCheck);
 
 // Function to serve static react resources
