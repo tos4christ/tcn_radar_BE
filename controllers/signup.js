@@ -11,7 +11,7 @@ const signup = (req, res,next) => {
     });
     return;
   }
-  let {name, staff_id, station, email, password} = req.body;
+  let {name, role, email, password} = req.body;
   const hashedPassword = encoder.hash(password, 9);
   const creationDate = new Date().toLocaleDateString();
   password = hashedPassword;
@@ -21,7 +21,7 @@ const signup = (req, res,next) => {
       if(user.rowCount > 0) {
         return res.status(401).send({message: 'User Already exists'})
       } else {             
-        return db.query(model.create, [name, staff_id, station, email, password, creationDate]);
+        return db.query(model.create, [name, role, email, password, creationDate]);
       }
     })  
     .then((result) => {
