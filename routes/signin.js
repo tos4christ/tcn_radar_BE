@@ -5,6 +5,6 @@ var signin = require('../controllers/signin');
 /* GET users listing. */
 
 router.post('/', signin);
-router.get('/', signin);
+// router.get('/', signin);
 
 module.exports = router;

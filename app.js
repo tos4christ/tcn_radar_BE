@@ -85,15 +85,15 @@ app.use('/lines', linesRouter);
 // })
 
 
-// Handle 404 and forward to error handler
-app.use(function(req, res, next) {
-    next(createError(404));
-  });
-
 // Function to serve static react resources
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"))
 })
+
+// Handle 404 and forward to error handler
+app.use(function(req, res, next) {
+    next(createError(404));
+});
 
   
 // error handler
