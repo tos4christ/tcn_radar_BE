@@ -61,6 +61,11 @@ app.use((req, res, next) => {
     }
   });
 
+  // Function to serve static react resources
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"))
+})
+
 // Functional routes
 app.use('/reactor', reactorRouter);
 app.use('/current', currentRouter);
