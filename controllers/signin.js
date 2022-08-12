@@ -5,7 +5,6 @@ var db = require('../database/db');
 
 const signin = (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password, 'the email and password');
   if (!email && !password) {
     return res.status(400).json({
       status: 'error',
