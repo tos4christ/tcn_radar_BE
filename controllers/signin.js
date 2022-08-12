@@ -5,7 +5,6 @@ var db = require('../database/db');
 
 const signin = (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password, 'the email and password');
   if (!email && !password) {
     return res.status(400).json({
       status: 'error',
@@ -16,6 +15,7 @@ const signin = (req, res) => {
   db.query(model.get, [email])
   .then((result) => {
     const passwordMatch = encoder.decode(password, result.rows[0].password);
+    
     if (passwordMatch) {
       // inside the database operation, store the jwt
       const token = jwt.sign({
@@ -30,6 +30,7 @@ const signin = (req, res) => {
           userName: result.rows[0].name
         }
       };
+      console.log(responseBody, 'the password match');
       return res.status(200).send(responseBody);  
     } else {
       res.status(401).send({
