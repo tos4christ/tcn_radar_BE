@@ -3,7 +3,12 @@ var encoder = require('../utility/passwordEnc');
 var model = require('../models/signup');
 var db = require('../database/db');
 
-const signup = (req, res,next) => {
+const signup = {};
+
+signup.get = (req, res, next) => {
+
+}
+signup.post = (req, res,next) => {
   if (!req.body.email && !req.body.password) {
     res.status(400).json({
       status: 'error',
@@ -21,7 +26,7 @@ const signup = (req, res,next) => {
       if(user.rowCount > 0) {
         return res.status(401).send({message: 'User Already exists'})
       } else {             
-        return db.query(model.create, [name, role, email, password, creationDate]);
+        return db.query(model.create, [name, email, password, role, creationDate]);
       }
     })  
     .then((result) => {

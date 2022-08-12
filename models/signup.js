@@ -1,5 +1,5 @@
 const signup = {
-    create: 'INSERT INTO users(name, email, password, role) VALUES($1, $2, $3, $4) RETURNING *',
+    create: 'INSERT INTO users(name, email, password, role, created_at) VALUES($1, $2, $3, $4, $5) RETURNING *',
     get: 'SELECT * FROM users where email=$1'
 }
 
