@@ -24,27 +24,23 @@ signup.post = (req, res,next) => {
   db.query(model.get, [email])
     .then(user => {
       if(user.rowCount > 0) {
-        return res.status(401).send({message: 'User Already exists'})
+        return res.status(403).send({message: 'User Already exists'})
       } else {             
-        return db.query(model.create, [name, email, password, role, creationDate]);
+        db.query(model.create, [name, email, password, role, creationDate])
+        .then(() => {
+          // response body to send to frontend
+          const responseBody = {
+            status: 'Success',
+            data: {
+              message: 'Your account has been successfully created',
+            }
+          };
+          return res.status(201).send(responseBody);
+        })
+        .catch((err) => {
+          res.status(500).send(err.message);
+        });
       }
-    })  
-    .then((result) => {
-      const { id: userId } = result.rows[0];
-      // create a token to send back to the user
-      const token = jwt.sign({
-        sub: userId
-      }, process.env.TOKENKEY, { expiresIn: 1440 });
-      // response body to send to frontend
-      const responseBody = {
-        status: 'Success',
-        data: {
-          message: 'Your account has been successfully created',
-          token,
-          userId
-        }
-      };
-      return res.status(201).send(responseBody);
     })
     .catch((err) => {
       res.status(401).send(err.message);
