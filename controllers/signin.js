@@ -16,10 +16,12 @@ const signin = (req, res) => {
   db.query(model.get, [email])
   .then((result) => {
     const passwordMatch = encoder.decode(password, result.rows[0].password);
+    const name = result.rows[0].name
+    // console.log(passwordMatch, 'the password match');
     if (passwordMatch) {
       // inside the database operation, store the jwt
       const token = jwt.sign({
-        sub: userId
+        sub: name
       }, process.env.TOKENKEY, { expiresIn: 1440 });
       // the body to send to front end
       const responseBody = {
@@ -30,6 +32,7 @@ const signin = (req, res) => {
           userName: result.rows[0].name
         }
       };
+      console.log(responseBody, 'the password match');
       return res.status(200).send(responseBody);  
     } else {
       res.status(401).send({
