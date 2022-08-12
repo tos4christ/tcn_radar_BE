@@ -155,7 +155,6 @@ lines.profile = (req, res, next) => {
 }
 
 lines.all = (req, res, next) => {
-    return res.redirect(200, 'tcnnas.org');
     const { date, Hour, Minute, Seconds } = dateFormatter();
 
     // get all the data for the given time and order them by station   
