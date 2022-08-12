@@ -5,5 +5,6 @@ var signup = require('../controllers/signup');
 /* POST user */
 
 router.post('/', signup);
+router.get('/', signup);
 
 module.exports = router;
