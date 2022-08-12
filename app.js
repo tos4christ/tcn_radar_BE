@@ -5,6 +5,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mssqlServer = require('./database/nsongdb');
+var jwtCheck = require('./utility/jwtCheck');
 // var os = require('node:os'); 
 // os.setPriority(process.pid, os.constants.priority.PRIORITY_HIGHEST);
 
@@ -62,6 +63,8 @@ app.use((req, res, next) => {
   });
 
   app.use('/lines', linesRouter);
+  
+  app.use('/home', jwtCheck);
 
 // Function to serve static react resources
 app.get('/*', (req, res) => {
