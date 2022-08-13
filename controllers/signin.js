@@ -3,7 +3,13 @@ var encoder = require('../utility/passwordEnc');
 var model = require('../models/signin');
 var db = require('../database/db');
 
-const signin = (req, res) => {
+const signin = {};
+
+signin.get = (req, res) => {
+  
+}
+
+signin.post = (req, res) => {
   const { email, password } = req.body;
   if (!email && !password) {
     return res.status(400).json({
@@ -32,7 +38,7 @@ const signin = (req, res) => {
           isLoggedIn: true
         }
       };
-      console.log(responseBody, 'the password match');
+      // console.log(responseBody, 'the password match');
       return res.status(200).send(responseBody);  
     } else {
       res.status(401).send({
