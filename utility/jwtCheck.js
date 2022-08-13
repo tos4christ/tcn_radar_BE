@@ -1,6 +1,7 @@
 var jwt = require('jsonwebtoken');
 
 const jwtCheck = (req, res, next) => {
+  console.log(req.headers, 'the request token')
   if (!req.headers.authorization) {
     res.status(401).json({
       status: 'error',
@@ -10,15 +11,18 @@ const jwtCheck = (req, res, next) => {
   }
   if (req.headers.authorization) {
     const requestToken = req.headers.authorization.split(' ')[1] ? req.headers.authorization.split(' ')[1] : req.headers.authorization;
+    // console.log(requestToken, 'the request token')
     jwt.verify(requestToken, process.env.TOKENKEY, (err, tokens) => {
       if (err) {
-        res.status(401).json({
+        // next(err)
+        return res.status(401).json({
           status: 'error',
           error: err.message
         });
       }
       if (!tokens) {
-        res.status(410).json({
+        // next(err)
+        return res.status(410).json({
           status: 'error',
           error: 'You are not properly authorized'
         });
