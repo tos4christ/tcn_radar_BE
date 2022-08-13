@@ -28,7 +28,8 @@ const signin = (req, res) => {
         data: {
           message: 'Your are now signed in',
           token,
-          userName: result.rows[0].name
+          userName: result.rows[0].name,
+          isLoggedIn: true
         }
       };
       console.log(responseBody, 'the password match');
