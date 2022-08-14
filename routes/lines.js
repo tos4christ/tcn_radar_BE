@@ -4,15 +4,15 @@ var controller = require('../controllers/lines');
 var jwtCheck = require('../utility/jwtCheck');
 
 /* GET users listing. */
-router.post('/uptime', jwtCheck, controller.uptime);
+router.post('/uptime', controller.uptime);
 
-router.post('/downtime', jwtCheck, controller.downtime);
+router.post('/downtime', controller.downtime);
 
-router.post('/history', jwtCheck, controller.history);
+router.post('/history', controller.history);
 
-router.post('/average', jwtCheck, controller.average);
+router.post('/average', controller.average);
 
-router.post('/profile', jwtCheck, controller.profile);
+router.post('/profile', controller.profile);
 
 router.get('/all', controller.all);
 
