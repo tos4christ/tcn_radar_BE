@@ -62,13 +62,12 @@ app.use((req, res, next) => {
     }
   });
 
-  app.use('/lines', linesRouter);
-  app.use('/home', jwtCheck);
+
 
 // Function to serve static react resources
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"))
-})
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, "build", "index.html"))
+// })
 
 // Functional routes
 app.use('/reactor', reactorRouter);
@@ -82,6 +81,8 @@ app.use('/signin', signinRouter);
 app.use('/signup', signupRouter);
 app.use('/mx', mxRouter);
 app.use('/sll', sllRouter);
+app.use('/lines', linesRouter);
+app.use('/home', jwtCheck);
 
 
 // app.get('/.well-known/pki-validation/F7E918FEFBA46C9E95A10FC7F19D183C.txt', (req, res) => {
