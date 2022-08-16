@@ -81,7 +81,8 @@ client_1.on('connect', () => {
 client_2.on('connect', () => {
   client_2.subscribe(
     [
-      'asabats/tv', 'delta4gs/tv', 'OkpaiippGs/tv', 'jebbaTs/tv', 'kainjits/tv', 'egbings/pv'
+      'asabats/tv', 'delta4gs/tv', 'OkpaiippGs/tv', 'jebbaTs/tv',
+       'kainjits/tv', 'egbings/pv', 'riversIppPs/pr',
     ],
     err => err ? console.log('this is the error', err) : null
   )
