@@ -61,8 +61,7 @@ const client_2 = mqtt.connect(host_2, options);
 client_1.on('connect', () => {
   client_1.subscribe(
       [
-           'gereguGs/pv', 'odukpanits/tv', 
-          'omotoso2ts/tv', 'sapelets/pv',
+           'gereguGs/pv', 'odukpanits/tv', 'omotoso2ts/tv',
           'omotoso11ts/pv', 'omotoso12ts/pv', 'delta3gs/pv',
           'phmains/tv', 'lokojats/tv', 'ihovborts/tv',
           'ikotekpene/tv', 'gwagwaladats/tv', 'gereguGs/tv',
@@ -70,7 +69,7 @@ client_1.on('connect', () => {
           'riversIppPs/pv', 'omokugs/pv', 'markudits/tv',
           'dadinkowags/tv', 'ugwuajits/tv', 'delta2gs/pv',
           'gbaraints/pv', 'olorunsogo1ts/pv', 'parasenergyPs/pv',
-          'asabats/tv', 'olorunsogo2ts/tv'
+          'asabats/tv', 'olorunsogo2ts/tv', 'sapelets/pv'
       ],
    (err) => {
       if(err) {

@@ -2,11 +2,13 @@ const station_keys1 = [
     'omotosho2', 'eket', 'phMain', 'afamViTs', 'alaoji', 'sapeleNippPs', 'omotoshoNippPs', 'okpaiGs',
     'odukpaniGs', 'omotosho1', 'ekim', 'gereguPs', 'ikotEkpene', 'riversIppPs', 'gbarain', 'jebbaTs',
     'omokuPs1', 'ihovborNippPs', 'olorunsogo1', 'parasEnergyPs', 'olorunsogoPhase1Gs', 'dadinKowaGs',
-    'kainjiTs', 'egbinPs'
+    'kainjiTs', 'egbinPs', 'afamIv_vPs', 'shiroroPs'
 ]; 
 
 module.exports = (data) => {
     let res_data = {
+        'AFAM IV & V (GAS)' : {mw: null, kv: null, station: 'AFAM IV & V (GAS)', amp: null, time: null, seconds: null, mvar:null},
+        'SHIRORO (HYDRO)' : {mw: null, kv: null, station: 'SHIRORO (HYDRO)', amp: null, time: null, seconds: null, mvar:null},
         'EGBIN (STEAM)' : {mw: null, kv: null, station: 'EGBIN (STEAM)', amp: null, time: null, seconds: null, mvar:null},
         'KAINJI (HYDRO)' : {mw: null, kv: null, station: 'KAINJI (HYDRO)', amp: null, time: null, seconds: null, mvar:null},
         'OKPAI (GAS/STEAM)' : {mw: null, kv: null, station: 'OKPAI (GAS/STEAM)', amp: null, time: null, seconds: null, mvar:null},
@@ -40,6 +42,50 @@ module.exports = (data) => {
         const filtered_station = data.filter( dat => dat.station === station);
         // console.log(data.filter( dat => dat.station === 'olorunsogo1'), 'the olorunsogo filtered station name in the nsong_station')
         if (filtered_station.length > 0) {
+            if (filtered_station[0].station === 'shiroroPs') {
+                let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
+                const mw_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.mw);
+                    max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
+                    return sum;
+                },0)
+                const amp_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.amp);
+                    return sum;
+                },0)
+                const mvar_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.mvar);
+                    return sum;
+                },0)
+                res_data['SHIRORO (HYDRO)'].mw = mw_sum;
+                res_data['SHIRORO (HYDRO)'].kv = max_voltage;
+                res_data['SHIRORO (HYDRO)'].amp = amp_sum;
+                res_data['SHIRORO (HYDRO)'].mvar = mvar_sum;
+                res_data['SHIRORO (HYDRO)'].time = time;
+                res_data['SHIRORO (HYDRO)'].seconds = seconds;
+            }
+            if (filtered_station[0].station === 'afamIv_vPs') {
+                let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
+                const mw_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.mw);
+                    max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
+                    return sum;
+                },0)
+                const amp_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.amp);
+                    return sum;
+                },0)
+                const mvar_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.mvar);
+                    return sum;
+                },0)
+                res_data['AFAM IV & V (GAS)'].mw = mw_sum;
+                res_data['AFAM IV & V (GAS)'].kv = max_voltage;
+                res_data['AFAM IV & V (GAS)'].amp = amp_sum;
+                res_data['AFAM IV & V (GAS)'].mvar = mvar_sum;
+                res_data['AFAM IV & V (GAS)'].time = time;
+                res_data['AFAM IV & V (GAS)'].seconds = seconds;
+            }
             if (filtered_station[0].station === 'kainjiTs') {
                 let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
                 const mw_sum = filtered_station.reduce((acc, curr) => {
