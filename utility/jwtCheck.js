@@ -3,7 +3,7 @@ var jwt = require('jsonwebtoken');
 const jwtCheck = (req, res, next) => {
   console.log(req.headers, 'the request token')
   if (!req.headers.authorization) {
-    return res.redirect('http://tcnnas.org');
+    // return res.redirect('http://tcnnas.org');
     return res.status(401).json({
       status: 'error',
       error: 'Unauthorized access, you need to be logged in as a registered user'
