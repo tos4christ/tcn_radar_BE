@@ -91,6 +91,7 @@ app.use('/sll', sllRouter);
 
 // Function to serve static react resources
 app.get('/*', (req, res) => {
+  console.log(__dirname, 'the name of this directory')
   res.sendFile(path.join(__dirname, "build", "index.html"))
 })
 
