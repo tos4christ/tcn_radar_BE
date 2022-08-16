@@ -82,7 +82,8 @@ client_2.on('connect', () => {
   client_2.subscribe(
     [
       'asabats/tv', 'delta4gs/tv', 'OkpaiippGs/tv', 'jebbaTs/tv',
-       'kainjits/tv', 'egbings/pv', 'riversIppPs/pr',
+       'kainjits/tv', 'egbings/pv', 'riversIppPs/pr', 'afam4gs/pv',
+       'shirorogs/pv'
     ],
     err => err ? console.log('this is the error', err) : null
   )
@@ -155,7 +156,7 @@ client_1.on('message', (topic, message) => {
 });
 client_2.on('message', (topic, message) => {
   let data;
-  if( ["riversIppPs/pr"].includes(topic) ) {
+  if( ['shirorogs/pv', 'afam4gs/pv'].includes(topic) ) {
     console.log(message.toString(), topic,  'the message')
   }
   // try block needed here.
