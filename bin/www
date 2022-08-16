@@ -155,9 +155,9 @@ client_1.on('message', (topic, message) => {
 });
 client_2.on('message', (topic, message) => {
   let data;
-  // if( ["egbings/pv"].includes(topic) ) {
-  //   console.log(message.toString(), topic,  'the message')
-  // }
+  if( ["riversIppPs/pr"].includes(topic) ) {
+    console.log(message.toString(), topic,  'the message')
+  }
   // try block needed here.
   try {
       data = JSON.parse(message.toString());     
