@@ -12,9 +12,9 @@ const jwtCheck = (req, res, next) => {
   if (req.headers.authorization) {
     const requestToken = req.headers.authorization.split(' ')[1] ? req.headers.authorization.split(' ')[1] : req.headers.authorization;
     // console.log(requestToken, 'the request token')
-    jwt.verify(requestToken, process.env.TOKENKEY, (err, tokens) => {
+    jwt.verify(JSON.parse(requestToken), process.env.TOKENKEY, (err, tokens) => {
       if (err) {
-        // next(err)
+        console.log(err)
         return res.status(401).json({
           status: 'error',
           error: err.message
