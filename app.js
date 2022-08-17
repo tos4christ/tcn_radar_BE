@@ -82,7 +82,7 @@ app.use('/signup', signupRouter);
 app.use('/mx', mxRouter);
 app.use('/sll', sllRouter);
 app.use('/lines', linesRouter);
-app.use('/home', jwtCheck);
+// app.use('/home', jwtCheck);
 
 
 // app.get('/.well-known/pki-validation/F7E918FEFBA46C9E95A10FC7F19D183C.txt', (req, res) => {

@@ -2,11 +2,12 @@ var jwt = require('jsonwebtoken');
 var encoder = require('../utility/passwordEnc');
 var model = require('../models/signin');
 var db = require('../database/db');
+const { NText } = require('mssql');
 
 const signin = {};
 
 signin.get = (req, res) => {
-  
+  res.redirect('https://tcnnas.org/')
 }
 
 signin.post = (req, res) => {
@@ -39,7 +40,8 @@ signin.post = (req, res) => {
         }
       };
       // console.log(responseBody, 'the password match');
-      return res.status(200).send(responseBody);  
+       res.status(200).send(responseBody); 
+       next();
     } else {
       res.status(401).send({
         status: 'error',
