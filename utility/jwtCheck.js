@@ -15,7 +15,7 @@ const jwtCheck = (req, res, next) => {
     // console.log(requestToken, 'the request token 2')
     jwt.verify(requestToken, process.env.TOKENKEY, (err, tokens) => {
       if (err) {
-        console.log(err)
+        // console.log(err)
         return res.status(401).json({
           status: 'error',
           error: err.message
