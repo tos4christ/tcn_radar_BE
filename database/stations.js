@@ -216,7 +216,7 @@ module.exports = (data) => {
                 const mw_sum = filtered_station.reduce((acc, curr) => {
                     max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv; 
                     if (curr.line_name === 'tr1' || curr.line_name === 'tr2' || curr.line_name === 'tr3' || curr.line_name === 'tr4') {
-                        const sum = acc + Math.abs(curr.mw);
+                        const sum = acc + curr.mw;
                         return sum;
                     }else {
                         return acc
