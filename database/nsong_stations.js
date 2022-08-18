@@ -2,7 +2,7 @@ const station_keys1 = [
     'omotosho2', 'eket', 'phMain', 'afamViTs', 'alaoji', 'sapeleNippPs', 'omotoshoNippPs', 'okpaiGs',
     'odukpaniGs', 'omotosho1', 'ekim', 'gereguPs', 'ikotEkpene', 'riversIppPs', 'gbarain', 'jebbaTs',
     'omokuPs1', 'ihovborNippPs', 'olorunsogo1', 'parasEnergyPs', 'olorunsogoPhase1Gs', 'dadinKowaGs',
-    'kainjiTs', 'egbinPs', 'afamIv_vPs', 'shiroroPs'
+    'kainjiTs', 'egbinPs', 'afamIv_vPs', 'shiroroPs', 'delta2', 'delta3', 'deltaGs'
 ]; 
 
 module.exports = (data) => {
@@ -13,7 +13,7 @@ module.exports = (data) => {
         'KAINJI (HYDRO)' : {mw: null, kv: null, station: 'KAINJI (HYDRO)', amp: null, time: null, seconds: null, mvar:null},
         'OKPAI (GAS/STEAM)' : {mw: null, kv: null, station: 'OKPAI (GAS/STEAM)', amp: null, time: null, seconds: null, mvar:null},
         'JEBBA (HYDRO)' : {mw: null, kv: null, station: 'JEBBA (HYDRO)', amp: null, time: null, seconds: null, mvar:null},
-        // 'DELTA (GAS)' : {mw: null, kv: null, station: 'DELTA (GAS)', amp: null, time: null, seconds: null, mvar:null},
+        'DELTA (GAS)' : {mw: null, kv: null, station: 'DELTA (GAS)', amp: null, time: null, seconds: null, mvar:null},
         'AFAM VI (GAS/STEAM)' : {mw: null, kv: null, station: 'AFAM VI (GAS/STEAM)', amp: null, time: null, seconds: null, mvar:null},
         'ALAOJI NIPP (GAS)' : {mw: null, kv: null, station: 'ALAOJI NIPP (GAS)', amp: null, time: null, seconds: null, mvar:null},
         'SAPELE NIPP (GAS)' : {mw: null, kv: null, station: 'SAPELE NIPP (GAS)', amp: null, time: null, seconds: null, mvar:null},
