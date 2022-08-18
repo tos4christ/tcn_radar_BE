@@ -62,12 +62,12 @@ client_1.on('connect', () => {
   client_1.subscribe(
       [
            'gereguGs/pv', 'odukpanits/tv', 'omotoso2ts/tv',
-          'omotoso11ts/pv', 'omotoso12ts/pv', 'delta3gs/pv',
+          'omotoso11ts/pv', 'omotoso12ts/pv',
           'phmains/tv', 'lokojats/tv', 'ihovborts/tv',
           'ikotekpene/tv', 'gwagwaladats/tv', 'gereguGs/tv',
           'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 
           'riversIppPs/pv', 'omokugs/pv', 'markudits/tv',
-          'dadinkowags/tv', 'ugwuajits/tv', 'delta2gs/pv',
+          'dadinkowags/tv', 'ugwuajits/tv', 
           'gbaraints/pv', 'olorunsogo1ts/pv', 'parasenergyPs/pv',
           'asabats/tv', 'olorunsogo2ts/tv', 'sapelets/pv'
       ],
@@ -82,7 +82,7 @@ client_2.on('connect', () => {
     [
       'asabats/tv', 'delta4gs/tv', 'OkpaiippGs/tv', 'jebbaTs/tv',
        'kainjits/tv', 'egbings/pv', 'riversIppPs/pr', 'afam4gs/pv',
-       'shirorogs/pv', 'afam6ts/tv'
+       'shirorogs/pv', 'afam6ts/tv', 'delta2gs/pv', 'delta3gs/pv',
     ],
     err => err ? console.log('this is the error', err) : null
   )
