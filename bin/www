@@ -76,7 +76,7 @@ client_1.on('connect', () => {
           console.log('this is the error', err);
       }
   })
-});
+}); 
 client_2.on('connect', () => {
   client_2.subscribe(
     [
@@ -155,9 +155,9 @@ client_1.on('message', (topic, message) => {
 });
 client_2.on('message', (topic, message) => {
   let data;
-  if( ['shirorogs/pv'].includes(topic) ) {
-    console.log(message.toString(), topic,  'the message')
-  }
+  // if( ['shirorogs/pv'].includes(topic) ) {
+  //   console.log(message.toString(), topic,  'the message')
+  // }
   // try block needed here.
   try {
       data = JSON.parse(message.toString());     

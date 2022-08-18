@@ -1,5 +1,4 @@
 module.exports = ( data ) => {
-
     const station_array = [
         {
             afamIv_vPs: [
