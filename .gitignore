@@ -23,9 +23,7 @@ ssl
 ssl/
 process.json
 /process.json
-./build
 build
-build/
 
 
 
