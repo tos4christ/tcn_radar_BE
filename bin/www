@@ -63,13 +63,13 @@ client_1.on('connect', () => {
       [
            'gereguGs/pv', 'odukpanits/tv', 'omotoso2ts/tv',
           'omotoso11ts/pv', 'omotoso12ts/pv',
-          'phmains/tv', 'lokojats/tv', 'ihovborts/tv',
+           'lokojats/tv', 'ihovborts/tv',
           'ikotekpene/tv', 'gwagwaladats/tv', 'gereguGs/tv',
           'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 
           'riversIppPs/pv', 'markudits/tv',
           'dadinkowags/tv', 'ugwuajits/tv', 'omokugs/pv',
           'gbaraints/pv', 'olorunsogo1ts/pv', 'parasenergyPs/pv',
-           'olorunsogo2ts/tv', 'sapelets/pv'
+           'olorunsogo2ts/tv',
       ],
    (err) => {
       if(err) {
@@ -91,9 +91,9 @@ client_2.on('connect', () => {
 
 
 client_1.on('message', (topic, message) => {
-  // if(topic === "ihovborts/tv" || topic === "OkpaiippGs/tv") {
-  //   console.log(message.toString(), 'the topic')
-  // }
+  if(topic === "omokugs/pv") {
+    console.log(message.toString(), 'the topic')
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
   // io.on('connection', (socket) => {
@@ -156,7 +156,7 @@ client_1.on('message', (topic, message) => {
 });
 client_2.on('message', (topic, message) => {
   let data;
-  if( ['omokugs/pv', 'phmains/tv', 'sapelets/pv'].includes(topic) ) {
+  if( ['omokugs/pv'].includes(topic) ) {
     console.log(message.toString(), topic,  'the message')
   }
   // try block needed here.
