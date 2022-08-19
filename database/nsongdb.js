@@ -130,7 +130,7 @@ mssql.connect(config, err => {
     // nsongdb();
 
     // get the amount of time needed to get to 10seconds of the next hour
-    const extraMinute = (60 - Number(Minute))*60*1000
+    const extraMinute = (61 - Number(Minute))*60*1000
     const extraSeconds = (90 - Number(Seconds))*1000;
     const totalTimeOut = extraMinute + extraSeconds;
     console.log(totalTimeOut, 'the total timeout');
