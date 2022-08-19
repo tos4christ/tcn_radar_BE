@@ -83,6 +83,7 @@ client_2.on('connect', () => {
       'asabats/tv', 'delta4gs/tv', 'OkpaiippGs/tv', 'jebbaTs/tv',
        'kainjits/tv', 'egbings/pv', 'riversIppPs/pr', 'afam4gs/pv',
        'shirorogs/pv', 'afam6ts/tv', 'delta2gs/pv', 'delta3gs/pv',
+       'omokugs/pv'
     ],
     err => err ? console.log('this is the error', err) : null
   )
