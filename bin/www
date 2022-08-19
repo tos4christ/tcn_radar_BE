@@ -67,7 +67,7 @@ client_1.on('connect', () => {
           'ikotekpene/tv', 'gwagwaladats/tv', 'gereguGs/tv',
           'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 
           'riversIppPs/pv', 'markudits/tv',
-          'dadinkowags/tv', 'ugwuajits/tv', 
+          'dadinkowags/tv', 'ugwuajits/tv', 'omokugs/pv',
           'gbaraints/pv', 'olorunsogo1ts/pv', 'parasenergyPs/pv',
            'olorunsogo2ts/tv', 'sapelets/pv'
       ],
@@ -156,9 +156,9 @@ client_1.on('message', (topic, message) => {
 });
 client_2.on('message', (topic, message) => {
   let data;
-  // if( ['omokugs/pv'].includes(topic) ) {
-  //   console.log(message.toString(), topic,  'the message')
-  // }
+  if( ['omokugs/pv', 'phmains/tv', 'sapelets/pv'].includes(topic) ) {
+    console.log(message.toString(), topic,  'the message')
+  }
   // try block needed here.
   try {
       data = JSON.parse(message.toString());     
