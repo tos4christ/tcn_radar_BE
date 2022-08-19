@@ -106,7 +106,7 @@ mssql.connect(config, err => {
                     table.columns.add('mvar', mssql.Float);
                     // Add corresponding row values to the column in similar order                    
                     if(stations[station]) {
-                        table.rows.add(stations[station], station, time, date, Math.abs(amp), kv, Hour, 00, 0, Math.abs(mw), Math.abs(mvar));
+                        table.rows.add(stations[station], station, time, date, amp, kv, Hour, 00, 0, mw, mvar);
                         request.bulk(table, (err, record, rows) => {
                             if(err) {
                                 console.error(err)
@@ -130,7 +130,7 @@ mssql.connect(config, err => {
     // nsongdb();
 
     // get the amount of time needed to get to 10seconds of the next hour
-    const extraMinute = (63 - Number(Minute))*60*1000
+    const extraMinute = (61 - Number(Minute))*60*1000
     const extraSeconds = (90 - Number(Seconds))*1000;
     const totalTimeOut = extraMinute + extraSeconds;
     console.log(totalTimeOut, 'the total timeout');
