@@ -156,7 +156,7 @@ client_1.on('message', (topic, message) => {
 });
 client_2.on('message', (topic, message) => {
   let data;
-  // if( ['omokugs/pv'].includes(topic) ) {
+  // if( ['omokugs/pv', 'ihovborts/tv'].includes(topic) ) {
   //   console.log(message.toString(), topic,  'the message')
   // }
   // try block needed here.
