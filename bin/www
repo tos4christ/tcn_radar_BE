@@ -83,7 +83,7 @@ client_2.on('connect', () => {
       'asabats/tv', 'delta4gs/tv', 'OkpaiippGs/tv', 'jebbaTs/tv',
        'kainjits/tv', 'egbings/pv', 'riversIppPs/pr', 'afam4gs/pv',
        'shirorogs/pv', 'afam6ts/tv', 'delta2gs/pv', 'delta3gs/pv',
-       'omokugs/pv', 'phmains/tv', 'sapelets/pv',
+       'omokugs/pv', 'phmains/tv', 'sapelets/pv', 'ihovborts/tv',
     ],
     err => err ? console.log('this is the error', err) : null
   )
@@ -156,7 +156,7 @@ client_1.on('message', (topic, message) => {
 });
 client_2.on('message', (topic, message) => {
   let data;
-  if( ['omokugs/pv'].includes(topic) ) {
+  if( ['omokugs/pv', 'ihovborts/tv'].includes(topic) ) {
     console.log(message.toString(), topic,  'the message')
   }
   // try block needed here.
