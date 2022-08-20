@@ -158,7 +158,7 @@ lines.all = (req, res, next) => {
     const { date, Hour, Minute, Seconds } = dateFormatter();
 
     // get all the data for the given time and order them by station   
-    db.query(model.get_all_2, [ date, Number(Hour), Number(Minute), Number(Seconds) -1, Number(Seconds) + 1 ])
+    db.query(model.get_all_2, [ date, Number(Hour), Number(Minute), Number(Seconds) -2, Number(Seconds) + 2 ])
         .then(respo => {
             const data = respo.rows;
             // console.log(data, 'the data')

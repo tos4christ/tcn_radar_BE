@@ -63,7 +63,7 @@ client_1.on('connect', () => {
       [
            'gereguGs/pv', 'odukpanits/tv', 'omotoso2ts/tv',
           'omotoso11ts/pv', 'omotoso12ts/pv',
-           'lokojats/tv', 'ihovborts/tv',
+           'lokojats/tv',
           'ikotekpene/tv', 'gwagwaladats/tv', 'gereguGs/tv',
           'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 
           'riversIppPs/pv', 'markudits/tv',
@@ -91,9 +91,9 @@ client_2.on('connect', () => {
 
 
 client_1.on('message', (topic, message) => {
-  if(topic === "omokugs/pv") {
-    console.log(message.toString(), 'the topic')
-  }
+  // if(topic === "omokugs/pv") {
+  //   console.log(message.toString(), 'the topic')
+  // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
   // io.on('connection', (socket) => {
@@ -156,9 +156,9 @@ client_1.on('message', (topic, message) => {
 });
 client_2.on('message', (topic, message) => {
   let data;
-  if( ['omokugs/pv', 'ihovborts/tv'].includes(topic) ) {
-    console.log(message.toString(), topic,  'the message')
-  }
+  // if( ['omokugs/pv', 'ihovborts/tv'].includes(topic) ) {
+  //   console.log(message.toString(), topic,  'the message')
+  // }
   // try block needed here.
   try {
       data = JSON.parse(message.toString());     
