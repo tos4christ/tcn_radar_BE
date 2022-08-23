@@ -41,12 +41,12 @@ var server = https.createServer(httpsOptions, app);
 // var server = http.createServer(app);
 
 const io = new Server(server);
-io.on("connection", socket => {
-  console.log(socket.data, 'the socket data');
-  socket.on("connected", data => {
-    console.log(data, "the data from client");
-  })
-})
+// io.on("connection", socket => {
+//   console.log(socket.data, 'the socket data');
+//   socket.on("connected", data => {
+//     console.log(data, "the data from client");
+//   })
+// })
 
 
 // Testing the MQTT service
@@ -94,19 +94,9 @@ client_2.on('connect', () => {
 
 
 client_1.on('message', (topic, message) => {
-  // if(topic === "omokugs/pv") {
-  //   console.log(message.toString(), 'the topic')
-  // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  io.on('connection', (socket) => {
-    // send the message to the client
-    sockets.emit('client_message_1', { message: message.toString() });
-    // socket.on('responderSignin', (data) => {
-    //   socket.username = data.nameOfUnit;
-      
-    // });
-  });
+  io.sockets.emit('client_message_1', { message: message.toString() }); 
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
   try {
@@ -155,20 +145,9 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  // if(topic === "omokugs/pv") {
-  //   console.log(message.toString(), 'the topic')
-  // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  io.on('connection', (socket) => {
-    // send the message to the client
-    sockets.emit('client_message_2', { message: message.toString() });
-    // socket.on('responderSignin', (data) => {
-    //   socket.username = data.nameOfUnit;
-      
-    // });
-  });
-  // console.log(topic, 'the topic')
+  io.sockets.emit('client_message_2', { message: message.toString() });
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
   try {
