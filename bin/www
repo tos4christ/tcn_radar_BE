@@ -99,19 +99,16 @@ client_1.on('message', (topic, message) => {
   // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  // io.on('connection', (socket) => {
-  //   // send the message to the client
-  //   io.sockets.emit('message', { message: message.toString() });
-  //   // socket.on('responderSignin', (data) => {
-  //   //   socket.username = data.nameOfUnit;
+  io.on('connection', (socket) => {
+    // send the message to the client
+    sockets.emit('client_message_1', { message: message.toString() });
+    // socket.on('responderSignin', (data) => {
+    //   socket.username = data.nameOfUnit;
       
-  //   // });
-  // });
-  // console.log(topic, 'the topic')
+    // });
+  });
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
-  // console.log([message.toString(), topic, 'the message'])
-  // try block needed here.
   try {
       data = JSON.parse(message.toString());     
       const station = data.id;
@@ -158,11 +155,22 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  let data;
-  // if( ['omokugs/pv', 'ihovborts/tv'].includes(topic) ) {
-  //   console.log(message.toString(), topic,  'the message')
+  // if(topic === "omokugs/pv") {
+  //   console.log(message.toString(), 'the topic')
   // }
-  // try block needed here.
+  // broadcast the message to the client that are connected
+  // Function to run when a client connects to the server whereever it is hosted
+  io.on('connection', (socket) => {
+    // send the message to the client
+    sockets.emit('client_message_2', { message: message.toString() });
+    // socket.on('responderSignin', (data) => {
+    //   socket.username = data.nameOfUnit;
+      
+    // });
+  });
+  // console.log(topic, 'the topic')
+  // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
+  let data;
   try {
       data = JSON.parse(message.toString());     
       const station = data.id;
