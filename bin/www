@@ -13,28 +13,22 @@ var mqtt = require("mqtt");
 // var webSocket = require("../utility/websockets")
 var db = require("../database/db");
 var linesModel = require("../models/lines");
+// var { Server } = require("socket.io");
 // var os = require('node:os');
 // os.setPriority(process.pid, os.constants.priority.PRIORITY_HIGHEST);
 
 /**
  * Get port from environment and store in Express.
  */
-
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
  * Create HTTPS server.
  */
-
 const cert = fs.readFileSync('./ssl/tcnnas.org.crt');
 const key = fs.readFileSync('./ssl/tcnnas.org.key');
 const ca = fs.readFileSync('./ssl/tcnnas.org.ca-bundle');
-
-// const cert = fs.readFileSync('./ssl/cert.pem');
-// const key = fs.readFileSync('./ssl/key.pem');
-
-// console.log(cert, 'the cert')
 
 const httpsOptions = {
   cert: cert,
@@ -45,6 +39,11 @@ const httpsOptions = {
 var server = https.createServer(httpsOptions, app);
 
 // var server = http.createServer(app);
+
+// const io = new Server(server);
+// io.on("connection", socket => {
+//   console.log(socket.data, 'the socket data')
+// })
 
 // Testing the MQTT service
 const host_1 = 'mqtt://172.16.200.3';
