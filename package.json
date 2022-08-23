@@ -20,7 +20,7 @@
     "openssl": "^2.0.0",
     "pg": "^8.7.1",
     "query-string": "^7.1.1",
-    "socket.io": "^4.4.1",
+    "socket.io": "^4.5.1",
     "websocket": "^1.0.34",
     "ws": "^8.5.0",
     "xlsx": "^0.18.5"
