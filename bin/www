@@ -10,31 +10,25 @@ var http = require('http');
 const fs = require('fs');
 var https = require('https');
 var mqtt = require("mqtt");
-var webSocket = require("../utility/websockets")
+// var webSocket = require("../utility/websockets")
 var db = require("../database/db");
 var linesModel = require("../models/lines");
+var { Server } = require("socket.io");
 // var os = require('node:os');
 // os.setPriority(process.pid, os.constants.priority.PRIORITY_HIGHEST);
 
 /**
  * Get port from environment and store in Express.
  */
-
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
  * Create HTTPS server.
  */
-
 const cert = fs.readFileSync('./ssl/tcnnas.org.crt');
 const key = fs.readFileSync('./ssl/tcnnas.org.key');
 const ca = fs.readFileSync('./ssl/tcnnas.org.ca-bundle');
-
-// const cert = fs.readFileSync('./ssl/cert.pem');
-// const key = fs.readFileSync('./ssl/key.pem');
-
-// console.log(cert, 'the cert')
 
 const httpsOptions = {
   cert: cert,
@@ -46,8 +40,17 @@ var server = https.createServer(httpsOptions, app);
 
 // var server = http.createServer(app);
 
+const io = new Server(server);
+// io.on("connection", socket => {
+//   console.log(socket.data, 'the socket data');
+//   socket.on("connected", data => {
+//     console.log(data, "the data from client");
+//   })
+// })
+
+
 // Testing the MQTT service
-const host = 'mqtt://127.0.0.1';
+const host_1 = 'mqtt://172.16.200.3';
 const host_2 = 'http://ec2-3-88-196-213.compute-1.amazonaws.com';
 const options = {
     clientId: '',
@@ -55,23 +58,48 @@ const options = {
     password: process.env.MQTT_PASS,
     clean: true
 }
-const client = mqtt.connect(host, options);
+const client_1 = mqtt.connect(host_1, options);
 const client_2 = mqtt.connect(host_2, options);
 
+client_1.on('connect', () => {
+  client_1.subscribe(
+      [
+           'gereguGs/pv', 'odukpanits/tv', 'omotoso2ts/tv',
+          'omotoso11ts/pv', 'omotoso12ts/pv',
+           'lokojats/tv',
+          'ikotekpene/tv', 'gwagwaladats/tv', 'gereguGs/tv',
+          'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 
+          'riversIppPs/pv', 'markudits/tv',
+          'dadinkowags/tv', 'ugwuajits/tv',
+          'gbaraints/pv', 'olorunsogo1ts/pv', 'parasenergyPs/pv',
+           'olorunsogo2ts/tv',
+      ],
+   (err) => {
+      if(err) {
+          console.log('this is the error', err);
+      }
+  })
+}); 
 client_2.on('connect', () => {
   client_2.subscribe(
     [
-      'asabats/tv', 'delta4gs/tv', 'OkpaiippGs/tv', 'jebbaTs/tv'
+      'asabats/tv', 'delta4gs/tv', 'OkpaiippGs/tv', 'jebbaTs/tv',
+       'kainjits/tv', 'egbings/pv', 'riversIppPs/pr', 'afam4gs/pv',
+       'shirorogs/pv', 'afam6ts/tv', 'delta2gs/pv', 'delta3gs/pv',
+       'omokugs/pv', 'phmains/tv', 'sapelets/pv', 'ihovborts/tv',
     ],
     err => err ? console.log('this is the error', err) : null
   )
 });
-client_2.on('message', (topic, message) => {
+
+
+
+client_1.on('message', (topic, message) => {
+  // broadcast the message to the client that are connected
+  // Function to run when a client connects to the server whereever it is hosted
+   io.sockets.emit('client_message_1', { message: message.toString() }); 
+  // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
-  // if(topic === "jebbaTs/tv") {
-  //   console.log(message.toString(), topic,  'the message')
-  // }
-  // try block needed here.
   try {
       data = JSON.parse(message.toString());     
       const station = data.id;
@@ -108,7 +136,7 @@ client_2.on('message', (topic, message) => {
           }
           db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
               .then( response => {
-                  // console.log(response.rows)
+                  // console.log('its okay 1')
               })
               .catch(err => console.log(err))
       })   
@@ -117,46 +145,12 @@ client_2.on('message', (topic, message) => {
       console.error(err)
   }
 });
-
-client.on('connect', () => {
-    client.subscribe(
-        [
-            'afam6ts/tv', 'gereguGs/pv', 'odukpanits/tv', 
-            'omotoso2ts/tv', 'riversIppPs/pr', 'sapelets/pv',
-            'omotoso11ts/pv', 'omotoso12ts/pv', 'delta3gs/pv',
-            'phmains/tv', 'lokojats/tv', 'ihovborts/tv',
-            'ikotekpene/tv', 'gwagwaladats/tv', 'gereguGs/tv',
-            'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 
-            'riversIppPs/pv', 'omokugs/pv', 'markudits/tv',
-            'dadinkowags/tv', 'ugwuajits/tv', 'delta2gs/pv',
-            'gbaraints/pv', 'olorunsogo1ts/pv', 'parasenergyPs/pv',
-            'asabats/tv', 'olorunsogo2ts/tv'
-        ],
-     (err) => {
-        if(err) {
-            console.log('this is the error', err);
-        }
-    })
-});
-client.on('message', (topic, message) => {
-  // if(topic === "delta4gs/tv" || topic === "OkpaiippGs/tv") {
-  //   console.log(message.toString(), 'the topic')
-  // }
+client_2.on('message', (topic, message) => {
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  // io.on('connection', (socket) => {
-  //   // send the message to the client
-  //   io.sockets.emit('message', { message: message.toString() });
-  //   // socket.on('responderSignin', (data) => {
-  //   //   socket.username = data.nameOfUnit;
-      
-  //   // });
-  // });
-  // console.log(topic, 'the topic')
+   io.sockets.emit('client_message_2', { message: message.toString() });
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
-  // console.log([message.toString(), topic, 'the message'])
-  // try block needed here.
   try {
       data = JSON.parse(message.toString());     
       const station = data.id;
@@ -193,7 +187,7 @@ client.on('message', (topic, message) => {
           }
           db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
               .then( response => {
-                  // console.log(response.rows)
+                // console.log('its okay 2')
               })
               .catch(err => console.log(err))
       })   
@@ -206,12 +200,13 @@ client.on('message', (topic, message) => {
 /**
  * Listen on provided port, on all network interfaces.
  */
-server.listen(port, "172.16.200.3");
+server.listen(port, "172.16.200.35");
 server.on('error', onError);
 server.on('listening', onListening);
 
 // Instantiation of the websocket on the server
-webSocket(server);
+// Use socket.Io for this implementation
+// webSocket(server);
 
 /**
  * Normalize a port into a number, string, or false.

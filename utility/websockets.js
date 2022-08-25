@@ -3,7 +3,7 @@ var queryString = require("query-string");
 
 const webSocket =  (expressServer) => {
   const websocketServer = new WebSocket.Server({
-    noServer: true,
+    server: expressServer,
     path: "/websockets",
   });
 

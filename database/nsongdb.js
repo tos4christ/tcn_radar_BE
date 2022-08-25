@@ -65,7 +65,7 @@ mssql.connect(config, err => {
                         "GEREGU (GAS)" :           3,
                         "OMOTOSHO (GAS)" :         4,
                         "OMOTOSHO NIPP (GAS)" :    5,
-                        "JEBBA (HYDRO)" :    6,
+                        "JEBBA (HYDRO)" :          6,
                         "SAPELE NIPP (GAS)" :      7,
                         "OMOKU (GAS)" :            8,
                         "AZURA-EDO IPP (GAS)" :    9,
@@ -75,6 +75,7 @@ mssql.connect(config, err => {
                         "DADINKOWA G.S (HYDRO)" : 13,
                         "PARAS ENERGY (GAS)" :    14,
                         "IBOM POWER (GAS)" :      15,
+                        "EGBIN (STEAM)":          16,
                         "OLORUNSOGO (GAS)":       17,
                         "OLORUNSOGO NIPP":        18,
                         "SAPELE (STEAM)" :        19,
@@ -83,6 +84,9 @@ mssql.connect(config, err => {
                         "IHOVBOR NIPP (GAS)" :    22,
                         "TRANS-AMADI (GAS)" :     23,
                         "DELTA (GAS)" :           24,
+                        "KAINJI (HYDRO)":         25,
+                        "SHIRORO (HYDRO)":        26,
+                        "AFAM IV & V (GAS)":      27,
                     }
                     // Create a temporary table
                     const table = new mssql.Table('generation');
@@ -102,7 +106,7 @@ mssql.connect(config, err => {
                     table.columns.add('mvar', mssql.Float);
                     // Add corresponding row values to the column in similar order                    
                     if(stations[station]) {
-                        table.rows.add(stations[station], station, time, date, Math.abs(amp), kv, Hour, 00, 0, Math.abs(mw), Math.abs(mvar));
+                        table.rows.add(stations[station], station, time, date, amp, kv, Hour, 00, 0, mw, mvar);
                         request.bulk(table, (err, record, rows) => {
                             if(err) {
                                 console.error(err)

@@ -2,8 +2,15 @@ var jwt = require('jsonwebtoken');
 var encoder = require('../utility/passwordEnc');
 var model = require('../models/signin');
 var db = require('../database/db');
+const { NText } = require('mssql');
 
-const signin = (req, res) => {
+const signin = {};
+
+signin.get = (req, res) => {
+  res.redirect('https://tcnnas.org/')
+}
+
+signin.post = (req, res) => {
   const { email, password } = req.body;
   if (!email && !password) {
     return res.status(400).json({
@@ -15,30 +22,26 @@ const signin = (req, res) => {
   db.query(model.get, [email])
   .then((result) => {
     const passwordMatch = encoder.decode(password, result.rows[0].password);
+    const name = result.rows[0].name
+    // console.log(passwordMatch, 'the password match');
     if (passwordMatch) {
-      const { id: userId, station } = result.rows[0];
       // inside the database operation, store the jwt
       const token = jwt.sign({
-        sub: userId
-      }, process.env.TOKENKEY, { expiresIn: 1440 });
+        sub: name
+      }, process.env.TOKENKEY, { expiresIn: "240h" });
       // the body to send to front end
-      db.query(model.get_station_id, [station])
-      .then(stationId => {
-        const {id: station_id} = stationId.rows[0];
-        const responseBody = {
-          status: 'Success',
-          data: {
-            message: 'Your are now signed in',
-            token,
-            userId,
-            station,
-            station_id,
-            userName: result.rows[0].name
-          }
-        };
-        return res.status(200).send(responseBody);
-      })
-      .catch(e => res.status(403).send(e));      
+      const responseBody = {
+        status: 'Success',
+        data: {
+          message: 'Your are now signed in',
+          token,
+          userName: result.rows[0].name,
+          isLoggedIn: true
+        }
+      };
+      // console.log(responseBody, 'the password match');
+       res.status(200).send(responseBody); 
+       next();
     } else {
       res.status(401).send({
         status: 'error',

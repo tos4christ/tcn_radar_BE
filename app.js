@@ -5,6 +5,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mssqlServer = require('./database/nsongdb');
+var jwtCheck = require('./utility/jwtCheck');
 // var os = require('node:os'); 
 // os.setPriority(process.pid, os.constants.priority.PRIORITY_HIGHEST);
 
@@ -37,7 +38,7 @@ http_app.use(function(req, res, next) {
   res.redirect("https://" + req.headers.host + req.url);
 });
 
-http_app.listen(80, "172.16.200.3");
+http_app.listen(80, "172.16.200.35");
 
 app.use(cors());
 app.use(logger('dev'));
@@ -61,6 +62,13 @@ app.use((req, res, next) => {
     }
   });
 
+
+
+// Function to serve static react resources
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, "build", "index.html"))
+// })
+
 // Functional routes
 app.use('/reactor', reactorRouter);
 app.use('/current', currentRouter);
@@ -74,21 +82,24 @@ app.use('/signup', signupRouter);
 app.use('/mx', mxRouter);
 app.use('/sll', sllRouter);
 app.use('/lines', linesRouter);
+// app.use('/home', jwtCheck);
+
 
 // app.get('/.well-known/pki-validation/F7E918FEFBA46C9E95A10FC7F19D183C.txt', (req, res) => {
 //   res.sendFile(path.join(__dirname, "ssl", "F7E918FEFBA46C9E95A10FC7F19D183C.txt"))
 // })
 
 
+// Function to serve static react resources
+app.get('/*', (req, res) => {
+  // console.log(__dirname, 'the name of this directory')
+  res.sendFile(path.join(__dirname, "build", "index.html"))
+})
+
 // Handle 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
-  });
-
-// Function to serve static react resources
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"))
-})
+});
 
   
 // error handler
@@ -98,7 +109,7 @@ res.locals.message = err.message;
 res.locals.error = req.app.get('env') === 'development' ? err : {};
 
 // send the error
-res.status(err.status || 500);
+// res.status(err.status || 500);
 res.send({error: err});
 });
 

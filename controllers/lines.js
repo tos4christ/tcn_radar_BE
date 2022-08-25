@@ -2,7 +2,7 @@ var model = require('../models/lines');
 var db = require('../database/db');
 var dateFormatter = require('../utility/dateFormatter');
 var timeConverter = require('../utility/timeConverter');
-var stations = require('../database/stations');
+// var stations = require('../database/stations');
 var temExtractor = require('../utility/temExtractor');
 var XLSX = require('xlsx');
 
@@ -154,28 +154,30 @@ lines.profile = (req, res, next) => {
         .catch(err => console.log(err))
 }
 
-lines.all = (req, res, next) => {
-    const { date, Hour, Minute, Seconds } = dateFormatter();
+// Data is coming real time now, no need for this anymore
+// Disabled
+// lines.all = (req, res, next) => {
+//     const { date, Hour, Minute, Seconds } = dateFormatter();
 
-    // get all the data for the given time and order them by station   
-    db.query(model.get_all_2, [ date, Number(Hour), Number(Minute), Number(Seconds) -1, Number(Seconds) + 1 ])
-        .then(respo => {
-            const data = respo.rows;
-            // console.log(data, 'the data')
+//     // get all the data for the given time and order them by station   
+//     db.query(model.get_all_2, [ date, Number(Hour), Number(Minute), Number(Seconds) -2, Number(Seconds) + 2 ])
+//         .then(respo => {
+//             const data = respo.rows;
+//             // console.log(data, 'the data')
             
-            // Use the stations key to filter all the rows coming from the database
-            // after filering for each station key, use the values for each
-            const refined_data = stations(data);
-            // console.log(refined_data)
-            const mappedObj = Object.entries(refined_data)
-            const tempArr = []
-            mappedObj.forEach(obj => {                
-                const value = obj[1]               
-                tempArr.push(value)
-            })            
-            return res.send({res: tempArr});
-        })
-        .catch(err => console.log(err))
-}
+//             // Use the stations key to filter all the rows coming from the database
+//             // after filering for each station key, use the values for each
+//             const refined_data = stations(data);
+//             // console.log(refined_data)
+//             const mappedObj = Object.entries(refined_data)
+//             const tempArr = []
+//             mappedObj.forEach(obj => {                
+//                 const value = obj[1]               
+//                 tempArr.push(value)
+//             })            
+//             return res.send({res: tempArr});
+//         })
+//         .catch(err => console.log(err))
+// }
 
 module.exports =  lines;

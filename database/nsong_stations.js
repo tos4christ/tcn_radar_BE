@@ -1,14 +1,19 @@
 const station_keys1 = [
     'omotosho2', 'eket', 'phMain', 'afamViTs', 'alaoji', 'sapeleNippPs', 'omotoshoNippPs', 'okpaiGs',
     'odukpaniGs', 'omotosho1', 'ekim', 'gereguPs', 'ikotEkpene', 'riversIppPs', 'gbarain', 'jebbaTs',
-    'omokuPs1', 'ihovborNippPs', 'olorunsogo1', 'parasEnergyPs', 'olorunsogoPhase1Gs', 'dadinKowaGs'
+    'omokuPs1', 'ihovborNippPs', 'olorunsogo1', 'parasEnergyPs', 'olorunsogoPhase1Gs', 'dadinKowaGs',
+    'kainjiTs', 'egbinPs', 'afamIv_vPs', 'shiroroPs', 'delta2', 'delta3', 'deltaGs'
 ]; 
 
 module.exports = (data) => {
     let res_data = {
+        'AFAM IV & V (GAS)' : {mw: null, kv: null, station: 'AFAM IV & V (GAS)', amp: null, time: null, seconds: null, mvar:null},
+        'SHIRORO (HYDRO)' : {mw: null, kv: null, station: 'SHIRORO (HYDRO)', amp: null, time: null, seconds: null, mvar:null},
+        'EGBIN (STEAM)' : {mw: null, kv: null, station: 'EGBIN (STEAM)', amp: null, time: null, seconds: null, mvar:null},
+        'KAINJI (HYDRO)' : {mw: null, kv: null, station: 'KAINJI (HYDRO)', amp: null, time: null, seconds: null, mvar:null},
         'OKPAI (GAS/STEAM)' : {mw: null, kv: null, station: 'OKPAI (GAS/STEAM)', amp: null, time: null, seconds: null, mvar:null},
         'JEBBA (HYDRO)' : {mw: null, kv: null, station: 'JEBBA (HYDRO)', amp: null, time: null, seconds: null, mvar:null},
-        // 'DELTA (GAS)' : {mw: null, kv: null, station: 'DELTA (GAS)', amp: null, time: null, seconds: null, mvar:null},
+        'DELTA (GAS)' : {mw: null, kv: null, station: 'DELTA (GAS)', amp: null, time: null, seconds: null, mvar:null},
         'AFAM VI (GAS/STEAM)' : {mw: null, kv: null, station: 'AFAM VI (GAS/STEAM)', amp: null, time: null, seconds: null, mvar:null},
         'ALAOJI NIPP (GAS)' : {mw: null, kv: null, station: 'ALAOJI NIPP (GAS)', amp: null, time: null, seconds: null, mvar:null},
         'SAPELE NIPP (GAS)' : {mw: null, kv: null, station: 'SAPELE NIPP (GAS)', amp: null, time: null, seconds: null, mvar:null},
@@ -37,6 +42,94 @@ module.exports = (data) => {
         const filtered_station = data.filter( dat => dat.station === station);
         // console.log(data.filter( dat => dat.station === 'olorunsogo1'), 'the olorunsogo filtered station name in the nsong_station')
         if (filtered_station.length > 0) {
+            if (filtered_station[0].station === 'shiroroPs') {
+                let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
+                const mw_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.mw);
+                    max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
+                    return sum;
+                },0)
+                const amp_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.amp);
+                    return sum;
+                },0)
+                const mvar_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.mvar);
+                    return sum;
+                },0)
+                res_data['SHIRORO (HYDRO)'].mw = mw_sum;
+                res_data['SHIRORO (HYDRO)'].kv = max_voltage;
+                res_data['SHIRORO (HYDRO)'].amp = amp_sum;
+                res_data['SHIRORO (HYDRO)'].mvar = mvar_sum;
+                res_data['SHIRORO (HYDRO)'].time = time;
+                res_data['SHIRORO (HYDRO)'].seconds = seconds;
+            }
+            if (filtered_station[0].station === 'afamIv_vPs') {
+                let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
+                const mw_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.mw);
+                    max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
+                    return sum;
+                },0)
+                const amp_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.amp);
+                    return sum;
+                },0)
+                const mvar_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.mvar);
+                    return sum;
+                },0)
+                res_data['AFAM IV & V (GAS)'].mw = mw_sum;
+                res_data['AFAM IV & V (GAS)'].kv = max_voltage;
+                res_data['AFAM IV & V (GAS)'].amp = amp_sum;
+                res_data['AFAM IV & V (GAS)'].mvar = mvar_sum;
+                res_data['AFAM IV & V (GAS)'].time = time;
+                res_data['AFAM IV & V (GAS)'].seconds = seconds;
+            }
+            if (filtered_station[0].station === 'kainjiTs') {
+                let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
+                const mw_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.mw);
+                    max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
+                    return sum;
+                },0)
+                const amp_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.amp);
+                    return sum;
+                },0)
+                const mvar_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.mvar);
+                    return sum;
+                },0)
+                res_data['KAINJI (HYDRO)'].mw = mw_sum;
+                res_data['KAINJI (HYDRO)'].kv = max_voltage;
+                res_data['KAINJI (HYDRO)'].amp = amp_sum;
+                res_data['KAINJI (HYDRO)'].mvar = mvar_sum;
+                res_data['KAINJI (HYDRO)'].time = time;
+                res_data['KAINJI (HYDRO)'].seconds = seconds;
+            }
+            if (filtered_station[0].station === 'egbinPs') {
+                let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
+                const mw_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.mw);
+                    max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
+                    return sum;
+                },0)
+                const amp_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.amp);
+                    return sum;
+                },0)
+                const mvar_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.mvar);
+                    return sum;
+                },0)
+                res_data['EGBIN (STEAM)'].mw = mw_sum;
+                res_data['EGBIN (STEAM)'].kv = max_voltage;
+                res_data['EGBIN (STEAM)'].amp = amp_sum;
+                res_data['EGBIN (STEAM)'].mvar = mvar_sum;
+                res_data['EGBIN (STEAM)'].time = time;
+                res_data['EGBIN (STEAM)'].seconds = seconds;
+            }
             if (filtered_station[0].station === 'jebbaTs') {
                 let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
                 const mw_sum = filtered_station.reduce((acc, curr) => {
@@ -142,11 +235,11 @@ module.exports = (data) => {
                 const mw_sum = filtered_station.reduce((acc, curr) => {
                     max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
                     if (curr.line_name === 'r1w' || curr.line_name === 'r2a') {
-                        const sum = acc + Math.abs(curr.mw);
+                        const sum = acc + curr.mw;
                         return sum;
                     }
                     if (curr.line_name === 'tr1' || curr.line_name === 'tr2' || curr.line_name === 'tr3' || curr.line_name === 'tr4') {
-                        const sum = acc - Math.abs(curr.mw);
+                        const sum = acc - curr.mw;
                         return sum;
                     }else {
                         return acc
@@ -154,11 +247,11 @@ module.exports = (data) => {
                 },0)
                 const amp_sum = filtered_station.reduce((acc, curr) => {
                     if (curr.line_name === 'r1w' || curr.line_name === 'r2a') {
-                        const sum = acc + Math.abs(curr.mw);
+                        const sum = acc + curr.mw;
                         return sum;
                     }
                     if (curr.line_name === 'tr1' || curr.line_name === 'tr2' || curr.line_name === 'tr3' || curr.line_name === 'tr4') {
-                        const sum = acc - Math.abs(curr.amp);
+                        const sum = acc - curr.amp;
                         return sum;
                     }else {
                         return acc
@@ -166,19 +259,19 @@ module.exports = (data) => {
                 },0)
                 const mvar_sum = filtered_station.reduce((acc, curr) => {
                     if (curr.line_name === 'r1w' || curr.line_name === 'r2a') {
-                        const sum = acc + Math.abs(curr.mw);
+                        const sum = acc + curr.mw;
                         return sum;
                     }
                     if (curr.line_name === 'tr1' || curr.line_name === 'tr2' || curr.line_name === 'tr3' || curr.line_name === 'tr4') {
-                        const sum = acc - Math.abs(curr.mvar);
+                        const sum = acc - curr.mvar;
                         return sum;
                     }else {
                         return acc
                     }
                 },0)
-                res_data['OLORUNSOGO NIPP'].mw = res_data['OLORUNSOGO NIPP'].mw + mw_sum <= 0 ? 0 : mw_sum;
-                res_data['OLORUNSOGO NIPP'].amp = res_data['OLORUNSOGO NIPP'].amp + amp_sum <= 0 ? 0 : amp_sum;
-                res_data['OLORUNSOGO NIPP'].mvar = res_data['OLORUNSOGO NIPP'].mvar + mvar_sum <= 0 ? 0 : mvar_sum;
+                res_data['OLORUNSOGO NIPP'].mw = res_data['OLORUNSOGO NIPP'].mw + mw_sum;
+                res_data['OLORUNSOGO NIPP'].amp = res_data['OLORUNSOGO NIPP'].amp + amp_sum;
+                res_data['OLORUNSOGO NIPP'].mvar = res_data['OLORUNSOGO NIPP'].mvar + mvar_sum;
                 res_data['OLORUNSOGO NIPP'].time = res_data['OLORUNSOGO NIPP'].time ? res_data['OLORUNSOGO NIPP'].time : time;
                 res_data['OLORUNSOGO NIPP'].seconds = res_data['OLORUNSOGO NIPP'].seconds ? res_data['OLORUNSOGO NIPP'].seconds : seconds;
                 res_data['OLORUNSOGO NIPP'].kv = res_data['OLORUNSOGO NIPP'].kv ? res_data['OLORUNSOGO NIPP'].kv : max_voltage;
@@ -566,11 +659,11 @@ module.exports = (data) => {
                 const mw_sum = filtered_station.reduce((acc, curr) => {
                     max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
                     if (curr.line_name === 'gt11' || curr.line_name === 'gt12' || curr.line_name === 'gt13') {
-                        const sum = acc - curr.mw;
+                        const sum = acc - Math.abs(curr.mw);
                         return sum;
                     }
                     if (curr.line_name === 'r1j' || curr.line_name === 'r2j') {
-                        const sum = acc + curr.mw;
+                        const sum = acc + -(curr.mw);
                         return sum;
                     }else {
                         return acc
@@ -578,11 +671,11 @@ module.exports = (data) => {
                 },0)
                 const amp_sum = filtered_station.reduce((acc, curr) => {
                     if (curr.line_name === 'gt11' || curr.line_name === 'gt12' || curr.line_name === 'gt13') {
-                        const sum = acc - curr.amp;
+                        const sum = acc - Math.abs(curr.amp);
                         return sum;
                     }
                     if (curr.line_name === 'r1j' || curr.line_name === 'r2j') {
-                        const sum = acc + curr.amp;
+                        const sum = acc + -(curr.amp);
                         return sum;
                     }else {
                         return acc
@@ -590,11 +683,11 @@ module.exports = (data) => {
                 },0)
                 const mvar_sum = filtered_station.reduce((acc, curr) => {
                     if (curr.line_name === 'gt11' || curr.line_name === 'gt12' || curr.line_name === 'gt13') {
-                        const sum = acc - curr.mvar;
+                        const sum = acc - Math.abs(curr.mvar);
                         return sum;
                     }
                     if (curr.line_name === 'r1j' || curr.line_name === 'r2j') {
-                        const sum = acc + curr.mvar;
+                        const sum = acc + -(curr.mvar);
                         return sum;
                     }else {
                         return acc
@@ -691,7 +784,7 @@ module.exports = (data) => {
                 const mw_sum = filtered_station.reduce((acc, curr) => {
                     max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;                    
                     if (curr.line_name === 'ohl1' || curr.line_name === 'ohl2') {
-                        const sum = acc + Math.abs(curr.mw);
+                        const sum = acc + -(curr.mw);
                         return sum;
                     }else {
                         return acc
@@ -699,7 +792,7 @@ module.exports = (data) => {
                 },0)
                 const amp_sum = filtered_station.reduce((acc, curr) => {
                     if (curr.line_name === 'ohl1' || curr.line_name === 'ohl2') {
-                        const sum = acc + Math.abs(curr.amp);
+                        const sum = acc + -(curr.amp);
                         return sum;
                     }else {
                         return acc
@@ -707,7 +800,7 @@ module.exports = (data) => {
                 },0)
                 const mvar_sum = filtered_station.reduce((acc, curr) => {
                     if (curr.line_name === 'ohl1' || curr.line_name === 'ohl2') {
-                        const sum = acc + Math.abs(curr.mvar);
+                        const sum = acc + -(curr.mvar);
                         return sum;
                     }else {
                         return acc
@@ -745,16 +838,16 @@ module.exports = (data) => {
             if (filtered_station[0].station === 'eket') {
                 let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
                 const mw_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + curr.mw;
+                    const sum = acc + -(curr.mw);
                     max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
                     return sum;
                 },0)
                 const amp_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + curr.amp;
+                    const sum = acc + -(curr.amp);
                     return sum;
                 },0)
                 const mvar_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + curr.mvar;
+                    const sum = acc + -(curr.mvar);
                     return sum;
                 },0)
                 res_data['IBOM POWER (GAS)'].mw = res_data['IBOM POWER (GAS)'].mw  + mw_sum;
@@ -767,16 +860,16 @@ module.exports = (data) => {
             if (filtered_station[0].station === 'ekim') {
                 let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
                 const mw_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + curr.mw;
+                    const sum = acc + -(curr.mw);
                     max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
                     return sum;
                 },0)
                 const amp_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + curr.amp;
+                    const sum = acc + -(curr.amp);
                     return sum;
                 },0)
                 const mvar_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + curr.mvar;
+                    const sum = acc + -(curr.mvar);
                     return sum;
                 },0)
                 res_data['IBOM POWER (GAS)'].mw = res_data['IBOM POWER (GAS)'].mw  - mw_sum;
