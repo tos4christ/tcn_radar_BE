@@ -78,7 +78,6 @@ app.use('/reports', reportsRouter);
 app.use('/equipment', equipmentRouter);
 app.use('/tap', tapRouter);
 app.use('/signin', signinRouter);
-app.use('/signup', signupRouter);
 app.use('/mx', mxRouter);
 app.use('/sll', sllRouter);
 app.use('/lines', linesRouter);
