@@ -14,7 +14,7 @@ router.post('/average', jwtCheck, controller.average);
 
 router.post('/profile', jwtCheck, controller.profile);
 
-router.get('/all', jwtCheck, controller.all);
+// router.get('/all', jwtCheck, controller.all);
 
 router.get('/getdaily', controller.getdaily);
 
