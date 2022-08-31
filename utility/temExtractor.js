@@ -1153,7 +1153,7 @@ function Station_Adder(station_array) {
                         }
                     })
                 }
-                //console.log(temp_hold, 'temphold');
+                console.log(temp_hold.length, 'temphold length');
                 // run logic only if there is an equipment to iterate
                 if (equipment_to_sum_2.length > 0) {
                     equipment_to_sum_2.forEach((equip, index) => {
@@ -1178,7 +1178,9 @@ function Station_Adder(station_array) {
                                     const check = e.hour === th.hour && e.minute === th.minute;
                                     if (check) {
                                         chosen_index = ind;
+                                        console.log(check, 'the checks')
                                     }
+                                    
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
