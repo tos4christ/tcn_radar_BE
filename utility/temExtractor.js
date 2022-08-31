@@ -1170,22 +1170,18 @@ function Station_Adder(station_array) {
                         } else {
                             // Get the key for the next elements
                             const key = Object.keys(equip)[0];
-                            let chosen_index, incrementer = 0;
+                            let chosen_index;
                             equip[key].forEach( (e) => {
                                // Get the hour and minute for each of this equipment item, this would be used to filter for a matching hour
                                 // and minute inside the temphold array
-                                const temp_hold_item_to_add = temp_hold.filter( (th, ind, tdd) => {
-                                    if (incrementer === 0) {
-                                        console.log(ind, tdd, 'the index checker');
-                                    }
-                                    incrementer++
+                                const temp_hold_item_to_add = temp_hold.filter( (th, ind) => {
                                     const check = e.hour === th.hour && e.minute === th.minute;
                                     if (check) {
                                         chosen_index = ind;
-                                    }
-                                    
+                                    }                                    
                                     return check;
                                 });
+                                console.log(temp_hold_item_to_add, 'the filtered temp hold', chosen_index, 'the chosen index')
                                 // if there is a temp hold item to add, then add this items to the temp hold
                                 if(temp_hold_item_to_add && temp_hold[chosen_index]) {
                                     // console.log([e, 'sum function check', temp_hold[chosen_index]], 'the if temp_hold_item_to_add && temp_hold_chosen')
