@@ -483,7 +483,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -531,7 +531,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -579,7 +579,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -627,7 +627,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -675,7 +675,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -727,7 +727,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -764,7 +764,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -802,7 +802,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -852,7 +852,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -900,7 +900,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -948,7 +948,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -996,7 +996,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -1044,7 +1044,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -1092,7 +1092,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -1143,7 +1143,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -1181,13 +1181,12 @@ function Station_Adder(station_array) {
                                     }                                    
                                     return check;
                                 });
-                                console.log(temp_hold_item_to_add, 'the filtered temp hold', chosen_index, 'the chosen index')
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     // console.log([e, 'sum function check', temp_hold[chosen_index]], 'the if temp_hold_item_to_add && temp_hold_chosen')
-                                    temp_hold[chosen_index].mw = temp_hold[chosen_index].mw + Math.abs(e.mw);
-                                    temp_hold[chosen_index].amp = temp_hold[chosen_index].amp + Math.abs(e.amp);
-                                    temp_hold[chosen_index].mvar = temp_hold[chosen_index].mvar + Math.abs(e.mvar);
+                                    temp_hold[chosen_index].mw += Math.abs(e.mw);
+                                    temp_hold[chosen_index].amp += Math.abs(e.amp);
+                                    temp_hold[chosen_index].mvar += Math.abs(e.mvar);
                                     temp_hold[chosen_index].kv = temp_hold[chosen_index].kv > e.kv ? temp_hold[chosen_index].kv : e.kv;
                                 }
                             })
@@ -1236,7 +1235,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -1274,7 +1273,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -1324,7 +1323,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -1372,7 +1371,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -1420,7 +1419,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -1468,7 +1467,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += -(e.mw);
                                     temp_hold[chosen_index].amp += -(e.amp);
                                     temp_hold[chosen_index].mvar += -(e.mvar);
@@ -1495,7 +1494,6 @@ function Station_Adder(station_array) {
                 const equipment_to_subtract_2 = station_to_subtract[0]['olorunsogo1'];
                 // run logic only if there is an equipment to iterate
                 if (equipment_to_sum.length > 0) {
-                    console.log('sum 1');
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -1522,7 +1520,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw = temp_hold[chosen_index].mw + e.mw;
                                     temp_hold[chosen_index].amp = temp_hold[chosen_index].amp + e.amp;
                                     temp_hold[chosen_index].mvar = temp_hold[chosen_index].mvar + e.mvar;
@@ -1534,7 +1532,6 @@ function Station_Adder(station_array) {
                 }                
                 // run logic only if there is an equipment to iterate
                 if (equipment_to_subtract.length > 0) {
-                    console.log('subtract 1');
                     equipment_to_subtract.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -1562,7 +1559,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw = temp_hold[chosen_index].mw - e.mw;
                                     temp_hold[chosen_index].amp = temp_hold[chosen_index].amp - e.amp;
                                     temp_hold[chosen_index].mvar = temp_hold[chosen_index].mvar - e.mvar;
@@ -1574,7 +1571,6 @@ function Station_Adder(station_array) {
                 }                
                 // run logic only if there is an equipment to iterate
                 if (equipment_to_subtract_2.length > 0) {
-                    console.log('subtract 2');
                     equipment_to_subtract_2.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -1602,7 +1598,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw = temp_hold[chosen_index].mw - e.mw;
                                     temp_hold[chosen_index].amp = temp_hold[chosen_index].amp - e.amp;
                                     temp_hold[chosen_index].mvar = temp_hold[chosen_index].mvar - e.mvar;
@@ -1654,7 +1650,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -1692,7 +1688,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -1742,7 +1738,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add  && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0  && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -1790,7 +1786,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add  && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0  && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -1839,7 +1835,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add  && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0  && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw = temp_hold[chosen_index].mw + -(e.mw);
                                     temp_hold[chosen_index].amp = temp_hold[chosen_index].amp + -(e.amp);
                                     temp_hold[chosen_index].mvar = temp_hold[chosen_index].mvar + -(e.mvar);
@@ -1877,7 +1873,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add  && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0  && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw = temp_hold[chosen_index].mw - Math.abs(e.mw);
                                     temp_hold[chosen_index].amp = temp_hold[chosen_index].amp - Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar = temp_hold[chosen_index].mvar - Math.abs(e.mvar);
@@ -1927,7 +1923,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -1975,7 +1971,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
@@ -2025,7 +2021,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw = temp_hold[chosen_index].mw + -(e.mw);
                                     temp_hold[chosen_index].amp = temp_hold[chosen_index].amp + -(e.amp);
                                     temp_hold[chosen_index].mvar = temp_hold[chosen_index].mvar + -(e.mvar);
@@ -2063,7 +2059,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw = temp_hold[chosen_index].mw - -(e.mw);
                                     temp_hold[chosen_index].amp = temp_hold[chosen_index].amp - -(e.amp);
                                     temp_hold[chosen_index].mvar = temp_hold[chosen_index].mvar - -(e.mvar);
@@ -2113,7 +2109,7 @@ function Station_Adder(station_array) {
                                     return check;
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
                                     temp_hold[chosen_index].mw += Math.abs(e.mw);
                                     temp_hold[chosen_index].amp += Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar += Math.abs(e.mvar);
