@@ -1175,9 +1175,10 @@ function Station_Adder(station_array) {
                                // Get the hour and minute for each of this equipment item, this would be used to filter for a matching hour
                                 // and minute inside the temphold array
                                 const temp_hold_item_to_add = temp_hold.filter( (th, ind, tdd) => {
-                                    if (incrementer = 0) {
+                                    if (incrementer === 0) {
                                         console.log(ind, tdd, 'the index checker');
                                     }
+                                    incrementer++
                                     const check = e.hour === th.hour && e.minute === th.minute;
                                     if (check) {
                                         chosen_index = ind;
