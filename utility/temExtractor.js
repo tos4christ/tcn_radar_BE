@@ -1153,7 +1153,7 @@ function Station_Adder(station_array) {
                         }
                     })
                 }
-                console.log(temp_hold.length, 'temphold length');
+                console.log(temp_hold.length, 'temphold length', equipment_to_sum.length, equipment_to_sum_2.length);
                 // run logic only if there is an equipment to iterate
                 if (equipment_to_sum_2.length > 0) {
                     equipment_to_sum_2.forEach((equip, index) => {
@@ -1175,10 +1175,10 @@ function Station_Adder(station_array) {
                                // Get the hour and minute for each of this equipment item, this would be used to filter for a matching hour
                                 // and minute inside the temphold array
                                 const temp_hold_item_to_add = temp_hold.filter( (th, ind) => {
+                                    console.log([e, 'equipment 2 sum function check', th], 'the checks')
                                     const check = e.hour === th.hour && e.minute === th.minute;
                                     if (check) {
                                         chosen_index = ind;
-                                        console.log(check, 'the checks')
                                     }
                                     
                                     return check;
