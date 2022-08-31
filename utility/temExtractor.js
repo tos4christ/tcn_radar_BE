@@ -1175,7 +1175,6 @@ function Station_Adder(station_array) {
                                // Get the hour and minute for each of this equipment item, this would be used to filter for a matching hour
                                 // and minute inside the temphold array
                                 const temp_hold_item_to_add = temp_hold.filter( (th, ind) => {
-                                    console.log([e, 'equipment 2 sum function check', th], 'the checks')
                                     const check = e.hour === th.hour && e.minute === th.minute;
                                     if (check) {
                                         chosen_index = ind;
@@ -1185,6 +1184,7 @@ function Station_Adder(station_array) {
                                 });
                                 // if there is a temp hold item to add, then add this items to the temp hold
                                 if(temp_hold_item_to_add && temp_hold[chosen_index]) {
+                                    console.log([e, 'sum function check', th], 'the if temp_hold_item_to_add && temp_hold_chosen')
                                     temp_hold[chosen_index].mw = temp_hold[chosen_index].mw + Math.abs(e.mw);
                                     temp_hold[chosen_index].amp = temp_hold[chosen_index].amp + Math.abs(e.amp);
                                     temp_hold[chosen_index].mvar = temp_hold[chosen_index].mvar + Math.abs(e.mvar);
