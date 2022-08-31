@@ -1,4 +1,4 @@
-const fs = require('fs');
+// const fs = require('fs');
 
 module.exports = ( data ) => {
     const station_array = [
@@ -367,9 +367,11 @@ module.exports = ( data ) => {
             return null;
         }        
     });
-    const writeStream = fs.createWriteStream('logger.txt');
-    writeStream.write(station_array);
-    writeStream.end()
+    console.log(JSON.stringify(station_array[15]), 'the station array 1');
+    console.log(JSON.stringify(station_array[18]), 'the station array 2')
+    // const writeStream = fs.createWriteStream('logger.txt');
+    // writeStream.write(station_array);
+    // writeStream.end()
     return Station_Adder(station_array);
 };
 
