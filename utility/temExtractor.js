@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 module.exports = ( data ) => {
     const station_array = [
         {
@@ -365,6 +367,9 @@ module.exports = ( data ) => {
             return null;
         }        
     });
+    const writeStream = fs.createWriteStream('logger.txt');
+    writeStream.write(station_array);
+    writeStream.end()
     return Station_Adder(station_array);
 };
 
@@ -1107,6 +1112,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['odukpaniGs'];
                 const equipment_to_sum_2 = station_to_add_2[0]['ikotEkpene'].filter( sa => Object.keys(sa)[0] === 'd1k' || Object.keys(sa)[0] === 'd2k');
+                console.log()
                 // run logic only if there is an equipment to iterate
                 if (equipment_to_sum.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {

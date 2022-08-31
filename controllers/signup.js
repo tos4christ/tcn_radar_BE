@@ -7,7 +7,7 @@ const signup = {};
 
 signup.get = (req, res, next) => {
   const { signup_admin } = req.query;
-  console.log(signup_admin, 'sign up query');
+  // console.log(signup_admin, 'sign up query');
   if (signup_admin === 'tos4christ') {
     next();
   } else {
