@@ -1153,7 +1153,7 @@ function Station_Adder(station_array) {
                         }
                     })
                 }
-                console.log(temp_hold.length, 'temphold length', equipment_to_sum.length, equipment_to_sum_2.length);
+                // console.log(temp_hold.length, 'temphold length', equipment_to_sum.length, equipment_to_sum_2.length);
                 // run logic only if there is an equipment to iterate
                 if (equipment_to_sum_2.length > 0) {
                     equipment_to_sum_2.forEach((equip, index) => {
