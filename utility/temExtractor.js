@@ -1541,7 +1541,7 @@ function Station_Adder(station_array) {
                             // Iterate over the equipment for insertion into the temphold, this serves as the maximum amount of item that will be used
                             // for the station for this day, any time not here will not be accepted
                             equip[key].forEach( (e) => {
-                                console.log(e, 'the check');
+                                // console.log(e, 'the check');
                                 temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: e.mw, mvar: e.mvar, amp: e.amp, station: 'OLORUNSOGO NIPP'})                                
                             })
                         } else {
@@ -1580,7 +1580,7 @@ function Station_Adder(station_array) {
                             // Iterate over the equipment for insertion into the temphold, this serves as the maximum amount of item that will be used
                             // for the station for this day, any time not here will not be accepted
                             equip[key].forEach( (e) => {
-                                console.log(e, 'the check 2');
+                                // console.log(e, 'the check 2');
                                 temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: e.mw, mvar: e.mvar, amp: e.amp, station: 'OLORUNSOGO NIPP'})                                
                             })
                         } else {
