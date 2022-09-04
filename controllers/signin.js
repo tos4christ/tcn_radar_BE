@@ -32,7 +32,7 @@ signin.post = (req, res) => {
       if (login_count === 0) {
         console.log(typeof login_count, email, 'the login count')
         // Update the login count and redirect to the update password page
-        db.query(model.update_login_count, [login_count++, email])
+        db.query(model.update_login_count, [(login_count + 1), email])
           .then( resp => {
             console.log(resp, 'this is the response')
             // redirect to the update password page in the react app
