@@ -38,6 +38,7 @@ signin.post = (req, res) => {
               status: 'new',
               data: 'new'
             };
+            res.redirect(`https://tcnnas.org/updatepassword?email=${email}`);
             // console.log(responseBody, 'the password match');
             res.status(200).send(responseBody);
           })
