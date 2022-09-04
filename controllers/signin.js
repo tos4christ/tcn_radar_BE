@@ -24,9 +24,10 @@ signin.post = (req, res) => {
     const passwordMatch = encoder.decode(password, result.rows[0].password);
     const name = result.rows[0].name;
     const login_count = result.rows[0].login_count;
-    console.log(login_count, 'the login count')
+    
     // console.log(passwordMatch, 'the password match');    
     if (passwordMatch) {
+      console.log(login_count, 'the login count')
       // check the login_count
       if (login_count === 0) {
         // Update the login count and redirect to the update password page
