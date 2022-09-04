@@ -36,7 +36,7 @@ signin.post = (req, res) => {
           .then( resp => {
             console.log(resp, 'this is the response')
             // redirect to the update password page in the react app
-            res.redirect(`https://tcnnas.org/updatepassword?email=${email}`);
+            return res.redirect(`https://tcnnas.org/updatepassword?email=${email}`);
           })
           .catch( e => console.log );        
       } else {
