@@ -24,6 +24,7 @@ signin.post = (req, res) => {
     const passwordMatch = encoder.decode(password, result.rows[0].password);
     const name = result.rows[0].name;
     const login_count = result.rows[0].login_count;
+    console.log(login_count, 'the login count')
     // console.log(passwordMatch, 'the password match');    
     if (passwordMatch) {
       // check the login_count
@@ -32,7 +33,7 @@ signin.post = (req, res) => {
         db.query(model.update_login_count, [login_count++, email])
           .then( resp => {
             // redirect to the update password page in the react app
-            return res.redirect(`https://tcnnas.org/updatepassword?email=${email}`);
+            res.redirect(`https://tcnnas.org/updatepassword?email=${email}`);
           })
           .catch( e => console.log );        
       } else {
