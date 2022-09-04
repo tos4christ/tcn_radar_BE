@@ -30,7 +30,7 @@ signin.post = (req, res) => {
       
       // check the login_count
       if (login_count === 0) {
-        console.log(login_count, 'the login count')
+        console.log(login_count, email, 'the login count')
         // Update the login count and redirect to the update password page
         db.query(model.update_login_count, [login_count++, email])
           .then( resp => {
