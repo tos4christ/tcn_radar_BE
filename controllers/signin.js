@@ -39,24 +39,29 @@ signin.post = (req, res) => {
             return res.redirect(`https://tcnnas.org/updatepassword?email=${email}`);
           })
           .catch( e => console.log );        
-      } else {
-        // inside the database operation, store the jwt
-        const token = jwt.sign({
-          sub: name
-        }, process.env.TOKENKEY, { expiresIn: "240h" });
-        // the body to send to front end
-        const responseBody = {
-          status: 'Success',
-          data: {
-            message: 'Your are now signed in',
-            token,
-            userName: result.rows[0].name,
-            isLoggedIn: true
-          }
-        };
-        // console.log(responseBody, 'the password match');
-        res.status(200).send(responseBody); 
-        next();
+      } else if (login_count > 0) {
+        console.log('the count is greater than 0')
+        db.query(model.update_login_count, [(login_count + 1), email])
+          .then( result => {
+            // inside the database operation, store the jwt
+            const token = jwt.sign({
+              sub: name
+            }, process.env.TOKENKEY, { expiresIn: "240h" });
+            // the body to send to front end
+            const responseBody = {
+              status: 'Success',
+              data: {
+                message: 'Your are now signed in',
+                token,
+                userName: result.rows[0].name,
+                isLoggedIn: true
+              }
+            };
+            // console.log(responseBody, 'the password match');
+            res.status(200).send(responseBody); 
+            next();
+          })
+          .catch(e => console.log);        
       }      
     } else {
       res.status(401).send({
