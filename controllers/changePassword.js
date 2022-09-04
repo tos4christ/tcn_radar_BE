@@ -5,7 +5,7 @@ var db = require('../database/db');
 
 const changePassword = {};
 
-changePassword.put = (req, res,next) => {
+changePassword.put = (req, res, next) => {
   if (!req.body.email && !req.body.password) {
     res.status(400).json({
       status: 'error',
@@ -20,7 +20,7 @@ changePassword.put = (req, res,next) => {
   // inside the database operation, store the jwt
   db.query(model.update, [password, email])
     .then(user => {
-        console.log(user, 'the user after the password update')
+        // console.log(user, 'the user after the password update')
         const responseBody = {
         status: 'Success',
         data: {
