@@ -2,7 +2,6 @@ var jwt = require('jsonwebtoken');
 var encoder = require('../utility/passwordEnc');
 var model = require('../models/signin');
 var db = require('../database/db');
-const { NText } = require('mssql');
 
 const signin = {};
 
@@ -21,27 +20,40 @@ signin.post = (req, res) => {
   }
   db.query(model.get, [email])
   .then((result) => {
+    // check to see if the user has ever changed their password before and then redirect them to change password
     const passwordMatch = encoder.decode(password, result.rows[0].password);
-    const name = result.rows[0].name
-    // console.log(passwordMatch, 'the password match');
+    const name = result.rows[0].name;
+    const login_count = result.rows[0].login_count;
+    // console.log(passwordMatch, 'the password match');    
     if (passwordMatch) {
-      // inside the database operation, store the jwt
-      const token = jwt.sign({
-        sub: name
-      }, process.env.TOKENKEY, { expiresIn: "240h" });
-      // the body to send to front end
-      const responseBody = {
-        status: 'Success',
-        data: {
-          message: 'Your are now signed in',
-          token,
-          userName: result.rows[0].name,
-          isLoggedIn: true
-        }
-      };
-      // console.log(responseBody, 'the password match');
-       res.status(200).send(responseBody); 
-       next();
+      // check the login_count
+      if (login_count === 0) {
+        // Update the login count and redirect to the update password page
+        db.query(model.update_login_count, [login_count++, email])
+          .then( resp => {
+            // redirect to the update password page in the react app
+            return res.redirect(`https://tcnnas.org/updatepassword?email=${email}`);
+          })
+          .catch( e => console.log );        
+      } else {
+        // inside the database operation, store the jwt
+        const token = jwt.sign({
+          sub: name
+        }, process.env.TOKENKEY, { expiresIn: "240h" });
+        // the body to send to front end
+        const responseBody = {
+          status: 'Success',
+          data: {
+            message: 'Your are now signed in',
+            token,
+            userName: result.rows[0].name,
+            isLoggedIn: true
+          }
+        };
+        // console.log(responseBody, 'the password match');
+        res.status(200).send(responseBody); 
+        next();
+      }      
     } else {
       res.status(401).send({
         status: 'error',
