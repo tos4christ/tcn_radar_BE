@@ -27,12 +27,14 @@ signin.post = (req, res) => {
     
     // console.log(passwordMatch, 'the password match');    
     if (passwordMatch) {
-      console.log(login_count, 'the login count')
+      
       // check the login_count
       if (login_count === 0) {
+        console.log(login_count, 'the login count')
         // Update the login count and redirect to the update password page
         db.query(model.update_login_count, [login_count++, email])
           .then( resp => {
+            console.log(resp, 'this is the response')
             // redirect to the update password page in the react app
             res.redirect(`https://tcnnas.org/updatepassword?email=${email}`);
           })
