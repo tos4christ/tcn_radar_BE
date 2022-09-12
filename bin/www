@@ -87,6 +87,7 @@ client_2.on('connect', () => {
        'kainjits/tv', 'egbings/pv', 'riversIppPs/pr', 'afam4gs/pv',
        'shirorogs/pv', 'afam6ts/tv', 'delta2gs/pv', 'delta3gs/pv',
        'omokugs/pv', 'phmains/tv', 'sapelets/pv', 'ihovborts/tv',
+       'omotoso2ts/tv', 'omotoso11ts/pv', 'omotoso12ts/pv',
     ],
     err => err ? console.log('this is the error', err) : null
   )
@@ -146,6 +147,9 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
+  if (['omotoso2ts/tv', 'omotoso11ts/pv', 'omotoso12ts/pv'].includes(topic)) {
+    console.log(message.toString())
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    io.sockets.emit('client_message_2', { message: message.toString() });
