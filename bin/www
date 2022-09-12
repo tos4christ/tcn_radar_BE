@@ -95,6 +95,9 @@ client_2.on('connect', () => {
 
 
 client_1.on('message', (topic, message) => {
+  if (topic === 'odukpanits/tv') {
+    console.log(message.toString())
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    io.sockets.emit('client_message_1', { message: message.toString() }); 
