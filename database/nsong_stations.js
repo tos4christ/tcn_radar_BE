@@ -881,5 +881,9 @@ module.exports = (data) => {
             }
         }
     })
+    const check_olorunsogo = data.filter( dat => dat.station === 'olorunsogoPhase1Gs');
+    if (!check_olorunsogo) {
+        res_data['OLORUNSOGO (GAS)'].mw = 0;
+    }
     return res_data;
 }
