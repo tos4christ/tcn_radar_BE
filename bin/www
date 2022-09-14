@@ -66,7 +66,7 @@ client_1.on('connect', () => {
       [
            'gereguGs/pv', 'odukpanits/tv', 'omotoso2ts/tv',
           'omotoso11ts/pv', 'omotoso12ts/pv',
-           'lokojats/tv',
+           'lokojats/tv', 'afam4gs/pv',
           'ikotekpene/tv', 'gwagwaladats/tv', 'gereguGs/tv',
           'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 
           'riversIppPs/pv', 'markudits/tv',
@@ -96,6 +96,9 @@ client_2.on('connect', () => {
 
 
 client_1.on('message', (topic, message) => {
+  if (['afam4gs/pv'].includes(topic)) {
+    console.log(message.toString(), 'client 1')
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    io.sockets.emit('client_message_1', { message: message.toString() }); 
@@ -147,8 +150,8 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  if (['omotoso2ts/tv', 'omotoso11ts/pv', 'omotoso12ts/pv'].includes(topic)) {
-    console.log(message.toString())
+  if (['afam4gs/pv'].includes(topic)) {
+    console.log(message.toString(), 'client 2')
   }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
