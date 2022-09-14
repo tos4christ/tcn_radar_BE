@@ -72,7 +72,7 @@ client_1.on('connect', () => {
           'riversIppPs/pv', 'markudits/tv',
           'dadinkowags/tv', 'ugwuajits/tv',
           'gbaraints/pv', 'olorunsogo1ts/pv', 'parasenergyPs/pv',
-           'olorunsogo2ts/tv',
+           'olorunsogo2ts/tv','omotoshoGas/pv'
       ],
    (err) => {
       if(err) {
@@ -88,6 +88,7 @@ client_2.on('connect', () => {
        'shirorogs/pv', 'afam6ts/tv', 'delta2gs/pv', 'delta3gs/pv',
        'omokugs/pv', 'phmains/tv', 'sapelets/pv', 'ihovborts/tv',
        'omotoso2ts/tv', 'omotoso11ts/pv', 'omotoso12ts/pv',
+       'olorunsogo1ts/pv', 'olorunsogo2ts/tv', 'omotoshoGas/pv'
     ],
     err => err ? console.log('this is the error', err) : null
   )
@@ -96,6 +97,9 @@ client_2.on('connect', () => {
 
 
 client_1.on('message', (topic, message) => {
+  if (['omotoshoGas/pv'].includes(topic)) {
+    console.log(message.toString())
+}
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    io.sockets.emit('client_message_1', { message: message.toString() }); 
@@ -147,9 +151,9 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  if (['omotoso2ts/tv', 'omotoso11ts/pv', 'omotoso12ts/pv'].includes(topic)) {
+  if (['omotoshoGas/pv'].includes(topic)) {
     console.log(message.toString())
-  }
+}
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    io.sockets.emit('client_message_2', { message: message.toString() });
