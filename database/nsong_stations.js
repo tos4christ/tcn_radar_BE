@@ -882,7 +882,7 @@ module.exports = (data) => {
         }
     })
     const check_olorunsogo = data.filter( dat => dat.station === 'olorunsogoPhase1Gs');
-    if (check_olorunsogo.length === 0) {
+    if (check_olorunsogo.length === 0 || res_data['OLORUNSOGO NIPP'].mw <= -3) {
         res_data['OLORUNSOGO NIPP'].mw = 0;
     }
     return res_data;
