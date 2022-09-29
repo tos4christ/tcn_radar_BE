@@ -517,6 +517,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['afamIv_vPs'];                
                 // run logic only if there is an equipment to iterate
+                console.log(equipment_to_sum, 'the equipment to sum afam');
                 if (equipment_to_sum.length > 0) {
                     return addSimilarEquipment(equipment_to_sum);
                 }
@@ -527,7 +528,8 @@ function Station_Adder(station_array) {
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'shiroroPs');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['shiroroPs'];                
+                const equipment_to_sum = station_to_add[0]['shiroroPs']; 
+                console.log(equipment_to_sum, 'the equipment to sum shiroro');               
                 if (equipment_to_sum.length > 0) {
                     return addSimilarEquipment(equipment_to_sum);
                 }
