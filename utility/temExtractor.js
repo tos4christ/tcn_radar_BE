@@ -10,7 +10,7 @@ module.exports = ( data ) => {
                 {
                     gt18: []
                 }
-            ]  
+            ] 
         },
         {
             shiroroPs: [
@@ -64,7 +64,7 @@ module.exports = ( data ) => {
                 {
                     k1f: []
                 }
-            ]  
+            ] 
         },
         {
             jebbaTs: [
@@ -94,7 +94,7 @@ module.exports = ( data ) => {
                 {
                     s4g: []
                 }
-            ]
+            ] 
         },
         {
             omotosho2: [
@@ -334,7 +334,7 @@ module.exports = ( data ) => {
                 {
                     st2: []
                 }
-            ]
+            ] 
         },
         {
             dadinKowaGs: [

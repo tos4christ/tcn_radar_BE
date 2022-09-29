@@ -18,6 +18,11 @@ pids
 # remove temp editor
 database/tem_editor.js
 
+test.mjs
+data-eket.csv
+data-ekim.csv
+
+
 .env
 ssl
 ssl/
