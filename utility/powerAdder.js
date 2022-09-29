@@ -523,8 +523,11 @@ function Station_Adder(station_array) {
                 // run logic only if there is an equipment to iterate
                 console.log(equipment_to_sum, 'the equipment to sum afam');
                 if (equipment_to_sum.length > 0) {
-                    return addSimilarEquipment(equipment_to_sum);
+                    return temp_hold.push(addSimilarEquipment(equipment_to_sum));
                 }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj)
                 
             }
             if (station_name === 'SHIRORO (HYDRO)') {
@@ -535,8 +538,11 @@ function Station_Adder(station_array) {
                 const equipment_to_sum = station_to_add[0]['shiroroPs']; 
                 console.log(equipment_to_sum, 'the equipment to sum shiroro');               
                 if (equipment_to_sum.length > 0) {
-                    return addSimilarEquipment(equipment_to_sum);
+                    return temp_hold.push(addSimilarEquipment(equipment_to_sum));
                 }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj)
             }
             if (station_name === 'EGBIN (STEAM)') {
                 const temp_hold = [];
