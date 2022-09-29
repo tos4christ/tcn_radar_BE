@@ -12,7 +12,7 @@ mydb.query(model.get_collapse, [start.getTime(), end.getTime()])
     .then( data => {
         const row_data = data.rows;
         const result = addPower(row_data);
-        // console.log(JSON.stringify(result), 'power data result');
+        console.log(JSON.stringify(result), 'power data result');
     })
 
 function addPower( data ) {
@@ -477,7 +477,7 @@ function addSimilarEquipment(array) {
             });
         }
     }    
-    console.log(finalArray, 'the add similar final array')
+    // console.log(finalArray, 'the add similar final array')
     return finalArray;
 }
 function addDissimilarEquipment1(array1, array2) {
@@ -545,6 +545,8 @@ function Station_Adder(station_array) {
     // replace the mw, amp, mvar
     // (id, date, hour, minute, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, time)
     res_data.forEach(station_name => {
+        // Before adding two equipments that have been summed with the similarsum function
+        // Check to see if the array is not empty before proceeding
         if (station_name) {
             if (station_name === 'AFAM IV & V (GAS)') {
                 const temp_hold = [];
