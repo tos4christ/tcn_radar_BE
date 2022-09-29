@@ -461,21 +461,22 @@ function addSimilarEquipment(array) {
     const key = Object.keys(array[0]);
     // console.log(key[0])
     // check to see it is an array of array
-    console.log(array, 'the array')
-    finalArray.push(...array[0][key[0]][0]);
-    if (array.length < 2) {
-        return finalArray;
-    }
-    // console.log(array.length, 'arrya length')
-    for (let i=1; i < array.length; i++) {
-        const key = Object.keys(array[i]);
-        // console.log(key, 'present key')
-        const current_array = array[i][key[0]][0];
-        // console.log(current_array, 'the current array')
-        current_array.forEach( (item, index) => {
-            finalArray[index].mw += item.mw;
-        });
-    }
+    if(array[0][key[0]].length > 0) {
+        finalArray.push(...array[0][key[0]][0]);
+        if (array.length < 2) {
+            return finalArray;
+        }
+        // console.log(array.length, 'arrya length')
+        for (let i=1; i < array.length; i++) {
+            const key = Object.keys(array[i]);
+            // console.log(key, 'present key')
+            const current_array = array[i][key[0]][0];
+            // console.log(current_array, 'the current array')
+            current_array.forEach( (item, index) => {
+                finalArray[index].mw += item.mw;
+            });
+        }
+    }    
     console.log(finalArray, 'the add similar final array')
     return finalArray;
 }
