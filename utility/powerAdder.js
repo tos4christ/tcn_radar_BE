@@ -468,7 +468,7 @@ function addSimilarEquipment(array) {
     for (let i=1; i < array.length; i++) {
         const key = Object.keys(array[i]);
         console.log(key, 'present key')
-        const current_array = array[i][key[0]];
+        const current_array = array[i][key[0]][0];
         console.log(current_array, 'the current array')
         current_array.forEach( (item, index) => {
             finalArray[index].mw += finalArray[index].mw + item.mw;
