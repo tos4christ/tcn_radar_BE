@@ -836,6 +836,72 @@ function Station_Adder(station_array) {
                 obj[station_name] = temp_hold;
                 final_array.push(obj); 
             }
+            if (station_name === 'OLORUNSOGO (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogoPhase1Gs');
+                const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogo1');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
+                const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'];
+                const total_equipment_to_sum = [...equipment_to_sum, ...equipment_to_sum_2]
+                if (total_equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(total_equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
+            if (station_name === 'ODUKPANI NIPP (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'odukpaniGs');
+                const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'ikotEkpene');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['odukpaniGs'];
+                const equipment_to_sum_2 = station_to_add_2[0]['ikotEkpene'].filter( sa => Object.keys(sa)[0] === 'd1k' || Object.keys(sa)[0] === 'd2k');
+                const total_equipment_to_sum = [...equipment_to_sum, ...equipment_to_sum_2]
+                if (total_equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(total_equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj);            
+            }
+            if (station_name === 'OMOTOSHO (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'omotosho1');
+                const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'omotosho2');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['omotosho1'];
+                const equipment_to_sum_2 = station_to_add_2[0]['omotosho2'];
+                const total_equipment_to_sum = [...equipment_to_sum, ...equipment_to_sum_2]
+                if (total_equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(total_equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
+            if (station_name === 'DELTA (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'delta2');
+                const station_to_add_1 = station_array.filter( sa => Object.keys(sa)[0] === 'delta3');
+                const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'deltaGs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['delta2'];
+                const equipment_to_sum_1 = station_to_add_1[0]['delta3'];
+                const equipment_to_sum_2 = station_to_add_2[0]['deltaGs'];
+                const total_equipment_to_sum = [...equipment_to_sum, ...equipment_to_sum_1, ...equipment_to_sum_2]
+                if (total_equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(total_equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
 
             // Complicated ones
             if (station_name === 'GEREGU NIPP (GAS)') {
@@ -867,49 +933,7 @@ function Station_Adder(station_array) {
                 const equipment_to_subtract = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
                 const equipment_to_subtract_2 = station_to_subtract[0]['olorunsogo1'];
                 
-            }
-            if (station_name === 'OLORUNSOGO (GAS)') {
-                const temp_hold = [];
-                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogoPhase1Gs');
-                const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogo1');
-                // Get the list of equipment objects from the stations
-                // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
-                const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'];
-                
-            }
-            if (station_name === 'ODUKPANI NIPP (GAS)') {
-                const temp_hold = [];
-                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'odukpaniGs');
-                const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'ikotEkpene');
-                // Get the list of equipment objects from the stations
-                // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['odukpaniGs'];
-                const equipment_to_sum_2 = station_to_add_2[0]['ikotEkpene'].filter( sa => Object.keys(sa)[0] === 'd1k' || Object.keys(sa)[0] === 'd2k');
-                             
-            }
-            if (station_name === 'OMOTOSHO (GAS)') {
-                const temp_hold = [];
-                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'omotosho1');
-                const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'omotosho2');
-                // Get the list of equipment objects from the stations
-                // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['omotosho1'];
-                const equipment_to_sum_2 = station_to_add_2[0]['omotosho2'];
-                
-            }
-            if (station_name === 'DELTA (GAS)') {
-                const temp_hold = [];
-                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'delta2');
-                const station_to_add_1 = station_array.filter( sa => Object.keys(sa)[0] === 'delta3');
-                const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'deltaGs');
-                // Get the list of equipment objects from the stations
-                // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['delta2'];
-                const equipment_to_sum_1 = station_to_add_1[0]['delta3'];
-                const equipment_to_sum_2 = station_to_add_2[0]['deltaGs'];
-                
-            }
+            }            
         }
     });
     // console.log(JSON.stringify(final_array), 'the final array');
