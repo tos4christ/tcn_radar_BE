@@ -5,9 +5,9 @@ const timeConverter = require('./timeConverter')
 
 // Get all the data
 // date, start-(hour, minute, seconds), end-(hour, minute, seconds)
-const startDate = '2022-09-29', endDate = '2022-09-29', startTime = '15:00', endTime = '16:00';
+const startDate = '2022-09-29', endDate = '2022-09-29', startTime = '15:00', endTime = '15:02';
 const { start, end} = timeConverter(startDate, endDate, startTime, endTime);
-console.log(start, end, 'the start and end time')
+// console.log(start, end, 'the start and end time')
 mydb.query(model.get_collapse, [start.getTime(), end.getTime()])
     .then( data => {
         const row_data = data.rows;
@@ -459,15 +459,15 @@ function addSimilarEquipment(array) {
     const finalArray = [];
     // get the key for the first item
     const key = Object.keys(array[0]);
-    console.log(key[0])
+    // console.log(key[0])
     finalArray.push(...array[0][key[0]][0]);
     if (array.length < 2) {
         return finalArray;
     }
-    console.log(array.length, 'arrya length')
+    // console.log(array.length, 'arrya length')
     for (let i=1; i < array.length; i++) {
         const key = Object.keys(array[i]);
-        console.log(key, 'present key')
+        // console.log(key, 'present key')
         const current_array = array[i][key[0]][0];
         // console.log(current_array, 'the current array')
         current_array.forEach( (item, index) => {
@@ -526,12 +526,11 @@ function Station_Adder(station_array) {
                 // run logic only if there is an equipment to iterate
                 console.log(equipment_to_sum, 'the equipment to sum afam');
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
-                final_array.push(obj)
-                
+                final_array.push(obj);                
             }
             if (station_name === 'SHIRORO (HYDRO)') {
                 const temp_hold = [];
@@ -541,11 +540,11 @@ function Station_Adder(station_array) {
                 const equipment_to_sum = station_to_add[0]['shiroroPs']; 
                 console.log(equipment_to_sum, 'the equipment to sum shiroro');               
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
-                final_array.push(obj)
+                final_array.push(obj);
             }
             if (station_name === 'EGBIN (STEAM)') {
                 const temp_hold = [];
