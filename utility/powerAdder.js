@@ -12,7 +12,7 @@ mydb.query(model.get_collapse, [start.getTime(), end.getTime()])
     .then( data => {
         const row_data = data.rows;
         const result = addPower(row_data);
-        console.log(JSON.stringify(result), 'power data result');
+        // console.log(JSON.stringify(result), 'power data result');
     })
 
 function addPower( data ) {
@@ -474,19 +474,45 @@ function addSimilarEquipment(array) {
             finalArray[index].mw += item.mw;
         });
     }
+    console.log(finalArray, 'the add similar final array')
     return finalArray;
 }
-function addDissimilarEquipment(array1, array2) {
-    // ENSURE THE ARRAYS ARE SORTED ACCORDING TO TIME IN THE RETRIEVAL SO COMPARISON IS EASIER
-    // check for the items with the shortest item
-    const short_array = array1.length < array2.length ? array1 : array2;
-    const long_array = array1.length < array2.length ? array2 : array1;
+function addDissimilarEquipment1(array1, array2) {
+    // Ensure array1 is the array from the add similar function
     const finalArray = [];
-    finalArray.push(...short_array);
+    // get the key for the first item
+    const key = Object.keys(array1[0]);
+    finalArray.push(...array1[0][key[0]]);
 
     let last_item_time = 1;
 
-    long_array.forEach( (item, index) => {
+    array2.forEach( (item, index) => {
+        // First filter the item with the closest time to this
+        // This is an N^2 operation
+        const chosen_item = finalArray.filter( f_arr => {
+            const item_time_diff = Math.abs(f_arr.time - item.time);
+            // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
+            // saved from a previous operation then chose the item and set it as the previous
+            if (item_time_diff < 4000 && f_arr.time !== last_item_time) {
+                last_item_time = f_arr.time;
+                return true;
+            }
+        })
+        // add the filtered item    
+        finalArray[index].mw += finalArray[index].mw + chosen_item.mw;        
+        
+    })
+}
+function addDissimilarEquipment2(array1, array2) {
+    // Ensure array1 is the array from the add similar function
+    const finalArray = [];
+    // get the key for the first item
+    const key = Object.keys(array1[0]);
+    finalArray.push(...array1[0][key[0]]);
+
+    let last_item_time = 1;
+
+    array2.forEach( (item, index) => {
         // First filter the item with the closest time to this
         // This is an N^2 operation
         const chosen_item = finalArray.filter( f_arr => {
@@ -632,7 +658,12 @@ function Station_Adder(station_array) {
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['omokuPs1'];
-                
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj);                
             }            
             if (station_name === 'IHOVBOR NIPP (GAS)') {
                 const temp_hold = [];
