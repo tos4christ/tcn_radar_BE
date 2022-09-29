@@ -534,7 +534,7 @@ function addDissimilarEquipment_raw(array1, array2) {
         // This is an N^2 operation
         const chosen_item = finalArray.filter( f_arr => {
             const item_time_diff = Math.abs(f_arr.time - item.time);
-            console.log(item_time_diff, 'the time diff');
+            
             // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
             // saved from a previous operation then chose the item and set it as the previous
             if (item_time_diff < 4000 && f_arr.time !== last_item_time) {
@@ -542,6 +542,7 @@ function addDissimilarEquipment_raw(array1, array2) {
                 return true;
             }
         })
+        console.log(chosen_item, 'the chosen item');
         // add the filtered item    
         finalArray[index].mw += chosen_item.mw;        
     });
