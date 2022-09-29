@@ -5,7 +5,7 @@ const timeConverter = require('./timeConverter')
 
 // Get all the data
 // date, start-(hour, minute, seconds), end-(hour, minute, seconds)
-const startDate = '2022-09-25', endDate = '2022-09-25', startTime = '00:00', endTime = '10:00';
+const startDate = '2022-09-29', endDate = '2022-09-29', startTime = '15:00', endTime = '16:00';
 const { start, end} = timeConverter(startDate, endDate, startTime, endTime);
 console.log(start, end, 'the start and end time')
 mydb.query(model.get_collapse, [start.getTime(), end.getTime()])
