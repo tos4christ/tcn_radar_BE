@@ -12,7 +12,7 @@ mydb.query(model.get_collapse, [start.getTime(), end.getTime()])
     .then( data => {
         const row_data = data.rows;
         const result = addPower(row_data);
-        console.log(result, 'power data result');
+        console.log(JSON.stringify(result), 'power data result');
     })
 
 function addPower( data ) {
