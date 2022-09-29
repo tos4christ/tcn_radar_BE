@@ -460,6 +460,8 @@ function addSimilarEquipment(array) {
     // get the key for the first item
     const key = Object.keys(array[0]);
     // console.log(key[0])
+    // check to see it is an array of array
+    console.log(array, 'the array')
     finalArray.push(...array[0][key[0]][0]);
     if (array.length < 2) {
         return finalArray;
