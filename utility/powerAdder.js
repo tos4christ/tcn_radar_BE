@@ -523,7 +523,7 @@ function addDissimilarEquipment_raw(array1, array2) {
     array1 = addSimilarEquipment(array1);
     array2 = addSimilarEquipment(array2);
 
-    console.log(array1, array2, 'check')
+    // console.log(array1, array2, 'check')
     // Ensure array1 is the array from the add similar function
     const finalArray = [];
     finalArray.push(...array1);
