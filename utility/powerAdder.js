@@ -12,7 +12,7 @@ mydb.query(model.get_collapse, [start.getTime(), end.getTime()])
     .then( data => {
         const row_data = data.rows;
         const result = addPower(row_data);
-        console.log(JSON.stringify(result), 'power data result');
+        // console.log(JSON.stringify(result), 'power data result');
     })
 
 function addPower( data ) {
@@ -464,6 +464,7 @@ function addSimilarEquipment(array) {
     if (array.length < 2) {
         return finalArray;
     }
+    console.log(array.length, 'arrya length')
     for (let i=1; i < array.length; i++) {
         const key = Object.keys(array[i]);
         const current_array = array[i][key[0]];
