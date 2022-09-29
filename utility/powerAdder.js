@@ -542,7 +542,7 @@ function addDissimilarEquipment_raw(array1, array2) {
             }
         })
         // add the filtered item    
-        finalArray[index].mw += finalArray[index].mw + chosen_item.mw;        
+        finalArray[index].mw += chosen_item.mw;        
     });
     return finalArray;
 }
