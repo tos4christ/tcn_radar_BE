@@ -517,7 +517,10 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['afamIv_vPs'];                
                 // run logic only if there is an equipment to iterate
-                return addSimilarEquipment(equipment_to_sum);
+                if (equipment_to_sum.length > 0) {
+                    return addSimilarEquipment(equipment_to_sum);
+                }
+                
             }
             if (station_name === 'SHIRORO (HYDRO)') {
                 const temp_hold = [];
@@ -525,7 +528,9 @@ function Station_Adder(station_array) {
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['shiroroPs'];                
-                
+                if (equipment_to_sum.length > 0) {
+                    return addSimilarEquipment(equipment_to_sum);
+                }
             }
             if (station_name === 'EGBIN (STEAM)') {
                 const temp_hold = [];
