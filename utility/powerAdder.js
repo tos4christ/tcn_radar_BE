@@ -12,7 +12,7 @@ mydb.query(model.get_collapse, [start.getTime(), end.getTime()])
     .then( data => {
         const row_data = data.rows;
         const result = addPower(row_data);
-        // console.log(JSON.stringify(result), 'power data result');
+        console.log(JSON.stringify(result), 'power data result');
     })
 
 function addPower( data ) {
@@ -542,9 +542,9 @@ function addDissimilarEquipment_raw(array1, array2) {
                 return true;
             }
         })
-        console.log(chosen_item, 'the chosen item');
+        //console.log(chosen_item, 'the chosen item');
         // add the filtered item    
-        finalArray[index].mw += chosen_item.mw;        
+        finalArray[index].mw += chosen_item[0].mw;        
     });
     return finalArray;
 }
