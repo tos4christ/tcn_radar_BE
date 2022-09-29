@@ -458,15 +458,15 @@ function Equipment_Sorter(equipment_array) {
 function addSimilarEquipment(array) {
     const finalArray = [];
     // get the key for the first item
-    const key = Object.keys(array);
+    const key = Object.keys(array[0]);
     console.log(key)
-    finalArray.push(...array[0][key[0]]);
+    finalArray.push(...array[0][key]);
     if (array.length < 2) {
         return finalArray;
     }
     for (let i=1; i < array.length; i++) {
-        const key = Object.keys(array)[i];
-        const current_array = array[i][key[i]];
+        const key = Object.keys(array[i]);
+        const current_array = array[i][key];
         current_array.forEach( (item, index) => {
             finalArray[index].mw += finalArray[index].mw + item.mw;
         });
