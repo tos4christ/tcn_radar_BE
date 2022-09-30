@@ -482,6 +482,13 @@ function addDissimilarEquipment_raw(array1, array2) {
     console.log(array1, 'the array 1');
     // console.log(array2, 'the array 2')
 
+    // if the array1 is empty return the similar addition of the second array
+    if (array1.length === 0) {
+        return array2;
+    } else if (array2.length === 0) {
+        return array1;
+    }
+
     // console.log(array1, array2, 'check')
     // Ensure array1 is the array from the add similar function
     const finalArray = [];
