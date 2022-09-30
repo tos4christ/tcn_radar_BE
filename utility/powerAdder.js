@@ -479,6 +479,9 @@ function addDissimilarEquipment_raw(array1, array2) {
     array1 = addSimilarEquipment(array1);
     array2 = addSimilarEquipment(array2);
 
+    console.log(array1, 'the array 1');
+    console.log(array2, 'the array 2')
+
     // console.log(array1, array2, 'check')
     // Ensure array1 is the array from the add similar function
     const finalArray = [];
@@ -817,11 +820,11 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['odukpaniGs'];
                 const equipment_to_sum_2 = station_to_add_2[0]['ikotEkpene'].filter( sa => Object.keys(sa)[0] === 'd1k' || Object.keys(sa)[0] === 'd2k');
-                try {
-                    temp_hold.push(...addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_2));
-                } catch(e) {
-                    console.log(e)
-                }
+                // try {
+                //     temp_hold.push(...addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_2));
+                // } catch(e) {
+                //     console.log(e)
+                // }
                 const obj = {};
                 obj[station_name] = temp_hold;
                 final_array.push(obj);
@@ -834,11 +837,11 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['omotosho1'];
                 const equipment_to_sum_2 = station_to_add_2[0]['omotosho2'];
-                try {
-                    temp_hold.push(...addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_2));
-                } catch(e) {
-                    console.log(e)
-                }
+                // try {
+                //     temp_hold.push(...addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_2));
+                // } catch(e) {
+                //     console.log(e)
+                // }
                 const obj = {};
                 obj[station_name] = temp_hold;
                 final_array.push(obj);
