@@ -479,7 +479,7 @@ function addDissimilarEquipment_raw(array1, array2) {
     array1 = addSimilarEquipment(array1);
     array2 = addSimilarEquipment(array2);
 
-    // console.log(array1, 'the array 1');
+    console.log(array1, 'the array 1');
     // console.log(array2, 'the array 2')
 
     // console.log(array1, array2, 'check')
