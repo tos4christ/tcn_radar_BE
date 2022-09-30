@@ -853,12 +853,6 @@ function Station_Adder(station_array) {
                 obj[station_name] = temp_hold;
                 final_array.push(obj); 
             }
-            
-            
-            
-            
-
-            // Complicated ones
             if (station_name === 'OLORUNSOGO (GAS)') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogoPhase1Gs');
@@ -868,7 +862,7 @@ function Station_Adder(station_array) {
                 const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
                 const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'];
                 try {
-                    temp_hold.push(...addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_2));
+                    temp_hold.push(...addSimilarEquipment([...equipment_to_sum, ...equipment_to_sum_2]));
                 } catch(e) {
                     console.log(e)
                 }
@@ -878,6 +872,12 @@ function Station_Adder(station_array) {
                 obj[station_name] = temp_hold;
                 final_array.push(obj); 
             }
+            
+            
+            
+
+            // Complicated ones
+            
             if (station_name === 'ODUKPANI NIPP (GAS)') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'odukpaniGs');
