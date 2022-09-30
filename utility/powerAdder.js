@@ -479,8 +479,8 @@ function addDissimilarEquipment_raw(array1, array2) {
     array1 = addSimilarEquipment(array1);
     array2 = addSimilarEquipment(array2);
 
-    console.log(array1, 'the array 1');
-    console.log(array2, 'the array 2')
+    // console.log(array1, 'the array 1');
+    // console.log(array2, 'the array 2')
 
     // console.log(array1, array2, 'check')
     // Ensure array1 is the array from the add similar function
@@ -502,7 +502,7 @@ function addDissimilarEquipment_raw(array1, array2) {
                 return true;
             }
         })
-        // console.log(chosen_item, 'the chosen item');
+        console.log(chosen_item, 'the chosen item');
         // add the filtered item    
         finalArray[index].mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
         finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
@@ -858,6 +858,9 @@ function Station_Adder(station_array) {
                 const equipment_to_sum = station_to_add[0]['delta2'];
                 const equipment_to_sum_1 = station_to_add_1[0]['delta3'];
                 const equipment_to_sum_2 = station_to_add_2[0]['deltaGs'];
+
+                console.log(equipment_to_sum, 'the equipment to sum');
+
 
                 const first_sum = addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_1);
                 const second_sum = addSimilarEquipment(equipment_to_sum_2);
