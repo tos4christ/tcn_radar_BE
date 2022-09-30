@@ -865,9 +865,7 @@ function Station_Adder(station_array) {
                     temp_hold.push(...addSimilarEquipment([...equipment_to_sum, ...equipment_to_sum_2]));
                 } catch(e) {
                     console.log(e)
-                }
-                
-                
+                }                
                 const obj = {};
                 obj[station_name] = temp_hold;
                 final_array.push(obj); 
@@ -887,12 +885,14 @@ function Station_Adder(station_array) {
                 const equipment_to_sum = station_to_add[0]['odukpaniGs'];
                 const equipment_to_sum_2 = station_to_add_2[0]['ikotEkpene'].filter( sa => Object.keys(sa)[0] === 'd1k' || Object.keys(sa)[0] === 'd2k');
                 // const total_equipment_to_sum = [...equipment_to_sum, ...equipment_to_sum_2]
-                // if (total_equipment_to_sum.length > 0) {
-                //     temp_hold.push(...addSimilarEquipment(total_equipment_to_sum));
-                // }
-                // const obj = {};
-                // obj[station_name] = temp_hold;
-                // final_array.push(obj);            
+                try {
+                    temp_hold.push(...addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_2));
+                } catch(e) {
+                    console.log(e)
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj);
             }
             if (station_name === 'OMOTOSHO (GAS)') {
                 const temp_hold = [];
