@@ -12,7 +12,7 @@ mydb.query(model.get_collapse, [start.getTime(), end.getTime()])
     .then( data => {
         const row_data = data.rows;
         const result = addPower(row_data);
-        console.log(JSON.stringify(result), 'power data result');
+        // console.log(JSON.stringify(result), 'power data result');
     })
 
 function addPower( data ) {
@@ -394,67 +394,6 @@ function addPower( data ) {
     return Station_Adder(station_array);
 };
 
-function Equipment_Sorter(equipment_array) {
-    let hour = 0, minute = 0;
-    const res_data = [];
-    while( hour < 24 ) {
-        const pres_min = equipment_array.filter(equip => equip.hour === hour && equip.minute === minute);        
-        let max_voltage = 0, divisor = pres_min.length;
-        // Iterate over the filtered data to recaliberate
-        if (pres_min && pres_min.length > 0) {
-            const mw_sum = pres_min.reduce((acc, curr) => {
-                const sum = acc + curr.mw;
-                max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
-                return sum;
-            },0)
-            const amp_sum = pres_min.reduce((acc, curr) => {
-                const sum = acc + curr.amp;
-                return sum;
-            },0)
-            const mvar_sum = pres_min.reduce((acc, curr) => {
-                const sum = acc + curr.mvar;
-                return sum;
-            },0);
-            // replace the mw, amp, mvar
-            // (id, date, hour, minute, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, time)
-            const date = pres_min[0].date;
-            const equipment_id = pres_min[0].equipment_id;
-            const station = pres_min[0].station;
-            const level = pres_min[0].level;
-            const line_name = pres_min[0].line_name;
-            const id = hour;
-            const variant = pres_min[0].variant;
-            const time = pres_min[pres_min.length - 1].time;
-            const kv = max_voltage;
-            // Get the average of the mw, amp and mvar
-            const mw = mw_sum / divisor;
-            const amp = amp_sum / divisor;
-            const mvar = mvar_sum / divisor;
-            res_data.push({
-                date, equipment_id, station, level, line_name, id, variant, time, kv, mw, amp, mvar, hour, minute
-            })
-            // increment minute by 1 for the next iteration
-            minute += 1;
-            // once the 59th minute data is processed, increment the hour by 1 and set minute to zero
-            // to start the next hour iteration
-            if (minute === 60) {
-                hour += 1;
-                minute = 0;
-            }
-        } else {
-            // increment minute by 1 for the next iteration
-            minute += 1;
-            // once the 59th minute data is processed, increment the hour by 1 and set minute to zero
-            // to start the next hour iteration
-            if (minute === 60) {
-                hour += 1;
-                minute = 0;
-            }
-        }
-    }
-    return res_data;
-};
-
 function addSimilarEquipment(array) {
     const finalArray = [];
     // get the key for the first item
@@ -476,44 +415,61 @@ function addSimilarEquipment(array) {
                 finalArray[index].mw += item.mw;
             });
         }
-    }    
-    // console.log(finalArray, 'the add similar final array')
-    return finalArray;
-}
-function subtractSimilarEquipment(add_array, subtract_array) {
-    
-    const finalArray = [];
-    
-    if (add_array === 0) {
-        finalArray.push(subtract_array);
-        for (let i = 0; i < subtract_array.length; i++) {
-            finalArray[i].mw = 0 - finalArray[i].mw;
-        }
-    } else if ( Array.isArray(add_array) ) {
-        finalArray.push(add_array);
-        //for (let i = 0; )
     }
+    return finalArray;
+}
+
+function subtractSimilarEquipment(add_array, subtract_array) {
+    add_array = addSimilarEquipment(add_array);
+    subtract_array = addSimilarEquipment(subtract_array);  
     
-    // check to see it is an array of array
-    if(array.length > 0) {
-        finalArray.push(...array);
-        if (array.length < 2) {
-            return finalArray;
-        }
-        // console.log(array.length, 'arrya length')
-        for (let i=1; i < array.length; i++) {
-            const key = Object.keys(array[i]);
-            // console.log(key, 'present key')
-            const current_array = array[i][key[0]][0];
-            // console.log(current_array, 'the current array')
-            current_array.forEach( (item, index) => {
-                finalArray[index].mw += item.mw;
-            });
-        }
-    }    
+    // Ensure array1 is the array from the add similar function
+    const finalArray = [];
+    finalArray.push(...add_array);
+  
+    subtract_array.forEach( (item, index) => {
+        // First filter the item with the closest time to this
+        // add the filtered item    
+        finalArray[index].mw = Math.abs(finalArray[index].mw) - Math.abs(item.mw);
+        finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
+    })
     // console.log(finalArray, 'the add similar final array')
     return finalArray;
 }
+
+function subtractDissimilarEquipment(add_array, subtract_array) {
+    add_array = addSimilarEquipment(add_array);
+    subtract_array = addSimilarEquipment(subtract_array);  
+    
+    // console.log(array1, array2, 'check')
+    // Ensure array1 is the array from the add similar function
+    const finalArray = [];
+    finalArray.push(...add_array);
+
+    let last_item_time = 1;    
+    subtract_array.forEach( (item, index) => {
+        // First filter the item with the closest time to this
+        // This is an N^2 operation
+        const chosen_item = finalArray.filter( f_arr => {
+            const item_time_diff = Math.abs(f_arr.time - item.time);
+            
+            // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
+            // saved from a previous operation then chose the item and set it as the previous
+            if (item_time_diff < 3000 && f_arr.time !== last_item_time) {
+                last_item_time = f_arr.time;
+                // console.log(f_arr, item, 'the items contesting', last_item_time)
+                return true;
+            }
+        })
+        // console.log(chosen_item, 'the chosen item');
+        // add the filtered item    
+        finalArray[index].mw = Math.abs(chosen_item[0].mw) - Math.abs(item.mw);
+        finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
+    })
+    // console.log(finalArray, 'the add similar final array')
+    return finalArray;
+}
+
 function addDissimilarEquipment_raw(array1, array2) {
     if (array1.length === 0 || array2.length === 0) {
         return [];
@@ -550,32 +506,7 @@ function addDissimilarEquipment_raw(array1, array2) {
     });
     return finalArray;
 }
-function addDissimilarEquipment_unraw(array1, array2) {
-    // Ensure array1 is the array from the add similar function
-    const finalArray = [];
-    // get the key for the first item
-    const key = Object.keys(array1[0]);
-    finalArray.push(...array1[0][key[0]]);
 
-    let last_item_time = 1;
-
-    array2.forEach( (item, index) => {
-        // First filter the item with the closest time to this
-        // This is an N^2 operation
-        const chosen_item = finalArray.filter( f_arr => {
-            const item_time_diff = Math.abs(f_arr.time - item.time);
-            // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
-            // saved from a previous operation then chose the item and set it as the previous
-            if (item_time_diff < 4000 && f_arr.time !== last_item_time) {
-                last_item_time = f_arr.time;
-                return true;
-            }
-        })
-        // add the filtered item    
-        finalArray[index].mw += finalArray[index].mw + chosen_item.mw;        
-        
-    })
-}
 
 function Station_Adder(station_array) {
     const res_data = [
@@ -877,7 +808,7 @@ function Station_Adder(station_array) {
             
 
             // Complicated ones
-            
+            // Add Dissimilar equipment for 2 equipment
             if (station_name === 'ODUKPANI NIPP (GAS)') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'odukpaniGs');
@@ -886,7 +817,6 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['odukpaniGs'];
                 const equipment_to_sum_2 = station_to_add_2[0]['ikotEkpene'].filter( sa => Object.keys(sa)[0] === 'd1k' || Object.keys(sa)[0] === 'd2k');
-                // const total_equipment_to_sum = [...equipment_to_sum, ...equipment_to_sum_2]
                 try {
                     temp_hold.push(...addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_2));
                 } catch(e) {
@@ -904,14 +834,17 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['omotosho1'];
                 const equipment_to_sum_2 = station_to_add_2[0]['omotosho2'];
-                // const total_equipment_to_sum = [...equipment_to_sum, ...equipment_to_sum_2]
-                // if (total_equipment_to_sum.length > 0) {
-                //     temp_hold.push(...addSimilarEquipment(total_equipment_to_sum));
-                // }
-                // const obj = {};
-                // obj[station_name] = temp_hold;
-                // final_array.push(obj); 
+                try {
+                    temp_hold.push(...addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_2));
+                } catch(e) {
+                    console.log(e)
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj);
             }
+
+            // Add dismilar equipment for 3 equipment arrays
             if (station_name === 'DELTA (GAS)') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'delta2');
@@ -922,6 +855,11 @@ function Station_Adder(station_array) {
                 const equipment_to_sum = station_to_add[0]['delta2'];
                 const equipment_to_sum_1 = station_to_add_1[0]['delta3'];
                 const equipment_to_sum_2 = station_to_add_2[0]['deltaGs'];
+
+                const first_sum = addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_1);
+                const second_sum = addSimilarEquipment(equipment_to_sum_2);
+                console.log(first_sum, 'the first sum');
+                console.log(second_sum, 'the second sum');
                 // const total_equipment_to_sum = [...equipment_to_sum, ...equipment_to_sum_1, ...equipment_to_sum_2]
                 // if (total_equipment_to_sum.length > 0) {
                 //     temp_hold.push(...addSimilarEquipment(total_equipment_to_sum));
@@ -931,7 +869,7 @@ function Station_Adder(station_array) {
                 // final_array.push(obj); 
             }
 
-
+            // Subtract similar equipment
             if (station_name === 'GEREGU NIPP (GAS)') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'gereguPs');
@@ -939,8 +877,16 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['gereguPs'].filter( sa => Object.keys(sa)[0] === 'r1j' || Object.keys(sa)[0] === 'r2j');
                 const equipment_to_subtract = station_to_add[0]['gereguPs'].filter( sa => Object.keys(sa)[0] === 'gt11' || Object.keys(sa)[0] === 'gt12' || Object.keys(sa)[0] === 'gt13');
-                
+                try {
+                    temp_hold.push(...subtractSimilarEquipment(equipment_to_sum, equipment_to_subtract));
+                } catch(e) {
+                    console.log(e)
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj);
             }
+
             if (station_name === 'IBOM POWER (GAS)') {
                 const temp_hold = [];
                 const station_to_subtract = station_array.filter( sa => Object.keys(sa)[0] === 'ekim');
@@ -951,6 +897,7 @@ function Station_Adder(station_array) {
                 const equipment_to_sum = station_to_add_2[0]['eket'];
                 
             }
+
             if (station_name === 'OLORUNSOGO NIPP') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogoPhase1Gs');
