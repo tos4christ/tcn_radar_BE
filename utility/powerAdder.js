@@ -12,7 +12,7 @@ mydb.query(model.get_collapse, [start.getTime(), end.getTime()])
     .then( data => {
         const row_data = data.rows;
         const result = addPower(row_data);
-        console.log(JSON.stringify(result), 'power data result');
+        // console.log(JSON.stringify(result), 'power data result');
     })
 
 function addPower( data ) {
@@ -539,10 +539,11 @@ function addDissimilarEquipment_raw(array1, array2) {
             // saved from a previous operation then chose the item and set it as the previous
             if (item_time_diff < 3000 && f_arr.time !== last_item_time) {
                 last_item_time = f_arr.time;
+                console.log(f_arr, item, 'the items contesting', last_item_time)
                 return true;
             }
         })
-        //console.log(chosen_item, 'the chosen item');
+        console.log(chosen_item, 'the chosen item');
         // add the filtered item    
         finalArray[index].mw += chosen_item[0].mw;        
     });
