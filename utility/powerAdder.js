@@ -932,6 +932,7 @@ function Station_Adder(station_array) {
                 } catch(e) {
                     console.log(e)
                 }
+                console.log(temp_hold, 'the temphold')
                 const obj = {};
                 obj[station_name] = temp_hold;
                 final_array.push(obj);
