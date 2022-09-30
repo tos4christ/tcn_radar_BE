@@ -537,7 +537,7 @@ function addDissimilarEquipment_raw(array1, array2) {
             
             // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
             // saved from a previous operation then chose the item and set it as the previous
-            if (item_time_diff < 4000 && f_arr.time !== last_item_time) {
+            if (item_time_diff < 3000 && f_arr.time !== last_item_time) {
                 last_item_time = f_arr.time;
                 return true;
             }
