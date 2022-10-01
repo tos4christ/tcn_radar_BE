@@ -41,7 +41,7 @@ lines.getdaily = (req, res) => {
 
 lines.getcollapse = (req, res, next) => {
     const { body } = req;
-    console.log(body, 'the collapse body')
+    // console.log(body, 'the collapse body')
     if(!body.startDate || !body.endDate || !body.startTime || !body.endTime) {
         res.end({data: 'Please supply necessary inputs'})
     }    
