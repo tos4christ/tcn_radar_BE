@@ -460,6 +460,25 @@ function subtractSimilarEquipment_array(add_array, subtract_array) {
     return finalArray;
 }
 
+function subtractSimilarEquipment_array_noabs(add_array, subtract_array) {
+    if (add_array.length === 0 || subtract_array.length === 0) {
+        return [];
+    } 
+    
+    // Ensure array1 is the array from the add similar function
+    const finalArray = [];
+    finalArray.push(...add_array);
+  
+    subtract_array.forEach( (item, index) => {
+        // First filter the item with the closest time to this
+        // add the filtered item    
+        finalArray[index].mw = finalArray[index].mw - item.mw;
+        finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
+    })
+    // console.log(finalArray, 'the add similar final array')
+    return finalArray;
+}
+
 function subtractDissimilarEquipment_array(add_array, subtract_array) {
     if (add_array.length === 0 || subtract_array.length === 0) {
         return [];
@@ -1067,14 +1086,12 @@ function Station_Adder(station_array) {
                 const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'r1w' || Object.keys(sa)[0] === 'r2a');
                 const equipment_to_subtract = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
                 const equipment_to_subtract_2 = station_to_subtract[0]['olorunsogo1'];
-                console.log(JSON.stringify(equipment_to_sum), 'the equipment to sum');
-                console.log(JSON.stringify(equipment_to_subtract), 'the equipment to subtract')
-                console.log(JSON.stringify(equipment_to_subtract_2), 'the equipment to subtract2')
                 const adder = addSimilarEquipment(equipment_to_sum);
                 const subber = addDissimilarEquipment_raw_noabs(equipment_to_subtract, equipment_to_subtract_2);
-                console.log(JSON.stringify(adder), 'the adder');
+                // console.log(JSON.stringify(adder), 'the adder');
+                // console.log(JSON.stringify(subber), 'the adder');
                 try {
-                    temp_hold.push(...subtractSimilarEquipment_array(adder, subber));
+                    temp_hold.push(...subtractSimilarEquipment_array_noabs(adder, subber));
                 } catch(e) {
                     console.log(e)
                 }
