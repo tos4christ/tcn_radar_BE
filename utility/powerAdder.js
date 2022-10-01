@@ -1,20 +1,3 @@
-// const fs = require('fs');
-const mydb = require("../database/db");
-var model = require("../models/lines");
-const timeConverter = require('./timeConverter')
-
-// Get all the data
-// date, start-(hour, minute, seconds), end-(hour, minute, seconds)
-const startDate = '2022-09-29', endDate = '2022-09-29', startTime = '15:00', endTime = '15:02';
-const { start, end} = timeConverter(startDate, endDate, startTime, endTime);
-// console.log(start, end, 'the start and end time')
-mydb.query(model.get_collapse, [start.getTime(), end.getTime()])
-    .then( data => {
-        const row_data = data.rows;
-        const result = addPower(row_data);
-        console.log(JSON.stringify(result), 'power data result');
-    })
-
 function addPower( data ) {
     // const start_hour = req.body.start_hour;
     const station_array = [

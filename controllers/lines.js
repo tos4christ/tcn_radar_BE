@@ -5,6 +5,7 @@ var timeConverter = require('../utility/timeConverter');
 // var stations = require('../database/stations');
 var temExtractor = require('../utility/temExtractor');
 var XLSX = require('xlsx');
+var PowerAdder = require('../utility/powerAdder');
 
 const lines = {};
 // Controller first checks to see if the particular row exists or not, this determines
