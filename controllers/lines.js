@@ -19,7 +19,7 @@ lines.getdaily = (req, res) => {
     console.log(body, 'the body')
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };   
     const today = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
-    const searchDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/.test(body.startDate) ? query.day : today;    
+    const searchDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/.test(body.startDate) ? body.startDate : today;    
     // query the db for the data to use for populating the excel sheet
     db.query(model.get_daily, [searchDate])
         .then( resp => {
