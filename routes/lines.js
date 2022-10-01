@@ -16,8 +16,8 @@ router.post('/profile', jwtCheck, controller.profile);
 
 // router.get('/all', jwtCheck, controller.all);
 
-router.get('/tem', controller.getdaily);
+router.post('/tem', controller.getdaily);
 
-router.get('/collapse', controller.getcollapse);
+router.post('/collapse', controller.getcollapse);
 
 module.exports = router;
