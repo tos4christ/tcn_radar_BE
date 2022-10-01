@@ -17,7 +17,6 @@ mydb.query(model.get_collapse, [start.getTime(), end.getTime()])
 
 function addPower( data ) {
     // const start_hour = req.body.start_hour;
-
     const station_array = [
         {
             afamIv_vPs: [
@@ -364,7 +363,6 @@ function addPower( data ) {
             ]
         }
     ];
-
     // map the data from the database into the station_array (this is an expensive operation)
     station_array.forEach(station => {
         let equipment_array;
@@ -377,7 +375,6 @@ function addPower( data ) {
             // iterate through the equipment array, use the equipment name to filter for the equipment values from station_data
             equipment_array.forEach( equipment => {                
                 const equipment_data = station_data.filter( edat => edat.line_name === Object.keys(equipment)[0]);
-
                 // No need to sort the equipment
                 // const resorted_array = Equipment_Sorter(equipment_data);
                 equipment[Object.keys(equipment)[0]].push(equipment_data);
@@ -386,11 +383,6 @@ function addPower( data ) {
             return null;
         }        
     });
-    // console.log(JSON.stringify(station_array[15]), 'the station array 1');
-    // console.log(JSON.stringify(station_array[18]), 'the station array 2')
-    // const writeStream = fs.createWriteStream('logger.txt');
-    // writeStream.write(station_array);
-    // writeStream.end()
     return Station_Adder(station_array);
 };
 
@@ -398,19 +390,15 @@ function addSimilarEquipment(array) {
     const finalArray = [];
     // get the key for the first item
     const key = Object.keys(array[0]);
-    // console.log(key[0])
     // check to see it is an array of array
     if(array[0][key[0]].length > 0) {
         finalArray.push(...array[0][key[0]][0]);
         if (array.length < 2) {
             return finalArray;
         }
-        // console.log(array.length, 'arrya length')
         for (let i=1; i < array.length; i++) {
             const key = Object.keys(array[i]);
-            // console.log(key, 'present key')
             const current_array = array[i][key[0]][0];
-            // console.log(current_array, 'the current array')
             current_array.forEach( (item, index) => {
                 finalArray[index].mw += item.mw;
             });
@@ -421,61 +409,51 @@ function addSimilarEquipment(array) {
 
 function subtractSimilarEquipment_raw(add_array, subtract_array) {
     add_array = addSimilarEquipment(add_array);
-    subtract_array = addSimilarEquipment(subtract_array);
-    
+    subtract_array = addSimilarEquipment(subtract_array);    
     if (add_array.length < 1 || subtract_array < 1) {
         return []
-    }
-    
+    }    
     // Ensure array1 is the array from the add similar function
     const finalArray = [];
-    finalArray.push(...add_array);
-  
+    finalArray.push(...add_array);  
     subtract_array.forEach( (item, index) => {
         // First filter the item with the closest time to this
         // add the filtered item    
         finalArray[index].mw = Math.abs(finalArray[index].mw) - Math.abs(item.mw);
         finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
-    })
-    // console.log(finalArray, 'the add similar final array')
+    });
     return finalArray;
 }
 
 function subtractSimilarEquipment_array(add_array, subtract_array) {
     if (add_array.length === 0 || subtract_array.length === 0) {
         return [];
-    } 
-    
+    }    
     // Ensure array1 is the array from the add similar function
     const finalArray = [];
-    finalArray.push(...add_array);
-  
+    finalArray.push(...add_array);  
     subtract_array.forEach( (item, index) => {
         // First filter the item with the closest time to this
         // add the filtered item    
         finalArray[index].mw = Math.abs(finalArray[index].mw) - Math.abs(item.mw);
         finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
-    })
-    // console.log(finalArray, 'the add similar final array')
+    });
     return finalArray;
 }
 
 function subtractSimilarEquipment_array_noabs(add_array, subtract_array) {
     if (add_array.length === 0 || subtract_array.length === 0) {
         return [];
-    } 
-    
+    }    
     // Ensure array1 is the array from the add similar function
     const finalArray = [];
-    finalArray.push(...add_array);
-  
+    finalArray.push(...add_array);  
     subtract_array.forEach( (item, index) => {
         // First filter the item with the closest time to this
         // add the filtered item    
         finalArray[index].mw = finalArray[index].mw - item.mw;
         finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
-    })
-    // console.log(finalArray, 'the add similar final array')
+    });
     return finalArray;
 }
 
@@ -483,19 +461,15 @@ function subtractDissimilarEquipment_array(add_array, subtract_array) {
     if (add_array.length === 0 || subtract_array.length === 0) {
         return [];
     }
-    
-    // console.log(array1, array2, 'check')
     // Ensure array1 is the array from the add similar function
     const finalArray = [];
     finalArray.push(...add_array);
-
     let last_item_time = 1;    
     subtract_array.forEach( (item, index) => {
         // First filter the item with the closest time to this
         // This is an N^2 operation
         const chosen_item = finalArray.filter( f_arr => {
-            const item_time_diff = Math.abs(f_arr.time - item.time);
-            
+            const item_time_diff = Math.abs(f_arr.time - item.time);            
             // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
             // saved from a previous operation then chose the item and set it as the previous
             if (item_time_diff < 3000 && f_arr.time !== last_item_time) {
@@ -503,15 +477,13 @@ function subtractDissimilarEquipment_array(add_array, subtract_array) {
                 // console.log(f_arr, item, 'the items contesting', last_item_time)
                 return true;
             }
-        })
-        // console.log(chosen_item, 'the chosen item');
+        });
         // add the filtered item
         if (chosen_item.length > 0) {
             finalArray[index].mw = Math.abs(chosen_item[0].mw) - Math.abs(item.mw);
             finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
         }        
-    })
-    // console.log(finalArray, 'the add similar final array')
+    });
     return finalArray;
 }
 
@@ -519,16 +491,13 @@ function subtractEquipment_zero(subtract_array) {
     if (subtract_array.length === 0) {
         return [];
     }
-
     // Ensure array1 is the array from the add similar function
-    const finalArray = [];
- 
+    const finalArray = []; 
     subtract_array.forEach( (item) => {
         // subtract the megawatt from zero to get the complete equation of the series
         item.mw = 0 - item.mw
         finalArray.push(item);
-    })
-    // console.log(finalArray, 'the add similar final array')
+    });
     return finalArray;
 }
 
@@ -540,38 +509,28 @@ function addDissimilarEquipment_raw(array1, array2) {
     // After that you add the single arrays from the results comparing the time
     array1 = addSimilarEquipment(array1);
     array2 = addSimilarEquipment(array2);
-
-    // console.log(array1, 'the array 1');
-    // console.log(array2, 'the array 2')
-
     // if the array1 is empty return the similar addition of the second array
     if (array1.length === 0) {
         return array2;
     } else if (array2.length === 0) {
         return array1;
-    }
-
-    // console.log(array1, array2, 'check')
+    };
     // Ensure array1 is the array from the add similar function
     const finalArray = [];
     finalArray.push(...array1);
-
     let last_item_time = 1;    
     array2.forEach( (item, index) => {
         // First filter the item with the closest time to this
         // This is an N^2 operation
         const chosen_item = finalArray.filter( f_arr => {
-            const item_time_diff = Math.abs(f_arr.time - item.time);
-            
+            const item_time_diff = Math.abs(f_arr.time - item.time);            
             // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
             // saved from a previous operation then chose the item and set it as the previous
             if (item_time_diff < 3000 && f_arr.time !== last_item_time) {
                 last_item_time = f_arr.time;
-                // console.log(f_arr, item, 'the items contesting', last_item_time)
                 return true;
             }
-        })
-        // console.log(chosen_item, 'the chosen item');
+        });
         // add the filtered item 
         if (chosen_item.length > 0) {
             finalArray[index].mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
@@ -589,38 +548,28 @@ function addDissimilarEquipment_raw_noabs(array1, array2) {
     // After that you add the single arrays from the results comparing the time
     array1 = addSimilarEquipment(array1);
     array2 = addSimilarEquipment(array2);
-
-    // console.log(array1, 'the array 1');
-    // console.log(array2, 'the array 2')
-
     // if the array1 is empty return the similar addition of the second array
     if (array1.length === 0) {
         return array2;
     } else if (array2.length === 0) {
         return array1;
-    }
-
-    // console.log(array1, array2, 'check')
+    };
     // Ensure array1 is the array from the add similar function
     const finalArray = [];
     finalArray.push(...array1);
-
     let last_item_time = 1;    
     array2.forEach( (item, index) => {
         // First filter the item with the closest time to this
         // This is an N^2 operation
         const chosen_item = finalArray.filter( f_arr => {
-            const item_time_diff = Math.abs(f_arr.time - item.time);
-            
+            const item_time_diff = Math.abs(f_arr.time - item.time);            
             // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
             // saved from a previous operation then chose the item and set it as the previous
             if (item_time_diff < 3000 && f_arr.time !== last_item_time) {
                 last_item_time = f_arr.time;
-                // console.log(f_arr, item, 'the items contesting', last_item_time)
                 return true;
             }
-        })
-        // console.log(chosen_item, 'the chosen item');
+        });
         // add the filtered item 
         if (chosen_item.length > 0) {
             finalArray[index].mw = (chosen_item[0].mw) + (item.mw);
@@ -633,29 +582,23 @@ function addDissimilarEquipment_raw_noabs(array1, array2) {
 function addDissimilarEquipment_array(array1, array2) {
     if (array1.length === 0 || array2.length === 0) {
         return [];
-    }
-
-    // console.log(array1, array2, 'check')
+    };
     // Ensure array1 is the array from the add similar function
     const finalArray = [];
     finalArray.push(...array1);
-
     let last_item_time = 1;    
     array2.forEach( (item, index) => {
         // First filter the item with the closest time to this
         // This is an N^2 operation
         const chosen_item = finalArray.filter( f_arr => {
-            const item_time_diff = Math.abs(f_arr.time - item.time);
-            
+            const item_time_diff = Math.abs(f_arr.time - item.time);            
             // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
             // saved from a previous operation then chose the item and set it as the previous
             if (item_time_diff < 3000 && f_arr.time !== last_item_time) {
                 last_item_time = f_arr.time;
-                // console.log(f_arr, item, 'the items contesting', last_item_time)
                 return true;
             }
-        })
-        // console.log(chosen_item, 'the chosen item');
+        });
         // add the filtered item
         if (chosen_item.length > 0) {
             finalArray[index].mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
@@ -664,8 +607,6 @@ function addDissimilarEquipment_array(array1, array2) {
     });
     return finalArray;
 }
-
-
 
 function Station_Adder(station_array) {
     const res_data = [
@@ -682,287 +623,286 @@ function Station_Adder(station_array) {
         // Before adding two equipments that have been summed with the similarsum function
         // Check to see if the array is not empty before proceeding
         if (station_name) {
-            // if (station_name === 'AFAM IV & V (GAS)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'afamIv_vPs');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['afamIv_vPs'];                
-            //     // run logic only if there is an equipment to iterate
-            //     console.log(equipment_to_sum, 'the equipment to sum afam');
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj);                
-            // }
-            // if (station_name === 'SHIRORO (HYDRO)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'shiroroPs');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['shiroroPs']; 
-            //     console.log(equipment_to_sum, 'the equipment to sum shiroro');               
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj);
-            // }
-            // if (station_name === 'EGBIN (STEAM)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'egbinPs');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['egbinPs'];                
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }
-            // if (station_name === 'KAINJI (HYDRO)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'kainjiTs');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['kainjiTs'];                
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }
-            // if (station_name === 'JEBBA (HYDRO)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'jebbaTs');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['jebbaTs'];                
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }
-            // if (station_name === 'OKPAI (GAS|STEAM)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'okpaiGs');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['okpaiGs'];                
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }
-            // if (station_name === 'DADINKOWA G.S (HYDRO)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'dadinKowaGs');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['dadinKowaGs'];                
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }
-            // if (station_name === 'AFAM VI (GAS|STEAM)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'afamViTs');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['afamViTs'];                
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }
-            // if (station_name === 'ALAOJI NIPP (GAS)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'alaoji');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['alaoji'];
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }
-            // if (station_name === 'SAPELE NIPP (GAS)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'sapeleNippPs');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['sapeleNippPs'].filter( sa => Object.keys(sa)[0] === 'gt1' || Object.keys(sa)[0] === 'gt2' || Object.keys(sa)[0] === 'gt3' || Object.keys(sa)[0] === 'gt4');
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }
-            // if (station_name === 'SAPELE (STEAM)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'sapeleNippPs');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['sapeleNippPs'].filter( sa => Object.keys(sa)[0] === 'st1' || Object.keys(sa)[0] === 'st3');
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }            
-            // if (station_name === 'RIVERS IPP (GAS)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'riversIppPs');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['riversIppPs'];
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }
-            // if (station_name === 'OMOKU (GAS)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'omokuPs1');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['omokuPs1'];
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj);                
-            // }            
-            // if (station_name === 'IHOVBOR NIPP (GAS)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'ihovborNippPs');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['ihovborNippPs'].filter( sa => Object.keys(sa)[0] === 'gt1' || Object.keys(sa)[0] === 'gt2' || Object.keys(sa)[0] === 'gt3' || Object.keys(sa)[0] === 'gt4');
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }
-            // if (station_name === 'AZURA-EDO IPP (GAS)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'ihovborNippPs');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['ihovborNippPs'].filter( sa => Object.keys(sa)[0] === 'ohl1' || Object.keys(sa)[0] === 'ohl2');
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }            
-            // if (station_name === 'PARAS ENERGY (GAS)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'parasEnergyPs');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['parasEnergyPs'];
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }
-            // if (station_name === 'OMOTOSHO NIPP (GAS)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'omotoshoNippPs');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['omotoshoNippPs'];
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }            
-            // if (station_name === 'GEREGU (GAS)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'gereguPs');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['gereguPs'].filter( sa => Object.keys(sa)[0] === 'gt11' || Object.keys(sa)[0] === 'gt12' || Object.keys(sa)[0] === 'gt13');
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }
-            // if (station_name === 'TRANS-AMADI (GAS)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'phMain');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['phMain'];
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }            
-            // if (station_name === 'GBARAIN NIPP (GAS)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'gbarain');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['gbarain'];
-            //     if (equipment_to_sum.length > 0) {
-            //         temp_hold.push(...addSimilarEquipment(equipment_to_sum));
-            //     }
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }
-            // if (station_name === 'OLORUNSOGO (GAS)') {
-            //     const temp_hold = [];
-            //     const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogoPhase1Gs');
-            //     const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogo1');
-            //     // Get the list of equipment objects from the stations
-            //     // remember to filter equipment in the cases where not all is required
-            //     const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
-            //     const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'];
-            //     try {
-            //         temp_hold.push(...addSimilarEquipment([...equipment_to_sum, ...equipment_to_sum_2]));
-            //     } catch(e) {
-            //         console.log(e)
-            //     }                
-            //     const obj = {};
-            //     obj[station_name] = temp_hold;
-            //     final_array.push(obj); 
-            // }            
-
+            if (station_name === 'AFAM IV & V (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'afamIv_vPs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['afamIv_vPs'];                
+                // run logic only if there is an equipment to iterate
+                console.log(equipment_to_sum, 'the equipment to sum afam');
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj);                
+            }
+            if (station_name === 'SHIRORO (HYDRO)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'shiroroPs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['shiroroPs']; 
+                console.log(equipment_to_sum, 'the equipment to sum shiroro');               
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj);
+            }
+            if (station_name === 'EGBIN (STEAM)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'egbinPs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['egbinPs'];                
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
+            if (station_name === 'KAINJI (HYDRO)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'kainjiTs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['kainjiTs'];                
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
+            if (station_name === 'JEBBA (HYDRO)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'jebbaTs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['jebbaTs'];                
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
+            if (station_name === 'OKPAI (GAS|STEAM)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'okpaiGs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['okpaiGs'];                
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
+            if (station_name === 'DADINKOWA G.S (HYDRO)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'dadinKowaGs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['dadinKowaGs'];                
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
+            if (station_name === 'AFAM VI (GAS|STEAM)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'afamViTs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['afamViTs'];                
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
+            if (station_name === 'ALAOJI NIPP (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'alaoji');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['alaoji'];
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
+            if (station_name === 'SAPELE NIPP (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'sapeleNippPs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['sapeleNippPs'].filter( sa => Object.keys(sa)[0] === 'gt1' || Object.keys(sa)[0] === 'gt2' || Object.keys(sa)[0] === 'gt3' || Object.keys(sa)[0] === 'gt4');
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
+            if (station_name === 'SAPELE (STEAM)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'sapeleNippPs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['sapeleNippPs'].filter( sa => Object.keys(sa)[0] === 'st1' || Object.keys(sa)[0] === 'st3');
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }            
+            if (station_name === 'RIVERS IPP (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'riversIppPs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['riversIppPs'];
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
+            if (station_name === 'OMOKU (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'omokuPs1');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['omokuPs1'];
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj);                
+            }            
+            if (station_name === 'IHOVBOR NIPP (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'ihovborNippPs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['ihovborNippPs'].filter( sa => Object.keys(sa)[0] === 'gt1' || Object.keys(sa)[0] === 'gt2' || Object.keys(sa)[0] === 'gt3' || Object.keys(sa)[0] === 'gt4');
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
+            if (station_name === 'AZURA-EDO IPP (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'ihovborNippPs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['ihovborNippPs'].filter( sa => Object.keys(sa)[0] === 'ohl1' || Object.keys(sa)[0] === 'ohl2');
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }            
+            if (station_name === 'PARAS ENERGY (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'parasEnergyPs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['parasEnergyPs'];
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
+            if (station_name === 'OMOTOSHO NIPP (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'omotoshoNippPs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['omotoshoNippPs'];
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }            
+            if (station_name === 'GEREGU (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'gereguPs');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['gereguPs'].filter( sa => Object.keys(sa)[0] === 'gt11' || Object.keys(sa)[0] === 'gt12' || Object.keys(sa)[0] === 'gt13');
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
+            if (station_name === 'TRANS-AMADI (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'phMain');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['phMain'];
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }            
+            if (station_name === 'GBARAIN NIPP (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'gbarain');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['gbarain'];
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                }
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
+            if (station_name === 'OLORUNSOGO (GAS)') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogoPhase1Gs');
+                const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogo1');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
+                const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'];
+                try {
+                    temp_hold.push(...addSimilarEquipment([...equipment_to_sum, ...equipment_to_sum_2]));
+                } catch(e) {
+                    console.log(e)
+                }                
+                const obj = {};
+                obj[station_name] = temp_hold;
+                final_array.push(obj); 
+            }
             // Complicated ones
             // Add Dissimilar equipment for 2 equipment
             if (station_name === 'ODUKPANI NIPP (GAS)') {
@@ -999,7 +939,6 @@ function Station_Adder(station_array) {
                 obj[station_name] = temp_hold;
                 final_array.push(obj);
             }
-
             // Add dismilar equipment for 3 equipment arrays
             if (station_name === 'DELTA (GAS)') {
                 const temp_hold = [];
@@ -1011,26 +950,17 @@ function Station_Adder(station_array) {
                 const equipment_to_sum = station_to_add[0]['delta2'];
                 const equipment_to_sum_1 = station_to_add_1[0]['delta3'];
                 const equipment_to_sum_2 = station_to_add_2[0]['deltaGs'];
-
-                // console.log(equipment_to_sum, 'the equipment to sum');
-
-
                 const first_sum = addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_1);
-                const second_sum = addSimilarEquipment(equipment_to_sum_2);
-                // console.log(first_sum, 'the first sum');
-                // console.log(second_sum, 'the second sum');
-                
+                const second_sum = addSimilarEquipment(equipment_to_sum_2);                
                 try {
                     temp_hold.push(...addDissimilarEquipment_array(first_sum, second_sum));
                 } catch(e) {
                     console.log(e);
                 }
-                // console.log(temp_hold, 'the temp hold');
                 const obj = {};
                 obj[station_name] = temp_hold;
                 final_array.push(obj); 
             }
-
             // Subtract similar equipment
             // 0 minus addition of all
             if (station_name === 'GEREGU NIPP (GAS)') {
@@ -1040,13 +970,13 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['gereguPs'].filter( sa => Object.keys(sa)[0] === 'r1j' || Object.keys(sa)[0] === 'r2j');
                 const equipment_to_subtract = station_to_add[0]['gereguPs'].filter( sa => Object.keys(sa)[0] === 'gt11' || Object.keys(sa)[0] === 'gt12' || Object.keys(sa)[0] === 'gt13');
+                // get the final sum function
                 const final_sum = addSimilarEquipment([...equipment_to_sum, ...equipment_to_subtract])
                 try {
                     temp_hold.push(...subtractEquipment_zero(final_sum));
                 } catch(e) {
                     console.log(e)
                 }
-                // console.log(temp_hold, 'the temphold')
                 const obj = {};
                 obj[station_name] = temp_hold;
                 final_array.push(obj);
@@ -1061,7 +991,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_subtract = station_to_subtract[0]['ekim'];
                 const equipment_to_sum = station_to_add_2[0]['eket'];
-
+                // Add equipment separately
                 const first_sum = addSimilarEquipment(equipment_to_subtract);
                 const second_sum = addSimilarEquipment(equipment_to_sum);
                 const final_sum = addDissimilarEquipment_array(first_sum, second_sum);
@@ -1070,13 +1000,11 @@ function Station_Adder(station_array) {
                 } catch(e) {
                     console.log(e)
                 }
-                // console.log(temp_hold, 'the temphold')
                 const obj = {};
                 obj[station_name] = temp_hold;
-                final_array.push(obj);
-                
+                final_array.push(obj);                
             }
-
+            // Disparate additions
             if (station_name === 'OLORUNSOGO NIPP') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogoPhase1Gs');
@@ -1086,23 +1014,19 @@ function Station_Adder(station_array) {
                 const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'r1w' || Object.keys(sa)[0] === 'r2a');
                 const equipment_to_subtract = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
                 const equipment_to_subtract_2 = station_to_subtract[0]['olorunsogo1'];
+                // Add the sub functions
                 const adder = addSimilarEquipment(equipment_to_sum);
                 const subber = addDissimilarEquipment_raw_noabs(equipment_to_subtract, equipment_to_subtract_2);
-                // console.log(JSON.stringify(adder), 'the adder');
-                // console.log(JSON.stringify(subber), 'the adder');
                 try {
                     temp_hold.push(...subtractSimilarEquipment_array_noabs(adder, subber));
                 } catch(e) {
                     console.log(e)
                 }
-                // console.log(temp_hold, 'the temphold')
                 const obj = {};
                 obj[station_name] = temp_hold;
-                final_array.push(obj);
-                
+                final_array.push(obj);                
             }            
         }
     });
-    // console.log(JSON.stringify(final_array), 'the final array');
     return final_array;
 };
