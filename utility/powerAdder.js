@@ -386,7 +386,7 @@ function addPower( data ) {
     return Station_Adder(station_array);
 };
 
-function addSimilarEquipment(array) {
+function addSimilarEquipment(array, station_name) {
     const finalArray = [];
     // get the key for the first item
     const key = Object.keys(array[0]);
@@ -401,47 +401,17 @@ function addSimilarEquipment(array) {
             const current_array = array[i][key[0]][0];
             current_array.forEach( (item, index) => {
                 finalArray[index].mw += item.mw;
+                if (station_name) {
+                    finalArray[index].station = station_name;
+                    delete finalArray[index].line_name;
+                }                
             });
         }
     }
     return finalArray;
 }
 
-function subtractSimilarEquipment_raw(add_array, subtract_array) {
-    add_array = addSimilarEquipment(add_array);
-    subtract_array = addSimilarEquipment(subtract_array);    
-    if (add_array.length < 1 || subtract_array < 1) {
-        return []
-    }    
-    // Ensure array1 is the array from the add similar function
-    const finalArray = [];
-    finalArray.push(...add_array);  
-    subtract_array.forEach( (item, index) => {
-        // First filter the item with the closest time to this
-        // add the filtered item    
-        finalArray[index].mw = Math.abs(finalArray[index].mw) - Math.abs(item.mw);
-        finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
-    });
-    return finalArray;
-}
-
-function subtractSimilarEquipment_array(add_array, subtract_array) {
-    if (add_array.length === 0 || subtract_array.length === 0) {
-        return [];
-    }    
-    // Ensure array1 is the array from the add similar function
-    const finalArray = [];
-    finalArray.push(...add_array);  
-    subtract_array.forEach( (item, index) => {
-        // First filter the item with the closest time to this
-        // add the filtered item    
-        finalArray[index].mw = Math.abs(finalArray[index].mw) - Math.abs(item.mw);
-        finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
-    });
-    return finalArray;
-}
-
-function subtractSimilarEquipment_array_noabs(add_array, subtract_array) {
+function subtractSimilarEquipment_array_noabs(add_array, subtract_array, station_name) {
     if (add_array.length === 0 || subtract_array.length === 0) {
         return [];
     }    
@@ -453,41 +423,15 @@ function subtractSimilarEquipment_array_noabs(add_array, subtract_array) {
         // add the filtered item    
         finalArray[index].mw = finalArray[index].mw - item.mw;
         finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
+        if (station_name) {
+            finalArray[index].station = station_name;
+            delete finalArray[index].line_name;
+        }  
     });
     return finalArray;
 }
 
-function subtractDissimilarEquipment_array(add_array, subtract_array) {
-    if (add_array.length === 0 || subtract_array.length === 0) {
-        return [];
-    }
-    // Ensure array1 is the array from the add similar function
-    const finalArray = [];
-    finalArray.push(...add_array);
-    let last_item_time = 1;    
-    subtract_array.forEach( (item, index) => {
-        // First filter the item with the closest time to this
-        // This is an N^2 operation
-        const chosen_item = finalArray.filter( f_arr => {
-            const item_time_diff = Math.abs(f_arr.time - item.time);            
-            // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
-            // saved from a previous operation then chose the item and set it as the previous
-            if (item_time_diff < 3000 && f_arr.time !== last_item_time) {
-                last_item_time = f_arr.time;
-                // console.log(f_arr, item, 'the items contesting', last_item_time)
-                return true;
-            }
-        });
-        // add the filtered item
-        if (chosen_item.length > 0) {
-            finalArray[index].mw = Math.abs(chosen_item[0].mw) - Math.abs(item.mw);
-            finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
-        }        
-    });
-    return finalArray;
-}
-
-function subtractEquipment_zero(subtract_array) {
+function subtractEquipment_zero(subtract_array, station_name) {
     if (subtract_array.length === 0) {
         return [];
     }
@@ -496,12 +440,16 @@ function subtractEquipment_zero(subtract_array) {
     subtract_array.forEach( (item) => {
         // subtract the megawatt from zero to get the complete equation of the series
         item.mw = 0 - item.mw
+        if (station_name) {
+            item.station = station_name;
+            delete item.line_name;
+        }  
         finalArray.push(item);
     });
     return finalArray;
 }
 
-function addDissimilarEquipment_raw(array1, array2) {
+function addDissimilarEquipment_raw(array1, array2, station_name) {
     if (array1.length === 0 || array2.length === 0) {
         return [];
     }
@@ -535,6 +483,10 @@ function addDissimilarEquipment_raw(array1, array2) {
         if (chosen_item.length > 0) {
             finalArray[index].mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
             finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
+            if (station_name) {
+                finalArray[index].station = station_name;
+                delete finalArray[index].line_name;
+            }            
         }        
     });
     return finalArray;
@@ -579,7 +531,7 @@ function addDissimilarEquipment_raw_noabs(array1, array2) {
     return finalArray;
 }
 
-function addDissimilarEquipment_array(array1, array2) {
+function addDissimilarEquipment_array(array1, array2, station_name) {
     if (array1.length === 0 || array2.length === 0) {
         return [];
     };
@@ -603,6 +555,10 @@ function addDissimilarEquipment_array(array1, array2) {
         if (chosen_item.length > 0) {
             finalArray[index].mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
             finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
+            if (station_name) {
+                finalArray[index].station = station_name;
+                delete finalArray[index].line_name;
+            }  
         }        
     });
     return finalArray;
@@ -632,7 +588,7 @@ function Station_Adder(station_array) {
                 // run logic only if there is an equipment to iterate
                 console.log(equipment_to_sum, 'the equipment to sum afam');
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -646,7 +602,7 @@ function Station_Adder(station_array) {
                 const equipment_to_sum = station_to_add[0]['shiroroPs']; 
                 console.log(equipment_to_sum, 'the equipment to sum shiroro');               
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -659,7 +615,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['egbinPs'];                
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -672,7 +628,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['kainjiTs'];                
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -685,7 +641,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['jebbaTs'];                
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -698,7 +654,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['okpaiGs'];                
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -711,7 +667,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['dadinKowaGs'];                
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -724,7 +680,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['afamViTs'];                
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -737,7 +693,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['alaoji'];
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -750,7 +706,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['sapeleNippPs'].filter( sa => Object.keys(sa)[0] === 'gt1' || Object.keys(sa)[0] === 'gt2' || Object.keys(sa)[0] === 'gt3' || Object.keys(sa)[0] === 'gt4');
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -763,7 +719,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['sapeleNippPs'].filter( sa => Object.keys(sa)[0] === 'st1' || Object.keys(sa)[0] === 'st3');
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -776,7 +732,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['riversIppPs'];
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -789,7 +745,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['omokuPs1'];
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -802,7 +758,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['ihovborNippPs'].filter( sa => Object.keys(sa)[0] === 'gt1' || Object.keys(sa)[0] === 'gt2' || Object.keys(sa)[0] === 'gt3' || Object.keys(sa)[0] === 'gt4');
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -815,7 +771,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['ihovborNippPs'].filter( sa => Object.keys(sa)[0] === 'ohl1' || Object.keys(sa)[0] === 'ohl2');
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -828,7 +784,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['parasEnergyPs'];
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -841,7 +797,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['omotoshoNippPs'];
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -854,7 +810,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['gereguPs'].filter( sa => Object.keys(sa)[0] === 'gt11' || Object.keys(sa)[0] === 'gt12' || Object.keys(sa)[0] === 'gt13');
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -867,7 +823,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['phMain'];
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -880,7 +836,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['gbarain'];
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum));
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 const obj = {};
                 obj[station_name] = temp_hold;
@@ -895,7 +851,7 @@ function Station_Adder(station_array) {
                 const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
                 const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'];
                 try {
-                    temp_hold.push(...addSimilarEquipment([...equipment_to_sum, ...equipment_to_sum_2]));
+                    temp_hold.push(...addSimilarEquipment([...equipment_to_sum, ...equipment_to_sum_2], station_name));
                 } catch(e) {
                     console.log(e)
                 }                
@@ -914,7 +870,7 @@ function Station_Adder(station_array) {
                 const equipment_to_sum = station_to_add[0]['odukpaniGs'];
                 const equipment_to_sum_2 = station_to_add_2[0]['ikotEkpene'].filter( sa => Object.keys(sa)[0] === 'd1k' || Object.keys(sa)[0] === 'd2k');
                 try {
-                    temp_hold.push(...addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_2));
+                    temp_hold.push(...addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_2, station_name));
                 } catch(e) {
                     console.log(e)
                 }
@@ -931,7 +887,7 @@ function Station_Adder(station_array) {
                 const equipment_to_sum = station_to_add[0]['omotosho1'];
                 const equipment_to_sum_2 = station_to_add_2[0]['omotosho2'];
                 try {
-                    temp_hold.push(...addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_2));
+                    temp_hold.push(...addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_2, station_name));
                 } catch(e) {
                     console.log(e)
                 }
@@ -953,7 +909,7 @@ function Station_Adder(station_array) {
                 const first_sum = addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_1);
                 const second_sum = addSimilarEquipment(equipment_to_sum_2);                
                 try {
-                    temp_hold.push(...addDissimilarEquipment_array(first_sum, second_sum));
+                    temp_hold.push(...addDissimilarEquipment_array(first_sum, second_sum, station_name));
                 } catch(e) {
                     console.log(e);
                 }
@@ -973,7 +929,7 @@ function Station_Adder(station_array) {
                 // get the final sum function
                 const final_sum = addSimilarEquipment([...equipment_to_sum, ...equipment_to_subtract])
                 try {
-                    temp_hold.push(...subtractEquipment_zero(final_sum));
+                    temp_hold.push(...subtractEquipment_zero(final_sum, station_name));
                 } catch(e) {
                     console.log(e)
                 }
@@ -996,7 +952,7 @@ function Station_Adder(station_array) {
                 const second_sum = addSimilarEquipment(equipment_to_sum);
                 const final_sum = addDissimilarEquipment_array(first_sum, second_sum);
                 try {
-                    temp_hold.push(...subtractEquipment_zero(final_sum));
+                    temp_hold.push(...subtractEquipment_zero(final_sum, station_name));
                 } catch(e) {
                     console.log(e)
                 }
@@ -1018,7 +974,7 @@ function Station_Adder(station_array) {
                 const adder = addSimilarEquipment(equipment_to_sum);
                 const subber = addDissimilarEquipment_raw_noabs(equipment_to_subtract, equipment_to_subtract_2);
                 try {
-                    temp_hold.push(...subtractSimilarEquipment_array_noabs(adder, subber));
+                    temp_hold.push(...subtractSimilarEquipment_array_noabs(adder, subber, station_name));
                 } catch(e) {
                     console.log(e)
                 }
