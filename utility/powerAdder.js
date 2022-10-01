@@ -1067,11 +1067,12 @@ function Station_Adder(station_array) {
                 const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'r1w' || Object.keys(sa)[0] === 'r2a');
                 const equipment_to_subtract = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
                 const equipment_to_subtract_2 = station_to_subtract[0]['olorunsogo1'];
-                console.log(equipment_to_sum, 'the equipment to sum');
-                console.log(equipment_to_subtract, 'the equipment to subtract')
-                console.log(equipment_to_subtract_2, 'the equipment to subtract2')
+                console.log(JSON.stringify(equipment_to_sum), 'the equipment to sum');
+                console.log(JSON.stringify(equipment_to_subtract), 'the equipment to subtract')
+                console.log(JSON.stringify(equipment_to_subtract_2), 'the equipment to subtract2')
                 const adder = addSimilarEquipment(equipment_to_sum);
                 const subber = addDissimilarEquipment_raw_noabs(equipment_to_subtract, equipment_to_subtract_2);
+                console.log(JSON.stringify(adder), 'the adder');
                 try {
                     temp_hold.push(...subtractSimilarEquipment_array(adder, subber));
                 } catch(e) {
