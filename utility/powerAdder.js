@@ -590,9 +590,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj);                
+                final_array.push(...temp_hold);
             }
             if (station_name === 'SHIRORO (HYDRO)') {
                 const temp_hold = [];
@@ -604,9 +602,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj);
+                final_array.push(...temp_hold);
             }
             if (station_name === 'EGBIN (STEAM)') {
                 const temp_hold = [];
@@ -617,9 +613,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }
             if (station_name === 'KAINJI (HYDRO)') {
                 const temp_hold = [];
@@ -630,9 +624,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }
             if (station_name === 'JEBBA (HYDRO)') {
                 const temp_hold = [];
@@ -643,9 +635,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }
             if (station_name === 'OKPAI (GAS|STEAM)') {
                 const temp_hold = [];
@@ -656,9 +646,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }
             if (station_name === 'DADINKOWA G.S (HYDRO)') {
                 const temp_hold = [];
@@ -669,9 +657,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }
             if (station_name === 'AFAM VI (GAS|STEAM)') {
                 const temp_hold = [];
@@ -682,9 +668,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }
             if (station_name === 'ALAOJI NIPP (GAS)') {
                 const temp_hold = [];
@@ -695,9 +679,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }
             if (station_name === 'SAPELE NIPP (GAS)') {
                 const temp_hold = [];
@@ -708,9 +690,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }
             if (station_name === 'SAPELE (STEAM)') {
                 const temp_hold = [];
@@ -721,9 +701,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }            
             if (station_name === 'RIVERS IPP (GAS)') {
                 const temp_hold = [];
@@ -734,9 +712,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }
             if (station_name === 'OMOKU (GAS)') {
                 const temp_hold = [];
@@ -747,9 +723,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj);                
+                final_array.push(...temp_hold);
             }            
             if (station_name === 'IHOVBOR NIPP (GAS)') {
                 const temp_hold = [];
@@ -760,9 +734,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }
             if (station_name === 'AZURA-EDO IPP (GAS)') {
                 const temp_hold = [];
@@ -773,9 +745,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }            
             if (station_name === 'PARAS ENERGY (GAS)') {
                 const temp_hold = [];
@@ -786,9 +756,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }
             if (station_name === 'OMOTOSHO NIPP (GAS)') {
                 const temp_hold = [];
@@ -799,9 +767,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }            
             if (station_name === 'GEREGU (GAS)') {
                 const temp_hold = [];
@@ -812,9 +778,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }
             if (station_name === 'TRANS-AMADI (GAS)') {
                 const temp_hold = [];
@@ -825,9 +789,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }            
             if (station_name === 'GBARAIN NIPP (GAS)') {
                 const temp_hold = [];
@@ -838,9 +800,7 @@ function Station_Adder(station_array) {
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }
             if (station_name === 'OLORUNSOGO (GAS)') {
                 const temp_hold = [];
@@ -855,9 +815,7 @@ function Station_Adder(station_array) {
                 } catch(e) {
                     console.log(e)
                 }                
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }
             // Complicated ones
             // Add Dissimilar equipment for 2 equipment
@@ -874,9 +832,7 @@ function Station_Adder(station_array) {
                 } catch(e) {
                     console.log(e)
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj);
+                final_array.push(...temp_hold);
             }
             if (station_name === 'OMOTOSHO (GAS)') {
                 const temp_hold = [];
@@ -891,9 +847,7 @@ function Station_Adder(station_array) {
                 } catch(e) {
                     console.log(e)
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj);
+                final_array.push(...temp_hold);
             }
             // Add dismilar equipment for 3 equipment arrays
             if (station_name === 'DELTA (GAS)') {
@@ -913,9 +867,7 @@ function Station_Adder(station_array) {
                 } catch(e) {
                     console.log(e);
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj); 
+                final_array.push(...temp_hold);
             }
             // Subtract similar equipment
             // 0 minus addition of all
@@ -933,9 +885,7 @@ function Station_Adder(station_array) {
                 } catch(e) {
                     console.log(e)
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj);
+                final_array.push(...temp_hold);
             }
             // Subtract similar equipment
             // 0 minus addition of all
@@ -956,9 +906,7 @@ function Station_Adder(station_array) {
                 } catch(e) {
                     console.log(e)
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj);                
+                final_array.push(...temp_hold);
             }
             // Disparate additions
             if (station_name === 'OLORUNSOGO NIPP') {
@@ -978,9 +926,7 @@ function Station_Adder(station_array) {
                 } catch(e) {
                     console.log(e)
                 }
-                const obj = {};
-                obj[station_name] = temp_hold;
-                final_array.push(obj);                
+                final_array.push(...temp_hold);
             }            
         }
     });
