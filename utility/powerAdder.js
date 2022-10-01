@@ -382,13 +382,15 @@ function addSimilarEquipment(array, station_name) {
         for (let i=1; i < array.length; i++) {
             const key = Object.keys(array[i]);
             const current_array = array[i][key[0]][0];
-            current_array.forEach( (item, index) => {
-                finalArray[index].mw += item.mw;
-                if (station_name) {
-                    finalArray[index].station = station_name;
-                    delete finalArray[index].line_name;
-                }                
-            });
+            if (current_array.length > 0) {
+                current_array.forEach( (item, index) => {
+                    finalArray[index].mw += item.mw;
+                    if (station_name) {
+                        finalArray[index].station = station_name;
+                        delete finalArray[index].line_name;
+                    }                
+                });
+            }            
         }
     }
     return finalArray;
