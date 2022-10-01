@@ -562,6 +562,55 @@ function addDissimilarEquipment_raw(array1, array2) {
     return finalArray;
 }
 
+function addDissimilarEquipment_raw_noabs(array1, array2) {
+    if (array1.length === 0 || array2.length === 0) {
+        return [];
+    }
+    // The logic here is to use addSimilar function to add array1 and array2 separately
+    // After that you add the single arrays from the results comparing the time
+    array1 = addSimilarEquipment(array1);
+    array2 = addSimilarEquipment(array2);
+
+    // console.log(array1, 'the array 1');
+    // console.log(array2, 'the array 2')
+
+    // if the array1 is empty return the similar addition of the second array
+    if (array1.length === 0) {
+        return array2;
+    } else if (array2.length === 0) {
+        return array1;
+    }
+
+    // console.log(array1, array2, 'check')
+    // Ensure array1 is the array from the add similar function
+    const finalArray = [];
+    finalArray.push(...array1);
+
+    let last_item_time = 1;    
+    array2.forEach( (item, index) => {
+        // First filter the item with the closest time to this
+        // This is an N^2 operation
+        const chosen_item = finalArray.filter( f_arr => {
+            const item_time_diff = Math.abs(f_arr.time - item.time);
+            
+            // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
+            // saved from a previous operation then chose the item and set it as the previous
+            if (item_time_diff < 3000 && f_arr.time !== last_item_time) {
+                last_item_time = f_arr.time;
+                // console.log(f_arr, item, 'the items contesting', last_item_time)
+                return true;
+            }
+        })
+        // console.log(chosen_item, 'the chosen item');
+        // add the filtered item 
+        if (chosen_item.length > 0) {
+            finalArray[index].mw = (chosen_item[0].mw) + (item.mw);
+            finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
+        }        
+    });
+    return finalArray;
+}
+
 function addDissimilarEquipment_array(array1, array2) {
     if (array1.length === 0 || array2.length === 0) {
         return [];
@@ -587,7 +636,7 @@ function addDissimilarEquipment_array(array1, array2) {
                 return true;
             }
         })
-        console.log(chosen_item, 'the chosen item');
+        // console.log(chosen_item, 'the chosen item');
         // add the filtered item
         if (chosen_item.length > 0) {
             finalArray[index].mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
@@ -1018,8 +1067,11 @@ function Station_Adder(station_array) {
                 const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'r1w' || Object.keys(sa)[0] === 'r2a');
                 const equipment_to_subtract = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
                 const equipment_to_subtract_2 = station_to_subtract[0]['olorunsogo1'];
+                console.log(equipment_to_sum, 'the equipment to sum');
+                console.log(equipment_to_subtract, 'the equipment to subtract')
+                console.log(equipment_to_subtract2, 'the equipment to subtract2')
                 const adder = addSimilarEquipment(equipment_to_sum);
-                const subber = addDissimilarEquipment_raw(equipment_to_subtract, equipment_to_subtract_2);
+                const subber = addDissimilarEquipment_raw_noabs(equipment_to_subtract, equipment_to_subtract_2);
                 try {
                     temp_hold.push(...subtractSimilarEquipment_array(adder, subber));
                 } catch(e) {
