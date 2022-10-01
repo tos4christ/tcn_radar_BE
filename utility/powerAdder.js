@@ -421,7 +421,11 @@ function addSimilarEquipment(array) {
 
 function subtractSimilarEquipment_raw(add_array, subtract_array) {
     add_array = addSimilarEquipment(add_array);
-    subtract_array = addSimilarEquipment(subtract_array);  
+    subtract_array = addSimilarEquipment(subtract_array);
+    
+    if (add_array.length < 1 || subtract_array < 1) {
+        return []
+    }
     
     // Ensure array1 is the array from the add similar function
     const finalArray = [];
@@ -482,9 +486,11 @@ function subtractDissimilarEquipment_array(add_array, subtract_array) {
             }
         })
         // console.log(chosen_item, 'the chosen item');
-        // add the filtered item    
-        finalArray[index].mw = Math.abs(chosen_item[0].mw) - Math.abs(item.mw);
-        finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
+        // add the filtered item
+        if (chosen_item.length > 0) {
+            finalArray[index].mw = Math.abs(chosen_item[0].mw) - Math.abs(item.mw);
+            finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
+        }        
     })
     // console.log(finalArray, 'the add similar final array')
     return finalArray;
@@ -547,9 +553,11 @@ function addDissimilarEquipment_raw(array1, array2) {
             }
         })
         // console.log(chosen_item, 'the chosen item');
-        // add the filtered item    
-        finalArray[index].mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
-        finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
+        // add the filtered item 
+        if (chosen_item.length > 0) {
+            finalArray[index].mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
+            finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
+        }        
     });
     return finalArray;
 }
@@ -580,9 +588,11 @@ function addDissimilarEquipment_array(array1, array2) {
             }
         })
         console.log(chosen_item, 'the chosen item');
-        // add the filtered item    
-        finalArray[index].mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
-        finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
+        // add the filtered item
+        if (chosen_item.length > 0) {
+            finalArray[index].mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
+            finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
+        }        
     });
     return finalArray;
 }
@@ -947,7 +957,7 @@ function Station_Adder(station_array) {
                 } catch(e) {
                     console.log(e);
                 }
-                console.log(temp_hold, 'the temp hold');
+                // console.log(temp_hold, 'the temp hold');
                 const obj = {};
                 obj[station_name] = temp_hold;
                 final_array.push(obj); 
