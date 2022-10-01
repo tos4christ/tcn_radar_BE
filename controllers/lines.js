@@ -59,7 +59,7 @@ lines.getcollapse = (req, res, next) => {
             // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
             const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
             res.attachment('tem.xlsx');
-            res.end(buffer);
+            res.send(buffer);
         })
 }
 
