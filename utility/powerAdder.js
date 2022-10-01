@@ -494,25 +494,27 @@ function addDissimilarEquipment_raw_noabs(array1, array2) {
     // Ensure array1 is the array from the add similar function
     const finalArray = [];
     finalArray.push(...array1);
-    let last_item_time = 1;    
-    array2.forEach( (item, index) => {
-        // First filter the item with the closest time to this
-        // This is an N^2 operation
-        const chosen_item = finalArray.filter( f_arr => {
-            const item_time_diff = Math.abs(f_arr.time - item.time);            
-            // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
-            // saved from a previous operation then chose the item and set it as the previous
-            if (item_time_diff < 3000 && f_arr.time !== last_item_time) {
-                last_item_time = f_arr.time;
-                return true;
-            }
+    let last_item_time = 1;
+    if (array2.length > 0) {
+        array2.forEach( (item, index) => {
+            // First filter the item with the closest time to this
+            // This is an N^2 operation
+            const chosen_item = finalArray.filter( f_arr => {
+                const item_time_diff = Math.abs(f_arr.time - item.time);            
+                // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
+                // saved from a previous operation then chose the item and set it as the previous
+                if (item_time_diff < 3000 && f_arr.time !== last_item_time) {
+                    last_item_time = f_arr.time;
+                    return true;
+                }
+            });
+            // add the filtered item 
+            if (chosen_item.length > 0) {
+                finalArray[index].mw = (chosen_item[0].mw) + (item.mw);
+                finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
+            }        
         });
-        // add the filtered item 
-        if (chosen_item.length > 0) {
-            finalArray[index].mw = (chosen_item[0].mw) + (item.mw);
-            finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
-        }        
-    });
+    }    
     return finalArray;
 }
 
