@@ -9,16 +9,15 @@ var XLSX = require('xlsx');
 const lines = {};
 // Controller first checks to see if the particular row exists or not, this determines
 // If the row will be created or displayed.
-lines.uptime = (req, res, next) => {
+lines.uptime = (req, res) => {
     res.send({res: 'incoming'})
 }
 
-lines.getdaily = (req, res, next) => {
-    const { query } = req;
-    console.log(query)
+lines.getdaily = (req, res) => {
+    const { body } = req;
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };   
     const today = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
-    const searchDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/.test(query.day) ? query.day : today;    
+    const searchDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/.test(body.startDate) ? query.day : today;    
     // query the db for the data to use for populating the excel sheet
     db.query(model.get_daily, [searchDate])
         .then( resp => {
@@ -40,23 +39,20 @@ lines.getdaily = (req, res, next) => {
 }
 
 lines.getcollapse = (req, res, next) => {
-    const { query } = req;
-    console.log(query)
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };   
-    const today = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
-    const searchDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/.test(query.day) ? query.day : today;    
+    const { body } = req;
+    if(!body.startDate || !body.endDate || !body.startTime || !body.endTime) {
+        res.end({data: 'Please supply necessary inputs'})
+    }
+    const { start, end} = timeConverter(body.startDate, body.endDate, body.startTime, body.endTime);   
     // query the db for the data to use for populating the excel sheet
-    db.query(model.get_daily, [searchDate])
+    db.query(model.get_collapse, [start, end])
         .then( resp => {
             const data = resp.rows;
-            const tem_data = temExtractor(data);
+            const collapse_data = powerAdder(data);
             // Create a new workbook
             const workbook = XLSX.utils.book_new();
-            tem_data.forEach( (temp) => {
-                const key = Object.keys(temp)[0];
-                const worksheet = XLSX.utils.json_to_sheet(temp[key])
-                XLSX.utils.book_append_sheet(workbook, worksheet, key);
-            });            
+            const worksheet = XLSX.utils.json_to_sheet(collapse_data);
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'System Collpase Probe');                       
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
             const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
