@@ -50,7 +50,7 @@ lines.getcollapse = (req, res, next) => {
     db.query(model.get_collapse, [start.getTime(), end.getTime()])
         .then( resp => {
             const data = resp.rows;
-            const collapse_data = powerAdder(data);
+            const collapse_data = PowerAdder(data);
             // Create a new workbook
             const workbook = XLSX.utils.book_new();
             const worksheet = XLSX.utils.json_to_sheet(collapse_data);
