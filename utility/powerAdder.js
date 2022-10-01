@@ -579,7 +579,7 @@ function addDissimilarEquipment_array(array1, array2) {
                 return true;
             }
         })
-        // console.log(chosen_item, 'the chosen item');
+        console.log(chosen_item, 'the chosen item');
         // add the filtered item    
         finalArray[index].mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
         finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
