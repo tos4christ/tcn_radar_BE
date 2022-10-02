@@ -370,7 +370,7 @@ module.exports = function addPower( data ) {
         //     console.log(station_data, ' olorunsogo station data');
         // }
     });
-    return Station_Adder(station_array.splice());
+    return Station_Adder(station_array);
 };
 
 // Done
@@ -591,7 +591,8 @@ function addDissimilarEquipment_array(array1_in, array2_in, station_name) {
     return finalArray;
 }
 
-function Station_Adder(station_array) {
+function Station_Adder(station_array_in) {
+    const station_array = station_array_in.splice();
     const res_data = [
         'AFAM VI (GAS|STEAM)', 'ALAOJI NIPP (GAS)', 'SAPELE NIPP (GAS)', 'SAPELE (STEAM)', 'ODUKPANI NIPP (GAS)', 'JEBBA (HYDRO)',
          'RIVERS IPP (GAS)', 'OMOKU (GAS)', 'IHOVBOR NIPP (GAS)', 'DELTA (GAS)', 'OMOTOSHO (GAS)', 'KAINJI (HYDRO)',
