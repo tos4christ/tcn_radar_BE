@@ -603,6 +603,7 @@ function Station_Adder(station_array_in) {
     ];
     const res_data_2 = ['OLORUNSOGO (GAS)'];
     const final_array = [];
+    const final_array_2 = [];
     // replace the mw, amp, mvar
     // (id, date, hour, minute, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, time)
     res_data_2.forEach( station_name => {
@@ -628,7 +629,7 @@ function Station_Adder(station_array_in) {
             }
             console.log(JSON.stringify(temp_hold), 'olorunsogo1 gas temphold');
             const final = temp_hold.concat();
-            final_array.push(...final);
+            final_array_2.push(...final);
         }
     })
     res_data.forEach(station_name => {
@@ -972,5 +973,5 @@ function Station_Adder(station_array_in) {
         }
     });
     // console.log(final_array, 'the final array')
-    return final_array;
+    return [...final_array, ...final_array_2];
 };
