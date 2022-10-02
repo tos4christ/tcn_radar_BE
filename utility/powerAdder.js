@@ -369,6 +369,7 @@ module.exports = function addPower( data ) {
     return Station_Adder(station_array);
 };
 
+// Done
 function addSimilarEquipment(array, station_name) {
     const finalArray = [];
     // get the key for the first item
@@ -376,13 +377,16 @@ function addSimilarEquipment(array, station_name) {
     // check to see it is an array of array
     if(array[0][key[0]].length > 0) {
         finalArray.push(...array[0][key[0]][0]);
+        // This checks if there is only one object in the add
+        // In this case just return the only array available
+        // or an empty array if nothing exists
         if (array.length < 2) {
             return finalArray;
         }
         for (let i=1; i < array.length; i++) {
             const key = Object.keys(array[i]);
             const current_array = array[i][key[0]][0];
-            if (current_array.length > 0) {
+            if (current_array && current_array.length > 0) {
                 current_array.forEach( (item, index) => {
                     finalArray[index].mw += item.mw;
                     if (station_name) {
@@ -396,6 +400,7 @@ function addSimilarEquipment(array, station_name) {
     return finalArray;
 }
 
+// Done
 function subtractSimilarEquipment_array_noabs(add_array, subtract_array, station_name) {
     if (add_array.length === 0 || subtract_array.length === 0) {
         return [];
@@ -416,6 +421,7 @@ function subtractSimilarEquipment_array_noabs(add_array, subtract_array, station
     return finalArray;
 }
 
+// Done
 function subtractEquipment_zero(subtract_array, station_name) {
     if (subtract_array.length === 0) {
         return [];
@@ -434,6 +440,7 @@ function subtractEquipment_zero(subtract_array, station_name) {
     return finalArray;
 }
 
+// Done
 function addDissimilarEquipment_raw(array1, array2, station_name) {
     if (array1.length === 0 || array2.length === 0) {
         return [];
@@ -444,39 +451,42 @@ function addDissimilarEquipment_raw(array1, array2, station_name) {
     array2 = addSimilarEquipment(array2);
     // if the array1 is empty return the similar addition of the second array
     if (array1.length === 0) {
-        return array2;
+        return [];
     } else if (array2.length === 0) {
-        return array1;
+        return [];
     };
     // Ensure array1 is the array from the add similar function
     const finalArray = [];
-    finalArray.push(...array1);
+    // finalArray.push(...array1);
     let last_item_time = 1;    
-    array2.forEach( (item, index) => {
+    array2.forEach( (item) => {
         // First filter the item with the closest time to this
         // This is an N^2 operation
-        const chosen_item = finalArray.filter( f_arr => {
+        const chosen_item = array1.filter( (f_arr) => {
             const item_time_diff = Math.abs(f_arr.time - item.time);            
             // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
             // saved from a previous operation then chose the item and set it as the previous
-            if (item_time_diff < 3000 && f_arr.time !== last_item_time) {
+            if (item_time_diff <= 3000 && f_arr.time !== last_item_time) {
                 last_item_time = f_arr.time;
                 return true;
             }
         });
         // add the filtered item 
         if (chosen_item.length > 0) {
-            finalArray[index].mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
-            finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
+            item.mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
+            item.kv = item.kv < chosen_item[0].kv ? chosen_item[0].kv : item.kv;
             if (station_name) {
-                finalArray[index].station = station_name;
-                delete finalArray[index].line_name;
-            }            
+                item.station = station_name;
+                delete item.line_name;
+            }
+            // Push the edited item
+            finalArray.push(item);
         }        
     });
     return finalArray;
 }
 
+// Done
 function addDissimilarEquipment_raw_noabs(array1, array2) {
     if (array1.length === 0 || array2.length === 0) {
         return [];
@@ -487,67 +497,67 @@ function addDissimilarEquipment_raw_noabs(array1, array2) {
     array2 = addSimilarEquipment(array2);
     // if the array1 is empty return the similar addition of the second array
     if (array1.length === 0) {
-        return array2;
+        return [];
     } else if (array2.length === 0) {
-        return array1;
+        return [];
     };
     // Ensure array1 is the array from the add similar function
     const finalArray = [];
-    finalArray.push(...array1);
+    // finalArray.push(...array1);
     let last_item_time = 1;
-    let indexer;
-    if (array2.length > 0) {
-        array2.forEach( (item, index) => {
-            // First filter the item with the closest time to this
-            // This is an N^2 operation
-            const chosen_item = finalArray.filter( (f_arr, indexed) => {
-                const item_time_diff = Math.abs(f_arr.time - item.time);            
-                // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
-                // saved from a previous operation then chose the item and set it as the previous
-                if (item_time_diff < 3000 && f_arr.time !== last_item_time) {
-                    last_item_time = f_arr.time;
-                    indexer = indexed;
-                    return true;
-                }
-            });
-            // add the filtered item 
-            if (chosen_item.length > 0) {
-                finalArray[indexer].mw = (chosen_item[0].mw) + (item.mw);
-                finalArray[indexer].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
-            }        
+    array2.forEach( (item) => {
+        // First filter the item with the closest time to this
+        // This is an N^2 operation
+        const chosen_item = array1.filter( (f_arr) => {
+            const item_time_diff = Math.abs(f_arr.time - item.time);            
+            // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
+            // saved from a previous operation then chose the item and set it as the previous
+            if (item_time_diff <= 3000 && f_arr.time !== last_item_time) {
+                last_item_time = f_arr.time;
+                return true;
+            }
         });
-    }    
+        // add the filtered item 
+        if (chosen_item.length > 0) {
+            item.mw = chosen_item[0].mw + item.mw;
+            item.kv = chosen_item[0].kv > item.kv ? chosen_item[0].kv : item.kv;
+            finalArray.push(item);
+        }        
+    });  
     return finalArray;
 }
 
+// Done
 function addDissimilarEquipment_array(array1, array2, station_name) {
     if (array1.length === 0 || array2.length === 0) {
         return [];
     };
     // Ensure array1 is the array from the add similar function
     const finalArray = [];
-    finalArray.push(...array1);
+    // finalArray.push(...array1);
     let last_item_time = 1;    
-    array2.forEach( (item, index) => {
+    array2.forEach( (item) => {
         // First filter the item with the closest time to this
         // This is an N^2 operation
-        const chosen_item = finalArray.filter( f_arr => {
+        const chosen_item = array1.filter( (f_arr) => {
             const item_time_diff = Math.abs(f_arr.time - item.time);            
             // If the time difference is less than 4000 and the time is not the same as the last_item_time that was
             // saved from a previous operation then chose the item and set it as the previous
-            if (item_time_diff < 3000 && f_arr.time !== last_item_time) {
+            if (item_time_diff <= 3000 && f_arr.time !== last_item_time) {
                 last_item_time = f_arr.time;
                 return true;
             }
         });
         // add the filtered item
         if (chosen_item.length > 0) {
-            finalArray[index].mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
-            finalArray[index].kv = finalArray[index].kv > item.kv ? finalArray[index].kv : item.kv;
+            item.mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
+            item.kv = chosen_item[0].kv > item.kv ? chosen_item[0].kv : item.kv;
             if (station_name) {
-                finalArray[index].station = station_name;
-                delete finalArray[index].line_name;
-            }  
+                item.station = station_name;
+                delete item.line_name;
+            }
+            // Push the edited item
+            finalArray.push(item);
         }        
     });
     return finalArray;
