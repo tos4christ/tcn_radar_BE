@@ -366,11 +366,8 @@ module.exports = function addPower( data ) {
         } else {
             return null;
         }
-        // if (Object.keys(station)[0] === 'olorunsogo1') {
-        //     console.log(station_data, ' olorunsogo station data');
-        // }
     });
-    return Station_Adder(new Array(station_array)[0]);
+    return Station_Adder(station_array);
 };
 
 // Done
