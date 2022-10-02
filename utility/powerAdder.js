@@ -843,7 +843,7 @@ function Station_Adder(station_array) {
                 // const equipment_to_sum_2 = olorunsogo1[0]['olorunsogo1'];
 
                 console.log(JSON.stringify(equipment_to_sum_2), 'olorunsogo gas equipment to sum 2 stage 2');
-                // console.log(JSON.stringify(equipment_to_sum), 'olorunsogo gas equipment to sum 1');
+                console.log(JSON.stringify(equipment_to_sum), 'olorunsogo gas equipment to sum 1');
                 // console.log(JSON.stringify(station_to_add_2), 'olorunsogo gas station to sum 2');
                 const first_sum = addSimilarEquipment(equipment_to_sum);
                 const second_sum = addSimilarEquipment(equipment_to_sum_2);
