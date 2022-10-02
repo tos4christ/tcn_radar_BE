@@ -592,10 +592,6 @@ function addDissimilarEquipment_array(array1, array2, station_name) {
 }
 
 function Station_Adder(station_array) {
-    const olorunsogo1 = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogo1');
-    const equipment_to_sum_2 = [...olorunsogo1[0]['olorunsogo1']];
-    // console.log(JSON.stringify(olorunsogo1, 'the station with issue'));
-    // console.log(JSON.stringify(equipment_to_sum_2), 'the station with issue')
     const res_data = [
         'AFAM VI (GAS|STEAM)', 'ALAOJI NIPP (GAS)', 'SAPELE NIPP (GAS)', 'SAPELE (STEAM)', 'ODUKPANI NIPP (GAS)', 'JEBBA (HYDRO)',
          'RIVERS IPP (GAS)', 'OMOKU (GAS)', 'IHOVBOR NIPP (GAS)', 'OLORUNSOGO NIPP', 'DELTA (GAS)', 'OMOTOSHO (GAS)', 'KAINJI (HYDRO)',
@@ -606,7 +602,7 @@ function Station_Adder(station_array) {
     const final_array = [];
     // replace the mw, amp, mvar
     // (id, date, hour, minute, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, time)
-    res_data.map(station_name => {
+    res_data.forEach(station_name => {
         // Before adding two equipments that have been summed with the similarsum function
         // Check to see if the array is not empty before proceeding
         if (station_name) {
@@ -834,16 +830,15 @@ function Station_Adder(station_array) {
             }
             if (station_name === 'OLORUNSOGO (GAS)') {
                 const temp_hold = [];
-                // const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogo1');
-                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogoPhase1Gs');                
-                // console.log(JSON.stringify(station_to_add_2), 'olorunsogo gas station to sum 2 stage 1');
+                const station_to_add_2 = station_array.filter( fa => Object.keys(fa)[0] === 'olorunsogo1');
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogoPhase1Gs'); 
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
-                // const equipment_to_sum_2 = olorunsogo1[0]['olorunsogo1'];
+                const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( ta => Object.keys(ta)[0] === 'tr3' || Object.keys(ta)[0] === 'tr4');
+                const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'].filter( tp => Object.keys(tp)[0] === 'tr1' || Object.keys(tp)[0] === 'tr2');
 
-                console.log(JSON.stringify(equipment_to_sum_2), 'olorunsogo gas equipment to sum 2 stage 2');
-                console.log(JSON.stringify(equipment_to_sum), 'olorunsogo gas equipment to sum 1');
+                console.log(JSON.stringify(equipment_to_sum_2), 'olorunsogo1 gas equipment to sum 2 stage 2');
+                console.log(JSON.stringify(equipment_to_sum), 'olorunsogo2 gas equipment to sum 1');
                 // console.log(JSON.stringify(station_to_add_2), 'olorunsogo gas station to sum 2');
                 const second_sum = addSimilarEquipment(equipment_to_sum_2);
                 const first_sum = addSimilarEquipment(equipment_to_sum);
