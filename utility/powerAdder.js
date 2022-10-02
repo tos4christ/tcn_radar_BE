@@ -375,7 +375,7 @@ module.exports = function addPower( data ) {
 
 // Done
 function addSimilarEquipment(array_in, station_name) {
-    const array = array_in.slice();
+    const array = array_in.concat();
     station_name = station_name;
     const finalArray = [];
     // get the key for the first item
@@ -417,8 +417,8 @@ function addSimilarEquipment(array_in, station_name) {
 
 // Done
 function subtractSimilarEquipment_array_noabs(add_array_in, subtract_array_in, station_name) {
-    const add_array = add_array_in.slice();
-    const subtract_array = subtract_array_in.slice();
+    const add_array = add_array_in.concat();
+    const subtract_array = subtract_array_in.concat();
     station_name = station_name;
     if (add_array.length === 0 || subtract_array.length === 0) {
         return [];
@@ -442,7 +442,7 @@ function subtractSimilarEquipment_array_noabs(add_array_in, subtract_array_in, s
 // Done
 function subtractEquipment_zero(subtract_array_in, station_name) {
     station_name = station_name;
-    const subtract_array = subtract_array_in.slice();
+    const subtract_array = subtract_array_in.concat();
     if (subtract_array.length === 0) {
         return [];
     }
@@ -463,8 +463,8 @@ function subtractEquipment_zero(subtract_array_in, station_name) {
 // Done
 function addDissimilarEquipment_raw(array1_in, array2_in, station_name) {
     station_name = station_name;
-    let array1 = array1_in.slice();
-    let array2 = array2_in.slice();
+    let array1 = array1_in.concat();
+    let array2 = array2_in.concat();
     if (array1.length === 0 || array2.length === 0) {
         return [];
     }
@@ -511,8 +511,8 @@ function addDissimilarEquipment_raw(array1_in, array2_in, station_name) {
 
 // Done
 function addDissimilarEquipment_raw_noabs(array1_in, array2_in) {
-    let array1 = array1_in.slice();
-    let array2 = array2_in.slice();
+    let array1 = array1_in.concat();
+    let array2 = array2_in.concat();
     if (array1.length === 0 || array2.length === 0) {
         return [];
     }
@@ -554,8 +554,8 @@ function addDissimilarEquipment_raw_noabs(array1_in, array2_in) {
 
 // Done
 function addDissimilarEquipment_array(array1_in, array2_in, station_name) {
-    const array1 = array1_in.slice();
-    const array2 = array2_in.slice();
+    const array1 = array1_in.concat();
+    const array2 = array2_in.concat();
     station_name = station_name;
     if (array1.length === 0 || array2.length === 0) {
         return [];
@@ -592,7 +592,7 @@ function addDissimilarEquipment_array(array1_in, array2_in, station_name) {
 }
 
 function Station_Adder(station_array_in) {
-    const station_array = station_array_in.splice();
+    const station_array = station_array_in.concat();
     const res_data = [
         'AFAM VI (GAS|STEAM)', 'ALAOJI NIPP (GAS)', 'SAPELE NIPP (GAS)', 'SAPELE (STEAM)', 'ODUKPANI NIPP (GAS)', 'JEBBA (HYDRO)',
          'RIVERS IPP (GAS)', 'OMOKU (GAS)', 'IHOVBOR NIPP (GAS)', 'DELTA (GAS)', 'OMOTOSHO (GAS)', 'KAINJI (HYDRO)',
@@ -835,14 +835,14 @@ function Station_Adder(station_array_in) {
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogoPhase1Gs'); 
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( ta => Object.keys(ta)[0] === 'tr3' || Object.keys(ta)[0] === 'tr4').slice();
-                const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'].filter( tp => Object.keys(tp)[0] === 'tr1' || Object.keys(tp)[0] === 'tr2').slice();
+                const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( ta => Object.keys(ta)[0] === 'tr3' || Object.keys(ta)[0] === 'tr4').concat();
+                const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'].filter( tp => Object.keys(tp)[0] === 'tr1' || Object.keys(tp)[0] === 'tr2').concat();
 
                 console.log(JSON.stringify(equipment_to_sum_2), 'olorunsogo1 gas equipment to sum 2 stage 2');
                 console.log(JSON.stringify(equipment_to_sum), 'olorunsogo2 gas equipment to sum 1');
                 // console.log(JSON.stringify(station_to_add_2), 'olorunsogo gas station to sum 2');
-                const second_sum = addSimilarEquipment(equipment_to_sum_2.slice());
-                const first_sum = addSimilarEquipment(equipment_to_sum.slice());
+                const second_sum = addSimilarEquipment(equipment_to_sum_2.concat());
+                const first_sum = addSimilarEquipment(equipment_to_sum.concat());
                 
                 // console.log(JSON.stringify(first_sum), 'olorunsogo gas sum 1');
                 // console.log(JSON.stringify(second_sum), 'olorunsogo gas sum 2');
@@ -951,12 +951,12 @@ function Station_Adder(station_array_in) {
                 const station_to_subtract = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogo1');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'r1w' || Object.keys(sa)[0] === 'r2a').slice();
-                const equipment_to_subtract = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4').slice();
-                const equipment_to_subtract_2 = station_to_subtract[0]['olorunsogo1'].slice();
+                const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'r1w' || Object.keys(sa)[0] === 'r2a').concat();
+                const equipment_to_subtract = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4').concat();
+                const equipment_to_subtract_2 = station_to_subtract[0]['olorunsogo1'].concat();
                 // Add the sub functions
-                const adder = addSimilarEquipment(equipment_to_sum.slice());
-                const subber = addDissimilarEquipment_raw_noabs(equipment_to_subtract.slice(), equipment_to_subtract_2.slice());
+                const adder = addSimilarEquipment(equipment_to_sum.concat());
+                const subber = addDissimilarEquipment_raw_noabs(equipment_to_subtract.slice(), equipment_to_subtract_2.concat());
                 try {
                     temp_hold.push(...subtractSimilarEquipment_array_noabs(adder, subber, station_name));
                 } catch(e) {
