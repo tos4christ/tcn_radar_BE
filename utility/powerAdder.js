@@ -497,14 +497,15 @@ function addDissimilarEquipment_raw(array1_in, array2_in, station_name) {
         });
         // add the filtered item 
         if (chosen_item.length > 0) {
-            item.mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
-            item.kv = item.kv < chosen_item[0].kv ? chosen_item[0].kv : item.kv;
+            const new_item = JSON.parse(JSON.stringify(item));
+            new_item.mw = Math.abs(chosen_item[0].mw) + Math.abs(new_item.mw);
+            new_item.kv = new_item.kv < chosen_item[0].kv ? chosen_item[0].kv : new_item.kv;
             if (station_name) {
-                item.station = station_name;
-                delete item.line_name;
+                new_item.station = station_name;
+                delete new_item.line_name;
             }
             // Push the edited item
-            finalArray.push(item);
+            finalArray.push(new_item);
         }        
     });
     return finalArray;
@@ -545,9 +546,10 @@ function addDissimilarEquipment_raw_noabs(array1_in, array2_in) {
         });
         // add the filtered item 
         if (chosen_item.length > 0) {
-            item.mw = chosen_item[0].mw + item.mw;
-            item.kv = chosen_item[0].kv > item.kv ? chosen_item[0].kv : item.kv;
-            finalArray.push(item);
+            const new_item = JSON.parse(JSON.stringify(item));
+            new_item.mw = chosen_item[0].mw + new_item.mw;
+            new_item.kv = chosen_item[0].kv > new_item.kv ? chosen_item[0].kv : new_item.kv;
+            finalArray.push(new_item);
         }        
     });  
     return finalArray;
@@ -579,14 +581,15 @@ function addDissimilarEquipment_array(array1_in, array2_in, station_name) {
         });
         // add the filtered item
         if (chosen_item.length > 0) {
-            item.mw = Math.abs(chosen_item[0].mw) + Math.abs(item.mw);
-            item.kv = chosen_item[0].kv > item.kv ? chosen_item[0].kv : item.kv;
+            const new_item = JSON.parse(JSON.stringify(item));
+            new_item.mw = Math.abs(chosen_item[0].mw) + Math.abs(new_item.mw);
+            new_item.kv = chosen_item[0].kv > new_item.kv ? chosen_item[0].kv : new_item.kv;
             if (station_name) {
-                item.station = station_name;
-                delete item.line_name;
+                new_item.station = station_name;
+                delete new_item.line_name;
             }
             // Push the edited item
-            finalArray.push(item);
+            finalArray.push(new_item);
         }        
     });
     return finalArray;
@@ -628,7 +631,7 @@ function Station_Adder(station_array_in) {
             } catch(e) {
                 console.log(e)
             }
-            console.log(JSON.stringify(temp_hold), 'olorunsogo1 gas temphold');
+            // console.log(JSON.stringify(temp_hold), 'olorunsogo1 gas temphold');
             const final = temp_hold.concat();
             final_array_2.push(...final);
         }
@@ -963,7 +966,7 @@ function Station_Adder(station_array_in) {
                 const equipment_to_subtract_2 = station_to_subtract[0]['olorunsogo1'].concat();
                 // Add the sub functions
                 const adder = addSimilarEquipment(equipment_to_sum.concat());
-                const subber = addDissimilarEquipment_raw_noabs(equipment_to_subtract.slice(), equipment_to_subtract_2.concat());
+                const subber = addDissimilarEquipment_raw_noabs(equipment_to_subtract.concat(), equipment_to_subtract_2.concat());
                 try {
                     temp_hold.push(...subtractSimilarEquipment_array_noabs(adder, subber, station_name));
                 } catch(e) {
