@@ -619,13 +619,14 @@ function Station_Adder(station_array_in) {
             // console.log(JSON.stringify(station_to_add_2), 'olorunsogo gas station to sum 2');
             const second_sum = addSimilarEquipment(equipment_to_sum_2.concat());
             const first_sum = addSimilarEquipment(equipment_to_sum.concat());
-            console.log(JSON.stringify(second_sum), 'olorunsogo1 gas second sum');
-            console.log(JSON.stringify(first_sum), 'olorunsogo2 gas first sum');
+            // console.log(JSON.stringify(second_sum), 'olorunsogo1 gas second sum');
+            // console.log(JSON.stringify(first_sum), 'olorunsogo2 gas first sum');
             try {
                 temp_hold.push(...addDissimilarEquipment_array(first_sum, second_sum, station_name));
             } catch(e) {
                 console.log(e)
             }
+            console.log(JSON.stringify(temp_hold), 'olorunsogo1 gas temphold');
             final_array.push(...temp_hold);
         }
     })
