@@ -388,9 +388,9 @@ function addSimilarEquipment(array, station_name) {
             const current_array = array[i][key[0]][0];
             if (current_array && current_array.length > 0) {
                 current_array.forEach( (item, index) => {
-                    if (station_name === 'OLORUNSOGO (GAS)') {
-                        console.log(finalArray[index], index, 'the error from olorunsogo gas')
-                    }
+                    // if (station_name === 'OLORUNSOGO (GAS)') {
+                    //     console.log(finalArray[index], index, 'the error from olorunsogo gas')
+                    // }
                     finalArray[index].mw += item.mw;
                     if (station_name) {
                         finalArray[index].station = station_name;
@@ -698,7 +698,7 @@ function Station_Adder(station_array) {
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['sapeleNippPs'].filter( sa => Object.keys(sa)[0] === 'st1' || Object.keys(sa)[0] === 'st3');
-                console.log(equipment_to_sum, 'equipment for sapaele steam')
+                // console.log(equipment_to_sum, 'equipment for sapaele steam')
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
@@ -811,8 +811,8 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
                 const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'];
-                console.log(equipment_to_sum, 'olorunsogo gas equipment to sum 1');
-                console.log(equipment_to_sum_2, 'olorunsogo gas equipment to sum 2');
+                console.log(JSON.stringify(equipment_to_sum), 'olorunsogo gas equipment to sum 1');
+                console.log(JSON.stringify(equipment_to_sum_2), 'olorunsogo gas equipment to sum 2');
                 try {
                     temp_hold.push(...addSimilarEquipment([...equipment_to_sum, ...equipment_to_sum_2], station_name));
                 } catch(e) {
