@@ -416,9 +416,9 @@ function addSimilarEquipment(array_in, station_name) {
 }
 
 // Done
-function subtractSimilarEquipment_array_noabs(add_array, subtract_array, station_name) {
-    add_array = add_array.slice();
-    subtract_array = subtract_array.slice();
+function subtractSimilarEquipment_array_noabs(add_array_in, subtract_array_in, station_name) {
+    const add_array = add_array_in.slice();
+    const subtract_array = subtract_array_in.slice();
     station_name = station_name;
     if (add_array.length === 0 || subtract_array.length === 0) {
         return [];
@@ -440,9 +440,9 @@ function subtractSimilarEquipment_array_noabs(add_array, subtract_array, station
 }
 
 // Done
-function subtractEquipment_zero(subtract_array, station_name) {
+function subtractEquipment_zero(subtract_array_in, station_name) {
     station_name = station_name;
-    subtract_array = subtract_array.slice();
+    const subtract_array = subtract_array_in.slice();
     if (subtract_array.length === 0) {
         return [];
     }
@@ -461,10 +461,10 @@ function subtractEquipment_zero(subtract_array, station_name) {
 }
 
 // Done
-function addDissimilarEquipment_raw(array1, array2, station_name) {
+function addDissimilarEquipment_raw(array1_in, array2_in, station_name) {
     station_name = station_name;
-    array1 = array1.slice();
-    array2 = array2.slice();
+    const array1 = array1_in.slice();
+    const array2 = array2_in.slice();
     if (array1.length === 0 || array2.length === 0) {
         return [];
     }
@@ -510,9 +510,9 @@ function addDissimilarEquipment_raw(array1, array2, station_name) {
 }
 
 // Done
-function addDissimilarEquipment_raw_noabs(array1, array2) {
-    array1 = array1.slice();
-    array2 = array2.slice();
+function addDissimilarEquipment_raw_noabs(array1_in, array2_in) {
+    const array1 = array1_in.slice();
+    const array2 = array2_in.slice();
     if (array1.length === 0 || array2.length === 0) {
         return [];
     }
@@ -553,9 +553,9 @@ function addDissimilarEquipment_raw_noabs(array1, array2) {
 }
 
 // Done
-function addDissimilarEquipment_array(array1, array2, station_name) {
-    array1 = array1.slice();
-    array2 = array2.slice();
+function addDissimilarEquipment_array(array1_in, array2_in, station_name) {
+    const array1 = array1_in.slice();
+    const array2 = array2_in.slice();
     station_name = station_name;
     if (array1.length === 0 || array2.length === 0) {
         return [];
