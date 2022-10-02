@@ -592,8 +592,8 @@ function addDissimilarEquipment_array(array1_in, array2_in, station_name) {
 }
 
 function Station_Adder(station_array_in) {
-    const station_array = new Array(station_array_in.concat());
-    const station_array_2 = new Array(station_array_in.concat());
+    const station_array = new Array(station_array_in);
+    const station_array_2 = new Array(station_array_in);
     const res_data = [
         'AFAM VI (GAS|STEAM)', 'ALAOJI NIPP (GAS)', 'SAPELE NIPP (GAS)', 'SAPELE (STEAM)', 'ODUKPANI NIPP (GAS)', 'JEBBA (HYDRO)',
          'RIVERS IPP (GAS)', 'OMOKU (GAS)', 'IHOVBOR NIPP (GAS)', 'DELTA (GAS)', 'OMOTOSHO (GAS)', 'KAINJI (HYDRO)',
