@@ -593,7 +593,7 @@ function addDissimilarEquipment_array(array1, array2, station_name) {
 
 function Station_Adder(station_array) {
     const olorunsogo1 = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogo1');
-    const equipment_to_sum_2 = olorunsogo1[0]['olorunsogo1'];
+    const equipment_to_sum_2 = [...olorunsogo1[0]['olorunsogo1']];
     // console.log(JSON.stringify(olorunsogo1, 'the station with issue'));
     // console.log(JSON.stringify(equipment_to_sum_2), 'the station with issue')
     const res_data = [
@@ -845,8 +845,9 @@ function Station_Adder(station_array) {
                 console.log(JSON.stringify(equipment_to_sum_2), 'olorunsogo gas equipment to sum 2 stage 2');
                 console.log(JSON.stringify(equipment_to_sum), 'olorunsogo gas equipment to sum 1');
                 // console.log(JSON.stringify(station_to_add_2), 'olorunsogo gas station to sum 2');
-                const first_sum = addSimilarEquipment(equipment_to_sum);
                 const second_sum = addSimilarEquipment(equipment_to_sum_2);
+                const first_sum = addSimilarEquipment(equipment_to_sum);
+                
                 // console.log(JSON.stringify(first_sum), 'olorunsogo gas sum 1');
                 // console.log(JSON.stringify(second_sum), 'olorunsogo gas sum 2');
                 try {
