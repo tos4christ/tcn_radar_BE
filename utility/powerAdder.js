@@ -627,7 +627,8 @@ function Station_Adder(station_array_in) {
                 console.log(e)
             }
             console.log(JSON.stringify(temp_hold), 'olorunsogo1 gas temphold');
-            final_array.push(...temp_hold);
+            const final = temp_hold.concat();
+            final_array.push(...final);
         }
     })
     res_data.forEach(station_name => {
