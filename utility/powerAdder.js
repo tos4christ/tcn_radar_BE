@@ -615,9 +615,7 @@ function Station_Adder(station_array_in) {
             // Get the list of equipment objects from the stations
             // remember to filter equipment in the cases where not all is required
             const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( ta => Object.keys(ta)[0] === 'tr3' || Object.keys(ta)[0] === 'tr4').concat();
-            const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'].filter( tp => Object.keys(tp)[0] === 'tr1' || Object.keys(tp)[0] === 'tr2').concat();
-
-            
+            const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'].filter( tp => Object.keys(tp)[0] === 'tr1' || Object.keys(tp)[0] === 'tr2').concat();            
             // console.log(JSON.stringify(station_to_add_2), 'olorunsogo gas station to sum 2');
             const second_sum = addSimilarEquipment(equipment_to_sum_2.concat());
             const first_sum = addSimilarEquipment(equipment_to_sum.concat());

@@ -50,7 +50,7 @@ lines.getcollapse = (req, res, next) => {
         .then( resp => {
             const data = resp.rows;
             const collapse_data = PowerAdder(data);
-            console.log(JSON.stringify(collapse_data), 'the collapse data');
+            // console.log(JSON.stringify(collapse_data), 'the collapse data');
             // Create a new workbook
             const workbook = XLSX.utils.book_new();
             const worksheet = XLSX.utils.json_to_sheet(collapse_data);
