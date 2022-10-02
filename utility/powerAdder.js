@@ -834,8 +834,8 @@ function Station_Adder(station_array) {
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogoPhase1Gs'); 
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( ta => Object.keys(ta)[0] === 'tr3' || Object.keys(ta)[0] === 'tr4');
-                const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'].filter( tp => Object.keys(tp)[0] === 'tr1' || Object.keys(tp)[0] === 'tr2');
+                const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( ta => Object.keys(ta)[0] === 'tr3' || Object.keys(ta)[0] === 'tr4').slice();
+                const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'].filter( tp => Object.keys(tp)[0] === 'tr1' || Object.keys(tp)[0] === 'tr2').slice();
 
                 console.log(JSON.stringify(equipment_to_sum_2), 'olorunsogo1 gas equipment to sum 2 stage 2');
                 console.log(JSON.stringify(equipment_to_sum), 'olorunsogo2 gas equipment to sum 1');
@@ -950,9 +950,9 @@ function Station_Adder(station_array) {
                 const station_to_subtract = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogo1');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'r1w' || Object.keys(sa)[0] === 'r2a');
-                const equipment_to_subtract = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
-                const equipment_to_subtract_2 = station_to_subtract[0]['olorunsogo1'];
+                const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'r1w' || Object.keys(sa)[0] === 'r2a').slice();
+                const equipment_to_subtract = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4').slice();
+                const equipment_to_subtract_2 = station_to_subtract[0]['olorunsogo1'].slice();
                 // Add the sub functions
                 const adder = addSimilarEquipment(equipment_to_sum.slice());
                 const subber = addDissimilarEquipment_raw_noabs(equipment_to_subtract.slice(), equipment_to_subtract_2.slice());
