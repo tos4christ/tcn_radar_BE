@@ -366,9 +366,9 @@ module.exports = function addPower( data ) {
         } else {
             return null;
         }
-        if (Object.keys(station)[0] === 'olorunsogo1') {
-            console.log(station_data, ' olorunsogo station data');
-        }
+        // if (Object.keys(station)[0] === 'olorunsogo1') {
+        //     console.log(station_data, ' olorunsogo station data');
+        // }
     });
     return Station_Adder(station_array);
 };
@@ -577,6 +577,7 @@ function addDissimilarEquipment_array(array1, array2, station_name) {
 }
 
 function Station_Adder(station_array) {
+    console.log(JSON.stringify(station_array, 'the station array input to station adder'))
     const res_data = [
         'AFAM VI (GAS|STEAM)', 'ALAOJI NIPP (GAS)', 'SAPELE NIPP (GAS)', 'SAPELE (STEAM)', 'ODUKPANI NIPP (GAS)', 'JEBBA (HYDRO)',
          'RIVERS IPP (GAS)', 'OMOKU (GAS)', 'IHOVBOR NIPP (GAS)', 'OLORUNSOGO NIPP', 'DELTA (GAS)', 'OMOTOSHO (GAS)', 'KAINJI (HYDRO)',
