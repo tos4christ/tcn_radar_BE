@@ -346,6 +346,7 @@ module.exports = function addPower( data ) {
             ]
         }
     ];
+    console.log(JSON.stringify(data), 'the data from the database');
     // map the data from the database into the station_array (this is an expensive operation)
     station_array.forEach(station => {
         let equipment_array;

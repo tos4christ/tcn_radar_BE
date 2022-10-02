@@ -45,7 +45,6 @@ lines.getcollapse = (req, res, next) => {
         res.end({data: 'Please supply necessary inputs'})
     }    
     const { start, end} = timeConverter(body.startDate, body.endDate, body.startTime, body.endTime);
-    console.log(start.getTime(), end.getTime(), 'get collapse start and end times')   
     // query the db for the data to use for populating the excel sheet
     db.query(model.get_collapse, [start.getTime(), end.getTime()])
         .then( resp => {
