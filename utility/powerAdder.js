@@ -973,5 +973,5 @@ function Station_Adder(station_array_in) {
         }
     });
     // console.log(final_array, 'the final array')
-    return [...final_array, ...final_array_2];
+    return [ ...final_array_2, ...final_array];
 };
