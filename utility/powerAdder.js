@@ -361,7 +361,7 @@ module.exports = function addPower( data ) {
                 const equipment_data = station_data.filter( edat => edat.line_name === Object.keys(equipment)[0]);
                 // No need to sort the equipment
                 // const resorted_array = Equipment_Sorter(equipment_data);
-                equipment[Object.keys(equipment)[0]].push(equipment_data);
+                equipment[Object.keys(equipment)[0]].push([...equipment_data.concat()]);
             })
         } else {
             return null;
