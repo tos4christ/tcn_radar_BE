@@ -375,6 +375,8 @@ module.exports = function addPower( data ) {
 
 // Done
 function addSimilarEquipment(array, station_name) {
+    array = array;
+    station_name = station_name;
     const finalArray = [];
     // get the key for the first item
     const key = Object.keys(array[0]);
@@ -415,6 +417,9 @@ function addSimilarEquipment(array, station_name) {
 
 // Done
 function subtractSimilarEquipment_array_noabs(add_array, subtract_array, station_name) {
+    add_array = add_array;
+    subtract_array = subtract_array;
+    station_name = station_name;
     if (add_array.length === 0 || subtract_array.length === 0) {
         return [];
     }    
@@ -436,6 +441,8 @@ function subtractSimilarEquipment_array_noabs(add_array, subtract_array, station
 
 // Done
 function subtractEquipment_zero(subtract_array, station_name) {
+    station_name = station_name;
+    subtract_array = subtract_array;
     if (subtract_array.length === 0) {
         return [];
     }
@@ -455,6 +462,9 @@ function subtractEquipment_zero(subtract_array, station_name) {
 
 // Done
 function addDissimilarEquipment_raw(array1, array2, station_name) {
+    station_name = station_name;
+    array1 = array1;
+    array2 = array2;
     if (array1.length === 0 || array2.length === 0) {
         return [];
     }
@@ -501,6 +511,8 @@ function addDissimilarEquipment_raw(array1, array2, station_name) {
 
 // Done
 function addDissimilarEquipment_raw_noabs(array1, array2) {
+    array1 = array1;
+    array2 = array2;
     if (array1.length === 0 || array2.length === 0) {
         return [];
     }
@@ -542,6 +554,9 @@ function addDissimilarEquipment_raw_noabs(array1, array2) {
 
 // Done
 function addDissimilarEquipment_array(array1, array2, station_name) {
+    array1 = array1;
+    array2 = array2;
+    station_name = station_name;
     if (array1.length === 0 || array2.length === 0) {
         return [];
     };
