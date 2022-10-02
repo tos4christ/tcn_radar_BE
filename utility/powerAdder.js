@@ -840,8 +840,8 @@ function Station_Adder(station_array) {
                 console.log(JSON.stringify(equipment_to_sum_2), 'olorunsogo1 gas equipment to sum 2 stage 2');
                 console.log(JSON.stringify(equipment_to_sum), 'olorunsogo2 gas equipment to sum 1');
                 // console.log(JSON.stringify(station_to_add_2), 'olorunsogo gas station to sum 2');
-                const second_sum = addSimilarEquipment(equipment_to_sum_2);
-                const first_sum = addSimilarEquipment(equipment_to_sum);
+                const second_sum = addSimilarEquipment(equipment_to_sum_2.slice());
+                const first_sum = addSimilarEquipment(equipment_to_sum.slice());
                 
                 // console.log(JSON.stringify(first_sum), 'olorunsogo gas sum 1');
                 // console.log(JSON.stringify(second_sum), 'olorunsogo gas sum 2');
@@ -954,8 +954,8 @@ function Station_Adder(station_array) {
                 const equipment_to_subtract = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
                 const equipment_to_subtract_2 = station_to_subtract[0]['olorunsogo1'];
                 // Add the sub functions
-                const adder = addSimilarEquipment(equipment_to_sum);
-                const subber = addDissimilarEquipment_raw_noabs(equipment_to_subtract, equipment_to_subtract_2);
+                const adder = addSimilarEquipment(equipment_to_sum.slice());
+                const subber = addDissimilarEquipment_raw_noabs(equipment_to_subtract.slice(), equipment_to_subtract_2.slice());
                 try {
                     temp_hold.push(...subtractSimilarEquipment_array_noabs(adder, subber, station_name));
                 } catch(e) {
