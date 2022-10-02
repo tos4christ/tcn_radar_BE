@@ -371,23 +371,25 @@ module.exports = function addPower( data ) {
 
 // Done
 function addSimilarEquipment(array, station_name) {
-    if (station_name === 'OLORUNSOGO (GAS)') {
-        console.log(JSON.stringify(array), ' the array from olorunsogo gas')
-        const key = Object.keys(array[0]);
-        const key1 = Object.keys(array[1]);
-        const key2 = Object.keys(array[2]);
-        const key3 = Object.keys(array[3]);
-        console.log(array[0][key[0]].length, 'the error from olorunsogo gas 0');
-        console.log(array[1][key[1]].length, 'the error from olorunsogo gas 1')
-        console.log(array[2][key[2]].length, 'the error from olorunsogo gas 2')
-        console.log(array[3][key[3]].length, 'the error from olorunsogo gas 3')
-    }
     const finalArray = [];
     // get the key for the first item
     const key = Object.keys(array[0]);
     // check to see it is an array of array
     if(array[0][key[0]].length > 0) {
         finalArray.push(...array[0][key[0]][0]);
+
+        if (station_name === 'OLORUNSOGO (GAS)') {
+            console.log(JSON.stringify(finalArray), ' the first final array push from olorunsogo gas')
+            const key = Object.keys(array[0]);
+            const key1 = Object.keys(array[1]);
+            const key2 = Object.keys(array[2]);
+            const key3 = Object.keys(array[3]);
+            console.log(key, key1, key2, key3, 'the keys')
+            console.log(array[0][key[0]][0].length, 'the error from olorunsogo gas 0');
+            console.log(array[1][key1[0]][0].length, 'the error from olorunsogo gas 1')
+            console.log(array[2][key2[0]][0].length, 'the error from olorunsogo gas 2')
+            console.log(array[3][key3[0]][0].length, 'the error from olorunsogo gas 3')
+        }
         // This checks if there is only one object in the add
         // In this case just return the only array available
         // or an empty array if nothing exists
