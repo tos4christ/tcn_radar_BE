@@ -601,7 +601,7 @@ function Station_Adder(station_array_in) {
          'IBOM POWER (GAS)', 'GBARAIN NIPP (GAS)', 'GEREGU (GAS)', 'DADINKOWA G.S (HYDRO)', 'OKPAI (GAS|STEAM)',
          'AFAM IV & V (GAS)', 'SHIRORO (HYDRO)'
     ];
-    const res_data_2 = ['OLORUNSOGO (GAS)']
+    const res_data_2 = ['OLORUNSOGO (GAS)'];
     const final_array = [];
     // replace the mw, amp, mvar
     // (id, date, hour, minute, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, time)
@@ -969,5 +969,6 @@ function Station_Adder(station_array_in) {
             }            
         }
     });
+    console.log(final_array, 'the final array')
     return final_array;
 };
