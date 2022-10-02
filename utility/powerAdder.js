@@ -606,7 +606,7 @@ function Station_Adder(station_array) {
     const final_array = [];
     // replace the mw, amp, mvar
     // (id, date, hour, minute, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, time)
-    res_data.forEach(station_name => {
+    res_data.map(station_name => {
         // Before adding two equipments that have been summed with the similarsum function
         // Check to see if the array is not empty before proceeding
         if (station_name) {
