@@ -577,7 +577,8 @@ function addDissimilarEquipment_array(array1, array2, station_name) {
 }
 
 function Station_Adder(station_array) {
-    // console.log(JSON.stringify(station_array, 'the station array input to station adder'))
+    const the_issue = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogo1');
+    console.log(JSON.stringify(the_issue, 'the station with issue'))
     const res_data = [
         'AFAM VI (GAS|STEAM)', 'ALAOJI NIPP (GAS)', 'SAPELE NIPP (GAS)', 'SAPELE (STEAM)', 'ODUKPANI NIPP (GAS)', 'JEBBA (HYDRO)',
          'RIVERS IPP (GAS)', 'OMOKU (GAS)', 'IHOVBOR NIPP (GAS)', 'OLORUNSOGO NIPP', 'DELTA (GAS)', 'OMOTOSHO (GAS)', 'KAINJI (HYDRO)',
