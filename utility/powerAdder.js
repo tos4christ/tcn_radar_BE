@@ -375,7 +375,7 @@ module.exports = function addPower( data ) {
 
 // Done
 function addSimilarEquipment(array_in, station_name) {
-    const array = array_in.concat();
+    const array = new Array(array_in.concat())[0];
     station_name = station_name;
     const finalArray = [];
     // get the key for the first item
@@ -417,8 +417,8 @@ function addSimilarEquipment(array_in, station_name) {
 
 // Done
 function subtractSimilarEquipment_array_noabs(add_array_in, subtract_array_in, station_name) {
-    const add_array = add_array_in.concat();
-    const subtract_array = subtract_array_in.concat();
+    const add_array = new Array(add_array_in.concat())[0];
+    const subtract_array = new Array(subtract_array_in.concat())[0];
     station_name = station_name;
     if (add_array.length === 0 || subtract_array.length === 0) {
         return [];
@@ -442,7 +442,7 @@ function subtractSimilarEquipment_array_noabs(add_array_in, subtract_array_in, s
 // Done
 function subtractEquipment_zero(subtract_array_in, station_name) {
     station_name = station_name;
-    const subtract_array = subtract_array_in.concat();
+    const subtract_array = new Array(subtract_array_in.concat())[0];
     if (subtract_array.length === 0) {
         return [];
     }
@@ -463,8 +463,8 @@ function subtractEquipment_zero(subtract_array_in, station_name) {
 // Done
 function addDissimilarEquipment_raw(array1_in, array2_in, station_name) {
     station_name = station_name;
-    let array1 = array1_in.concat();
-    let array2 = array2_in.concat();
+    let array1 = new Array(array1_in.concat())[0];
+    let array2 = new Array(array2_in.concat())[0];
     if (array1.length === 0 || array2.length === 0) {
         return [];
     }
@@ -511,8 +511,8 @@ function addDissimilarEquipment_raw(array1_in, array2_in, station_name) {
 
 // Done
 function addDissimilarEquipment_raw_noabs(array1_in, array2_in) {
-    let array1 = array1_in.concat();
-    let array2 = array2_in.concat();
+    let array1 = new Array(array1_in.concat())[0];
+    let array2 = new Array(array2_in.concat())[0];
     if (array1.length === 0 || array2.length === 0) {
         return [];
     }
@@ -554,8 +554,8 @@ function addDissimilarEquipment_raw_noabs(array1_in, array2_in) {
 
 // Done
 function addDissimilarEquipment_array(array1_in, array2_in, station_name) {
-    const array1 = array1_in.concat();
-    const array2 = array2_in.concat();
+    const array1 = new Array(array1_in.concat())[0];
+    const array2 = new Array(array2_in.concat())[0];
     station_name = station_name;
     if (array1.length === 0 || array2.length === 0) {
         return [];
