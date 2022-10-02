@@ -370,7 +370,7 @@ module.exports = function addPower( data ) {
         //     console.log(station_data, ' olorunsogo station data');
         // }
     });
-    return Station_Adder(station_array);
+    return Station_Adder(station_array.splice());
 };
 
 // Done
