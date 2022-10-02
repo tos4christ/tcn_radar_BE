@@ -346,7 +346,7 @@ module.exports = function addPower( data ) {
             ]
         }
     ];
-    console.log(JSON.stringify(data), 'the data from the database');
+    // console.log(JSON.stringify(data), 'the data from the database');
     // map the data from the database into the station_array (this is an expensive operation)
     station_array.forEach(station => {
         let equipment_array;
@@ -816,14 +816,14 @@ function Station_Adder(station_array) {
             }
             if (station_name === 'OLORUNSOGO (GAS)') {
                 const temp_hold = [];
-                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogoPhase1Gs');
                 const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogo1');
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogoPhase1Gs');                
                 console.log(JSON.stringify(station_to_add_2), 'olorunsogo gas station to sum 2 stage 1');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
                 const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'];
-                
+
                 console.log(JSON.stringify(equipment_to_sum_2), 'olorunsogo gas equipment to sum 2 stage 2');
                 // console.log(JSON.stringify(equipment_to_sum), 'olorunsogo gas equipment to sum 1');
                 // console.log(JSON.stringify(station_to_add_2), 'olorunsogo gas station to sum 2');
