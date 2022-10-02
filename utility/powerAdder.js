@@ -577,7 +577,7 @@ function addDissimilarEquipment_array(array1, array2, station_name) {
 }
 
 function Station_Adder(station_array) {
-    console.log(JSON.stringify(station_array, 'the station array input to station adder'))
+    // console.log(JSON.stringify(station_array, 'the station array input to station adder'))
     const res_data = [
         'AFAM VI (GAS|STEAM)', 'ALAOJI NIPP (GAS)', 'SAPELE NIPP (GAS)', 'SAPELE (STEAM)', 'ODUKPANI NIPP (GAS)', 'JEBBA (HYDRO)',
          'RIVERS IPP (GAS)', 'OMOKU (GAS)', 'IHOVBOR NIPP (GAS)', 'OLORUNSOGO NIPP', 'DELTA (GAS)', 'OMOTOSHO (GAS)', 'KAINJI (HYDRO)',
@@ -818,10 +818,13 @@ function Station_Adder(station_array) {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogoPhase1Gs');
                 const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogo1');
+                console.log(JSON.stringify(station_to_add_2), 'olorunsogo gas station to sum 2 stage 1');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['olorunsogoPhase1Gs'].filter( sa => Object.keys(sa)[0] === 'tr3' || Object.keys(sa)[0] === 'tr4');
                 const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'];
+                
+                console.log(JSON.stringify(equipment_to_sum_2), 'olorunsogo gas equipment to sum 2 stage 2');
                 // console.log(JSON.stringify(equipment_to_sum), 'olorunsogo gas equipment to sum 1');
                 // console.log(JSON.stringify(station_to_add_2), 'olorunsogo gas station to sum 2');
                 const first_sum = addSimilarEquipment(equipment_to_sum);
