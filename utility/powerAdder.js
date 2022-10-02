@@ -382,7 +382,8 @@ function addSimilarEquipment(array_in, station_name) {
     const key = Object.keys(array[0]);
     // check to see it is an array of array
     if(array[0][key[0]].length > 0) {
-        finalArray.push(...array[0][key[0]][0]);
+        const newArr = [...array[0][key[0]][0]]
+        finalArray.push(newArr.concat());
         // This checks if there is only one object in the add
         // In this case just return the only array available
         // or an empty array if nothing exists
