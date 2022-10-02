@@ -371,6 +371,16 @@ module.exports = function addPower( data ) {
 
 // Done
 function addSimilarEquipment(array, station_name) {
+    if (station_name === 'OLORUNSOGO (GAS)') {
+        const key = Object.keys(array[0]);
+        const key1 = Object.keys(array[1]);
+        const key2 = Object.keys(array[2]);
+        const key3 = Object.keys(array[3]);
+        console.log(array[0][key[0]].length, 'the error from olorunsogo gas 0');
+        console.log(array[1][key[1]].length, 'the error from olorunsogo gas 1')
+        console.log(array[2][key[2]].length, 'the error from olorunsogo gas 2')
+        console.log(array[3][key[3]].length, 'the error from olorunsogo gas 3')
+    }
     const finalArray = [];
     // get the key for the first item
     const key = Object.keys(array[0]);
