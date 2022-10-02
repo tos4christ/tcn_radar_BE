@@ -383,7 +383,7 @@ function addSimilarEquipment(array, station_name) {
         if (array.length < 2) {
             return finalArray;
         }
-        for (let i=1; i < array.length; i++) {
+        for (let i=0; i < array.length; i++) {
             const key = Object.keys(array[i]);
             const current_array = array[i][key[0]][0];
             if (current_array && current_array.length > 0) {
