@@ -375,18 +375,8 @@ function addSimilarEquipment(array, station_name) {
     // get the key for the first item
     const key = Object.keys(array[0]);
     // check to see it is an array of array
-    if(array[0][key[0]].length > 0) {
+    if(array[0][key[0]].length > 0 && array[0][key[0]][0] > 0) {
         finalArray.push(...array[0][key[0]][0]);
-
-        if (station_name === 'OLORUNSOGO (GAS)') {
-            const key1 = Object.keys(array[1]);
-            const key2 = Object.keys(array[2]);
-            const key3 = Object.keys(array[3]);
-            console.log(JSON.stringify(array[0][key[0]]), key[0], ' the olorunsogo gas');
-            console.log(JSON.stringify(array[1][key1[0]]), key1[0], ' the olorunsogo gas');
-            console.log(JSON.stringify(array[2][key2[0]]), key2[0], ' the olorunsogo gas');
-            console.log(JSON.stringify(array[3][key3[0]]), key3[0], ' the olorunsogo gas');
-        }
         // This checks if there is only one object in the add
         // In this case just return the only array available
         // or an empty array if nothing exists
@@ -823,8 +813,10 @@ function Station_Adder(station_array) {
                 const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'];
                 // console.log(JSON.stringify(equipment_to_sum), 'olorunsogo gas equipment to sum 1');
                 // console.log(JSON.stringify(equipment_to_sum_2), 'olorunsogo gas equipment to sum 2');
+                const first_sum = addSimilarEquipment(equipment_to_sum);
+                const second_sum = addSimilarEquipment(equipment_to_sum_2);
                 try {
-                    temp_hold.push(...addSimilarEquipment([...equipment_to_sum, ...equipment_to_sum_2], station_name));
+                    temp_hold.push(...addDissimilarEquipment_array(first_sum, second_sum, station_name));
                 } catch(e) {
                     console.log(e)
                 }                
