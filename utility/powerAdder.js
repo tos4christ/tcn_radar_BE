@@ -463,8 +463,8 @@ function subtractEquipment_zero(subtract_array_in, station_name) {
 // Done
 function addDissimilarEquipment_raw(array1_in, array2_in, station_name) {
     station_name = station_name;
-    const array1 = array1_in.slice();
-    const array2 = array2_in.slice();
+    let array1 = array1_in.slice();
+    let array2 = array2_in.slice();
     if (array1.length === 0 || array2.length === 0) {
         return [];
     }
@@ -511,8 +511,8 @@ function addDissimilarEquipment_raw(array1_in, array2_in, station_name) {
 
 // Done
 function addDissimilarEquipment_raw_noabs(array1_in, array2_in) {
-    const array1 = array1_in.slice();
-    const array2 = array2_in.slice();
+    let array1 = array1_in.slice();
+    let array2 = array2_in.slice();
     if (array1.length === 0 || array2.length === 0) {
         return [];
     }
