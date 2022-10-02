@@ -388,6 +388,9 @@ function addSimilarEquipment(array, station_name) {
             const current_array = array[i][key[0]][0];
             if (current_array && current_array.length > 0) {
                 current_array.forEach( (item, index) => {
+                    if (station_name === 'OLORUNSOGO (GAS)') {
+                        console.log(finalArray[index], index, 'the error from olorunsogo gas')
+                    }
                     finalArray[index].mw += item.mw;
                     if (station_name) {
                         finalArray[index].station = station_name;
