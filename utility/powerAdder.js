@@ -379,9 +379,13 @@ function addSimilarEquipment(array, station_name) {
         finalArray.push(...array[0][key[0]][0]);
 
         if (station_name === 'OLORUNSOGO (GAS)') {
+            const key1 = Object.keys(array[1]);
             const key2 = Object.keys(array[2]);
+            const key3 = Object.keys(array[3]);
             console.log(JSON.stringify(array[0][key[0]]), key[0], ' the olorunsogo gas');
+            console.log(JSON.stringify(array[1][key1[0]]), key1[0], ' the olorunsogo gas');
             console.log(JSON.stringify(array[2][key2[0]]), key2[0], ' the olorunsogo gas');
+            console.log(JSON.stringify(array[3][key3[0]]), key3[0], ' the olorunsogo gas');
         }
         // This checks if there is only one object in the add
         // In this case just return the only array available
