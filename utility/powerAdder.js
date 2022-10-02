@@ -374,8 +374,8 @@ module.exports = function addPower( data ) {
 };
 
 // Done
-function addSimilarEquipment(array, station_name) {
-    array = array.slice();
+function addSimilarEquipment(array_in, station_name) {
+    const array = array_in.slice();
     station_name = station_name;
     const finalArray = [];
     // get the key for the first item
@@ -595,9 +595,9 @@ function Station_Adder(station_array) {
     const res_data = [
         'AFAM VI (GAS|STEAM)', 'ALAOJI NIPP (GAS)', 'SAPELE NIPP (GAS)', 'SAPELE (STEAM)', 'ODUKPANI NIPP (GAS)', 'JEBBA (HYDRO)',
          'RIVERS IPP (GAS)', 'OMOKU (GAS)', 'IHOVBOR NIPP (GAS)', 'DELTA (GAS)', 'OMOTOSHO (GAS)', 'KAINJI (HYDRO)',
-         'PARAS ENERGY (GAS)', 'OMOTOSHO NIPP (GAS)', 'GEREGU NIPP (GAS)', 'AZURA-EDO IPP (GAS)', 'TRANS-AMADI (GAS)', 'EGBIN (STEAM)',
+         'PARAS ENERGY (GAS)', 'OMOTOSHO NIPP (GAS)', 'OLORUNSOGO NIPP', 'GEREGU NIPP (GAS)', 'AZURA-EDO IPP (GAS)', 'TRANS-AMADI (GAS)', 'EGBIN (STEAM)',
          'IBOM POWER (GAS)', 'OLORUNSOGO (GAS)', 'GBARAIN NIPP (GAS)', 'GEREGU (GAS)', 'DADINKOWA G.S (HYDRO)', 'OKPAI (GAS|STEAM)',
-         'AFAM IV & V (GAS)', 'SHIRORO (HYDRO)', 'OLORUNSOGO NIPP'
+         'AFAM IV & V (GAS)', 'SHIRORO (HYDRO)'
     ];
     const final_array = [];
     // replace the mw, amp, mvar
