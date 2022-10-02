@@ -969,6 +969,6 @@ function Station_Adder(station_array_in) {
             }            
         }
     });
-    console.log(final_array, 'the final array')
+    // console.log(final_array, 'the final array')
     return final_array;
 };
