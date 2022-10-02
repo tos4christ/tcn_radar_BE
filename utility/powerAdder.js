@@ -578,7 +578,7 @@ function addDissimilarEquipment_array(array1, array2, station_name) {
 
 function Station_Adder(station_array) {
     const olorunsogo1 = station_array.filter( sa => Object.keys(sa)[0] === 'olorunsogo1');
-    const equipment_to_sum_2 = station_to_add_2[0]['olorunsogo1'];
+    const equipment_to_sum_2 = olorunsogo1[0]['olorunsogo1'];
     // console.log(JSON.stringify(olorunsogo1, 'the station with issue'));
     console.log(JSON.stringify(equipment_to_sum_2, 'the station with issue'))
     const res_data = [
