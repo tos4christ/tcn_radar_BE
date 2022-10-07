@@ -35,6 +35,7 @@ mssql.connect(config, err => {
         // get all the data for the given time and order them by station   
         mydb.query(model.get_nsong_2, [ date, Number(Hour), 0, 5, 0, 59])
             .then(respo => {
+                // console.log(respo, Date.now(), 'this is the respo and the time the query completed')
                 const data = respo.rows;  
                 // console.log(JSON.stringify(data), data.length, Hour, 'the raw data')                
                 // filter the data to return only one station for each
@@ -127,7 +128,7 @@ mssql.connect(config, err => {
     const Minute = time.split(':')[1];
     const Seconds = time.split(':')[2];
 
-    // nsongdb();
+    //  nsongdb();
 
     // get the amount of time needed to get to 10seconds of the next hour
     const extraMinute = (63 - Number(Minute))*60*1000
