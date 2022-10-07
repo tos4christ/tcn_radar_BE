@@ -30,14 +30,15 @@ mssql.connect(config, err => {
     var request = new mssql.Request();
     // Create the function that will be supplied to setTimeout as an input to setInterval
     const nsongdb = () => {
+        console.log( Date(), 'the nsong function just activated now');
         const {date, Hour} = dateFormatter();     
         // connect to my local db to get items to save on the nsong platform        
         // get all the data for the given time and order them by station   
         mydb.query(model.get_nsong_2, [ date, Number(Hour), 0, 5, 0, 59])
             .then(respo => {
-                // console.log(respo, Date.now(), 'this is the respo and the time the query completed')
+                console.log(Date(), 'this is the time the query completed');
                 const data = respo.rows;  
-                // console.log(JSON.stringify(data), data.length, Hour, 'the raw data')                
+                // console.log(JSON.stringify(data), data.length, Hour, 'the raw data')
                 // filter the data to return only one station for each
                 const stationHold = [];
                 const filteredStationArray = data.filter( station => {
@@ -131,7 +132,7 @@ mssql.connect(config, err => {
     //  nsongdb();
 
     // get the amount of time needed to get to 10seconds of the next hour
-    const extraMinute = (63 - Number(Minute))*60*1000
+    const extraMinute = (62 - Number(Minute))*60*1000
     const extraSeconds = (90 - Number(Seconds))*1000;
     const totalTimeOut = extraMinute + extraSeconds;
     console.log(totalTimeOut, 'the total timeout');
