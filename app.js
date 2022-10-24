@@ -26,6 +26,7 @@ var mxRouter = require('./routes/mx');
 var sllRouter = require('./routes/station_line_load');
 var linesRouter = require('./routes/lines');
 var changePasswordRouter = require('./routes/changePassword');
+var frequencyRouter = require('./routes/freq');
 
 var app = express();
 var http_app = express();
@@ -83,6 +84,7 @@ app.use('/mx', mxRouter);
 app.use('/sll', sllRouter);
 app.use('/lines', linesRouter);
 app.use('/changepassword', changePasswordRouter);
+app.use('/frequency', frequencyRouter);
 
 
 // app.get('/.well-known/pki-validation/F7E918FEFBA46C9E95A10FC7F19D183C.txt', (req, res) => {
