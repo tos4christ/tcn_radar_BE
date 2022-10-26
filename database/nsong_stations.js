@@ -89,18 +89,18 @@ module.exports = (data) => {
             }
             if (filtered_station[0].station === 'afamVPs') {
                 let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
-                const multiplier = 3/10;
+                // const multiplier = 3/10;
                 const mw_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + Math.abs(curr.mw * multiplier);
+                    const sum = acc + Math.abs(curr.mw);
                     max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
                     return sum;
                 },0)
                 const amp_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + Math.abs(curr.amp * multiplier);
+                    const sum = acc + Math.abs(curr.amp);
                     return sum;
                 },0)
                 const mvar_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + Math.abs(curr.mvar * multiplier);
+                    const sum = acc + Math.abs(curr.mvar);
                     return sum;
                 },0)
                 res_data['AFAM IV & V (GAS)'].mw = res_data['AFAM IV & V (GAS)'].mw + mw_sum;
