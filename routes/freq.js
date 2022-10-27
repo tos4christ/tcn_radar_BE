@@ -3,6 +3,6 @@ var router = express.Router();
 var controller = require('../controllers/freq');
 
 /* GET users listing. */
-router.post('/', controller.getFrequency);
+router.get('/', controller.getFrequency);
 
 module.exports = router;
