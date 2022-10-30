@@ -642,7 +642,7 @@ function Station_Adder(station_array_in) {
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['afamIv_vPs'];
-                const equipment_to_sum_2 = station_to_add[0]['afamVPs'];
+                const equipment_to_sum_2 = station_to_add_2[0]['afamVPs'];
                 // run logic only if there is an equipment to iterate
                 try {
                     temp_hold.push(...addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_2, station_name));
