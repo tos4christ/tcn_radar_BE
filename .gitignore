@@ -18,7 +18,7 @@ pids
 # remove temp editor
 database/tem_editor.js
 
-test.mjs
+test.js
 data-eket.csv
 data-ekim.csv
 

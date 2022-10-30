@@ -2,6 +2,13 @@ module.exports = function addPower( data ) {
     // const start_hour = req.body.start_hour;
     const station_array = [
         {
+            afamVPs: [
+                {
+                    gt20: []
+                }
+            ] 
+        },
+        {
             afamIv_vPs: [
                 {
                     gt17: []
