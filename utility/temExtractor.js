@@ -127,9 +127,12 @@ module.exports = ( data ) => {
             ]
         },
         {
-            phMain: [
+            transamadiGs: [
                 {
                     m21p: []
+                },
+                {
+                    m22p: []
                 }
             ]
         },
@@ -140,6 +143,13 @@ module.exports = ( data ) => {
                 },
                 {
                     adb200: []
+                }
+            ]
+        },
+        {
+            afamVPs: [
+                {
+                    gt20: []
                 }
             ]
         },
@@ -192,12 +202,21 @@ module.exports = ( data ) => {
             ]
         },
         {
-            odukpaniGs: [
+            odukpaniNippPs: [
                 {
-                    d1b: []
+                    gt1: []
                 },
                 {
-                    d2b: []
+                    gt2: []
+                },
+                {
+                    gt3: []
+                },
+                {
+                    gt4: []
+                },
+                {
+                    gt5: []
                 }
             ]
         },
@@ -224,16 +243,6 @@ module.exports = ( data ) => {
                 }, 
                 {
                     gt13: []
-                }
-            ]
-        },
-        {
-            ikotEkpene: [
-                {
-                    d1k: []
-                },
-                {
-                    d2k: []
                 }
             ]
         },
@@ -452,9 +461,11 @@ function Station_Adder(station_array) {
             if (station_name === 'AFAM IV & V (GAS)') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'afamIv_vPs');
+                const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'afamVPs');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['afamIv_vPs'];                
+                const equipment_to_sum = station_to_add[0]['afamIv_vPs'];
+                const equipment_to_sum_2 = station_to_add_2[0]['afamVPs']; 
                 // run logic only if there is an equipment to iterate
                 if (equipment_to_sum.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
@@ -491,7 +502,46 @@ function Station_Adder(station_array) {
                                 }
                             })
                         }
+                    });
+                }
+                if (equipment_to_sum_2.length > 0) {
+                    equipment_to_sum_2.forEach((equip, index) => {
+                        // Insert all the first items into the temp hold container, 
+                        // Then on the next iteration start adding to it
+                        if(index == 0 && temp_hold.length == 0) {
+                            // Get the key of the first item
+                            const key = Object.keys(equip)[0];
+                            // Iterate over the equipment for insertion into the temphold, this serves as the maximum amount of item that will be used
+                            // for the station for this day, any time not here will not be accepted
+                            equip[key].forEach( (e) => {
+                                temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: Math.abs(e.mw), mvar: Math.abs(e.mvar), amp: Math.abs(e.amp), station: 'DELTA (GAS)'})                                
+                            })
+                        } else {
+                            // Get the key for the next elements
+                            const key = Object.keys(equip)[0];
+                            let chosen_index;
+                            equip[key].forEach( (e) => {
+                               // Get the hour and minute for each of this equipment item, this would be used to filter for a matching hour
+                                // and minute inside the temphold array
+                                const temp_hold_item_to_add = temp_hold.filter( (th, ind) => {
+                                    const check = e.hour === th.hour && e.minute === th.minute;
+                                    if (check) {
+                                        chosen_index = ind;
+                                    }
+                                    return check;
+                                });
+                                // if there is a temp hold item to add, then add this items to the temp hold
+                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
+                                    temp_hold[chosen_index].mw += Math.abs(e.mw);
+                                    temp_hold[chosen_index].amp += Math.abs(e.amp);
+                                    temp_hold[chosen_index].mvar += Math.abs(e.mvar);
+                                    temp_hold[chosen_index].kv = temp_hold[chosen_index].kv > e.kv ? temp_hold[chosen_index].kv : e.kv;
+                                }
+                            })
+                        }
                     })
+                }
+                if (temp_hold.length > 0) {
                     const obj = {};
                     obj[station_name] = temp_hold;
                     final_array.push(obj)
@@ -1108,13 +1158,10 @@ function Station_Adder(station_array) {
             }
             if (station_name === 'ODUKPANI NIPP (GAS)') {
                 const temp_hold = [];
-                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'odukpaniGs');
-                const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'ikotEkpene');
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'odukpaniNippPs');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['odukpaniGs'];
-                const equipment_to_sum_2 = station_to_add_2[0]['ikotEkpene'].filter( sa => Object.keys(sa)[0] === 'd1k' || Object.keys(sa)[0] === 'd2k');
-                //console.log(JSON.stringify(equipment_to_sum), 'item 1', JSON.stringify(equipment_to_sum_2), 'item 2');
+                const equipment_to_sum = station_to_add[0]['odukpaniNippPs'];
                 // run logic only if there is an equipment to iterate
                 if (equipment_to_sum.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
@@ -1152,47 +1199,7 @@ function Station_Adder(station_array) {
                             })
                         }
                     })
-                }
-                // console.log(temp_hold.length, 'temphold length', equipment_to_sum.length, equipment_to_sum_2.length);
-                // run logic only if there is an equipment to iterate
-                if (equipment_to_sum_2.length > 0) {
-                    equipment_to_sum_2.forEach((equip, index) => {
-                        // Insert all the first items into the temp hold container, 
-                        // Then on the next iteration start adding to it
-                        if(index == 0 && temp_hold.length == 0) {
-                            // Get the key of the first item
-                            const key = Object.keys(equip)[0];
-                            // Iterate over the equipment for insertion into the temphold, this serves as the maximum amount of item that will be used
-                            // for the station for this day, any time not here will not be accepted
-                            equip[key].forEach( (e) => {
-                                temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: Math.abs(e.mw), mvar: Math.abs(e.mvar), amp: Math.abs(e.amp), station: 'ODUKPANI NIPP (GAS)'})                                
-                            })
-                        } else {
-                            // Get the key for the next elements
-                            const key = Object.keys(equip)[0];
-                            let chosen_index;
-                            equip[key].forEach( (e) => {
-                               // Get the hour and minute for each of this equipment item, this would be used to filter for a matching hour
-                                // and minute inside the temphold array
-                                const temp_hold_item_to_add = temp_hold.filter( (th, ind) => {
-                                    const check = e.hour === th.hour && e.minute === th.minute;
-                                    if (check) {
-                                        chosen_index = ind;
-                                    }                                    
-                                    return check;
-                                });
-                                // if there is a temp hold item to add, then add this items to the temp hold
-                                if(temp_hold_item_to_add.length > 0 && temp_hold[chosen_index]) {
-                                    // console.log([e, 'sum function check', temp_hold[chosen_index]], 'the if temp_hold_item_to_add && temp_hold_chosen')
-                                    temp_hold[chosen_index].mw += Math.abs(e.mw);
-                                    temp_hold[chosen_index].amp += Math.abs(e.amp);
-                                    temp_hold[chosen_index].mvar += Math.abs(e.mvar);
-                                    temp_hold[chosen_index].kv = temp_hold[chosen_index].kv > e.kv ? temp_hold[chosen_index].kv : e.kv;
-                                }
-                            })
-                        }
-                    })
-                }               
+                }             
                 if (temp_hold.length > 0) {
                     const obj = {};
                     obj[station_name] = temp_hold;
@@ -1939,10 +1946,10 @@ function Station_Adder(station_array) {
             }
             if (station_name === 'TRANS-AMADI (GAS)') {
                 const temp_hold = [];
-                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'phMain');
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'transamadiGs');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['phMain'];
+                const equipment_to_sum = station_to_add[0]['transamadiGs'];
                 // run logic only if there is an equipment to iterate
                 if (equipment_to_sum.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {

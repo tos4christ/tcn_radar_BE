@@ -20,7 +20,10 @@ lines.getdaily = (req, res) => {
     const today = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
     const searchDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/.test(body.startDate) ? body.startDate : today;    
     // query the db for the data to use for populating the excel sheet
-    db.query(model.get_daily, [searchDate])
+    let { start, end} = timeConverter(searchDate, searchDate, "00:00", "23:59");
+    start = start.getTime();
+    end = end.getTime() + 59000;
+    db.query(model.get_daily, [start, end])
         .then( resp => {
             const data = resp.rows;
             const tem_data = temExtractor(data);
