@@ -50,7 +50,7 @@ const io = new Server(server);
 
 
 // Testing the MQTT service
-const host_1 = 'mqtt://172.16.200.3';
+const host_1 = 'mqtt://172.16.200.9';
 const host_2 = 'http://ec2-3-88-196-213.compute-1.amazonaws.com';
 const options = {
     clientId: '',
