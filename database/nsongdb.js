@@ -119,7 +119,9 @@ mssql.connect(config, err => {
                     }
                 });
             })
-            .catch(err => console.log(err))            
+            .catch(err => console.log(err));
+
+        mydb.end();
     }
 
     const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
