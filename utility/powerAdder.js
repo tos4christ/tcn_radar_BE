@@ -133,9 +133,12 @@ module.exports = function addPower( data ) {
             ]
         },
         {
-            phMain: [
+            transamadiGs: [
                 {
                     m21p: []
+                },
+                {
+                    m22p: []
                 }
             ]
         },
@@ -198,12 +201,21 @@ module.exports = function addPower( data ) {
             ]
         },
         {
-            odukpaniGs: [
+            odukpaniNippPs: [
                 {
-                    d1b: []
+                    gt1: []
                 },
                 {
-                    d2b: []
+                    gt2: []
+                },
+                {
+                    gt3: []
+                },
+                {
+                    gt4: []
+                },
+                {
+                    gt5: []
                 }
             ]
         },
@@ -230,16 +242,6 @@ module.exports = function addPower( data ) {
                 }, 
                 {
                     gt13: []
-                }
-            ]
-        },
-        {
-            ikotEkpene: [
-                {
-                    d1k: []
-                },
-                {
-                    d2k: []
                 }
             ]
         },
@@ -636,12 +638,16 @@ function Station_Adder(station_array_in) {
             if (station_name === 'AFAM IV & V (GAS)') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'afamIv_vPs');
+                const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'afamVPs');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['afamIv_vPs'];                
+                const equipment_to_sum = station_to_add[0]['afamIv_vPs'];
+                const equipment_to_sum_2 = station_to_add[0]['afamVPs'];
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
+                try {
+                    temp_hold.push(...addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_2, station_name));
+                } catch(e) {
+                    console.log(e)
                 }
                 final_array.push(...temp_hold);
             }
@@ -835,10 +841,10 @@ function Station_Adder(station_array_in) {
             }
             if (station_name === 'TRANS-AMADI (GAS)') {
                 const temp_hold = [];
-                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'phMain');
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'transamadiGs');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['phMain'];
+                const equipment_to_sum = station_to_add[0]['transamadiGs'];
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
@@ -860,16 +866,12 @@ function Station_Adder(station_array_in) {
             // Add Dissimilar equipment for 2 equipment
             if (station_name === 'ODUKPANI NIPP (GAS)') {
                 const temp_hold = [];
-                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'odukpaniGs');
-                const station_to_add_2 = station_array.filter( sa => Object.keys(sa)[0] === 'ikotEkpene');
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'odukpaniNippPs');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['odukpaniGs'];
-                const equipment_to_sum_2 = station_to_add_2[0]['ikotEkpene'].filter( sa => Object.keys(sa)[0] === 'd1k' || Object.keys(sa)[0] === 'd2k');
-                try {
-                    temp_hold.push(...addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_2, station_name));
-                } catch(e) {
-                    console.log(e)
+                const equipment_to_sum = station_to_add[0]['odukpaniNippPs'];
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
                 final_array.push(...temp_hold);
             }
