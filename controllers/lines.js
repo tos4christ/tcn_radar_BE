@@ -51,7 +51,15 @@ lines.getdaily = (req, res) => {
     let { start, end} = timeConverter(searchDate, searchDate, "00:00", "23:59");
     start = start.getTime();
     end = end.getTime() + 59000;
-    client.query(get_daily_2(start, end))
+    client.query(`SELECT * FROM lines_table where time between 1664582400000 and 1664668799000 and station in 
+    (
+        'omotosho2', 'eket', 'afamViTs', 'alaoji', 'sapeleNippPs', 'omotoshoNippPs',
+        'omotosho1', 'delta3', 'ekim', 'gereguPs', 'riversIppPs', 'gbarain', 'dadinKowaGs',
+        'omokuPs1', 'ihovborNippPs', 'olorunsogo1', 'delta2', 'parasEnergyPs', 'olorunsogoPhase1Gs',
+        'jebbaTs', 'okpaiGs', 'deltaGs', 'kainjiTs', 'egbinPs', 'afamIv_vPs', 'shiroroPs', 'odukpaniNippPs',
+        'transamadiGs', 'afamVPs'
+    ) 
+    group by station, line_name, id, date, mw, amp, kv, level, equipment_id, mvar, variant, time order by station, line_name, time`)
         .then( resp => {
             const data = resp.rows;
             const tem_data = temExtractor(data);
