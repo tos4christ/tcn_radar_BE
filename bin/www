@@ -128,6 +128,15 @@ client_1.on('message', (topic, message) => {
           line_name = line.id;
           variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
           if (variant === 'transmission') {
+              if (station === 'olorunsogoPhase1Gs' && line_name === 'r1w') {
+                kv = line.td.V ? line.td.V : 0.00;
+                // uncomment this later when the CT ratio has been corrected
+                // mw = line.td.mw ? line.td.mw : 0.00;
+                // comment this out when the CT ratio has been corrected
+                mw = line.td.A ? (line.td.A / 1.76) : 0.00;
+                amp = line.td.A ? line.td.A : 0.00;
+                mvar = line.td.mvar ? line.td.mvar : 0.00;
+              }
               kv = line.td.V ? line.td.V : 0.00;
               mw = line.td.mw ? line.td.mw : 0.00;
               amp = line.td.A ? line.td.A : 0.00;
