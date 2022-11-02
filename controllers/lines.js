@@ -22,6 +22,17 @@ client.on('connection', () => {
     console.log('connected')
 })
 
+const get_collapse = (t1, t2) => { `select station, date, line_name, mw, kv, hour, minute, seconds, time from lines_table where time between ${t1} and ${t2} and station in 
+    (
+        'omotosho2', 'eket', 'afamViTs', 'alaoji', 'sapeleNippPs', 'omotoshoNippPs',
+        'omotosho1', 'delta3', 'ekim', 'gereguPs', 'riversIppPs', 'gbarain', 'dadinKowaGs',
+        'omokuPs1', 'ihovborNippPs', 'olorunsogo1', 'delta2', 'parasEnergyPs', 'olorunsogoPhase1Gs',
+        'jebbaTs', 'okpaiGs', 'deltaGs', 'kainjiTs', 'egbinPs', 'afamIv_vPs', 'shiroroPs', 'odukpaniNippPs',
+        'transamadiGs', 'afamVPs'
+    ) 
+    order by time`;
+}
+
 const get_daily_2 = (t1, t2)  => {
     return `SELECT * FROM test_2 where time between ${t1} and ${t2} and station in 
     (
@@ -78,7 +89,7 @@ lines.getcollapse = (req, res, next) => {
     }    
     const { start, end} = timeConverter(body.startDate, body.endDate, body.startTime, body.endTime);
     // query the db for the data to use for populating the excel sheet
-    db.query(model.get_collapse, [start.getTime(), end.getTime()])
+    db.query(get_collapse(start.getTime(), end.getTime()))
         .then( resp => {
             const data = resp.rows;
             const collapse_data = PowerAdder(data);
