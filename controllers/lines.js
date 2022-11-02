@@ -7,7 +7,11 @@ var timeConverter = require('../utility/timeConverter');
 var temExtractor = require('../utility/temExtractor');
 var XLSX = require('xlsx');
 var PowerAdder = require('../utility/powerAdder');
+<<<<<<< HEAD
 //const { client } = require("websocket");
+=======
+// const { client } = require("websocket");
+>>>>>>> e154550c900329637cc3951b7ee1849c40669ac4
 
 // Connecting to a different client
 // const newClient = async () => {
@@ -71,7 +75,11 @@ lines.getdaily = (req, res) => {
             res.send(buffer);
         });
 
+<<<<<<< HEAD
     //db.end();
+=======
+    // db.end();
+>>>>>>> e154550c900329637cc3951b7ee1849c40669ac4
 }
 
 lines.getcollapse = (req, res, next) => {
@@ -97,7 +105,11 @@ lines.getcollapse = (req, res, next) => {
             res.send(buffer);
         });
 
+<<<<<<< HEAD
     //db.end();
+=======
+    // db.end();
+>>>>>>> e154550c900329637cc3951b7ee1849c40669ac4
 }
 
 lines.downtime = (req, res, next) => {
@@ -149,13 +161,7 @@ lines.history = (req, res, next) => {
     // if the same return the compilation sum for the station
     if (station == equipment) {
         return;
-        db.query(model.get_history_2, [station, start.getTime(), end.getTime()])
-        .then(respo => {
-            console.log(respo.rows);
-            // return res.send({res: respo.rows})
-            return res.send({res: {}})
-        })
-        .catch(err => console.log(err))
+        
     } else {
         // check if the equipment and station are different, then return the equipment data only
         db.query(model.get_history, [station, equipment, start.getTime(), end.getTime()])
@@ -181,17 +187,7 @@ lines.average = (req, res, next) => {
     const interval_amount = Math.floor(timeDiff / 300000);
 
     // check if the data exists then switch between posting and updating    
-    db.query(model.get_average_5, [equipment, station])
-        .then(respo => {
-            const data = respo.rows;
-            const avgHolder = {};
-            // iterate the function to get the intervaled value
-            for (let i = 0; i < interval_amount; i++) {
-                
-            }
-            
-        })
-        .catch(err => console.log(err))
+    
 }
 
 lines.profile = (req, res, next) => {
@@ -214,31 +210,5 @@ lines.profile = (req, res, next) => {
         })
         .catch(err => console.log(err))
 }
-
-// Data is coming real time now, no need for this anymore
-// Disabled
-// lines.all = (req, res, next) => {
-//     const { date, Hour, Minute, Seconds } = dateFormatter();
-
-//     // get all the data for the given time and order them by station   
-//     db.query(model.get_all_2, [ date, Number(Hour), Number(Minute), Number(Seconds) -2, Number(Seconds) + 2 ])
-//         .then(respo => {
-//             const data = respo.rows;
-//             // console.log(data, 'the data')
-            
-//             // Use the stations key to filter all the rows coming from the database
-//             // after filering for each station key, use the values for each
-//             const refined_data = stations(data);
-//             // console.log(refined_data)
-//             const mappedObj = Object.entries(refined_data)
-//             const tempArr = []
-//             mappedObj.forEach(obj => {                
-//                 const value = obj[1]               
-//                 tempArr.push(value)
-//             })            
-//             return res.send({res: tempArr});
-//         })
-//         .catch(err => console.log(err))
-// }
 
 module.exports =  lines;
