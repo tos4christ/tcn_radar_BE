@@ -1,4 +1,4 @@
-const { Client } = require("pg");
+const { Pool } = require("pg");
 var model = require('../models/lines');
 var db = require('../database/db');
 var dateFormatter = require('../utility/dateFormatter');
@@ -9,7 +9,7 @@ var XLSX = require('xlsx');
 var PowerAdder = require('../utility/powerAdder');
 
 // Connecting to a different client
-const client =  new Client({
+const pool_2 =  new Pool({
     user: 'postgres',
     host: '172.16.200.9',
     database: 'postgres',
@@ -17,9 +17,11 @@ const client =  new Client({
     port: 5432
 });
         
-client.connect();
-client.on('connection', () => {
-    console.log('connected')
+pool_2.on('error', (err, client) => {
+    console.log(err, 'error from pool 2');
+})
+pool_2.on('connect', () => {
+    console.log('connected on pool 2')
 })
 
 const get_collapse = (t1, t2) => { `select station, date, line_name, mw, kv, hour, minute, seconds, time from lines_table where time between ${t1} and ${t2} and station in 
@@ -62,23 +64,45 @@ lines.getdaily = (req, res) => {
     let { start, end} = timeConverter(searchDate, searchDate, "00:00", "23:59");
     start = start.getTime();
     end = end.getTime() + 59000;
-    client.query(get_daily_2(start, end))
-        .then( resp => {
-            const data = resp.rows;
-            const tem_data = temExtractor(data);
-            // Create a new workbook
-            const workbook = XLSX.utils.book_new();
-            tem_data.forEach( (temp) => {
-                const key = Object.keys(temp)[0];
-                const worksheet = XLSX.utils.json_to_sheet(temp[key])
-                XLSX.utils.book_append_sheet(workbook, worksheet, key);
-            });            
-            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
-            const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
-            res.attachment('tem.xlsx');
-            res.send(buffer);
-        });
+    pool_2.connect((err, client, done) => {
+        if (err) throw err;
+        client.query(get_daily_2(start, end))
+            .then( resp => {
+                const data = resp.rows;
+                const tem_data = temExtractor(data);
+                // Create a new workbook
+                const workbook = XLSX.utils.book_new();
+                tem_data.forEach( (temp) => {
+                    const key = Object.keys(temp)[0];
+                    const worksheet = XLSX.utils.json_to_sheet(temp[key])
+                    XLSX.utils.book_append_sheet(workbook, worksheet, key);
+                });            
+                res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
+                const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
+                res.attachment('tem.xlsx');
+                res.send(buffer);
+            })
+            .catch(err => console.log(err))
+            .finally(() => done())
+    })
+    // client.query(get_daily_2(start, end))
+    //     .then( resp => {
+    //         const data = resp.rows;
+    //         const tem_data = temExtractor(data);
+    //         // Create a new workbook
+    //         const workbook = XLSX.utils.book_new();
+    //         tem_data.forEach( (temp) => {
+    //             const key = Object.keys(temp)[0];
+    //             const worksheet = XLSX.utils.json_to_sheet(temp[key])
+    //             XLSX.utils.book_append_sheet(workbook, worksheet, key);
+    //         });            
+    //         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    //         // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
+    //         const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
+    //         res.attachment('tem.xlsx');
+    //         res.send(buffer);
+    //     });
 
 }
 
