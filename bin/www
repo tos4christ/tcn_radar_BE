@@ -129,6 +129,7 @@ client_1.on('message', (topic, message) => {
           variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
           if (variant === 'transmission') {
               if (station === 'olorunsogoPhase1Gs' && line_name === 'r1w') {
+                console.log(line, 'this is the olorunsogo line')
                 kv = line.td.V ? line.td.V : 0.00;
                 // uncomment this later when the CT ratio has been corrected
                 // mw = line.td.mw ? line.td.mw : 0.00;
@@ -136,6 +137,7 @@ client_1.on('message', (topic, message) => {
                 mw = line.td.A ? (line.td.A / 1.76) : 0.00;
                 amp = line.td.A ? line.td.A : 0.00;
                 mvar = line.td.mvar ? line.td.mvar : 0.00;
+                return;
               }
               kv = line.td.V ? line.td.V : 0.00;
               mw = line.td.mw ? line.td.mw : 0.00;
