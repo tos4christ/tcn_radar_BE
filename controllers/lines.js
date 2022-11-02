@@ -18,6 +18,9 @@ const client =  new Client({
 });
         
 client.connect();
+client.on('connection', () => {
+    console.log('connected')
+})
 
 
 const lines = {};
@@ -36,7 +39,7 @@ lines.getdaily = (req, res) => {
     let { start, end} = timeConverter(searchDate, searchDate, "00:00", "23:59");
     start = start.getTime();
     end = end.getTime() + 59000;
-    client.query(model.get_daily, [start, end])
+    client.query(model.get_daily_2, [start, end])
         .then( resp => {
             const data = resp.rows;
             const tem_data = temExtractor(data);
