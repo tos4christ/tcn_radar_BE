@@ -7,11 +7,8 @@ var timeConverter = require('../utility/timeConverter');
 var temExtractor = require('../utility/temExtractor');
 var XLSX = require('xlsx');
 var PowerAdder = require('../utility/powerAdder');
-<<<<<<< HEAD
+
 //const { client } = require("websocket");
-=======
-// const { client } = require("websocket");
->>>>>>> e154550c900329637cc3951b7ee1849c40669ac4
 
 // Connecting to a different client
 // const newClient = async () => {
@@ -75,11 +72,6 @@ lines.getdaily = (req, res) => {
             res.send(buffer);
         });
 
-<<<<<<< HEAD
-    //db.end();
-=======
-    // db.end();
->>>>>>> e154550c900329637cc3951b7ee1849c40669ac4
 }
 
 lines.getcollapse = (req, res, next) => {
@@ -104,12 +96,6 @@ lines.getcollapse = (req, res, next) => {
             res.attachment('tem.xlsx');
             res.send(buffer);
         });
-
-<<<<<<< HEAD
-    //db.end();
-=======
-    // db.end();
->>>>>>> e154550c900329637cc3951b7ee1849c40669ac4
 }
 
 lines.downtime = (req, res, next) => {
