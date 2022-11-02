@@ -8,35 +8,24 @@ var temExtractor = require('../utility/temExtractor');
 var XLSX = require('xlsx');
 var PowerAdder = require('../utility/powerAdder');
 
-//const { client } = require("websocket");
-
 // Connecting to a different client
-// const newClient = async () => {
-//     try {
-//         const client = new Client({
-//             user: 'postgres',
-//             host: 'localhost',
-//             database: 'postgres',
-//             password: '000000',
-//             port: 5432
-//         });
-//         await client.connect();
-//         return client;
-//     } catch (err) {
-//         console.log(err);
-//     }    
-// }
+const newClient = async () => {
+    try {
+        const client = new Client({
+            user: 'postgres',
+            host: 'localhost',
+            database: 'postgres',
+            password: '000000',
+            port: 5432
+        });
+        await client.connect();
+        return client;
+    } catch (err) {
+        console.log(err);
+    }    
+}
 
 
-// When you are done with this client, close the connection
-// client.end()
-// try {
-//     const res = newClient.query('Select * from lines_table where id=2');
-//     console.log(res.rows);
-//     newClient.end();
-// } catch (err) {
-//     console.log(err)
-// }
 
 const lines = {};
 // Controller first checks to see if the particular row exists or not, this determines
@@ -54,7 +43,7 @@ lines.getdaily = (req, res) => {
     let { start, end} = timeConverter(searchDate, searchDate, "00:00", "23:59");
     start = start.getTime();
     end = end.getTime() + 59000;
-    db.query(model.get_daily, [start, end])
+    newClient.query(model.get_daily, [start, end])
         .then( resp => {
             const data = resp.rows;
             const tem_data = temExtractor(data);
