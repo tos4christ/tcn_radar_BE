@@ -51,7 +51,7 @@ lines.getdaily = (req, res) => {
     let { start, end} = timeConverter(searchDate, searchDate, "00:00", "23:59");
     start = start.getTime();
     end = end.getTime() + 59000;
-    client.query(`SELECT * FROM lines_table where time between 1664582400000 and 1664668799000 and station in 
+    client.query(`SELECT * FROM test_2 where time between 1664582400000 and 1664668799000 and station in 
     (
         'omotosho2', 'eket', 'afamViTs', 'alaoji', 'sapeleNippPs', 'omotoshoNippPs',
         'omotosho1', 'delta3', 'ekim', 'gereguPs', 'riversIppPs', 'gbarain', 'dadinKowaGs',
