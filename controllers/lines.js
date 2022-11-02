@@ -9,22 +9,15 @@ var XLSX = require('xlsx');
 var PowerAdder = require('../utility/powerAdder');
 
 // Connecting to a different client
-const newClient = async () => {
-    try {
-        const client = new Client({
-            user: 'postgres',
-            host: 'localhost',
-            database: 'postgres',
-            password: '000000',
-            port: 5432
-        });
-        await client.connect();
-        return client;
-    } catch (err) {
-        console.log(err);
-    }    
-}
-
+const client =  new Client({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'postgres',
+    password: '000000',
+    port: 5432
+});
+        
+client.connect();
 
 
 const lines = {};
@@ -43,7 +36,7 @@ lines.getdaily = (req, res) => {
     let { start, end} = timeConverter(searchDate, searchDate, "00:00", "23:59");
     start = start.getTime();
     end = end.getTime() + 59000;
-    newClient.query(model.get_daily, [start, end])
+    client.query(model.get_daily, [start, end])
         .then( resp => {
             const data = resp.rows;
             const tem_data = temExtractor(data);
