@@ -7,7 +7,7 @@ var timeConverter = require('../utility/timeConverter');
 var temExtractor = require('../utility/temExtractor');
 var XLSX = require('xlsx');
 var PowerAdder = require('../utility/powerAdder');
-const { client } = require("websocket");
+//const { client } = require("websocket");
 
 // Connecting to a different client
 // const newClient = async () => {
@@ -71,7 +71,7 @@ lines.getdaily = (req, res) => {
             res.send(buffer);
         });
 
-    db.end();
+    //db.end();
 }
 
 lines.getcollapse = (req, res, next) => {
@@ -97,7 +97,7 @@ lines.getcollapse = (req, res, next) => {
             res.send(buffer);
         });
 
-    db.end();
+    //db.end();
 }
 
 lines.downtime = (req, res, next) => {

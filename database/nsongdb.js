@@ -121,7 +121,7 @@ mssql.connect(config, err => {
             })
             .catch(err => console.log(err));
 
-        mydb.end();
+        // mydb.end();
     }
 
     const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
@@ -131,7 +131,7 @@ mssql.connect(config, err => {
     const Minute = time.split(':')[1];
     const Seconds = time.split(':')[2];
 
-    //  nsongdb();
+    // nsongdb();
 
     // get the amount of time needed to get to 10seconds of the next hour
     const extraMinute = (62 - Number(Minute))*60*1000

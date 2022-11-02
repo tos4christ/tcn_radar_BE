@@ -98,9 +98,9 @@ client_2.on('connect', () => {
 
 
 client_1.on('message', (topic, message) => {
-  if (['odukpanits/tv'].includes(topic)) {
-    console.log(message.toString(), 'client 1')
-  }
+  // if (['parasenergyPs/pv'].includes(topic)) {
+  //   console.log(message.toString(), 'client 1')
+  // } 
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    io.sockets.emit('client_message_1', { message: message.toString() }); 
