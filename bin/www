@@ -137,12 +137,12 @@ client_1.on('message', (topic, message) => {
                 mw = line.td.A ? (line.td.A / 1.76) : 0.00;
                 amp = line.td.A ? line.td.A : 0.00;
                 mvar = line.td.mvar ? line.td.mvar : 0.00;
-                // return;
-              }
-              kv = line.td.V ? line.td.V : 0.00;
-              mw = line.td.mw ? line.td.mw : 0.00;
-              amp = line.td.A ? line.td.A : 0.00;
-              mvar = line.td.mvar ? line.td.mvar : 0.00;
+              } else {
+                kv = line.td.V ? line.td.V : 0.00;
+                mw = line.td.mw ? line.td.mw : 0.00;
+                amp = line.td.A ? line.td.A : 0.00;
+                mvar = line.td.mvar ? line.td.mvar : 0.00;
+              }              
           } else if (variant === 'generation') {
               kv = line.gd.V ? line.gd.V : 0.00;
               mw = line.gd.mw ? line.gd.mw : 0.00;
