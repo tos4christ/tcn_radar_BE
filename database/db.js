@@ -1,12 +1,6 @@
 const { Pool } = require('pg');
 
-const pool = new Pool({
-    password: '000000',
-    user: 'postgres',
-    database: 'tcn_nas',
-    port: 5432,
-    host: 'localhost'
-});
+const pool = new Pool({});
 
 pool.on('connect', () => {
     // console.log('local db connected')

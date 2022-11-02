@@ -11,7 +11,7 @@ var PowerAdder = require('../utility/powerAdder');
 // Connecting to a different client
 const client =  new Client({
     user: 'postgres',
-    host: 'localhost',
+    host: '172.16.200.9',
     database: 'postgres',
     password: '000000',
     port: 5432
