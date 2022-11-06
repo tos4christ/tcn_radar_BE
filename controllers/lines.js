@@ -36,8 +36,7 @@ const get_collapse = (t1, t2) => { `select station, date, line_name, mw, kv, hou
 }
 
 const get_daily_2 = (t1, t2)  => {
-    return `BEGIN 
-    SELECT * FROM test_2 where time between ${t1} and ${t2} and station in 
+    return `EXECUTE SELECT * FROM test_2 where time between ${t1} and ${t2} and station in 
     (
         'omotosho2', 'eket', 'afamViTs', 'alaoji', 'sapeleNippPs', 'omotoshoNippPs',
         'omotosho1', 'delta3', 'ekim', 'gereguPs', 'riversIppPs', 'gbarain', 'dadinKowaGs',
@@ -45,8 +44,7 @@ const get_daily_2 = (t1, t2)  => {
         'jebbaTs', 'okpaiGs', 'deltaGs', 'kainjiTs', 'egbinPs', 'afamIv_vPs', 'shiroroPs', 'odukpaniNippPs',
         'transamadiGs', 'afamVPs'
     ) 
-    group by station, line_name, id, date, mw, amp, kv, level, equipment_id, mvar, variant, time order by station, line_name, time
-    END`;
+    group by station, line_name, id, date, mw, amp, kv, level, equipment_id, mvar, variant, time order by station, line_name, time`;
 }
 
 
