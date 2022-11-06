@@ -44,7 +44,7 @@ const get_daily_2 = (t1, t2)  => {
         'jebbaTs', 'okpaiGs', 'deltaGs', 'kainjiTs', 'egbinPs', 'afamIv_vPs', 'shiroroPs', 'odukpaniNippPs',
         'transamadiGs', 'afamVPs'
     ) 
-    group by station, line_name, id, date, mw, amp, kv, level, equipment_id, mvar, variant, time order by station, line_name, time`;
+    `;
 }
 
 
@@ -69,6 +69,8 @@ lines.getdaily = (req, res) => {
         client.query(get_daily_2(start, end))
             .then( resp => {
                 const data = resp.rows;
+                // remove this 
+                return res.end();
                 const tem_data = temExtractor(data);
                 // Create a new workbook
                 const workbook = XLSX.utils.book_new();
