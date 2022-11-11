@@ -1,6 +1,6 @@
 const { Pool } = require("pg");
 var model = require('../models/lines');
-var db = require('../database/db');
+var pool_1 = require('../database/db');
 var dateFormatter = require('../utility/dateFormatter');
 var timeConverter = require('../utility/timeConverter');
 // var stations = require('../database/stations');
@@ -37,7 +37,7 @@ const get_collapse = (t1, t2) => { `select station, date, line_name, mw, kv, hou
 
 const get_daily_2 = (t1, t2)  => {
     return `BEGIN;
-    SELECT * FROM test_2 where station in 
+    SELECT * FROM lines_table where station in 
     (
         'omotosho2', 'eket', 'afamViTs', 'alaoji', 'sapeleNippPs', 'omotoshoNippPs',
         'omotosho1', 'delta3', 'ekim', 'gereguPs', 'riversIppPs', 'gbarain', 'dadinKowaGs',
@@ -65,7 +65,7 @@ lines.getdaily = (req, res) => {
     let { start, end} = timeConverter(searchDate, searchDate, "00:00", "23:59");
     start = start.getTime();
     end = end.getTime() + 59000;
-    pool_2.connect((err, client, done) => {
+    pool_1.connect((err, client, done) => {
         if (err) throw err;
         client.query(get_daily_2(start, end))
             .then( resp => {
@@ -113,8 +113,8 @@ lines.getcollapse = (req, res, next) => {
         res.end({data: 'Please supply necessary inputs'})
     }    
     const { start, end} = timeConverter(body.startDate, body.endDate, body.startTime, body.endTime);
-    // query the db for the data to use for populating the excel sheet
-    db.query(get_collapse(start.getTime(), end.getTime()))
+    // query the pool_1 for the data to use for populating the excel sheet
+    pool_1.query(get_collapse(start.getTime(), end.getTime()))
         .then( resp => {
             const data = resp.rows;
             const collapse_data = PowerAdder(data);
@@ -138,7 +138,7 @@ lines.downtime = (req, res, next) => {
     const {start, end} = timeConverter(startDate, endDate, startTime, endTime);
 
     // check if the data exists then switch between posting and updating    
-    db.query(model.get_downtime, [start.getTime(), end.getTime(), equipment, station])
+    pool_1.query(model.get_downtime, [start.getTime(), end.getTime(), equipment, station])
         .then(respo => {
             const data = respo.rows;
             let dateRange = {}, i=0;
@@ -183,7 +183,7 @@ lines.history = (req, res, next) => {
         
     } else {
         // check if the equipment and station are different, then return the equipment data only
-        db.query(model.get_history, [station, equipment, start.getTime(), end.getTime()])
+        pool_1.query(model.get_history, [station, equipment, start.getTime(), end.getTime()])
         .then(respo => {
             return res.send({res: respo.rows})
         })
@@ -223,7 +223,7 @@ lines.profile = (req, res, next) => {
     if(!queryStatus) {
         return res.end({notice: 'the data sent is invalid'})
     }
-    db.query(queryStatus)
+    pool_1.query(queryStatus)
         .then(respo => {
             return res.send({res: respo.rows})
         })
