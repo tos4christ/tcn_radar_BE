@@ -36,8 +36,7 @@ const get_collapse = (t1, t2) => { `select station, date, line_name, mw, kv, hou
 }
 
 const get_daily_2 = (t1, t2)  => {
-    return `BEGIN;
-    SELECT * FROM test_2 where station in 
+    return `SELECT * FROM test_2 where station in 
     (
         'omotosho2', 'eket', 'afamViTs', 'alaoji', 'sapeleNippPs', 'omotoshoNippPs',
         'omotosho1', 'delta3', 'ekim', 'gereguPs', 'riversIppPs', 'gbarain', 'dadinKowaGs',
