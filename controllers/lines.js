@@ -36,7 +36,7 @@ const get_collapse = (t1, t2) => { `select station, date, line_name, mw, kv, hou
 }
 
 const get_daily_2 = (t1, t2)  => {
-    return `SELECT * FROM test_2 where station in 
+    return `SELECT * FROM lines_table where station in 
     (
         'omotosho2', 'eket', 'afamViTs', 'alaoji', 'sapeleNippPs', 'omotoshoNippPs',
         'omotosho1', 'delta3', 'ekim', 'gereguPs', 'riversIppPs', 'gbarain', 'dadinKowaGs',
@@ -64,7 +64,7 @@ lines.getdaily = (req, res) => {
     let { start, end} = timeConverter(searchDate, searchDate, "00:00", "23:59");
     start = start.getTime();
     end = end.getTime() + 59000;
-    pool_2.connect((err, client, done) => {
+    pool_1.connect((err, client, done) => {
         if (err) throw err;
         client.query(get_daily_2(start, end))
             .then( resp => {
