@@ -113,6 +113,7 @@ lines.getcollapse = (req, res, next) => {
     }    
     const { start, end} = timeConverter(body.startDate, body.endDate, body.startTime, body.endTime);
     // query the pool_1 for the data to use for populating the excel sheet
+    console.log()
     pool_1.query(get_collapse(start.getTime(), end.getTime()))
         .then( resp => {
             const data = resp.rows;
