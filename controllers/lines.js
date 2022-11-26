@@ -24,7 +24,8 @@ pool_2.on('connect', () => {
     console.log('connected on pool 2')
 })
 
-const get_collapse = (t1, t2) => { `select station, date, line_name, mw, kv, hour, minute, seconds, time from lines_table where time between ${t1} and ${t2} and station in 
+const get_collapse = (t1, t2) => {
+    return `select station, date, line_name, mw, kv, hour, minute, seconds, time from lines_table where time between ${t1} and ${t2} and station in 
     (
         'omotosho2', 'eket', 'afamViTs', 'alaoji', 'sapeleNippPs', 'omotoshoNippPs',
         'omotosho1', 'delta3', 'ekim', 'gereguPs', 'riversIppPs', 'gbarain', 'dadinKowaGs',
