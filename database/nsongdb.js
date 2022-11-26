@@ -221,7 +221,7 @@ mssql.connect(config, err => {
     const Minute = time.split(':')[1];
     const Seconds = time.split(':')[2];
 
-    //nsongdb();
+    // nsongdb();
 
     // get the amount of time needed to get to 10seconds of the next hour
     const extraMinute = (62 - Number(Minute))*60*1000
