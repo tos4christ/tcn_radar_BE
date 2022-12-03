@@ -685,7 +685,7 @@ module.exports = (data) => {
                         return sum;
                     }
                     if (curr.line_name === 'r1j' || curr.line_name === 'r2j') {
-                        const sum = acc + -(curr.mw);
+                        const sum = acc + -(curr.amp / 1.7082);
                         return sum;
                     }else {
                         return acc
