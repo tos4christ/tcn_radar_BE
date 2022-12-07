@@ -27,7 +27,7 @@ const freq = {};
 freq.getFrequency = (req, res, next) => {
     // use current_id, equipment_name and level to recognize a current item
     const { query } = req;
-    const { freq } = query;
+    const { frequency } = query;
     const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
     var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
@@ -39,7 +39,7 @@ freq.getFrequency = (req, res, next) => {
     //res.end();
     
     // Add date query to this in order to select other days
-    pool_2.query(save_freq(), [date, hour, minute, seconds, freq])
+    pool_2.query(save_freq(), [date, hour, minute, seconds, frequency])
         .then(resp => {
             //res.send({res: resp.rows })
             res.end();
