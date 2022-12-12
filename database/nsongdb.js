@@ -32,7 +32,7 @@ mssql.connect(config, err => {
     const nsongdb = () => {
         console.log( Date(), 'the nsong function just activated now');
         const {date, Hour} = dateFormatter();     
-        // connect to my local db to get items to save on the nsong platform        
+        // connect to my local db to get items to save on the nsong platform
         // get all the data for the given time and order them by station  
         mydb.connect((err, client, done) => {
             if (err) throw err;
