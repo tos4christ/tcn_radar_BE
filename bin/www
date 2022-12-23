@@ -98,9 +98,9 @@ client_2.on('connect', () => {
 
 
 client_1.on('message', (topic, message) => {
-  // if (['parasenergyPs/pv'].includes(topic)) {
-  //   console.log(message.toString(), 'client 1')
-  // } 
+  if ([ 'ekimts/tv', 'eketts/tv', 'riversIppPs/pv', 'dadinkowags/tv'].includes(topic)) {
+    console.log(message.toString(), 'client 1')
+  } 
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    io.sockets.emit('client_message_1', { message: message.toString() }); 
@@ -167,9 +167,10 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  // if (['OkpaiippGs/tv', 'odukpanits/pv'].includes(topic)) {
-  //   console.log(message.toString(), 'client 2')
-  // }
+  if (['delta4gs/tv', 'riversIppPs/pr', 'afam6ts/tv', 'delta2gs/pv', 'delta3gs/pv',
+  'omokugs/pv', 'sapelets/pv', 'ihovborts/tv', 'omotoshoGas/pv', 'transamadi/tv'].includes(topic)) {
+    console.log(message.toString(), 'client 2')
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    io.sockets.emit('client_message_2', { message: message.toString() });
