@@ -95,12 +95,10 @@ client_2.on('connect', () => {
   )
 });
 
-
-
 client_1.on('message', (topic, message) => {
-  if ([ 'ekimts/tv', 'eketts/tv', 'riversIppPs/pv', 'dadinkowags/tv'].includes(topic)) {
-    console.log(message.toString(), 'client 1')
-  } 
+  // if ([ 'ekimts/tv', 'eketts/tv', 'riversIppPs/pv', 'dadinkowags/tv'].includes(topic)) {
+  //   console.log(message.toString(), 'client 1')
+  // } 
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    io.sockets.emit('client_message_1', { message: message.toString() }); 
@@ -167,10 +165,10 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  if (['delta4gs/tv', 'riversIppPs/pr', 'afam6ts/tv', 'delta2gs/pv', 'delta3gs/pv',
-  'omokugs/pv', 'sapelets/pv', 'ihovborts/tv', 'omotoshoGas/pv', 'transamadi/tv'].includes(topic)) {
-    console.log(message.toString(), 'client 2')
-  }
+  // if (['delta4gs/tv', 'riversIppPs/pr', 'afam6ts/tv', 'delta2gs/pv', 'delta3gs/pv',
+  // 'omokugs/pv', 'sapelets/pv', 'ihovborts/tv', 'omotoshoGas/pv', 'transamadi/tv'].includes(topic)) {
+  //   console.log(message.toString(), 'client 2')
+  // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    io.sockets.emit('client_message_2', { message: message.toString() });
@@ -221,6 +219,37 @@ client_2.on('message', (topic, message) => {
       console.error(err)
   }
 });
+
+// Initiate connection with Pcube for frequency readings
+const url2 = 'http://10.5.30.162/Meters.htm';
+
+const getFrequency = () => {return fetch(url2)
+  .then(response => response.text())
+  .then( resp => {
+    try {
+      resp = JSON.stringify(resp);
+      resp = JSON.parse(resp);
+      const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
+      var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
+      const hour = time.split(':')[0];
+      const minute = time.split(':')[1]
+      const seconds = time.split(':')[2]
+      const frequency = [resp[2162],resp[2163],resp[2164],resp[2165], resp[2166]].join(" ").replaceAll(" ", "");
+      console.log(frequency, 'the response obj');
+      // this is the function to emit the socket message
+      io.sockets.emit('frequency', { message: frequency.toString() }); 
+      return frequency;
+    } catch (e) {
+      console.error(e);
+    }    
+  })
+  .catch(e => {
+    console.log(e);
+  });
+}
+//console.log(getFrequency());
+setInterval(() => getFrequency(), 2000);
 
 /**
  * Listen on provided port, on all network interfaces.
