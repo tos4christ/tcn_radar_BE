@@ -236,7 +236,7 @@ const getFrequency = () => {return fetch(url2)
       const minute = time.split(':')[1]
       const seconds = time.split(':')[2]
       const frequency = [resp[2162],resp[2163],resp[2164],resp[2165], resp[2166]].join(" ").replaceAll(" ", "");
-      //console.log(frequency, 'the response obj');
+      // console.log(frequency, 'the response obj');
       // this is the function to emit the socket message
       io.sockets.emit('frequency', { message: frequency.toString() }); 
       //return frequency;
