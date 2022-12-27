@@ -241,11 +241,11 @@ const getFrequency = () => {return fetch(url2)
       io.sockets.emit('frequency', { message: frequency.toString() }); 
       //return frequency;
     } catch (e) {
-      console.error(e);
+      //console.error(e);
     }    
   })
   .catch(e => {
-    console.log(e);
+    //console.log(e);
   });
 }
 //console.log(getFrequency());
