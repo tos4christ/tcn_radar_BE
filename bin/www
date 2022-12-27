@@ -249,7 +249,7 @@ const getFrequency = () => {return fetch(url2)
   });
 }
 //console.log(getFrequency());
-setInterval(() => getFrequency(), 500);
+setInterval(() => getFrequency(), 1000);
 
 /**
  * Listen on provided port, on all network interfaces.
