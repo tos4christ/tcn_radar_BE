@@ -239,7 +239,7 @@ const getFrequency = () => {return fetch(url2)
       //console.log(frequency, 'the response obj');
       // this is the function to emit the socket message
       io.sockets.emit('frequency', { message: frequency.toString() }); 
-      return frequency;
+      //return frequency;
     } catch (e) {
       console.error(e);
     }    
@@ -249,7 +249,7 @@ const getFrequency = () => {return fetch(url2)
   });
 }
 //console.log(getFrequency());
-setInterval(() => getFrequency(), 2000);
+setInterval(() => getFrequency(), 500);
 
 /**
  * Listen on provided port, on all network interfaces.
