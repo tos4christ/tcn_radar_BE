@@ -38,10 +38,19 @@ freq.getFrequency = (req, res, next) => {
     // Add date query to this in order to select other days
     db.query(get_freq(), [1672826400000, 1672827659000])
         .then(resp => {
-            console.log(resp.rows, "the frequency data");
-            //res.send({res: resp.rows })
-            res.end();
-        }).catch(err => console);        
+            // Declare constant to hold array of frequency objects
+            const frequency_data = resp.rows;
+            // Create a new workbook
+            const workbook = XLSX.utils.book_new();
+            const worksheet = XLSX.utils.json_to_sheet(frequency_data)
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Frequency Data");          
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
+            const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
+            res.attachment('frequency.xlsx');
+            res.send(buffer);
+        })
+        .catch(err => console);        
 }
 
 module.exports =  freq;
