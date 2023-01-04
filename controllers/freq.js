@@ -1,5 +1,5 @@
 // var model = require('../models/equipment');
-// var db = require('../database/db');
+var db = require('../database/db');
 const { Pool } = require("pg");
 
 // Connecting to a different client
@@ -36,7 +36,7 @@ freq.getFrequency = (req, res, next) => {
     const seconds = time.split(':')[2];
     
     // Add date query to this in order to select other days
-    pool_2.query(get_freq(), [1672826400000, 1672827659000])
+    db.query(get_freq(), [1672826400000, 1672827659000])
         .then(resp => {
             console.log(resp.rows, "the frequency data");
             //res.send({res: resp.rows })
