@@ -44,7 +44,7 @@ freq.getFrequency = (req, res, next) => {
             // console.log(frequency_data, "the frequency data");
             // Create a new workbook
             const workbook = XLSX.utils.book_new();
-            const worksheet = XLSX.utils.json_to_sheet(...frequency_data);
+            const worksheet = XLSX.utils.json_to_sheet(frequency_data);
             XLSX.utils.book_append_sheet(workbook, worksheet, "Frequency Data");      
             // console.log(workbook, "the worknook");    
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
