@@ -2,23 +2,7 @@
 var db = require('../database/db');
 var timeConverter = require('../utility/timeConverter');
 var XLSX = require('xlsx');
-const { Pool } = require("pg");
 
-// Connecting to a different client
-const pool_2 =  new Pool({
-    user: 'postgres',
-    host: '172.16.200.9',
-    database: 'postgres',
-    password: '000000',
-    port: 5432
-});
-
-pool_2.on('error', (err, client) => {
-    console.log(err, 'error from pool 2');
-});
-pool_2.on('connect', () => {
-    console.log('connected on pool 2')
-});
 const get_freq = ()  => {
     return `SELECT * FROM frequency_table WHERE time_epoch BETWEEN $1 AND $2`;
 }
@@ -28,15 +12,14 @@ const freq = {};
 // If the row will be created or displayed.
 freq.getFrequency = (req, res, next) => {
     // use current_id, equipment_name and level to recognize a current item
-    const { body } = req;
-    
+    const { body } = req;    
     var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     const today = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
     const searchDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/.test(body.startDate) ? body.startDate : today;
     let { start, end} = timeConverter(searchDate, searchDate, "00:00", "23:59");
     start = start.getTime();
     end = end.getTime() + 59000;
-    console.log(start, end, "the time");
+    //console.log(start, end, "the time");
     // Add date query to this in order to select other days
     db.query(get_freq(), [start, end])
         .then(resp => {
