@@ -1,5 +1,6 @@
 // var model = require('../models/equipment');
 var db = require('../database/db');
+var XLSX = require('xlsx');
 const { Pool } = require("pg");
 
 // Connecting to a different client
