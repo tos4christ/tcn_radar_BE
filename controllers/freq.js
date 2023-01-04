@@ -28,7 +28,8 @@ const freq = {};
 // If the row will be created or displayed.
 freq.getFrequency = (req, res, next) => {
     // use current_id, equipment_name and level to recognize a current item
-    const { body } = req;    
+    const { body } = req;
+    console.log(body, "the body");
     var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     const today = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
     const searchDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/.test(body.startDate) ? body.startDate : today;
