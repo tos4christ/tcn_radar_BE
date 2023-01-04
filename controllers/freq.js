@@ -4,7 +4,7 @@ var timeConverter = require('../utility/timeConverter');
 var XLSX = require('xlsx');
 
 const get_freq = ()  => {
-    return `SELECT * FROM frequency_table WHERE time_epoch BETWEEN $1 AND $2`;
+    return `SELECT * FROM frequency_table WHERE time_epoch BETWEEN $1 AND $2 ORDER BY time_epoch`;
 }
 
 const freq = {};
