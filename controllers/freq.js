@@ -20,7 +20,7 @@ pool_2.on('connect', () => {
     console.log('connected on pool 2')
 });
 const get_freq = ()  => {
-    return `SELECT * FROM frequency_table WHERE time BETWEEN $1 AND $2`;
+    return `SELECT * FROM frequency_table WHERE time_epoch BETWEEN $1 AND $2`;
 }
 
 const freq = {};
