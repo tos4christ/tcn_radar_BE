@@ -42,8 +42,8 @@ freq.getFrequency = (req, res, next) => {
             const frequency_data = resp.rows;
             // Create a new workbook
             const workbook = XLSX.utils.book_new();
-            const worksheet = XLSX.utils.json_to_sheet(frequency_data)
-            XLSX.utils.book_append_sheet(workbook, worksheet, "Frequency_Data");          
+            const worksheet = XLSX.utils.json_to_sheet(...frequency_data);
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Frequency Data");          
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
             const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
