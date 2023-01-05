@@ -238,11 +238,12 @@ const getFrequency = () => {return fetch(url2)
       const seconds = time.split(':')[2];
       const dateTemp = date.split('-');
       const time_epoch = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
-      const frequency = [resp[2162],resp[2163],resp[2164],resp[2165], resp[2166]].join(" ").replaceAll(" ", "");
+      let frequency = [resp[2162],resp[2163],resp[2164],resp[2165], resp[2166]].join(" ").replaceAll(" ", "");
+      frequency = Number(frequency);
       // console.log(frequency, 'the response obj');
       // this is the function to emit the socket message
       io.sockets.emit('frequency', { message: frequency.toString() });
-      db.query(frequencyModel.create, [date, time, time_epoch.getTime(), frequency.toString()])
+      db.query(frequencyModel.create, [date, time, time_epoch.getTime(), frequency])
               .then( response => {
                 // console.log('its okay 2')
               })
