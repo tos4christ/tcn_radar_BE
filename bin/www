@@ -246,7 +246,9 @@ const getFrequency = () => {return fetch(url2)
       frequency = Number(frequency);
       // console.log(frequency, 'the response obj');
       // this is the function to emit the socket message
-      io.sockets.emit('frequency', { message: frequency.toString() });
+      
+      // io.sockets.emit('frequency', { message: frequency.toString() });
+     
       db.query(frequencyModel.create, [date, time, time_epoch.getTime(), frequency])
               .then( response => {
                 // console.log('its okay 2')
