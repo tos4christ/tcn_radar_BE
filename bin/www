@@ -102,7 +102,9 @@ client_1.on('message', (topic, message) => {
   // } 
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-   io.sockets.emit('client_message_1', { message: message.toString() }); 
+   
+  // io.sockets.emit('client_message_1', { message: message.toString() }); 
+  
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
   try {
@@ -172,7 +174,9 @@ client_2.on('message', (topic, message) => {
   // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-   io.sockets.emit('client_message_2', { message: message.toString() });
+   
+  // io.sockets.emit('client_message_2', { message: message.toString() });
+  
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
   try {
