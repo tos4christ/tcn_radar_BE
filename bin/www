@@ -103,7 +103,7 @@ client_1.on('message', (topic, message) => {
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
-  // io.sockets.emit('client_message_1', { message: message.toString() }); 
+   io.sockets.emit('client_message_111', { message: message.toString() }); 
   
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
@@ -175,7 +175,7 @@ client_2.on('message', (topic, message) => {
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
-  // io.sockets.emit('client_message_2', { message: message.toString() });
+  io.sockets.emit('client_message_222', { message: message.toString() });
   
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
@@ -247,7 +247,7 @@ const getFrequency = () => {return fetch(url2)
       // console.log(frequency, 'the response obj');
       // this is the function to emit the socket message
       
-      // io.sockets.emit('frequency', { message: frequency.toString() });
+      io.sockets.emit('frequency000', { message: frequency.toString() });
      
       db.query(frequencyModel.create, [date, time, time_epoch.getTime(), frequency])
               .then( response => {
