@@ -42,12 +42,17 @@ signin.post = (req, res) => {
       };
       // console.log(responseBody, 'the password match');
       res.status(200).send(responseBody); 
-      //next();           
+      next();           
     } else {
-      res.status(401).send({
-        status: 'error',
-        error: 'Password does not match'
-      });
+      const responseBody = {
+        status: 'Success',
+        data: {
+          message: 'Password does not match',
+          status: "error",
+          isLoggedIn: false
+        }
+      };
+      res.status(401).send(responseBody);
     }
   })
     .catch((e) => e.message);
