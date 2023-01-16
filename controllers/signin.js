@@ -23,6 +23,17 @@ signin.post = (req, res) => {
   .then((result) => {
     
     // check to see if the user has ever changed their password before and then redirect them to change password
+    if(result.rows[0].length === 0) {
+      const responseBody = {
+        status: 'Error',
+        data: {
+          message: 'Password does not match',
+          isLoggedIn: false
+        }
+      };
+      res.status(401).send(responseBody);
+      return;
+    }
     const passwordMatch = encoder.decode(password, result.rows[0].password);
     const name = result.rows[0].name;
 
@@ -47,16 +58,6 @@ signin.post = (req, res) => {
       // console.log(responseBody, 'the password match');
       res.status(200).send(responseBody); 
       next();           
-    } else if(!passwordMatch) {
-      const responseBody = {
-        status: 'Error',
-        data: {
-          message: 'Password does not match',
-          isLoggedIn: false
-        }
-      };
-      res.status(401).send(responseBody);
-      next();
     }
   })
     .catch((e) => e.message);
