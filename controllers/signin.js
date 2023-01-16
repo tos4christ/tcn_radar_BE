@@ -11,7 +11,6 @@ signin.get = (req, res) => {
 
 signin.post = (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password, "it got here");
   if (!email && !password) {
     return res.status(400).json({
       status: 'error',
@@ -20,8 +19,7 @@ signin.post = (req, res) => {
     return;
   }
   db.query(model.get, [email])
-  .then((result) => {
-    
+  .then((result) => {    
     // check to see if the user has ever changed their password before and then redirect them to change password
     if(result.rows.length === 0) {
       const responseBody = {
@@ -36,10 +34,7 @@ signin.post = (req, res) => {
       return;
     }
     const passwordMatch = encoder.decode(password, result.rows[0].password);
-    const name = result.rows[0].name;
-
-    console.log(passwordMatch, name, "the pmatch and name");
-    
+    const name = result.rows[0].name;    
     // console.log(passwordMatch, 'the password match');    
     if (passwordMatch) {      
       // inside the database operation, store the jwt
