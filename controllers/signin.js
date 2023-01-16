@@ -11,6 +11,7 @@ signin.get = (req, res) => {
 
 signin.post = (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password, "it got here");
   if (!email && !password) {
     return res.status(400).json({
       status: 'error',
