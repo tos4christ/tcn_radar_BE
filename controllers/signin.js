@@ -42,7 +42,7 @@ signin.post = (req, res) => {
       };
       // console.log(responseBody, 'the password match');
       res.status(200).send(responseBody); 
-      next();           
+      //next();           
     } else {
       res.status(401).send({
         status: 'error',
