@@ -21,6 +21,7 @@ signin.post = (req, res) => {
   }
   db.query(model.get, [email])
   .then((result) => {
+    console.log(result, "the result");
     // check to see if the user has ever changed their password before and then redirect them to change password
     const passwordMatch = encoder.decode(password, result.rows[0].password);
     const name = result.rows[0].name;
