@@ -23,7 +23,7 @@ signin.post = (req, res) => {
   .then((result) => {
     
     // check to see if the user has ever changed their password before and then redirect them to change password
-    if(result.rows[0].length === 0) {
+    if(result.rows.length === 0) {
       const responseBody = {
         status: 'Error',
         data: {
