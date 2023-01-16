@@ -32,6 +32,7 @@ signin.post = (req, res) => {
         }
       };
       res.status(401).send(responseBody);
+      next();
       return;
     }
     const passwordMatch = encoder.decode(password, result.rows[0].password);
