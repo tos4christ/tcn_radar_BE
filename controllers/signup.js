@@ -6,7 +6,13 @@ var db = require('../database/db');
 const signup = {};
 
 signup.get = (req, res, next) => {
-
+  const { signup_admin } = req.query;
+  // console.log(signup_admin, 'sign up query');
+  if (signup_admin === 'tos4christ') {
+    next();
+  } else {
+    res.end();
+  }
 }
 
 signup.post = (req, res,next) => {

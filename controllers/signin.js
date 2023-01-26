@@ -2,7 +2,6 @@ var jwt = require('jsonwebtoken');
 var encoder = require('../utility/passwordEnc');
 var model = require('../models/signin');
 var db = require('../database/db');
-const { NText } = require('mssql');
 
 const signin = {};
 
@@ -20,11 +19,24 @@ signin.post = (req, res) => {
     return;
   }
   db.query(model.get, [email])
-  .then((result) => {
+  .then((result) => {    
+    // check to see if the user has ever changed their password before and then redirect them to change password
+    if(result.rows.length === 0) {
+      const responseBody = {
+        status: 'Error',
+        data: {
+          message: 'Password does not match',
+          isLoggedIn: false
+        }
+      };
+      res.status(401).send(responseBody);
+      next();
+      return;
+    }
     const passwordMatch = encoder.decode(password, result.rows[0].password);
-    const name = result.rows[0].name
-    // console.log(passwordMatch, 'the password match');
-    if (passwordMatch) {
+    const name = result.rows[0].name;    
+    // console.log(passwordMatch, 'the password match');    
+    if (passwordMatch) {      
       // inside the database operation, store the jwt
       const token = jwt.sign({
         sub: name
@@ -40,13 +52,8 @@ signin.post = (req, res) => {
         }
       };
       // console.log(responseBody, 'the password match');
-       res.status(200).send(responseBody); 
-       next();
-    } else {
-      res.status(401).send({
-        status: 'error',
-        error: 'Password does not match'
-      });
+      res.status(200).send(responseBody); 
+      next();           
     }
   })
     .catch((e) => e.message);

@@ -17,6 +17,7 @@
     "morgan": "~1.9.1",
     "mqtt": "^4.3.6",
     "mssql": "^8.1.0",
+    "node-fetch": "^3.3.0",
     "openssl": "^2.0.0",
     "pg": "^8.7.1",
     "query-string": "^7.1.1",
