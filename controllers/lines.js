@@ -56,6 +56,12 @@ lines.uptime = (req, res) => {
     res.send({res: 'incoming'})
 }
 
+lines.nari = (req, res) => {
+    const { body, query } = req;
+    console.log(body, " the body of the request ", query, " the query of the request ");
+    res.end();
+}
+
 lines.getdaily = (req, res) => {
     const { body } = req;
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };   
