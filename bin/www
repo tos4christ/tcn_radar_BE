@@ -233,26 +233,11 @@ client_2.on('message', (topic, message) => {
       console.error(err)
   }
 });
-client_3.on('message', (topic, message) => {
-  
-  let data;
+client_3.on('message', (topic, message) => {  
+  let frequency;
   try {
-      data = JSON.parse(message.toString());     
-      console.log(data, "the frequency data");
-  } catch(err) {
-      console.error(err)
-  }
-});
-
-// Initiate connection with Pcube for frequency readings
-const url2 = 'http://10.5.30.162/Meters.htm';
-
-const getFrequency = () => {return fetch(url2)
-  .then(response => response.text())
-  .then( resp => {
-    try {
-      resp = JSON.stringify(resp);
-      resp = JSON.parse(resp);
+      frequency = JSON.parse(message.toString());
+      console.log(frequency, "the frequency data");
       const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
       const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
@@ -261,11 +246,7 @@ const getFrequency = () => {return fetch(url2)
       const seconds = time.split(':')[2];
       const dateTemp = date.split('-');
       const time_epoch = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
-      let frequency = [resp[2162],resp[2163],resp[2164],resp[2165], resp[2166]].join(" ").replaceAll(" ", "");
-      frequency = Number(frequency);
-      // console.log(frequency, 'the response obj');
-      // this is the function to emit the socket message
-      
+            
       io.sockets.emit('frequency000', { message: frequency.toString() });
      
       db.query(frequencyModel.create, [date, time, time_epoch.getTime(), frequency])
@@ -276,14 +257,49 @@ const getFrequency = () => {return fetch(url2)
       //return frequency;
     } catch (e) {
       //console.error(e);
-    }    
-  })
-  .catch(e => {
-    //console.log(e);
-  });
-}
+    }
+});
+
+// Initiate connection with Pcube for frequency readings
+const url2 = 'http://10.5.30.162/Meters.htm';
+
+// const getFrequency = () => {return fetch(url2)
+//   .then(response => response.text())
+//   .then( resp => {
+//     try {
+//       resp = JSON.stringify(resp);
+//       resp = JSON.parse(resp);
+//       const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
+//       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+//       const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
+//       const hour = time.split(':')[0];
+//       const minute = time.split(':')[1];
+//       const seconds = time.split(':')[2];
+//       const dateTemp = date.split('-');
+//       const time_epoch = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
+//       let frequency = [resp[2162],resp[2163],resp[2164],resp[2165], resp[2166]].join(" ").replaceAll(" ", "");
+//       frequency = Number(frequency);
+//       // console.log(frequency, 'the response obj');
+//       // this is the function to emit the socket message
+      
+//       io.sockets.emit('frequency000', { message: frequency.toString() });
+     
+//       db.query(frequencyModel.create, [date, time, time_epoch.getTime(), frequency])
+//               .then( response => {
+//                 // console.log('its okay 2')
+//               })
+//               .catch(err => console.log(err))
+//       //return frequency;
+//     } catch (e) {
+//       //console.error(e);
+//     }    
+//   })
+//   .catch(e => {
+//     //console.log(e);
+//   });
+// }
 //console.log(getFrequency());
-setInterval(() => getFrequency(), 1000);
+// setInterval(() => getFrequency(), 1000);
 
 /**
  * Listen on provided port, on all network interfaces.
