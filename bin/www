@@ -53,6 +53,8 @@ const io = new Server(server);
 // Testing the MQTT service
 const host_1 = 'mqtt://172.16.200.9';
 const host_2 = 'http://ec2-3-88-196-213.compute-1.amazonaws.com';
+const host_3 = 'mqtt://127.0.0.1';
+
 const options = {
     clientId: '',
     username: process.env.MQTT_USER,
@@ -61,6 +63,7 @@ const options = {
 }
 const client_1 = mqtt.connect(host_1, options);
 const client_2 = mqtt.connect(host_2, options);
+const client_3 = mqtt.connect(host_3);
 
 client_1.on('connect', () => {
   client_1.subscribe(
@@ -92,6 +95,12 @@ client_2.on('connect', () => {
        'olorunsogo1ts/pv', 'olorunsogo2ts/tv', 'omotoshoGas/pv',
         'odukpanits/pv', 'transamadi/tv', 'afam5gs/pv'
     ],
+    err => err ? console.log('this is the error', err) : null
+  )
+});
+client_3.on('connect', () => {
+  client_3.subscribe(
+    [ 'frequency' ],
     err => err ? console.log('this is the error', err) : null
   )
 });
@@ -220,6 +229,16 @@ client_2.on('message', (topic, message) => {
               .catch(err => console.log(err))
       })   
   // client.end()
+  } catch(err) {
+      console.error(err)
+  }
+});
+client_3.on('message', (topic, message) => {
+  
+  let data;
+  try {
+      data = JSON.parse(message.toString());     
+      console.log(data, "the frequency data");
   } catch(err) {
       console.error(err)
   }
