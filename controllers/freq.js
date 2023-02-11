@@ -3,28 +3,6 @@ var db = require('../database/db');
 var timeConverter = require('../utility/timeConverter');
 var XLSX = require('xlsx');
 var model = require('../models/frequency');
-// const socket = new WebSocket("ws://localhost")
-var  WebSocket = require("ws");
-
-const wss = new WebSocket.WebSocketServer({ port: 8080 });
-wss.on('connection', function connection(ws) {
-    console.log("connected");
-    // ws.on('message', function message(data) {
-    //   console.log('received: %s', data);
-    // });
-  
-    // ws.send('something');
-  });
-
-const ws = new WebSocket('ws://ws/pqube');
-ws.on('open', function open() {
-    console.log("socket opened");
-  //ws.send('something');
-});
-
-ws.on('message', function message(data) {
-  console.log('received: %s', data);
-});
 
 const get_freq = ()  => {
     return `SELECT * FROM frequency_table WHERE time_epoch BETWEEN $1 AND $2 ORDER BY time_epoch`;
