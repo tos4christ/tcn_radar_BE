@@ -55,7 +55,7 @@ freq.getWeather = (req, res, next) => {
             "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With"
         },
         })
-        .then(response => console.log(response))
+        .then(response => console.log(response.json()))
         .catch(e => console.error(e))
     res.end();
 }
