@@ -44,9 +44,7 @@ freq.getFrequency = (req, res, next) => {
 freq.getWeather = (req, res, next) => {
     // use current_id, equipment_name and level to recognize a current item
     const { body } = req;    
-    const url = body.url_1;
-    console.log(url, 'this is the url');
-    return res.end();
+    const url = body.url;
     fetch(url, {
         method: "GET",
         mode: "cors",
