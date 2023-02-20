@@ -76,28 +76,19 @@ lines.getdaily = (req, res) => {
         client.query(get_daily_2(start, end))
             .then( resp => {
                 const data = resp.rows;
-                const myPromise = new Promise((resolve, reject) => {
-                    const tem_data = temExtractor(data);
-                    if (tem_data.length > 0) {
-                        resolve(tem_data);
-                    } else reject("Data fetch failed");
-                });
-                myPromise
-                    .then( data => {
-                        // Create a new workbook
-                        const workbook = XLSX.utils.book_new();
-                        data.forEach( (temp) => {
-                            const key = Object.keys(temp)[0];
-                            const worksheet = XLSX.utils.json_to_sheet(temp[key])
-                            XLSX.utils.book_append_sheet(workbook, worksheet, key);
-                        });            
-                        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                        // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
-                        const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
-                        res.attachment('tem.xlsx');
-                        res.send(buffer);
-                    })
-                    .catch(err => console.error(err));
+                const tem_data = temExtractor(data);
+                // Create a new workbook
+                const workbook = XLSX.utils.book_new();
+                tem_data.forEach( (temp) => {
+                    const key = Object.keys(temp)[0];
+                    const worksheet = XLSX.utils.json_to_sheet(temp[key])
+                    XLSX.utils.book_append_sheet(workbook, worksheet, key);
+                });            
+                res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
+                const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
+                res.attachment('tem.xlsx');
+                res.send(buffer);
             })
             .catch(err => console.log(err))
             .finally(() => done())
@@ -132,28 +123,18 @@ lines.getcollapse = (req, res, next) => {
     pool_1.query(get_collapse(start.getTime(), end.getTime()))
         .then( resp => {
             const data = resp.rows;
-            const myPromise = new Promise((resolve, reject) => {
-                const collapse_data = PowerAdder(data);
-                if (collapse_data.length > 0) {
-                    resolve(collapse_data);
-                } else reject("Data fetch failed");
-            });
-            myPromise
-                .then( data => {
-                    // console.log(JSON.stringify(collapse_data), 'the collapse data');
-                    // Create a new workbook
-                    const workbook = XLSX.utils.book_new();
-                    const worksheet = XLSX.utils.json_to_sheet(data);
-                    XLSX.utils.book_append_sheet(workbook, worksheet, 'I.o.T Generation Data');                       
-                    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                    // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
-                    const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
-                    res.attachment('IoT.xlsx');
-                    res.send(buffer);
-                })
-                .catch(err => console.error(err));
-        })
-        .catch(e => console.error(e));
+            const collapse_data = PowerAdder(data);
+            // console.log(JSON.stringify(collapse_data), 'the collapse data');
+            // Create a new workbook
+            const workbook = XLSX.utils.book_new();
+            const worksheet = XLSX.utils.json_to_sheet(collapse_data);
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'IoT Generation Data');                       
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
+            const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
+            res.attachment('IoT.xlsx');
+            res.send(buffer);
+        });
 }
 
 lines.downtime = (req, res, next) => {
