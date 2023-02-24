@@ -58,7 +58,7 @@ freq.getWeather = (req, res, next) => {
         .then(response => response.json())
         .then(resp => {
             // console.log(resp, " this is the final response");
-            res.send({weather: resp});
+            //res.send({weather: resp});
         })
         .catch(e => console.error(e))
 
