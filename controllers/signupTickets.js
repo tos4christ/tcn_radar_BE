@@ -1,7 +1,18 @@
-var jwt = require('jsonwebtoken');
 var encoder = require('../utility/passwordEnc');
 var model = require('../models/signup');
-var db = require('../database/db');
+const pool_1 =  new Pool({
+  user: 'postgres',
+  host: '172.16.200.9',
+  database: 'tcn-nas-2',
+  password: '000000',
+  port: 5432
+});      
+pool_1.on('error', (err, client) => {
+  console.log(err, 'error from pool 2');
+});
+pool_1.on('connect', () => {
+  console.log('connected on pool 1')
+});
 
 const signup = {};
 
@@ -23,17 +34,17 @@ signup.post = (req, res,next) => {
     });
     return;
   }
-  let {name, role, email, password} = req.body;
+  let {name, approval_level, department, email, password} = req.body;
   const hashedPassword = encoder.hash(password, 9);
   const creationDate = new Date().toLocaleDateString();
   password = hashedPassword;
   // inside the database operation, store the jwt
-  db.query(model.get, [email])
+  pool_1.query(model.get, [email])
     .then(user => {
       if(user.rowCount > 0) {
         return res.status(403).send({message: 'User Already exists'})
       } else {             
-        db.query(model.create, [name, email, password, role, creationDate])
+        db.query(model.create, [name, email, password, department, company, approval_level, creationDate])
         .then(() => {
           // response body to send to frontend
           const responseBody = {

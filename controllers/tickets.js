@@ -28,11 +28,11 @@ pool_1.on('connect', () => {
 
 const tickets = {};
 
-tickets.get = (req, res) => {
+tickets.get_disco = (req, res) => {
     const {disco} = req.query;
     pool_1.connect((err, client, done) => {
         if (err) throw err;
-        client.query(model.get_all_tickets, [disco])
+        client.query(model.get_all_tickets_disco, [disco])
             .then( resp => {
                 const data = resp.rows;
                 console.log(data);

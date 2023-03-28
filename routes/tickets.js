@@ -4,7 +4,7 @@ var tickets = require('../controllers/tickets');
 var jwtCheck = require('../utility/jwtCheck');
 
 /* GET users listing. */
-router.get('/get',  tickets.get);
+router.get('/get',  tickets.get_disco);
 
 router.get('/getall',  tickets.get_tcn);
 

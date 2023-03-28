@@ -1,7 +1,19 @@
 var jwt = require('jsonwebtoken');
 var encoder = require('../utility/passwordEnc');
 var model = require('../models/signin');
-var db = require('../database/db');
+const pool_1 =  new Pool({
+  user: 'postgres',
+  host: '172.16.200.9',
+  database: 'tcn-nas-2',
+  password: '000000',
+  port: 5432
+});      
+pool_1.on('error', (err, client) => {
+  console.log(err, 'error from pool 2');
+});
+pool_1.on('connect', () => {
+  console.log('connected on pool 1')
+});
 
 const signin = {};
 
@@ -18,7 +30,7 @@ signin.post = (req, res) => {
     });
     return;
   }
-  db.query(model.get, [email])
+  pool_1.query(model.get, [email])
   .then((result) => {    
     // check to see if the user has ever changed their password before and then redirect them to change password
     if(result.rows.length === 0) {
