@@ -1,5 +1,5 @@
 const tickets = {
-    create_ticket: 'INSERT INTO tickets_table(disco, station, equipment, comment, date, ticket_id, priority) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+    create_ticket: 'INSERT INTO tickets_table(disco, station, equipment, comment, date, ticket_id, status, priority) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
     update_ticket: 'UPDATE tickets_table SET station=$1, equipment=$2, comment=$3, priority=$4 where disco=$5 and ticket_id=$6',
     update_appr_1: 'UPDATE tickets_table SET appr_one=$1, status=$2 where disco=$3 and ticket_id=$4',
     update_appr_2: 'UPDATE tickets_table SET appr_two=$1, status=$2 where disco=$3 and ticket_id=$4',

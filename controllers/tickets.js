@@ -58,9 +58,10 @@ tickets.get_tcn = (req, res) => {
 tickets.create = (req, res, next) => {
     const { body } = req;
     const {disco, station, equipment, comment, date, ticket_id, priority } = body;
+    const status = "pending";
     pool_1.connect((err, client, done) => {
         if (err) throw err;
-        client.query(model.create_ticket,[disco, station, equipment, comment, date, ticket_id, priority])
+        client.query(model.create_ticket,[disco, station, equipment, comment, date, ticket_id, status, priority])
             .then( resp => {
                 const data = resp.rows;
                 console.log(data, " THE DATA");
