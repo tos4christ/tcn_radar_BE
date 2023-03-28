@@ -30,6 +30,8 @@ const jwtCheck = (req, res, next) => {
       }
       if (tokens) {
         // console.log("i got to this place")
+        // check the token to know who is logged in
+        req.payload = tokens;
         next();
       }
     });
