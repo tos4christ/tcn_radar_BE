@@ -1,3 +1,4 @@
+const { Pool } = require("pg");
 var encoder = require('../utility/passwordEnc');
 var model = require('../models/signup');
 const pool_1 =  new Pool({

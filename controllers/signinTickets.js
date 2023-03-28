@@ -1,3 +1,4 @@
+const { Pool } = require("pg");
 var jwt = require('jsonwebtoken');
 var encoder = require('../utility/passwordEnc');
 var model = require('../models/signin');
