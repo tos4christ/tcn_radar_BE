@@ -35,7 +35,7 @@ signup.post = (req, res,next) => {
     });
     return;
   }
-  let {name, approval_level, department, email, password} = req.body;
+  let {name, approval_level, department, email, password, company} = req.body;
   const hashedPassword = encoder.hash(password, 9);
   const creationDate = new Date().toLocaleDateString();
   password = hashedPassword;
