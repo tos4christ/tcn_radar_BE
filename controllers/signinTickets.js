@@ -77,7 +77,7 @@ signin.post = (req, res) => {
       res.status(200).send(responseBody); 
       /// if the company is Disco, redirect to api/tickets/disco
       /// if the company is Tcn, redirect to api/tickets/tcn
-      next();           
+      // next();           
     }
   })
     .catch((e) => e.message);
