@@ -47,7 +47,7 @@ signup.post = (req, res,next) => {
       if(user.rowCount > 0) {
         return res.status(403).send({message: 'User Already exists'})
       } else {             
-        db.query(model.create, [name, email, password, department, company, approval_level, creationDate])
+        pool_1.query(model.create, [name, email, password, department, company, approval_level, creationDate])
         .then(() => {
           // response body to send to frontend
           const responseBody = {
