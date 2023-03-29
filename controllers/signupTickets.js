@@ -36,14 +36,12 @@ signup.post = (req, res,next) => {
     return;
   }
   let {name, approval_level, department, email, password} = req.body;
-  console.log(email, password, " the email and password");
   const hashedPassword = encoder.hash(password, 9);
   const creationDate = new Date().toLocaleDateString();
   password = hashedPassword;
   // inside the database operation, store the jwt
   pool_1.query(model.get, [email])
     .then(user => {
-      console.log(user, "the user");
       if(user.rowCount > 0) {
         return res.status(403).send({message: 'User Already exists'})
       } else {             
