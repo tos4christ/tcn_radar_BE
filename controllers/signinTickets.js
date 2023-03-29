@@ -73,6 +73,8 @@ signin.post = (req, res) => {
       };
       // console.log(responseBody, 'the password match');
       res.status(200).send(responseBody); 
+      /// if the company is Disco, redirect to api/tickets/disco
+      /// if the company is Tcn, redirect to api/tickets/tcn
       next();           
     }
   })
