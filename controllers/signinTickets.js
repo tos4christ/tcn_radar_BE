@@ -68,7 +68,9 @@ signin.post = (req, res) => {
           userName: result.rows[0].name,
           isLoggedIn: true,
           department: result.rows[0].department,
-          approval_level: result.rows[0].approval_level
+          approval_level: result.rows[0].approval_level,
+          email: result.rows[0].email,
+          conpany: result.rows[0].company
         }
       };
       // console.log(responseBody, 'the password match');
