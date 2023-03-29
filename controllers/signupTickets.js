@@ -37,7 +37,8 @@ signup.post = (req, res,next) => {
   }
   let {name, approval_level, department, email, password, company} = req.body;
   const hashedPassword = encoder.hash(password, 9);
-  const created_at = new Date().toLocaleDateString();
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  const created_at = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
   password = hashedPassword;
   // inside the database operation, store the jwt
   pool_1.query(model.get, [email])
