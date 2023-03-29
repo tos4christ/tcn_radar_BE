@@ -37,7 +37,7 @@ signup.post = (req, res,next) => {
   }
   let {name, approval_level, department, email, password, company} = req.body;
   const hashedPassword = encoder.hash(password, 9);
-  const creationDate = new Date().toLocaleDateString();
+  const created_at = new Date().toLocaleDateString();
   password = hashedPassword;
   // inside the database operation, store the jwt
   pool_1.query(model.get, [email])
@@ -45,7 +45,7 @@ signup.post = (req, res,next) => {
       if(user.rowCount > 0) {
         return res.status(403).send({message: 'User Already exists'})
       } else {             
-        pool_1.query(model.create, [name, email, password, department, company, approval_level, creationDate])
+        pool_1.query(model.create, [name, email, password, department, company, approval_level, created_at])
         .then(() => {
           // response body to send to frontend
           const responseBody = {
