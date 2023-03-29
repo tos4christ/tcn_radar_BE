@@ -1,6 +1,6 @@
 const { Pool } = require("pg");
 var encoder = require('../utility/passwordEnc');
-var model = require('../models/signup');
+var model = require('../models/signupTickets');
 const pool_1 =  new Pool({
   user: 'postgres',
   host: '172.16.200.9',

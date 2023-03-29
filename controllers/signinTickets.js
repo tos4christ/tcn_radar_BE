@@ -1,7 +1,7 @@
 const { Pool } = require("pg");
 var jwt = require('jsonwebtoken');
 var encoder = require('../utility/passwordEnc');
-var model = require('../models/signin');
+var model = require('../models/signinTickets');
 const pool_1 =  new Pool({
   user: 'postgres',
   host: '172.16.200.9',
