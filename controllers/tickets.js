@@ -35,7 +35,6 @@ tickets.get_disco = (req, res) => {
         client.query(model.get_all_tickets_disco, [disco])
             .then( resp => {
                 const data = resp.rows;
-                console.log(data);
                 res.send({data});
             })
             .catch(err => console.log(err))
@@ -64,7 +63,6 @@ tickets.create = (req, res, next) => {
         client.query(model.create_ticket,[disco, station, equipment, comment, date, ticket_id, status, priority])
             .then( resp => {
                 const data = resp.rows;
-                console.log(data, " THE DATA");
                 res.send({data});
             })
             .catch(err => console.log(err))
@@ -80,7 +78,6 @@ tickets.update = (req, res, next) => {
         client.query(model.update_ticket,[station, equipment, comment, priority, disco,  ticket_id])
             .then( resp => {
                 const data = resp.rows;
-                console.log(data, " THE DATA");
                 res.send({data});
             })
             .catch(err => console.log(err))
@@ -117,7 +114,6 @@ tickets.update_status = (req, res, next) => {
                 const data = {};
                 data.payload = resp.rows;
                 data.status = 'success';
-                console.log(data, " THE DATA");
                 res.send(data);
             })
             .catch(err => console.log(err))
