@@ -305,8 +305,8 @@ setInterval(()=> {
         const station = stations_resolved_holder.filter(station => station.name === name);
         station.daily_weather_data = response.data;
       }));
-      console.log(stations_resolved_holder, " the station resolved holder");
-      io.sockets.emit('client_message_weather', { message: stations_resolved_holder.toString() }); 
+      console.log(JSON.stringify(stations_resolved_holder), " the station resolved holder");
+      io.sockets.emit('client_message_weather', { message: JSON.stringify(stations_resolved_holder) }); 
     })
     .catch(e => console.error(e))
 }, timeout);
