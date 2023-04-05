@@ -266,7 +266,9 @@ db.query(weatherModel.get_station_coords)
   .then(response => {
     // Separate for generation and transmission
     // Add the type to the station data before sending it to the frontend
+    console.log(response.rows, " the stations rows");
     const station_coords = response.rows;
+    return
     if(station_coords.length > 0) {
         station_coords.forEach(station => {
             stations_promise_holder.push(
