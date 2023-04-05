@@ -267,22 +267,20 @@ db.query(weatherModel.get_station_coords)
     //console.log(response.rows, " the stations rows");
     let stations_resolved_holder = [];
     let station_coords = response.rows;
-    let stationObjects = {};
     let url_array = [];
 
     // First get all the URLs you want to hit
     station_coords.map(async station => {
         const {long, lat, name, type} = station;
         const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
-        url_array.push(url);
-        const response = await axios.get(url);
-        station.weather_data = response.data;
-        return stations_resolved_holder.push(station);
-        stationObjects[name] = station;
+        url_array.push(url);        
     });
-    console.log(station_coords, " the station coords after", stations_resolved_holder);
-    console.log(stationObjects, " the station objects");
-        // fetch(url)
+    const responses = await Promise.all(url_array.map(async url => {
+      const response = await axios.get(url);
+      stations_resolved_holder.push(response.data);
+    }));
+    console.log(responses, " the responses");
+    console.log(stations_resolved_holder, " the station resolved holder");
         //       .then(res => res.json())
         //       .then((resp) => {
         //           // update the state that corresponds to the name/lon&lat of the station
