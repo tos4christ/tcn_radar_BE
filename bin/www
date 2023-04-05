@@ -285,8 +285,8 @@ setInterval(()=> {
           station_daily_url_array.push({onecall_daily_url_2, id, name, type});
       });
       await Promise.all(station_current_url_array.map(async station_url => {
-        const {url, name, type} = station_url;
-        const response = await axios.get(url);
+        const {onecall_current_url_2, name, type} = station_url;
+        const response = await axios.get(onecall_current_url_2);
         const station = {};
         station.name = name;
         station.type = type;
@@ -294,14 +294,14 @@ setInterval(()=> {
         stations_resolved_holder.push(station);
       }));
       await Promise.all(station_hourly_url_array.map(async station_url => {
-        const {url, name, type} = station_url;
-        const response = await axios.get(url);
+        const {onecall_hourly_url_2, name, type} = station_url;
+        const response = await axios.get(onecall_hourly_url_2);
         const station = stations_resolved_holder.filter(station => station.name === name);
         station.hourly_weather_data = response.data;
       }));
       await Promise.all(station_daily_url_array.map(async station_url => {
-        const {url, name, type} = station_url;
-        const response = await axios.get(url);
+        const {onecall_daily_url_2, name, type} = station_url;
+        const response = await axios.get(onecall_daily_url_2);
         const station = stations_resolved_holder.filter(station => station.name === name);
         station.daily_weather_data = response.data;
       }));
