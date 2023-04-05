@@ -274,6 +274,7 @@ db.query(weatherModel.get_station_coords)
                 new Promise((resolve, reject)=> {
                     const {long, lat, name, type} = station;
                     const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
+                    console.log(process.env.WEATHER_API, " the weather api")
                     fetch(url)
                         .then(res => res.json())
                         .then((resp) => {
@@ -282,7 +283,7 @@ db.query(weatherModel.get_station_coords)
                             // selected_station.weather_data = res.rows;
                             station.weather_data = resp.rows;
                             stations_resolved_holder.push(station);
-                            console.log(station, " the station with weather data");
+                            console.log(resp.rows, " the station with weather data");
                         })
                         .catch()
                 })
