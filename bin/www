@@ -293,11 +293,11 @@ db.query(weatherModel.get_station_coords)
   })
   .then( () => {
     if(stations_promise_holder.length > 0) {
-      //console.log(stations_resolved_holder);
-      Promise.all(stations_promise_holder).then( () => {
-        // Send the data via Web Sockets to the frontend
-          console.log(stations_resolved_holder);
-      });            
+      console.log(stations_resolved_holder);
+      // Promise.all(stations_promise_holder).then( () => {
+      //   // Send the data via Web Sockets to the frontend
+      //     console.log(stations_resolved_holder);
+      // });            
     }
   })
 
