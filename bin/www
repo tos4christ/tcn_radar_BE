@@ -286,14 +286,13 @@ db.query(weatherModel.get_station_coords)
               })
               .catch(e => console.error(e))
         })
-    }        
-  })
-  .then( () => {
+    }
     console.log(station_coords, " the station coords");
     if(stations_resolved_holder.length > 0) {
       console.log(stations_resolved_holder, " the station resolved");          
     }
   })
+  .catch(e => console.error(e))
 
 /**
  * Listen on provided port, on all network interfaces.
