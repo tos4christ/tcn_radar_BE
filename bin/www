@@ -283,17 +283,16 @@ db.query(weatherModel.get_station_coords)
                   station['weather_data'] = resp;
                   stations_resolved_holder.push(station);
                   //console.log(resp, " the station with weather data");
-              })
-              .then( res => {
-                console.log(res, " is there anything here?")
-                console.log(station_coords, " the station coords");
-                if(stations_resolved_holder.length > 0) {
-                  console.log(stations_resolved_holder, " the station resolved");          
-                }
-              })
+              })              
               .catch(e => console.error(e))
         })        
     }    
+  })
+  .then( res => {
+    console.log(res, " is there anything here?")
+    if(stations_resolved_holder.length > 0) {
+      console.log(stations_resolved_holder, " the station resolved");          
+    }
   })
   .catch(e => console.error(e))
 
