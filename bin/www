@@ -285,7 +285,7 @@ setInterval(()=> {
         stations_resolved_holder.push(station);
       }));
       console.log(stations_resolved_holder, " the station resolved holder");
-      io.sockets.emit('client_message_weather', { message: message.toString() }); 
+      io.sockets.emit('client_message_weather', { message: stations_resolved_holder.toString() }); 
     })
     .catch(e => console.error(e))
 }, timeout);
