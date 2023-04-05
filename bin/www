@@ -283,9 +283,9 @@ db.query(weatherModel.get_station_coords)
                             // selected_station.weather_data = res.rows;
                             station.weather_data = resp.rows;
                             stations_resolved_holder.push(station);
-                            console.log(resp.rows, " the station with weather data");
+                            console.log(resp, " the station with weather data");
                         })
-                        .catch()
+                        .catch(e => console.error(e))
                 })
             )
         })
