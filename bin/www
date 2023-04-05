@@ -281,9 +281,9 @@ db.query(weatherModel.get_station_coords)
                             // update the state that corresponds to the name/lon&lat of the station
                             // const selected_station = stations.filter( station => station.lon === lon && station.lat === lat);
                             // selected_station.weather_data = res.rows;
-                            station.weather_data = resp.rows;
+                            station.weather_data = resp;
                             stations_resolved_holder.push(station);
-                            console.log(resp, " the station with weather data");
+                            //console.log(resp, " the station with weather data");
                         })
                         .catch(e => console.error(e))
                 })
@@ -291,7 +291,7 @@ db.query(weatherModel.get_station_coords)
         })
     }        
     if(stations_promise_holder.length > 0) {
-        Promise.all(stations_promise_holder).then( () => {
+        Promise.all(...stations_promise_holder).then( () => {
           // Send the data via Web Sockets to the frontend
             console.log(stations_resolved_holder);
         });            
