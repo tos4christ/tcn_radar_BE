@@ -275,7 +275,7 @@ setInterval(()=> {
       // First get all the URLs you want to hit
       station_coords.map(async station => {
           const {long, lat, name, type, id} = station;
-          const daily_count = 96;
+          const daily_count = 16;
           // const onecall_url_3 = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
           const onecall_current_url_2 = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${process.env.WEATHER_API}`;
           const onecall_3hourly_url_2 = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${process.env.WEATHER_API}`;
