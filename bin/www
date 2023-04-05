@@ -266,7 +266,9 @@ setInterval(()=> {
     .then(async response => {
       // Separate for generation and transmission
       // Add the type to the station data before sending it to the frontend
-      let stations_resolved_holder = [];
+      let stations_current_resolved_holder = [];
+      let stations_3hourly_resolved_holder = [];
+      let stations_daily_resolved_holder = [];
       let station_coords = response.rows;
       // let station_url_array = [];
       let station_current_url_array = [];
@@ -291,22 +293,30 @@ setInterval(()=> {
         station.name = name;
         station.type = type;
         station.current_weather_data = response.data;
-        stations_resolved_holder.push(station);
+        stations_current_resolved_holder.push(station);
       }));
       await Promise.all(station_3hourly_url_array.map(async station_url => {
         const {onecall_3hourly_url_2, name, type} = station_url;
         const response = await axios.get(onecall_3hourly_url_2);
-        const station = stations_resolved_holder.filter(station => station.name === name);
+        const station = {};
+        station.name = name;
+        station.type = type;
         station.hourly3_weather_data = response.data;
+        stations_3hourly_resolved_holder.push(station);
       }));
       await Promise.all(station_daily_url_array.map(async station_url => {
         const {onecall_daily_url_2, name, type} = station_url;
         const response = await axios.get(onecall_daily_url_2);
-        const station = stations_resolved_holder.filter(station => station.name === name);
+        const station = {};
+        station.name = name;
+        station.type = type;
         station.daily_weather_data = response.data;
+        stations_daily_resolved_holder.push(station);
       }));
       console.log(JSON.stringify(stations_resolved_holder), " the station resolved holder");
-      io.sockets.emit('client_message_weather', { message: JSON.stringify(stations_resolved_holder) }); 
+      io.sockets.emit('client_message_weather_current', { message: JSON.stringify(stations_current_resolved_holder) });
+      io.sockets.emit('client_message_weather_hourly3', { message: JSON.stringify(stations_3hourly_resolved_holder) });
+      io.sockets.emit('client_message_weather_daily', { message: JSON.stringify(stations_daily_resolved_holder) });
     })
     .catch(e => console.error(e))
 }, timeout);
