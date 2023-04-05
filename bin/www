@@ -262,7 +262,8 @@ client_3.on('message', (topic, message) => {
 // Get weather data and store it in the database
 const timeout = 600000;
 setInterval(()=> {
-  return db.query(weatherModel.get_station_coords)
+  return 
+  db.query(weatherModel.get_station_coords)
     .then(async response => {
       // Separate for generation and transmission
       // Add the type to the station data before sending it to the frontend
