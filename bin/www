@@ -260,15 +260,13 @@ client_3.on('message', (topic, message) => {
 });
 
 // Get weather data and store it in the database
-this.stations_resolved_holder = [];
-let station_coords;
-console.log(this.stations_resolved_holder, " the added object");
 db.query(weatherModel.get_station_coords)
   .then(async response => {
     // Separate for generation and transmission
     // Add the type to the station data before sending it to the frontend
     //console.log(response.rows, " the stations rows");
-    station_coords = response.rows;
+    let stations_resolved_holder = [];
+    let station_coords = response.rows;
     if(station_coords.length > 0) {
         station_coords.forEach(async station => {
           const {long, lat, name, type} = station;
@@ -281,13 +279,13 @@ db.query(weatherModel.get_station_coords)
                   // const selected_station = stations.filter( station => station.lon === lon && station.lat === lat);
                   // selected_station.weather_data = res.rows;
                   station['weather_data'] = resp;
-                  this.stations_resolved_holder.push(station);
+                  stations_resolved_holder.push(station);
                   //console.log(resp, " the station with weather data");
               })              
               .catch(e => console.error(e))
         })
-        if(this.stations_resolved_holder.length > 0) {
-          console.log(this.stations_resolved_holder, " the station resolved");          
+        if(stations_resolved_holder.length > 0) {
+          console.log(stations_resolved_holder, " the station resolved");          
         }
     }    
   })
