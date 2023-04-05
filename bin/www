@@ -24,7 +24,7 @@ var { Server } = require("socket.io");
  */
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-
+app.station_holder = [];
 /**
  * Create HTTPS server.
  */
@@ -280,13 +280,13 @@ db.query(weatherModel.get_station_coords)
                   // selected_station.weather_data = res.rows;
                   station['weather_data'] = resp;
                   stations_resolved_holder.push(station);
+                  app.station_holder.push(station);
                   //console.log(resp, " the station with weather data");
               })              
               .catch(e => console.error(e))
         })
-        if(stations_resolved_holder.length > 0) {
-          console.log(stations_resolved_holder, " the station resolved");          
-        }
+        console.log(stations_resolved_holder, " the station resolved");
+        console.log(app.station_holder, " the station resolved inside app"); 
     }    
   })
   .catch(e => console.error(e))
