@@ -268,13 +268,12 @@ db.query(weatherModel.get_station_coords)
     // Add the type to the station data before sending it to the frontend
     console.log(response.rows, " the stations rows");
     const station_coords = response.rows;
-    return
     if(station_coords.length > 0) {
         station_coords.forEach(station => {
             stations_promise_holder.push(
                 new Promise((resolve, reject)=> {
-                    const {lon, lat, name, type} = station;
-                    const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
+                    const {long, lat, name, type} = station;
+                    const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
                     fetch(url)
                         .then(res => res.json())
                         .then((res) => {
