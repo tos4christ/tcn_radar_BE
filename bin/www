@@ -13,6 +13,7 @@ var mqtt = require("mqtt");
 // var webSocket = require("../utility/websockets")
 var db = require("../database/db");
 var linesModel = require("../models/lines");
+var weatherModel = require("../models/weather");
 var frequencyModel = require("../models/frequency");
 var { Server } = require("socket.io");
 // var os = require('node:os');
@@ -257,6 +258,42 @@ client_3.on('message', (topic, message) => {
       console.error(e);
     }
 });
+
+// Get weather data and store it in the database
+const stations_promise_holder = [];
+const stations_resolved_holder = [];
+db.query(weatherModel.get_station_coords)
+  .then(response => {
+    // Separate for generation and transmission
+    // Add the type to the station data before sending it to the frontend
+    const station_coords = response.rows;
+    if(station_coords.length > 0) {
+        station_coords.forEach(station => {
+            stations_promise_holder.push(
+                new Promise((resolve, reject)=> {
+                    const {lon, lat, name, type} = station;
+                    const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
+                    fetch(url)
+                        .then(res => res.json())
+                        .then((res) => {
+                            // update the state that corresponds to the name/lon&lat of the station
+                            // const selected_station = stations.filter( station => station.lon === lon && station.lat === lat);
+                            // selected_station.weather_data = res.rows;
+                            station.weather_data = res.rows;
+                            stations_resolved_holder.push(station);
+                        })
+                        .catch()
+                })
+            )
+        })
+    }        
+    if(stations_promise_holder.length > 0) {
+        Promise.all(stations_promise_holder).then( () => {
+          // Send the data via Web Sockets to the frontend
+            console.log(stations_resolved_holder);
+        });            
+    }
+  })
 
 /**
  * Listen on provided port, on all network interfaces.
