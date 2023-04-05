@@ -262,6 +262,7 @@ client_3.on('message', (topic, message) => {
 // Get weather data and store it in the database
 this.stations_resolved_holder = [];
 let station_coords;
+console.log(this.stations_resolved_holder, " the added object");
 db.query(weatherModel.get_station_coords)
   .then(async response => {
     // Separate for generation and transmission
@@ -284,13 +285,13 @@ db.query(weatherModel.get_station_coords)
                   //console.log(resp, " the station with weather data");
               })              
               .catch(e => console.error(e))
-        })        
+        })
+        .then(respp => {
+          if(this.stations_resolved_holder.length > 0) {
+            console.log(this.stations_resolved_holder, " the station resolved");          
+          }
+        })
     }    
-  })
-  .then( res => {
-    if(this.stations_resolved_holder.length > 0) {
-      console.log(this.stations_resolved_holder, " the station resolved");          
-    }
   })
   .catch(e => console.error(e))
 
