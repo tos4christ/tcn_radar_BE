@@ -313,7 +313,7 @@ setInterval(()=> {
         station.daily_weather_data = response.data;
         stations_daily_resolved_holder.push(station);
       }));
-      console.log(JSON.stringify(stations_resolved_holder), " the station resolved holder");
+      //console.log(JSON.stringify(stations_resolved_holder), " the station resolved holder");
       io.sockets.emit('client_message_weather_current', { message: JSON.stringify(stations_current_resolved_holder) });
       io.sockets.emit('client_message_weather_hourly3', { message: JSON.stringify(stations_3hourly_resolved_holder) });
       io.sockets.emit('client_message_weather_daily', { message: JSON.stringify(stations_daily_resolved_holder) });
