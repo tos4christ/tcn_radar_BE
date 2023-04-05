@@ -266,7 +266,7 @@ db.query(weatherModel.get_station_coords)
   .then(response => {
     // Separate for generation and transmission
     // Add the type to the station data before sending it to the frontend
-    console.log(response.rows, " the stations rows");
+    //console.log(response.rows, " the stations rows");
     const station_coords = response.rows;
     if(station_coords.length > 0) {
         station_coords.forEach(station => {
@@ -282,6 +282,7 @@ db.query(weatherModel.get_station_coords)
                             // selected_station.weather_data = res.rows;
                             station.weather_data = res.rows;
                             stations_resolved_holder.push(station);
+                            console.log(station, " the station with weather data");
                         })
                         .catch()
                 })
