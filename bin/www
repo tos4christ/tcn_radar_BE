@@ -260,33 +260,36 @@ client_3.on('message', (topic, message) => {
 });
 
 // Get weather data and store it in the database
-db.query(weatherModel.get_station_coords)
-  .then(async response => {
-    // Separate for generation and transmission
-    // Add the type to the station data before sending it to the frontend
-    //console.log(response.rows, " the stations rows");
-    let stations_resolved_holder = [];
-    let station_coords = response.rows;
-    let station_url_array = [];
+const timeout = 600000;
+setInterval(()=> {
+  db.query(weatherModel.get_station_coords)
+    .then(async response => {
+      // Separate for generation and transmission
+      // Add the type to the station data before sending it to the frontend
+      let stations_resolved_holder = [];
+      let station_coords = response.rows;
+      let station_url_array = [];
+      // First get all the URLs you want to hit
+      station_coords.map(async station => {
+          const {long, lat, name, type, id} = station;
+          const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
+          station_url_array.push({url, id, name, type});        
+      });
+      await Promise.all(station_url_array.map(async station_url => {
+        const {url, name, type} = station_url;
+        const response = await axios.get(url);
+        const station = {};
+        station.name = name;
+        station.type = type;
+        station.weather_data = response.data;
+        stations_resolved_holder.push(station);
+      }));
+      console.log(stations_resolved_holder, " the station resolved holder");
+      io.sockets.emit('client_message_weather', { message: message.toString() }); 
+    })
+    .catch(e => console.error(e))
+}, timeout);
 
-    // First get all the URLs you want to hit
-    station_coords.map(async station => {
-        const {long, lat, name, type, id} = station;
-        const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
-        station_url_array.push({url, id, name, type});        
-    });
-    await Promise.all(station_url_array.map(async station_url => {
-      const {url, name, type} = station_url;
-      const response = await axios.get(url);
-      const station = {};
-      station.name = name;
-      station.type = type;
-      station.weather_data = response.data;
-      stations_resolved_holder.push(station);
-    }));
-    console.log(stations_resolved_holder, " the station resolved holder");    
-  })
-  .catch(e => console.error(e))
 
 /**
  * Listen on provided port, on all network interfaces.
