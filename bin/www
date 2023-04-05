@@ -264,45 +264,36 @@ let stations_promise_holder = [];
 let stations_resolved_holder = [];
 let station_coords;
 db.query(weatherModel.get_station_coords)
-  .then(response => {
+  .then(async response => {
     // Separate for generation and transmission
     // Add the type to the station data before sending it to the frontend
     //console.log(response.rows, " the stations rows");
     station_coords = response.rows;
     if(station_coords.length > 0) {
-        station_coords.forEach(station => {
-            stations_promise_holder.push(
-                new Promise((resolve, reject)=> {
-                    const {long, lat, name, type} = station;
-                    const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
-                    // console.log(process.env.WEATHER_API, " the weather api")
-                    fetch(url)
-                        .then(res => res.json())
-                        .then((resp) => {
-                            // update the state that corresponds to the name/lon&lat of the station
-                            // const selected_station = stations.filter( station => station.lon === lon && station.lat === lat);
-                            // selected_station.weather_data = res.rows;
-                            station['weather_data'] = resp;
-                            stations_resolved_holder.push(station);
-                            //console.log(resp, " the station with weather data");
-                        })
-                        .catch(e => console.error(e))
-                })
-            )
+        station_coords.forEach(async station => {
+          const {long, lat, name, type} = station;
+          const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
+          // console.log(process.env.WEATHER_API, " the weather api")
+          await fetch(url)
+              .then(res => res.json())
+              .then((resp) => {
+                  // update the state that corresponds to the name/lon&lat of the station
+                  // const selected_station = stations.filter( station => station.lon === lon && station.lat === lat);
+                  // selected_station.weather_data = res.rows;
+                  station['weather_data'] = resp;
+                  stations_resolved_holder.push(station);
+                  //console.log(resp, " the station with weather data");
+              })
+              .catch(e => console.error(e))
         })
     }        
   })
   .then( () => {
     console.log(station_coords, " the station coords");
-    if(stations_promise_holder.length > 0) {
-      console.log(stations_resolved_holder, " the station resolved");
-      // Promise.all(stations_promise_holder).then( () => {
-      //   // Send the data via Web Sockets to the frontend
-      //     console.log(stations_resolved_holder);
-      // });            
+    if(stations_resolved_holder.length > 0) {
+      console.log(stations_resolved_holder, " the station resolved");          
     }
   })
-  console.log(stations_promise_holder, " the station promise holder")
 
 /**
  * Listen on provided port, on all network interfaces.
