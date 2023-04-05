@@ -267,29 +267,31 @@ db.query(weatherModel.get_station_coords)
     //console.log(response.rows, " the stations rows");
     let stations_resolved_holder = [];
     let station_coords = response.rows;
+    let url_array = [];
 
     // First get all the URLs you want to hit
     if(station_coords.length > 0) {
-        station_coords.map(async station => {
-          const {long, lat, name, type} = station;
-          const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
-          // console.log(process.env.WEATHER_API, " the weather api")
-          await fetch(url)
-              .then(res => res.json())
-              .then((resp) => {
-                  // update the state that corresponds to the name/lon&lat of the station
-                  // const selected_station = stations.filter( station => station.lon === lon && station.lat === lat);
-                  // selected_station.weather_data = res.rows;
-                  station['weather_data'] = resp;
-                  stations_resolved_holder.push(station);
-                  app.station_holder.push(station);
-                  //console.log(resp, " the station with weather data");
-              })              
-              .catch(e => console.error(e))
-        });
-        console.log(stations_resolved_holder, " the station resolved");
-        console.log(app.station_holder, " the station resolved inside app"); 
-    }    
+      station_coords.map(async station => {
+        const {long, lat, name, type} = station;
+        const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
+        url_array.push(url);
+        const response = await axios.get(url);
+        station.weather_data = response.data;
+    });
+    console.log(station_coords, " the station coords after");
+        // fetch(url)
+        //       .then(res => res.json())
+        //       .then((resp) => {
+        //           // update the state that corresponds to the name/lon&lat of the station
+        //           // const selected_station = stations.filter( station => station.lon === lon && station.lat === lat);
+        //           // selected_station.weather_data = res.rows;
+        //           station['weather_data'] = resp;
+        //           stations_resolved_holder.push(station);
+        //           app.station_holder.push(station);
+        //           //console.log(resp, " the station with weather data");
+        //       })              
+        //       .catch(e => console.error(e))
+    }
   })
   .catch(e => console.error(e))
 
@@ -367,4 +369,5 @@ function onListening() {
 }
 
 const {exec} = require('child_process');
+const { default: axios } = require('axios');
 exec('wmic process where "ProcessId=' + process.pid + '" CALL setpriority 256');
