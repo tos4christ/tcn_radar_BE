@@ -262,8 +262,7 @@ client_3.on('message', (topic, message) => {
 // Get weather data and store it in the database
 const timeout = 600000;
 setInterval(()=> {
-  return;
-  db.query(weatherModel.get_station_coords)
+  return db.query(weatherModel.get_station_coords)
     .then(async response => {
       // Separate for generation and transmission
       // Add the type to the station data before sending it to the frontend
@@ -280,9 +279,9 @@ setInterval(()=> {
           const {long, lat, name, type, id} = station;
           const daily_count = 16;
           // const onecall_url_3 = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
-          const onecall_current_url_2 = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${process.env.WEATHER_API}`;
-          const onecall_3hourly_url_2 = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${process.env.WEATHER_API}`;
-          const onecall_daily_url_2 = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${long}&cnt=${daily_count}&appid=${process.env.WEATHER_API}`;
+          const onecall_current_url_2 = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${process.env.WEATHER_API}&units=metric`;
+          const onecall_3hourly_url_2 = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${process.env.WEATHER_API}&units=metric`;
+          const onecall_daily_url_2 = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${long}&cnt=${daily_count}&appid=${process.env.WEATHER_API}&units=metric`;
           station_current_url_array.push({onecall_current_url_2, id, name, type});
           station_3hourly_url_array.push({onecall_3hourly_url_2, id, name, type});
           station_daily_url_array.push({onecall_daily_url_2, id, name, type});
