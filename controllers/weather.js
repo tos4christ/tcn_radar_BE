@@ -197,22 +197,10 @@ lines.history = (req, res, next) => {
     }
 }
 
-lines.average = (req, res, next) => {
-    console.log('i got here')
+lines.getStations = (req, res, next) => {
     return;
-    const { body } = req;
-    let { station, equipment, checkDate} = body;
-    // console.log(station, equipment, checkDate, 'the station')
-    
-    // get the amount of hour and divide it into 5 minutes interval
-    const {date, Hour, Minute, Seconds} = dateFormatter();
-    const { start, end } = timeConverter(date, date, '00:00:00', new Date().toLocaleTimeString("en-GB").split(' ')[0])
-    // console.log(start.getTime(), end.getTime(), date, 'the dates')
-    const timeDiff = end.getTime() - start.getTime();
-    const interval_amount = Math.floor(timeDiff / 300000);
-
-    // check if the data exists then switch between posting and updating    
-    
 }
+
+
 
 module.exports =  lines;
