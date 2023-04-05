@@ -261,7 +261,7 @@ client_3.on('message', (topic, message) => {
 
 // Get weather data and store it in the database
 const timeout = 600000;
-setInterval(()=> {
+function getWeather() {
   return db.query(weatherModel.get_station_coords)
     .then(async response => {
       // Separate for generation and transmission
@@ -319,6 +319,10 @@ setInterval(()=> {
       io.sockets.emit('client_message_weather_daily', { message: JSON.stringify(stations_daily_resolved_holder) });
     })
     .catch(e => console.error(e))
+}
+getWeather();
+setInterval(()=> {
+  return getWeather();
 }, timeout);
 
 
