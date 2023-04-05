@@ -276,11 +276,11 @@ db.query(weatherModel.get_station_coords)
                     const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
                     fetch(url)
                         .then(res => res.json())
-                        .then((res) => {
+                        .then((resp) => {
                             // update the state that corresponds to the name/lon&lat of the station
                             // const selected_station = stations.filter( station => station.lon === lon && station.lat === lat);
                             // selected_station.weather_data = res.rows;
-                            station.weather_data = res.rows;
+                            station.weather_data = resp.rows;
                             stations_resolved_holder.push(station);
                             console.log(station, " the station with weather data");
                         })
