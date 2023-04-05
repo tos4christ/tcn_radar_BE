@@ -260,14 +260,15 @@ client_3.on('message', (topic, message) => {
 });
 
 // Get weather data and store it in the database
-const stations_promise_holder = [];
-const stations_resolved_holder = [];
+let stations_promise_holder = [];
+let stations_resolved_holder = [];
+let station_coords;
 db.query(weatherModel.get_station_coords)
   .then(response => {
     // Separate for generation and transmission
     // Add the type to the station data before sending it to the frontend
     //console.log(response.rows, " the stations rows");
-    const station_coords = response.rows;
+    station_coords = response.rows;
     if(station_coords.length > 0) {
         station_coords.forEach(station => {
             stations_promise_holder.push(
@@ -292,14 +293,16 @@ db.query(weatherModel.get_station_coords)
     }        
   })
   .then( () => {
+    console.log(station_coords, " the station coords");
     if(stations_promise_holder.length > 0) {
-      console.log(stations_resolved_holder);
+      console.log(stations_resolved_holder, " the station resolved");
       // Promise.all(stations_promise_holder).then( () => {
       //   // Send the data via Web Sockets to the frontend
       //     console.log(stations_resolved_holder);
       // });            
     }
   })
+
 
 /**
  * Listen on provided port, on all network interfaces.
