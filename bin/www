@@ -262,14 +262,13 @@ client_3.on('message', (topic, message) => {
 // Get weather data and store it in the database
 const timeout = 600000;
 setInterval(()=> {
-  return;
-  db.query(weatherModel.get_station_coords)
+  return db.query(weatherModel.get_station_coords)
     .then(async response => {
       // Separate for generation and transmission
       // Add the type to the station data before sending it to the frontend
       let stations_resolved_holder = [];
       let station_coords = response.rows;
-      let station_url_array = [];
+      // let station_url_array = [];
       let station_current_url_array = [];
       let station_hourly_url_array = [];
       let station_daily_url_array = [];
@@ -277,7 +276,7 @@ setInterval(()=> {
       station_coords.map(async station => {
           const {long, lat, name, type, id} = station;
           const daily_count = 96;
-          const onecall_url_3 = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
+          // const onecall_url_3 = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
           const onecall_current_url_2 = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${process.env.WEATHER_API}`;
           const onecall_hourly_url_2 = `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${long}&appid=${process.env.WEATHER_API}`;
           const onecall_daily_url_2 = `api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${long}&cnt=${daily_count}&appid=${process.env.WEATHER_API}`;
@@ -285,14 +284,26 @@ setInterval(()=> {
           station_hourly_url_array.push({onecall_hourly_url_2, id, name, type});
           station_daily_url_array.push({onecall_daily_url_2, id, name, type});
       });
-      await Promise.all(station_url_array.map(async station_url => {
+      await Promise.all(station_current_url_array.map(async station_url => {
         const {url, name, type} = station_url;
         const response = await axios.get(url);
         const station = {};
         station.name = name;
         station.type = type;
-        station.weather_data = response.data;
+        station.current_weather_data = response.data;
         stations_resolved_holder.push(station);
+      }));
+      await Promise.all(station_hourly_url_array.map(async station_url => {
+        const {url, name, type} = station_url;
+        const response = await axios.get(url);
+        const station = stations_resolved_holder.filter(station => station.name === name);
+        station.hourly_weather_data = response.data;
+      }));
+      await Promise.all(station_daily_url_array.map(async station_url => {
+        const {url, name, type} = station_url;
+        const response = await axios.get(url);
+        const station = stations_resolved_holder.filter(station => station.name === name);
+        station.daily_weather_data = response.data;
       }));
       console.log(stations_resolved_holder, " the station resolved holder");
       io.sockets.emit('client_message_weather', { message: stations_resolved_holder.toString() }); 
