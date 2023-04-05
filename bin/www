@@ -277,7 +277,7 @@ db.query(weatherModel.get_station_coords)
         url_array.push(url);
         const response = await axios.get(url);
         station.weather_data = response.data;
-        stations_resolved_holder.push(station);
+        return stations_resolved_holder.push(station);
         stationObjects[name] = station;
     });
     console.log(station_coords, " the station coords after", stations_resolved_holder);
