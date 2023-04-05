@@ -267,8 +267,10 @@ db.query(weatherModel.get_station_coords)
     //console.log(response.rows, " the stations rows");
     let stations_resolved_holder = [];
     let station_coords = response.rows;
+
+    // First get all the URLs you want to hit
     if(station_coords.length > 0) {
-        station_coords.forEach(async station => {
+        station_coords.map(async station => {
           const {long, lat, name, type} = station;
           const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
           // console.log(process.env.WEATHER_API, " the weather api")
@@ -284,7 +286,7 @@ db.query(weatherModel.get_station_coords)
                   //console.log(resp, " the station with weather data");
               })              
               .catch(e => console.error(e))
-        })
+        });
         console.log(stations_resolved_holder, " the station resolved");
         console.log(app.station_holder, " the station resolved inside app"); 
     }    
