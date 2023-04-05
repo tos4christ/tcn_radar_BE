@@ -270,16 +270,18 @@ setInterval(()=> {
       let station_coords = response.rows;
       // let station_url_array = [];
       let station_current_url_array = [];
-      let station_hourly_url_array = [];
+      let station_3hourly_url_array = [];
       let station_daily_url_array = [];
       // First get all the URLs you want to hit
       station_coords.map(async station => {
           const {long, lat, name, type, id} = station;
-          const daily_count = 16;
+          const daily_count = 96;
           // const onecall_url_3 = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
           const onecall_current_url_2 = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${process.env.WEATHER_API}`;
+          const onecall_3hourly_url_2 = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${process.env.WEATHER_API}`;
           const onecall_daily_url_2 = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${long}&cnt=${daily_count}&appid=${process.env.WEATHER_API}`;
           station_current_url_array.push({onecall_current_url_2, id, name, type});
+          station_3hourly_url_array.push({onecall_3hourly_url_2, id, name, type});
           station_daily_url_array.push({onecall_daily_url_2, id, name, type});
       });
       await Promise.all(station_current_url_array.map(async station_url => {
@@ -290,6 +292,12 @@ setInterval(()=> {
         station.type = type;
         station.current_weather_data = response.data;
         stations_resolved_holder.push(station);
+      }));
+      await Promise.all(station_3hourly_url_array.map(async station_url => {
+        const {onecall_3hourly_url_2, name, type} = station_url;
+        const response = await axios.get(onecall_3hourly_url_2);
+        const station = stations_resolved_holder.filter(station => station.name === name);
+        station.hourly3_weather_data = response.data;
       }));
       await Promise.all(station_daily_url_array.map(async station_url => {
         const {onecall_daily_url_2, name, type} = station_url;
