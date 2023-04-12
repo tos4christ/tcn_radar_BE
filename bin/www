@@ -296,7 +296,8 @@ function getWeather() {
         stations_current_resolved_holder.push(station);
         const { coord, weather, main, wind, dt, clouds, rain } = response.data;
         const {lon, lat} = coord;
-        const {id, main: main_weather, description, icon} = weather;
+        const {id, description, icon} = weather;
+        const main_weather = weather.main;
         const {speed, deg, gust} = wind;
         const {temp, feels_like, pressure, humidity} = main;
         // const { "1h": rain_volume} =rain;
@@ -304,6 +305,9 @@ function getWeather() {
         var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
         const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
         // Save data into the database
+        // (date, time, station_name, lon, lat, main_weather, weather_id, 
+        //   main_weather_description, weather_icon, main_temperature, ambient_temperature,
+        //   main_pressure, main_humidity, wind_speed, wind_degree, wind_gust) 
         db.query(weatherModel.create, [date, dt, name, lon, lat, main_weather, id, description, icon, temp, feels_like, pressure, humidity, speed, deg, gust])
           .then( response => {
             // done
