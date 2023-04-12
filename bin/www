@@ -294,6 +294,19 @@ function getWeather() {
         station.type = type;
         station.current_weather_data = response.data;
         stations_current_resolved_holder.push(station);
+        const { coord, weather, main, wind, dt, clouds, rain } = response.data;
+        const {lon, lat} = coord;
+        const {id, main: main_weather, description, icon} = weather;
+        const {speed, deg, gust} = wind;
+        const {temp, feels_like, pressure, humidity} = main;
+        const { "1h": rain_volume} =rain;
+        const {all} = clouds;
+        // Save data into the database
+        db.query(weatherModel.create, [date, dt, name, lon, lat, main_weather, id, description, icon, , temp, feels_like, pressure, humidity, speed, deg, gust])
+          .then( response => {
+            // done
+          })
+          .catch(e => console.error(e))
       }));
       await Promise.all(station_3hourly_url_array.map(async station_url => {
         const {onecall_3hourly_url_2, name, type} = station_url;
