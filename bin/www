@@ -299,8 +299,8 @@ function getWeather() {
         const {id, main: main_weather, description, icon} = weather;
         const {speed, deg, gust} = wind;
         const {temp, feels_like, pressure, humidity} = main;
-        const { "1h": rain_volume} =rain;
-        const {all} = clouds;
+        // const { "1h": rain_volume} =rain;
+        // const {all} = clouds;
         // Save data into the database
         db.query(weatherModel.create, [date, dt, name, lon, lat, main_weather, id, description, icon, , temp, feels_like, pressure, humidity, speed, deg, gust])
           .then( response => {
