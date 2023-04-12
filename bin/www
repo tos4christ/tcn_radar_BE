@@ -301,6 +301,8 @@ function getWeather() {
         const {temp, feels_like, pressure, humidity} = main;
         // const { "1h": rain_volume} =rain;
         // const {all} = clouds;
+        var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
         // Save data into the database
         db.query(weatherModel.create, [date, dt, name, lon, lat, main_weather, id, description, icon, , temp, feels_like, pressure, humidity, speed, deg, gust])
           .then( response => {
