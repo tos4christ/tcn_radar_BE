@@ -307,7 +307,7 @@ function getWeather() {
         // (date, time, station_name, lon, lat, main_weather, weather_id, 
         //   main_weather_description, weather_icon, main_temperature, ambient_temperature,
         //   main_pressure, main_humidity, wind_speed, wind_degree, wind_gust) 
-        db.query(weatherModel.create, [date, dt, name, lon, lat, main_weather, id, description, icon, temp, feels_like, pressure, humidity, speed, deg, gust])
+        db.query(weatherModel.create, [date, dt, name, lon, lat, main_weather, id, description, icon, temp, feels_like, pressure, humidity, speed, deg, gust ? gust : 0])
           .then( response => {
             // done
           })
