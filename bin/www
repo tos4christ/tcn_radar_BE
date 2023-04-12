@@ -304,7 +304,7 @@ function getWeather() {
         var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
         const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
         // Save data into the database
-        db.query(weatherModel.create, [date, dt, name, lon, lat, main_weather, id, description, icon, , temp, feels_like, pressure, humidity, speed, deg, gust])
+        db.query(weatherModel.create, [date, dt, name, lon, lat, main_weather, id, description, icon, temp, feels_like, pressure, humidity, speed, deg, gust])
           .then( response => {
             // done
           })
