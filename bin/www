@@ -300,19 +300,19 @@ function getWeather() {
         const main_weather = weather.main;
         const {speed, deg, gust} = wind;
         const {temp, feels_like, pressure, humidity} = main;
+        console.log(response.data, "the data response", main_weather, "the main weather");
         // const { "1h": rain_volume} =rain;
         // const {all} = clouds;
         var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
         const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
         // Save data into the database
-        // (date, time, station_name, lon, lat, main_weather, weather_id, 
-        //   main_weather_description, weather_icon, main_temperature, ambient_temperature,
-        //   main_pressure, main_humidity, wind_speed, wind_degree, wind_gust) 
-        db.query(weatherModel.create, [date, dt, name, lon, lat, main_weather, id, description, icon, temp, feels_like, pressure, humidity, speed, deg, gust])
-          .then( response => {
-            // done
-          })
-          .catch(e => console.error(e))
+       
+        
+        // db.query(weatherModel.create, [date, dt, name, lon, lat, main_weather, id, description, icon, temp, feels_like, pressure, humidity, speed, deg, gust])
+        //   .then( response => {
+        //     // done
+        //   })
+        //   .catch(e => console.error(e))
       }));
       await Promise.all(station_3hourly_url_array.map(async station_url => {
         const {onecall_3hourly_url_2, name, type} = station_url;
