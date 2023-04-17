@@ -302,10 +302,7 @@ async function getWeather() {
       const {all: cloudiness} = clouds ? clouds : { all : null};
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
       const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
-      // Save data into the database
-      // (date, time, station_name, lon, lat, main_weather, weather_id, 
-      //   main_weather_description, weather_icon, main_temperature, ambient_temperature,
-      //   main_pressure, main_humidity, wind_speed, wind_degree, wind_gust) 
+      // Save data into the database 
       db.query(weatherModel.create, [
         date, dt, name_1, lon, lat_1, main_weather, id_1, description, 
         icon, temp, feels_like, pressure, humidity, speed, deg, gust ? gust : 0,
@@ -315,28 +312,31 @@ async function getWeather() {
         })
         .catch(e => console.error(e));
     }));
-    await Promise.all(station_3hourly_url_array.map(async (station_url_3) => {
-      const { onecall_3hourly_url_2: onecall_3hourly_url_2_1, name: name_2, type: type_2 } = station_url_3;
-      const response_3 = await axios.get(onecall_3hourly_url_2_1);
-      const station_3 = {};
-      station_3.name = name_2;
-      station_3.type = type_2;
-      station_3.hourly3_weather_data = response_3.data;
-      stations_3hourly_resolved_holder.push(station_3);
-    }));
-    await Promise.all(station_daily_url_array.map(async (station_url_5) => {
-      const { onecall_daily_url_2: onecall_daily_url_2_1, name: name_3, type: type_3 } = station_url_5;
-      const response_4 = await axios.get(onecall_daily_url_2_1);
-      const station_4 = {};
-      station_4.name = name_3;
-      station_4.type = type_3;
-      station_4.daily_weather_data = response_4.data;
-      stations_daily_resolved_holder.push(station_4);
-    }));
+
+    // Use the  hourly and daily forecast for requests only
+
+    // await Promise.all(station_3hourly_url_array.map(async (station_url_3) => {
+    //   const { onecall_3hourly_url_2: onecall_3hourly_url_2_1, name: name_2, type: type_2 } = station_url_3;
+    //   const response_3 = await axios.get(onecall_3hourly_url_2_1);
+    //   const station_3 = {};
+    //   station_3.name = name_2;
+    //   station_3.type = type_2;
+    //   station_3.hourly3_weather_data = response_3.data;
+    //   stations_3hourly_resolved_holder.push(station_3);
+    // }));
+    // await Promise.all(station_daily_url_array.map(async (station_url_5) => {
+    //   const { onecall_daily_url_2: onecall_daily_url_2_1, name: name_3, type: type_3 } = station_url_5;
+    //   const response_4 = await axios.get(onecall_daily_url_2_1);
+    //   const station_4 = {};
+    //   station_4.name = name_3;
+    //   station_4.type = type_3;
+    //   station_4.daily_weather_data = response_4.data;
+    //   stations_daily_resolved_holder.push(station_4);
+    // }));
     //console.log(JSON.stringify(stations_resolved_holder), " the station resolved holder");
     io.sockets.emit('client_message_weather_current', { message: JSON.stringify(stations_current_resolved_holder) });
-    io.sockets.emit('client_message_weather_hourly3', { message: JSON.stringify(stations_3hourly_resolved_holder) });
-    io.sockets.emit('client_message_weather_daily', { message: JSON.stringify(stations_daily_resolved_holder) });
+    // io.sockets.emit('client_message_weather_hourly3', { message: JSON.stringify(stations_3hourly_resolved_holder) });
+    // io.sockets.emit('client_message_weather_daily', { message: JSON.stringify(stations_daily_resolved_holder) });
   } catch (e_1) {
     return console.error(e_1);
   }
