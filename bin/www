@@ -177,10 +177,9 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  // if (['delta4gs/tv', 'riversIppPs/pr', 'afam6ts/tv', 'delta2gs/pv', 'delta3gs/pv',
-  // 'omokugs/pv', 'sapelets/pv', 'ihovborts/tv', 'omotoshoGas/pv', 'transamadi/tv'].includes(topic)) {
-  //   console.log(message.toString(), 'client 2')
-  // }
+  if (['transamadi/tv'].includes(topic)) {
+    console.log(message.toString(), 'client 2')
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
