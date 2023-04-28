@@ -41,6 +41,13 @@ freq.getFrequency = (req, res, next) => {
         .catch(err => console);        
 }
 
+freq.get = (req, res) => {
+    // use current_id, equipment_name and level to recognize a current item
+   const { query } = req;
+   console.log(query, " this is the query");
+   res.end();
+}
+
 freq.getWeather = (req, res, next) => {
     // use current_id, equipment_name and level to recognize a current item
     const { body } = req;    
