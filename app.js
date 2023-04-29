@@ -99,7 +99,7 @@ app.use('/frequency', frequencyRouter);
 app.use('/ticketsignin', signinRouterTickets);
 app.use('/ticketsignup', signupRouterTickets);
 app.use('/tickets', ticketsRouter);
-app.use('api/weather', weatherRouter);
+app.use('/api/weather', weatherRouter);
 
 
 // app.get('/.well-known/pki-validation/F7E918FEFBA46C9E95A10FC7F19D183C.txt', (req, res) => {
