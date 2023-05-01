@@ -1,6 +1,7 @@
 const { Pool } = require("pg");
 var model = require('../models/weather');
 var pool_1 = require('../database/db');
+const { default: axios } = require('axios');
 
 const weather = {};
 
