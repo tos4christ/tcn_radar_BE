@@ -16,7 +16,6 @@ weather.getStations = (req, res, next) => {
 
 weather.getWeather = async (req, res, next) => {
     const { lat, lon } = req.body;
-    console.log(req.body, " this is the body");
     const daily_count = 16;
     try {
         // First get all the URLs you want to hit
@@ -29,7 +28,6 @@ weather.getWeather = async (req, res, next) => {
         const response_2 = await axios.get(onecall_3hourly_url_2);
         const response_3 = await axios.get(onecall_daily_url_2);  
         const data = {current: response_1.data, hourly: response_2.data, daily: response_3.data};
-        console.log(data, " this is the data");
         res.send({data})
     } catch (e_1) {
         return console.error(e_1);
