@@ -15,6 +15,7 @@ weather.getStations = (req, res, next) => {
 
 weather.getWeather = async (req, res, next) => {
     const { lat, lon } = req.body;
+    console.log(req.body, " this is the body");
     const daily_count = 16;
     try {
         // First get all the URLs you want to hit
