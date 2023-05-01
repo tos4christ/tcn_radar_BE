@@ -5,4 +5,6 @@ var controller = require('../controllers/weather');
 /* GET users listing. */
 router.get('/getallstations', controller.getStations);
 
+router.get('/getweather', controller.getWeather);
+
 module.exports = router;
