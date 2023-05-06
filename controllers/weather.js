@@ -28,7 +28,7 @@ weather.getWeather = async (req, res, next) => {
         const response_2 = await axios.get(onecall_3hourly_url_2);
         const response_3 = await axios.get(onecall_daily_url_2);  
         const data = {current: response_1.data, hourly: response_2.data, daily: response_3.data};
-        res.send({data: "error: subscription finished"})
+        res.send({data})
     } catch (e_1) {
         return console.error(e_1);
     }
