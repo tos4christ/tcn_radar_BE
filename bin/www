@@ -93,7 +93,9 @@ client_2.on('connect', () => {
        'omokugs/pv', 'phmains/tv', 'sapelets/pv', 'ihovborts/tv',
        'omotoso2ts/tv', 'omotoso11ts/pv', 'omotoso12ts/pv',
        'olorunsogo1ts/pv', 'olorunsogo2ts/tv', 'omotoshoGas/pv',
-        'odukpanits/pv', 'transamadi/tv', 'afam5gs/pv'
+        'odukpanits/pv', 'transamadi/tv', 'afam5gs/pv', 
+        'dadinkowags/tv', 'gbaraints/pv', 'zungeru/tv',
+        'zungeru/status'
     ],
     err => err ? console.log('this is the error', err) : null
   )
@@ -177,7 +179,7 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  if (['transamadi/tv'].includes(topic)) {
+  if (['gbaraints/pv', 'zungeru/status', 'zungeru/tv', 'gbaraints/status'].includes(topic)) {
     console.log(message.toString(), 'client 2')
   }
   // broadcast the message to the client that are connected
