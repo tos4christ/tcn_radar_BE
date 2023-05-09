@@ -75,7 +75,7 @@ client_1.on('connect', () => {
           'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 
           'riversIppPs/pv', 'markudits/tv',
           'dadinkowags/tv', 'ugwuajits/tv',
-          'gbaraints/pv', 'olorunsogo1ts/pv', 'parasenergyPs/pv',
+           'olorunsogo1ts/pv', 'parasenergyPs/pv',
            'olorunsogo2ts/tv','omotoshoGas/pv',
       ],
    (err) => {
@@ -87,6 +87,7 @@ client_1.on('connect', () => {
 client_2.on('connect', () => {
   client_2.subscribe(
     [
+      'ikotekpene/tv', 'gwagwaladats/tv','gereguGs/pv', 'odukpanits/tv',
       'asabats/tv', 'delta4gs/tv', 'OkpaiippGs/tv', 'jebbaTs/tv',
        'kainjits/tv', 'egbings/pv', 'riversIppPs/pr', 'afam4gs/pv',
        'shirorogs/pv', 'afam6ts/tv', 'delta2gs/pv', 'delta3gs/pv',
@@ -95,7 +96,7 @@ client_2.on('connect', () => {
        'olorunsogo1ts/pv', 'olorunsogo2ts/tv', 'omotoshoGas/pv',
         'odukpanits/pv', 'transamadi/tv', 'afam5gs/pv', 
         'dadinkowags/tv', 'gbaraints/pv', 'zungeru/tv',
-        'zungeru/status'
+        'zungeru/status', 'gereguGs/tv',
     ],
     err => err ? console.log('this is the error', err) : null
   )
