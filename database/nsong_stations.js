@@ -3,7 +3,7 @@ const station_keys1 = [
     'odukpaniGs', 'omotosho1', 'ekim', 'gereguPs', 'ikotEkpene', 'riversIppPs', 'gbarain', 'jebbaTs',
     'omokuPs1', 'ihovborNippPs', 'olorunsogo1', 'parasEnergyPs', 'olorunsogoPhase1Gs', 'dadinKowaGs',
     'kainjiTs', 'egbinPs', 'afamIv_vPs', 'shiroroPs', 'delta2', 'delta3', 'deltaGs', 'odukpaniNippPs',
-    'transamadiGs', 'afamVPs'
+    'transamadiGs', 'afamVPs', 'zungeru'
 ]; 
 
 module.exports = (data) => {
@@ -34,6 +34,7 @@ module.exports = (data) => {
         'IBOM POWER (GAS)' : {mw: null, kv: null, station: 'IBOM POWER (GAS)', amp: null, time: null, seconds: null, mvar:null},
         'OLORUNSOGO (GAS)' : {mw: null, kv: null, station: 'OLORUNSOGO (GAS)', amp: null, time: null, seconds: null, mvar:null},
         'GBARAIN NIPP (GAS)' : {mw: null, kv: null, station: 'GBARAIN NIPP (GAS)', amp: null, time: null, seconds: null, mvar:null},
+        'ZUNGERU GS' : {mw: null, kv: null, station: 'ZUNGERU GS', amp: null, time: null, seconds: null, mvar:null},
         'DADINKOWA G.S (HYDRO)' : {mw: null, kv: null, station: 'DADINKOWA G.S (HYDRO)', amp: null, time: null, seconds: null, mvar:null}
     };
 
@@ -64,6 +65,28 @@ module.exports = (data) => {
                 res_data['SHIRORO (HYDRO)'].mvar = mvar_sum;
                 res_data['SHIRORO (HYDRO)'].time = time;
                 res_data['SHIRORO (HYDRO)'].seconds = seconds;
+            }
+            if (filtered_station[0].station === 'zungeru') {
+                let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
+                const mw_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.mw);
+                    max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
+                    return sum;
+                },0)
+                const amp_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.amp);
+                    return sum;
+                },0)
+                const mvar_sum = filtered_station.reduce((acc, curr) => {
+                    const sum = acc + Math.abs(curr.mvar);
+                    return sum;
+                },0)
+                res_data['ZUNGERU GS'].mw = mw_sum;
+                res_data['ZUNGERU GS'].kv = max_voltage;
+                res_data['ZUNGERU GS'].amp = amp_sum;
+                res_data['ZUNGERU GS'].mvar = mvar_sum;
+                res_data['ZUNGERU GS'].time = time;
+                res_data['ZUNGERU GS'].seconds = seconds;
             }
             if (filtered_station[0].station === 'afamIv_vPs') {
                 let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
