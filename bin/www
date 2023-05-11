@@ -64,6 +64,7 @@ const options = {
 const client_1 = mqtt.connect(host_1, options);
 const client_2 = mqtt.connect(host_2, options);
 const client_3 = mqtt.connect(host_3);
+// const client_4 = mqtt.connect(host_2, options);
 
 client_1.on('connect', () => {
   client_1.subscribe(
@@ -110,9 +111,9 @@ client_3.on('connect', () => {
 });
 
 client_1.on('message', (topic, message) => {
-  if (['odukpanits/tv'].includes(topic)) {
-    console.log(message.toString(), 'client 1')
-  } 
+  // if (['odukpanits/tv'].includes(topic)) {
+  //   console.log(message.toString(), 'client 1')
+  // } 
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
@@ -181,9 +182,9 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  if (['odukpanits/tv'].includes(topic)) {
-    console.log(message.toString(), 'client 2')
-  }
+  // if (['odukpanits/tv'].includes(topic)) {
+  //   console.log(message.toString(), 'client 2')
+  // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
