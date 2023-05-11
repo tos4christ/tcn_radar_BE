@@ -94,9 +94,10 @@ client_2.on('connect', () => {
        'omokugs/pv', 'phmains/tv', 'sapelets/pv', 'ihovborts/tv',
        'omotoso2ts/tv', 'omotoso11ts/pv', 'omotoso12ts/pv',
        'olorunsogo1ts/pv', 'olorunsogo2ts/tv', 'omotoshoGas/pv',
-        'odukpanits/pv', 'transamadi/tv', 'afam5gs/pv', 
-        'dadinkowags/tv', 'gbaraints/pv', 'zungeru/tv',
-        'zungeru/status', 'gereguGs/tv',
+        'odukpanits/pv', 'transamadi/tv', 'afam5gs/pv', 'markudits/tv',
+        'dadinkowags/tv', 'gbaraints/pv', 'zungeru/tv', 'ugwuajits/tv',
+        'zungeru/status', 'gereguGs/tv', 'lokojats/tv', 'parasenergyPs/pv',
+        'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 'riversIppPs/pv'
     ],
     err => err ? console.log('this is the error', err) : null
   )
@@ -109,9 +110,9 @@ client_3.on('connect', () => {
 });
 
 client_1.on('message', (topic, message) => {
-  // if ([ 'ekimts/tv', 'eketts/tv', 'riversIppPs/pv', 'dadinkowags/tv'].includes(topic)) {
-  //   console.log(message.toString(), 'client 1')
-  // } 
+  if (['odukpanits/tv'].includes(topic)) {
+    console.log(message.toString(), 'client 1')
+  } 
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
@@ -180,9 +181,9 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  // if (['zungeru/status', 'zungeru/tv', 'gbaraints/pv'].includes(topic)) {
-  //   console.log(message.toString(), 'client 2')
-  // }
+  if (['odukpanits/tv'].includes(topic)) {
+    console.log(message.toString(), 'client 2')
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
