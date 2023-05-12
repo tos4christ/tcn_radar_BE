@@ -280,9 +280,9 @@ client_3.on('message', (topic, message) => {
     }
 });
 client_4.on('message', (topic, message) => {
-  if (['jebbaTs/tv'].includes(topic)) {
-    console.log(message.toString(), 'client 4')
-  }
+  // if (['jebbaTs/tv'].includes(topic)) {
+  //   console.log(message.toString(), 'client 4')
+  // }
   let data;
   try {
     data = JSON.parse(message.toString());
