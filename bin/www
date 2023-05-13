@@ -301,6 +301,7 @@ client_4.on('message', (topic, message) => {
       },
       data: [data]
     }
+    return;
     axios
       .request(options)
       .then(response => {
@@ -331,6 +332,7 @@ client_5.on('message', (topic, message) => {
       },
       data: [frequency]
     }
+    return;
     axios
       .request(options)
       .then(response => {
