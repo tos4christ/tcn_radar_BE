@@ -92,6 +92,7 @@ mssql.connect(config, err => {
                         "SHIRORO (HYDRO)":        26,
                         "AFAM IV & V (GAS)":      27,
                         "ZUNGERU GS":             28,
+                        "TAOPEX GS":              29,
                     }
                     // Create a temporary table
                     const table = new mssql.Table('generation');

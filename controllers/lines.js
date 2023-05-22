@@ -31,7 +31,7 @@ const get_collapse = (t1, t2) => {
         'omotosho1', 'delta3', 'ekim', 'gereguPs', 'riversIppPs', 'gbarain', 'dadinKowaGs',
         'omokuPs1', 'ihovborNippPs', 'olorunsogo1', 'delta2', 'parasEnergyPs', 'olorunsogoPhase1Gs',
         'jebbaTs', 'okpaiGs', 'deltaGs', 'kainjiTs', 'egbinPs', 'afamIv_vPs', 'shiroroPs', 'odukpaniNippPs',
-        'transamadiGs', 'afamVPs', 'zungeru'
+        'transamadiGs', 'afamVPs', 'zungeru', 'taopex'
     ) 
     order by time`;
 }
@@ -43,7 +43,7 @@ const get_daily_2 = (t1, t2)  => {
         'omotosho1', 'delta3', 'ekim', 'gereguPs', 'riversIppPs', 'gbarain', 'dadinKowaGs',
         'omokuPs1', 'ihovborNippPs', 'olorunsogo1', 'delta2', 'parasEnergyPs', 'olorunsogoPhase1Gs',
         'jebbaTs', 'okpaiGs', 'deltaGs', 'kainjiTs', 'egbinPs', 'afamIv_vPs', 'shiroroPs', 'odukpaniNippPs',
-        'transamadiGs', 'afamVPs', 'zungeru'
+        'transamadiGs', 'afamVPs', 'zungeru', 'taopex'
     ) and time between ${t1} and ${t2}
     group by station, line_name, id, date, mw, amp, kv, level, equipment_id, mvar, variant, time order by station, line_name, time;`;
 }
