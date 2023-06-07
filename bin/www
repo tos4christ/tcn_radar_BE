@@ -347,7 +347,7 @@ client_5.on('message', (topic, message) => {
 });
 
 // Get weather data and store it in the database
-const timeout = 60000;
+const timeout = 120000;
 async function getWeather() {
   try {
     const response = await db.query(weatherModel.get_station_coords);
