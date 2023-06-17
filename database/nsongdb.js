@@ -4,8 +4,9 @@ const queryString = require("../models/lines");
 var model = require("../models/lines");
 var dateFormatter = require('../utility/dateFormatter');
 var refined_stations = require('../database/nsong_stations');
-
+const { Pool } = require('pg');
 require('dotenv').config();
+
 
 const config = {
     user: process.env.MSSQL_USER,
@@ -19,6 +20,22 @@ const config = {
         rowCollectionOnRequestCompletion: true
     }
 }
+
+// Connecting to a different client
+const db_2 =  new Pool({
+    user: 'postgres',
+    host: '172.16.200.9',
+    database: 'tcn-nas-2',
+    password: '000000',
+    port: 5432
+  });
+        
+  db_2.on('error', (err, client) => {
+    console.log(err, 'error from pool 2');
+  })
+  db_2.on('connect', () => {
+    console.log('connected on pool 2')
+  })
 
 mssql.connect(config, err => {
     console.log(' It has connected')
@@ -34,7 +51,7 @@ mssql.connect(config, err => {
         const {date, Hour} = dateFormatter();     
         // connect to my local db to get items to save on the nsong platform
         // get all the data for the given time and order them by station  
-        mydb.connect((err, client, done) => {
+        db_2.connect((err, client, done) => {
             if (err) throw err;
             client.query(model.get_nsong_2, [ date, Number(Hour), 0, 5, 0, 59])
             .then(respo => {
