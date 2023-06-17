@@ -16,6 +16,7 @@ var linesModel = require("../models/lines");
 var weatherModel = require("../models/weather");
 var frequencyModel = require("../models/frequency");
 var { Server } = require("socket.io");
+const { Pool } = require('pg');
 // var os = require('node:os');
 // os.setPriority(process.pid, os.constants.priority.PRIORITY_HIGHEST);
 
