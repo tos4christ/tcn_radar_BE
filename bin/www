@@ -50,6 +50,22 @@ const io = new Server(server);
 //   })
 // })
 
+// Connecting to a different client
+const db_2 =  new Pool({
+  user: 'postgres',
+  host: '172.16.200.9',
+  database: 'tcn-nas-2',
+  password: '000000',
+  port: 5432
+});
+      
+db_2.on('error', (err, client) => {
+  console.log(err, 'error from pool 2');
+})
+db_2.on('connect', () => {
+  console.log('connected on pool 2')
+})
+
 // Registering the MQTT service
 const host_1 = 'mqtt://172.16.200.9';
 const host_2 = 'mqtt://tcniot.org.ng';
@@ -189,7 +205,8 @@ client_1.on('message', (topic, message) => {
           } else if (variant === undefined) {
               return;
           }
-          db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
+          
+          db_2.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
               .then( response => {
                   // console.log('its okay 1')
               })
@@ -245,7 +262,7 @@ client_2.on('message', (topic, message) => {
           } else if (variant === undefined) {
               return;
           }
-          db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
+          db_2.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
               .then( response => {
                 // console.log('its okay 2')
               })
@@ -347,7 +364,7 @@ client_5.on('message', (topic, message) => {
 });
 
 // Get weather data and store it in the database
-const timeout = 60000;
+const timeout = 120000;
 async function getWeather() {
   try {
     const response = await db.query(weatherModel.get_station_coords);
