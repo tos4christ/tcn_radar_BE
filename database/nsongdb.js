@@ -129,7 +129,7 @@ mssql.connect(config, err => {
                     table.columns.add('mvar', mssql.Float);
                     // Add corresponding row values to the column in similar order                    
                     if(stations[station]) {
-                        table.rows.add(stations[station], station, time, date, amp, kv, Hour, 00, 0, mw, mvar);
+                        table.rows.add(stations[station], station, time, date, amp, kv, Hour, 0, 0, mw, mvar);
                         request.bulk(table, (err, record, rows) => {
                             if(err) {
                                 console.error(err)
