@@ -161,6 +161,7 @@ client_1.on('message', (topic, message) => {
       data = JSON.parse(message.toString());     
       const station = data.id;
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
+      console.log(data.t, ' time from message 1');
       const { lines, units } = data;
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
       const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
@@ -233,6 +234,7 @@ client_2.on('message', (topic, message) => {
       data = JSON.parse(message.toString());     
       const station = data.id;
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
+      console.log(data.t, ' time from message 2');
       const { lines, units } = data;
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
       const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
