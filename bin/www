@@ -440,9 +440,9 @@ async function getWeather() {
     //   stations_daily_resolved_holder.push(station_4);
     // }));
     //console.log(JSON.stringify(stations_resolved_holder), " the station resolved holder");
-    io.sockets.emit('client_message_weather_current', { message: JSON.stringify({data: null}) });
+    // io.sockets.emit('client_message_weather_current', { message: JSON.stringify({data: null}) });
     // this is the real function
-    // io.sockets.emit('client_message_weather_current', { message: JSON.stringify(stations_current_resolved_holder) });
+    io.sockets.emit('client_message_weather_current', { message: JSON.stringify(stations_current_resolved_holder) });
     // io.sockets.emit('client_message_weather_hourly3', { message: JSON.stringify(stations_3hourly_resolved_holder) });
     // io.sockets.emit('client_message_weather_daily', { message: JSON.stringify(stations_daily_resolved_holder) });
   } catch (e_1) {
