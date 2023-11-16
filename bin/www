@@ -207,7 +207,7 @@ client_1.on('message', (topic, message) => {
               return;
           }
           
-          db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
+          db_2.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
               .then( response => {
                   // console.log('its okay 1')
               })
@@ -263,7 +263,7 @@ client_2.on('message', (topic, message) => {
           } else if (variant === undefined) {
               return;
           }
-          db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
+          db_2.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
               .then( response => {
                 // console.log('its okay 2')
               })
@@ -289,7 +289,7 @@ client_3.on('message', (topic, message) => {
             
       io.sockets.emit('frequency000', { message: frequency.toString() });
      
-      db.query(frequencyModel.create, [date, time, time_epoch.getTime(), frequency])
+      db_2.query(frequencyModel.create, [date, time, time_epoch.getTime(), frequency])
         .then( response => {
           // console.log('its okay 2')
         })
