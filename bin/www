@@ -52,13 +52,13 @@ const io = new Server(server);
 // })
 
 // Connecting to a different client
-const db_2 =  new Pool({
-  user: 'postgres',
-  host: '172.16.200.9',
-  database: 'postgres',
-  password: '000000',
-  port: 5432
-});
+// const db_2 =  new Pool({
+//   user: 'postgres',
+//   host: '172.16.200.9',
+//   database: 'tcn-nas-2',
+//   password: '000000',
+//   port: 5432
+// });
       
 // db_2.on('error', (err, client) => {
 //   console.log(err, 'error from pool 2');
@@ -207,7 +207,7 @@ client_1.on('message', (topic, message) => {
               return;
           }
           
-          db_2.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
+          db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
               .then( response => {
                   // console.log('its okay 1')
               })
@@ -263,7 +263,7 @@ client_2.on('message', (topic, message) => {
           } else if (variant === undefined) {
               return;
           }
-          db_2.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
+          db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
               .then( response => {
                 // console.log('its okay 2')
               })
@@ -289,7 +289,7 @@ client_3.on('message', (topic, message) => {
             
       io.sockets.emit('frequency000', { message: frequency.toString() });
      
-      db_2.query(frequencyModel.create, [date, time, time_epoch.getTime(), frequency])
+      db.query(frequencyModel.create, [date, time, time_epoch.getTime(), frequency])
         .then( response => {
           // console.log('its okay 2')
         })
@@ -409,7 +409,7 @@ async function getWeather() {
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
       const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
       // Save data into the database 
-      db_2.query(weatherModel.create, [
+      db.query(weatherModel.create, [
         date, dt, name_1, lon, lat_1, main_weather, id_1, description, 
         icon, temp, feels_like, pressure, humidity, speed, deg, gust ? gust : 0,
         rain_volume_1h, rain_volume_3h, cloudiness
