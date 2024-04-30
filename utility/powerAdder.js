@@ -160,6 +160,16 @@ module.exports = function addPower( data ) {
             ]
         },
         {
+            phMain: [
+                {
+                    m21p: []
+                },
+                {
+                    m22p: []
+                }
+            ]
+        },
+        {
             afamViTs: [
                 {
                     ada200: []
@@ -880,10 +890,10 @@ function Station_Adder(station_array_in) {
             }
             if (station_name === 'TRANS-AMADI (GAS)') {
                 const temp_hold = [];
-                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'transamadiGs');
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'phMain');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['transamadiGs'];
+                const equipment_to_sum = station_to_add[0]['phMain'];
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }
