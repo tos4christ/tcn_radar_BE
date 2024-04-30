@@ -4,8 +4,9 @@ const queryString = require("../models/lines");
 var model = require("../models/lines");
 var dateFormatter = require('../utility/dateFormatter');
 var refined_stations = require('../database/nsong_stations');
-
+const { Pool } = require('pg');
 require('dotenv').config();
+
 
 const config = {
     user: process.env.MSSQL_USER,
@@ -19,6 +20,22 @@ const config = {
         rowCollectionOnRequestCompletion: true
     }
 }
+
+// Connecting to a different client
+// const db_2 =  new Pool({
+//     user: 'postgres',
+//     host: '172.16.200.9',
+//     database: 'tcn-nas-2',
+//     password: '000000',
+//     port: 5432
+//   });
+        
+//   db_2.on('error', (err, client) => {
+//     console.log(err, 'error from pool 2');
+//   })
+//   db_2.on('connect', () => {
+//     console.log('connected on pool 2')
+//   })
 
 mssql.connect(config, err => {
     console.log(' It has connected')
@@ -91,6 +108,8 @@ mssql.connect(config, err => {
                         "KAINJI (HYDRO)":         25,
                         "SHIRORO (HYDRO)":        26,
                         "AFAM IV & V (GAS)":      27,
+                        "ZUNGERU GS":             28,
+                        "TAOPEX GS":              29,
                     }
                     // Create a temporary table
                     const table = new mssql.Table('generation');
@@ -110,7 +129,7 @@ mssql.connect(config, err => {
                     table.columns.add('mvar', mssql.Float);
                     // Add corresponding row values to the column in similar order                    
                     if(stations[station]) {
-                        table.rows.add(stations[station], station, time, date, amp, kv, Hour, 00, 0, mw, mvar);
+                        table.rows.add(stations[station], station, time, date, amp, kv, Hour, 0, 0, mw, mvar);
                         request.bulk(table, (err, record, rows) => {
                             if(err) {
                                 console.error(err)

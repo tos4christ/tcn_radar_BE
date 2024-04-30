@@ -2,6 +2,7 @@
 var db = require('../database/db');
 var timeConverter = require('../utility/timeConverter');
 var XLSX = require('xlsx');
+var model = require('../models/frequency');
 
 const get_freq = ()  => {
     return `SELECT * FROM frequency_table WHERE time_epoch BETWEEN $1 AND $2 ORDER BY time_epoch`;
@@ -38,6 +39,36 @@ freq.getFrequency = (req, res, next) => {
             res.send(buffer);
         })
         .catch(err => console);        
+}
+
+freq.get = (req, res) => {
+    // use current_id, equipment_name and level to recognize a current item
+   const { query } = req;
+   console.log(query, " this is the query");
+   res.end();
+}
+
+freq.getWeather = (req, res, next) => {
+    // use current_id, equipment_name and level to recognize a current item
+    const { body } = req;    
+    const url = body.url;
+    fetch(url, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With"
+        },
+        })
+        .then(response => response.json())
+        .then(resp => {
+            // console.log(resp, " this is the final response");
+            //res.send({weather: resp});
+        })
+        .catch(e => console.error(e))
+
 }
 
 module.exports =  freq;

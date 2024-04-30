@@ -31,7 +31,7 @@ const get_collapse = (t1, t2) => {
         'omotosho1', 'delta3', 'ekim', 'gereguPs', 'riversIppPs', 'gbarain', 'dadinKowaGs',
         'omokuPs1', 'ihovborNippPs', 'olorunsogo1', 'delta2', 'parasEnergyPs', 'olorunsogoPhase1Gs',
         'jebbaTs', 'okpaiGs', 'deltaGs', 'kainjiTs', 'egbinPs', 'afamIv_vPs', 'shiroroPs', 'odukpaniNippPs',
-        'transamadiGs', 'afamVPs'
+        'transamadiGs', 'afamVPs', 'zungeru', 'taopex'
     ) 
     order by time`;
 }
@@ -43,7 +43,7 @@ const get_daily_2 = (t1, t2)  => {
         'omotosho1', 'delta3', 'ekim', 'gereguPs', 'riversIppPs', 'gbarain', 'dadinKowaGs',
         'omokuPs1', 'ihovborNippPs', 'olorunsogo1', 'delta2', 'parasEnergyPs', 'olorunsogoPhase1Gs',
         'jebbaTs', 'okpaiGs', 'deltaGs', 'kainjiTs', 'egbinPs', 'afamIv_vPs', 'shiroroPs', 'odukpaniNippPs',
-        'transamadiGs', 'afamVPs'
+        'transamadiGs', 'afamVPs', 'zungeru', 'taopex'
     ) and time between ${t1} and ${t2}
     group by station, line_name, id, date, mw, amp, kv, level, equipment_id, mvar, variant, time order by station, line_name, time;`;
 }
@@ -54,6 +54,12 @@ const lines = {};
 // If the row will be created or displayed.
 lines.uptime = (req, res) => {
     res.send({res: 'incoming'})
+}
+
+lines.nari = (req, res) => {
+    const { body, query } = req;
+    console.log(body, " the body of the request ", query, " the query of the request ");
+    res.end();
 }
 
 lines.getdaily = (req, res) => {
@@ -122,11 +128,11 @@ lines.getcollapse = (req, res, next) => {
             // Create a new workbook
             const workbook = XLSX.utils.book_new();
             const worksheet = XLSX.utils.json_to_sheet(collapse_data);
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'System Collpase Probe');                       
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'IoT Generation Data');                       
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
             const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
-            res.attachment('tem.xlsx');
+            res.attachment('IoT.xlsx');
             res.send(buffer);
         });
 }

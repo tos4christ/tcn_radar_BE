@@ -19,6 +19,23 @@ module.exports = function addPower( data ) {
             ] 
         },
         {
+            zungeru: [
+                {
+                    z1ssX: []
+                },
+                {
+                    z2ssX: []
+                }
+            ] 
+        },
+        {
+            taopex: [
+                {
+                    line1: []
+                }
+            ] 
+        },
+        {
             shiroroPs: [
                 {
                     '411g1': []
@@ -606,7 +623,7 @@ function Station_Adder(station_array_in) {
          'RIVERS IPP (GAS)', 'OMOKU (GAS)', 'IHOVBOR NIPP (GAS)', 'DELTA (GAS)', 'OMOTOSHO (GAS)', 'KAINJI (HYDRO)',
          'PARAS ENERGY (GAS)', 'OMOTOSHO NIPP (GAS)', 'OLORUNSOGO NIPP', 'GEREGU NIPP (GAS)', 'AZURA-EDO IPP (GAS)', 'TRANS-AMADI (GAS)', 'EGBIN (STEAM)',
          'IBOM POWER (GAS)', 'GBARAIN NIPP (GAS)', 'GEREGU (GAS)', 'DADINKOWA G.S (HYDRO)', 'OKPAI (GAS|STEAM)',
-         'AFAM IV & V (GAS)', 'SHIRORO (HYDRO)'
+         'AFAM IV & V (GAS)', 'SHIRORO (HYDRO)', 'ZUNGERU GS', 'TAOPEX GS'
     ];
     const res_data_2 = ['OLORUNSOGO (GAS)'];
     const final_array = [];
@@ -657,6 +674,28 @@ function Station_Adder(station_array_in) {
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['shiroroPs'];              
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
+                }
+                final_array.push(...temp_hold);
+            }
+            if (station_name === 'ZUNGERU GS') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'zungeru');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['zungeru'];              
+                if (equipment_to_sum.length > 0) {
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
+                }
+                final_array.push(...temp_hold);
+            }
+            if (station_name === 'TAOPEX GS') {
+                const temp_hold = [];
+                const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'taopex');
+                // Get the list of equipment objects from the stations
+                // remember to filter equipment in the cases where not all is required
+                const equipment_to_sum = station_to_add[0]['taopex'];              
                 if (equipment_to_sum.length > 0) {
                     temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
                 }

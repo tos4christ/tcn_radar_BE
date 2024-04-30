@@ -13,8 +13,10 @@ var mqtt = require("mqtt");
 // var webSocket = require("../utility/websockets")
 var db = require("../database/db");
 var linesModel = require("../models/lines");
+var weatherModel = require("../models/weather");
 var frequencyModel = require("../models/frequency");
 var { Server } = require("socket.io");
+const { Pool } = require('pg');
 // var os = require('node:os');
 // os.setPriority(process.pid, os.constants.priority.PRIORITY_HIGHEST);
 
@@ -23,7 +25,7 @@ var { Server } = require("socket.io");
  */
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-
+app.station_holder = [];
 /**
  * Create HTTPS server.
  */
@@ -49,10 +51,27 @@ const io = new Server(server);
 //   })
 // })
 
+// Connecting to a different client
+// const db_2 =  new Pool({
+//   user: 'postgres',
+//   host: '172.16.200.9',
+//   database: 'tcn-nas-2',
+//   password: '000000',
+//   port: 5432
+// });
+      
+// db_2.on('error', (err, client) => {
+//   console.log(err, 'error from pool 2');
+// })
+// db_2.on('connect', () => {
+//   console.log('connected on pool 2')
+// })
 
-// Testing the MQTT service
+// Registering the MQTT service
 const host_1 = 'mqtt://172.16.200.9';
-const host_2 = 'http://ec2-3-88-196-213.compute-1.amazonaws.com';
+const host_2 = 'mqtt://tcniot.org.ng';
+const host_3 = 'mqtt://127.0.0.1';
+
 const options = {
     clientId: '',
     username: process.env.MQTT_USER,
@@ -61,6 +80,9 @@ const options = {
 }
 const client_1 = mqtt.connect(host_1, options);
 const client_2 = mqtt.connect(host_2, options);
+const client_3 = mqtt.connect(host_3);
+const client_4 = mqtt.connect(host_2, options);
+const client_5 = mqtt.connect(host_3);
 
 client_1.on('connect', () => {
   client_1.subscribe(
@@ -72,7 +94,7 @@ client_1.on('connect', () => {
           'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 
           'riversIppPs/pv', 'markudits/tv',
           'dadinkowags/tv', 'ugwuajits/tv',
-          'gbaraints/pv', 'olorunsogo1ts/pv', 'parasenergyPs/pv',
+           'olorunsogo1ts/pv', 'parasenergyPs/pv',
            'olorunsogo2ts/tv','omotoshoGas/pv',
       ],
    (err) => {
@@ -84,20 +106,48 @@ client_1.on('connect', () => {
 client_2.on('connect', () => {
   client_2.subscribe(
     [
+      'ikotekpene/tv', 'gwagwaladats/tv','gereguGs/pv', 'odukpanits/tv',
       'asabats/tv', 'delta4gs/tv', 'OkpaiippGs/tv', 'jebbaTs/tv',
        'kainjits/tv', 'egbings/pv', 'riversIppPs/pr', 'afam4gs/pv',
        'shirorogs/pv', 'afam6ts/tv', 'delta2gs/pv', 'delta3gs/pv',
        'omokugs/pv', 'phmains/tv', 'sapelets/pv', 'ihovborts/tv',
        'omotoso2ts/tv', 'omotoso11ts/pv', 'omotoso12ts/pv',
        'olorunsogo1ts/pv', 'olorunsogo2ts/tv', 'omotoshoGas/pv',
-        'odukpanits/pv', 'transamadi/tv', 'afam5gs/pv'
+        'odukpanits/pv', 'transamadi/tv', 'afam5gs/pv', 'markudits/tv',
+        'dadinkowags/tv', 'gbaraints/pv', 'zungeru/tv', 'ugwuajits/tv',
+        'zungeru/status', 'gereguGs/tv', 'lokojats/tv', 'parasenergyPs/pv',
+        'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 'riversIppPs/pv',
+        'taopex/tv'
     ],
+    err => err ? console.log('this is the error', err) : null
+  )
+});
+client_3.on('connect', () => {
+  client_3.subscribe(
+    [ 'frequency' ],
+    err => err ? console.log('this is the error', err) : null
+  )
+});
+client_4.on('connect', () => {
+  client_4.subscribe(
+    [
+       'OkpaiippGs/tv', 'jebbaTs/tv',
+       'kainjits/tv', 'afam6ts/tv',
+       'omokugs/pv', 'odukpanits/pv', 
+       'zungeru/tv', 'gereguGs/tv',
+    ],
+    err => err ? console.log('this is the error', err) : null
+  )
+});
+client_5.on('connect', () => {
+  client_5.subscribe(
+    [ 'frequency' ],
     err => err ? console.log('this is the error', err) : null
   )
 });
 
 client_1.on('message', (topic, message) => {
-  // if ([ 'ekimts/tv', 'eketts/tv', 'riversIppPs/pv', 'dadinkowags/tv'].includes(topic)) {
+  // if (['parasenergyPs/pv'].includes(topic)) {
   //   console.log(message.toString(), 'client 1')
   // } 
   // broadcast the message to the client that are connected
@@ -156,6 +206,7 @@ client_1.on('message', (topic, message) => {
           } else if (variant === undefined) {
               return;
           }
+          
           db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
               .then( response => {
                   // console.log('its okay 1')
@@ -168,8 +219,7 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  // if (['delta4gs/tv', 'riversIppPs/pr', 'afam6ts/tv', 'delta2gs/pv', 'delta3gs/pv',
-  // 'omokugs/pv', 'sapelets/pv', 'ihovborts/tv', 'omotoshoGas/pv', 'transamadi/tv'].includes(topic)) {
+  // if (['parasenergyPs/pv'].includes(topic)) {
   //   console.log(message.toString(), 'client 2')
   // }
   // broadcast the message to the client that are connected
@@ -224,16 +274,10 @@ client_2.on('message', (topic, message) => {
       console.error(err)
   }
 });
-
-// Initiate connection with Pcube for frequency readings
-const url2 = 'http://10.5.30.162/Meters.htm';
-
-const getFrequency = () => {return fetch(url2)
-  .then(response => response.text())
-  .then( resp => {
-    try {
-      resp = JSON.stringify(resp);
-      resp = JSON.parse(resp);
+client_3.on('message', (topic, message) => {  
+  let frequency;
+  try {
+      frequency = JSON.parse(message.toString());
       const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
       const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
@@ -242,29 +286,175 @@ const getFrequency = () => {return fetch(url2)
       const seconds = time.split(':')[2];
       const dateTemp = date.split('-');
       const time_epoch = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
-      let frequency = [resp[2162],resp[2163],resp[2164],resp[2165], resp[2166]].join(" ").replaceAll(" ", "");
-      frequency = Number(frequency);
-      // console.log(frequency, 'the response obj');
-      // this is the function to emit the socket message
-      
+            
       io.sockets.emit('frequency000', { message: frequency.toString() });
      
       db.query(frequencyModel.create, [date, time, time_epoch.getTime(), frequency])
-              .then( response => {
-                // console.log('its okay 2')
-              })
-              .catch(err => console.log(err))
-      //return frequency;
+        .then( response => {
+          // console.log('its okay 2')
+        })
+        .catch(err => console.log(err))
     } catch (e) {
-      //console.error(e);
-    }    
-  })
-  .catch(e => {
-    //console.log(e);
-  });
+      console.error(e);
+    }
+});
+client_4.on('message', (topic, message) => {
+  // if (['jebbaTs/tv'].includes(topic)) {
+  //   console.log(message.toString(), 'client 4')
+  // }
+  let data;
+  try {
+    data = JSON.parse(message.toString());
+    const url = `https://power-ledger-dev-tstsldtdva-uc.a.run.app/publish_data?api_key=${process.env.POWER_LEDGER}`;
+    const options = {
+      method: "POST",
+      url,
+      params: {'api-version': '3.0'},
+      //mode: "cors",
+      headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With"
+      },
+      data: [data]
+    }
+    return;
+    axios
+      .request(options)
+      .then(response => {
+        console.log(response.statusText, response.data, " the power data ");
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  } catch(err) {
+    console.error(err);
+  }
+});
+client_5.on('message', (topic, message) => {  
+  let frequency;
+  try {
+    frequency = JSON.parse(message.toString());
+    const url = `https://power-ledger-dev-tstsldtdva-uc.a.run.app/publish_data?api_key=${process.env.POWER_LEDGER}`;
+    const options = {
+      method: "POST",
+      url,
+      params: {'api-version': '3.0'},
+      //mode: "cors",
+      headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With"
+      },
+      data: [frequency]
+    }
+    return;
+    axios
+      .request(options)
+      .then(response => {
+        console.log(response.statusText, response.data, " the frequency data");
+      })
+      .catch(err => {
+        console.error(err)
+      })      
+    } catch (e) {
+      console.error(e);
+    }
+});
+
+// Get weather data and store it in the database
+const timeout = 120000;
+async function getWeather() {
+  try {
+    const response = await db.query(weatherModel.get_station_coords);
+    // Separate for generation and transmission
+    // Add the type to the station data before sending it to the frontend
+    let stations_current_resolved_holder = [];
+    let stations_3hourly_resolved_holder = [];
+    let stations_daily_resolved_holder = [];
+    let station_coords = response.rows;
+    // let station_url_array = [];
+    let station_current_url_array = [];
+    let station_3hourly_url_array = [];
+    let station_daily_url_array = [];
+    // First get all the URLs you want to hit
+    station_coords.map( station => {
+      const { long, lat, name, type, id } = station;
+      const daily_count = 16;
+      // const onecall_url_3 = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly&appid=${process.env.WEATHER_API}`;
+      const onecall_current_url_2 = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${process.env.WEATHER_API}&units=metric`;
+      const onecall_3hourly_url_2 = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${process.env.WEATHER_API}&units=metric`;
+      const onecall_daily_url_2 = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${long}&cnt=${daily_count}&appid=${process.env.WEATHER_API}&units=metric`;
+      station_current_url_array.push({ onecall_current_url_2, id, name, type });
+      station_3hourly_url_array.push({ onecall_3hourly_url_2, id, name, type });
+      station_daily_url_array.push({ onecall_daily_url_2, id, name, type });
+    });
+    await Promise.all(station_current_url_array.map(async (station_url) => {
+      const { onecall_current_url_2: onecall_current_url_2_1, name: name_1, type: type_1 } = station_url;
+      const response_1 = await axios.get(onecall_current_url_2_1);
+      const station_2 = {};
+      station_2.name = name_1;
+      station_2.type = type_1;
+      station_2.current_weather_data = response_1.data;
+      stations_current_resolved_holder.push(station_2);
+      const { coord, weather, main, wind, dt, clouds, rain } = response_1.data;
+      const { lon, lat: lat_1 } = coord;
+      const { id: id_1, main: main_weather, description, icon } = weather[0];
+      const { speed, deg, gust } = wind;
+      const { temp, feels_like, pressure, humidity } = main;
+      const { "1h": rain_volume_1h, "3h" : rain_volume_3h} = rain ? rain : { "1h" : null, "3h" : null};
+      const {all: cloudiness} = clouds ? clouds : { all : null};
+      var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
+      // Save data into the database 
+      db.query(weatherModel.create, [
+        date, dt, name_1, lon, lat_1, main_weather, id_1, description, 
+        icon, temp, feels_like, pressure, humidity, speed, deg, gust ? gust : 0,
+        rain_volume_1h, rain_volume_3h, cloudiness
+      ])
+        .then(response_2 => {
+        })
+        .catch(e => console.error(e));
+    }));
+
+    // Use the  hourly and daily forecast for requests only
+
+    // await Promise.all(station_3hourly_url_array.map(async (station_url_3) => {
+    //   const { onecall_3hourly_url_2: onecall_3hourly_url_2_1, name: name_2, type: type_2 } = station_url_3;
+    //   const response_3 = await axios.get(onecall_3hourly_url_2_1);
+    //   const station_3 = {};
+    //   station_3.name = name_2;
+    //   station_3.type = type_2;
+    //   station_3.hourly3_weather_data = response_3.data;
+    //   stations_3hourly_resolved_holder.push(station_3);
+    // }));
+    // await Promise.all(station_daily_url_array.map(async (station_url_5) => {
+    //   const { onecall_daily_url_2: onecall_daily_url_2_1, name: name_3, type: type_3 } = station_url_5;
+    //   const response_4 = await axios.get(onecall_daily_url_2_1);
+    //   const station_4 = {};
+    //   station_4.name = name_3;
+    //   station_4.type = type_3;
+    //   station_4.daily_weather_data = response_4.data;
+    //   stations_daily_resolved_holder.push(station_4);
+    // }));
+    //console.log(JSON.stringify(stations_resolved_holder), " the station resolved holder");
+    // use this function to pause the system
+    // io.sockets.emit('client_message_weather_current', { message: JSON.stringify({data: null}) });
+    // this is the real function
+    io.sockets.emit('client_message_weather_current', { message: JSON.stringify(stations_current_resolved_holder) });
+    // io.sockets.emit('client_message_weather_hourly3', { message: JSON.stringify(stations_3hourly_resolved_holder) });
+    // io.sockets.emit('client_message_weather_daily', { message: JSON.stringify(stations_daily_resolved_holder) });
+  } catch (e_1) {
+    return console.error(e_1);
+  }
 }
-//console.log(getFrequency());
-setInterval(() => getFrequency(), 1000);
+getWeather();
+setInterval(()=> {
+  return getWeather();
+}, timeout);
+
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -340,4 +530,5 @@ function onListening() {
 }
 
 const {exec} = require('child_process');
+const { default: axios } = require('axios');
 exec('wmic process where "ProcessId=' + process.pid + '" CALL setpriority 256');

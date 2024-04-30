@@ -12,7 +12,15 @@ dotenv.config();
 
 // Add methods to accepts wide range of requests for the API
 
-// Import routers
+// Import routers for tickets
+var signupRouterTickets = require('./routes/signupTickets');
+var signinRouterTickets = require('./routes/signinTickets');
+var ticketsRouter = require('./routes/tickets');
+
+// Import routers for Weather
+var weatherRouter = require('./routes/weather');
+
+// Import routers for Lines
 var currentRouter = require('./routes/current');
 var powerRouter = require('./routes/power');
 var reactorRouter = require('./routes/reactor');
@@ -26,6 +34,8 @@ var mxRouter = require('./routes/mx');
 var sllRouter = require('./routes/station_line_load');
 var linesRouter = require('./routes/lines');
 var changePasswordRouter = require('./routes/changePassword');
+
+// Import routers for Frequency
 var frequencyRouter = require('./routes/freq');
 
 var app = express();
@@ -85,6 +95,11 @@ app.use('/sll', sllRouter);
 app.use('/lines', linesRouter);
 app.use('/changepassword', changePasswordRouter);
 app.use('/frequency', frequencyRouter);
+// Functional routes
+app.use('/ticketsignin', signinRouterTickets);
+app.use('/ticketsignup', signupRouterTickets);
+app.use('/tickets', ticketsRouter);
+app.use('/api/weather', weatherRouter);
 
 
 // app.get('/.well-known/pki-validation/F7E918FEFBA46C9E95A10FC7F19D183C.txt', (req, res) => {

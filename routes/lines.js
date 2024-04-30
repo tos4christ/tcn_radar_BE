@@ -6,6 +6,8 @@ var jwtCheck = require('../utility/jwtCheck');
 /* GET users listing. */
 router.post('/uptime', jwtCheck, controller.uptime);
 
+router.post('/nari', controller.nari);
+
 router.post('/downtime', jwtCheck, controller.downtime);
 
 router.post('/history', jwtCheck, controller.history);
