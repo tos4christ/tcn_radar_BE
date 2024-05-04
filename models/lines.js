@@ -29,7 +29,7 @@ const lines = {
         },    
     get_history: 'select * from lines_table where station=$1 and line_name=$2 and time between $3 and $4 order by time',    
     get_nsong_2: 'select station, kv, mw, amp, time, seconds, mvar, line_name from lines_table where date=$1 and hour=$2 and minute between $3 and $4 and seconds between $5 and $6 order by station, line_name, time, seconds',
-    get_collapse: `select station, date, line_name, mw, kv, hour, minute, seconds, time from lines_table where time between $1 and $2 and station in 
+    get_collapse: `select station, date, line_name, mw, kv, hour, minute, seconds, amp, time from lines_table where time between $1 and $2 and station in 
     (
         'omotosho2', 'eket', 'afamViTs', 'alaoji', 'sapeleNippPs', 'omotoshoNippPs',
         'omotosho1', 'delta3', 'ekim', 'gereguPs', 'riversIppPs', 'gbarain', 'dadinKowaGs',
