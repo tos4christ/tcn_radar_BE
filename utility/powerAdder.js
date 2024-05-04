@@ -481,7 +481,7 @@ function addSimilarEquipment_zungeru(array_in, station_name) {
                     // This is the permanent MW derivative from assets on field
                     // finalArray[index].mw += item.mw;
                     // Create a temporary final array MW calculations for zungeru
-                    console.log(finalArray[index], 'this is the zungeru final array before adding')
+                    // console.log(finalArray[index], 'this is the zungeru final array before adding')
                     finalArray[index].mw += (item.kv * item.amp * Math.sqrt(3)) / 1000;                    
                     if (station_name) {
                         finalArray[index].station = station_name;
