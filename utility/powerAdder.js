@@ -448,6 +448,51 @@ function addSimilarEquipment(array_in, station_name) {
     return finalArray;
 }
 
+// Create Function for Zungeru
+function addSimilarEquipment_zungeru(array_in, station_name) {
+    const array = array_in;
+    station_name = station_name;
+    const finalArray = [];
+    // get the key for the first item
+    const key = Object.keys(array[0]);
+    // check to see it is an array of array
+    if(array[0][key[0]].length > 0) {
+        finalArray.push(...array[0][key[0]][0]);
+        // This checks if there is only one object in the add
+        // In this case just return the only array available
+        // or an empty array if nothing exists
+        if (array.length < 2) {
+            finalArray.forEach( (item, index) => {
+                if (station_name) {
+                    finalArray[index].station = station_name;
+                    delete finalArray[index].line_name;
+                }                
+            });
+            return finalArray;
+        }
+        for (let i=1; i < array.length; i++) {
+            const key = Object.keys(array[i]);
+            const current_array = array[i][key[0]][0];
+            if (current_array && current_array.length > 0) {
+                current_array.forEach( (item, index) => {
+                    // if (station_name === 'OLORUNSOGO (GAS)') {
+                    //     console.log(finalArray[index], index, 'the error from olorunsogo gas')
+                    // }
+                    // This is the permanent MW derivative from assets on field
+                    // finalArray[index].mw += item.mw;
+                    // Create a temporary final array MW calculations for zungeru
+                    finalArray[index].mw += (item.kv * item.amp * Math.sqrt(3)) / 1000;                    
+                    if (station_name) {
+                        finalArray[index].station = station_name;
+                        delete finalArray[index].line_name;
+                    }                
+                });
+            }            
+        }
+    }
+    return finalArray;
+}
+
 // Done
 function subtractSimilarEquipment_array_noabs(add_array_in, subtract_array_in, station_name) {
     const add_array = add_array_in;
@@ -696,7 +741,7 @@ function Station_Adder(station_array_in) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['zungeru'];              
                 if (equipment_to_sum.length > 0) {
-                    temp_hold.push(...addSimilarEquipment(equipment_to_sum, station_name));
+                    temp_hold.push(...addSimilarEquipment_zungeru(equipment_to_sum, station_name));
                 }
                 final_array.push(...temp_hold);
             }
