@@ -70,7 +70,7 @@ module.exports = (data) => {
             if (filtered_station[0].station === 'zungeru') {
                 let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
                 const mw_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + Math.abs(curr.mw);
+                    const sum = acc + Math.abs((Math.sqrt(3) * curr.kv * curr.amp)/1000);
                     max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
                     return sum;
                 },0)
@@ -392,7 +392,7 @@ module.exports = (data) => {
             if (filtered_station[0].station === 'alaoji') {
                 let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
                 const mw_sum = filtered_station.reduce((acc, curr) => {
-                    const sum = acc + Math.abs(curr.mw);
+                    const sum = acc + curr.mw;
                     max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
                     return sum;
                 },0)
