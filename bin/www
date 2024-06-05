@@ -216,9 +216,9 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  if (['sagamu/tv', 'sunflag/cs', 'monarch/cs', 'larfarge/cs', 'topSteel/cs'].includes(topic)) {
-    console.log(message.toString(), 'client 2')
-  }
+  // if (['sagamu/tv', 'sunflag/cs', 'monarch/cs', 'larfarge/cs', 'topSteel/cs'].includes(topic)) {
+  //   console.log(message.toString(), 'client 2')
+  // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
