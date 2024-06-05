@@ -102,8 +102,8 @@ app.use('/tickets', ticketsRouter);
 app.use('/api/weather', weatherRouter);
 
 
-// app.get('/.well-known/pki-validation/F7E918FEFBA46C9E95A10FC7F19D183C.txt', (req, res) => {
-//   res.sendFile(path.join(__dirname, "ssl", "F7E918FEFBA46C9E95A10FC7F19D183C.txt"))
+// app.get('/.well-known/pki-validation/042B2D6470F726347D7B55996AA809F6.txt', (req, res) => {
+//   res.sendFile(path.join(__dirname, "ssl", "042B2D6470F726347D7B55996AA809F6.txt"))
 // })
 
 
