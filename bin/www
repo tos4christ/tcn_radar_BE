@@ -219,9 +219,9 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  if (['sagamu/tv', 'sunflag/cs'].includes(topic)) {
-    console.log(message.toString(), 'client 2')
-  }
+  // if (['sagamu/tv', 'sunflag/cs'].includes(topic)) {
+  //   console.log(message.toString(), 'client 2')
+  // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
@@ -286,9 +286,33 @@ client_3.on('message', (topic, message) => {
       const seconds = time.split(':')[2];
       const dateTemp = date.split('-');
       const time_epoch = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
-            
+      // Send Frequency data in realtime to the client      
       io.sockets.emit('frequency000', { message: frequency.toString() });
-     
+      // Push Frequency data to the Power BI API      
+      console.log(frequency, ' the frequency object');
+      const url = `https://api.powerbi.com/beta/b740a52c-b75e-450e-84bb-7b929258459a/datasets/075b5431-b7df-43a6-b39c-5c8148f628bb/rows?experience=power-bi&key=Yze1bhmSZ7jjzMjSgQY7kW1ZF5kX2uKc8NT0pB4tiFZYOlf7h99rkvTjmCPkCWBFh3wbjSy5LmzfTScqLFu8vA%3D%3D`
+      const options = {
+        method: "POST",
+        url,
+        params: {'api-version': '3.0'},
+        //mode: "cors",
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With"
+        },
+        data: [{frequency}]
+      }
+      axios
+        .request(options)
+        .then(response => {
+          console.log(response.statusText, response.data, " the power bi data ");
+        })
+        .catch(err => {
+          console.error(err)
+        });
+      // Store Frequency into the database
       db.query(frequencyModel.create, [date, time, time_epoch.getTime(), frequency])
         .then( response => {
           // console.log('its okay 2')
