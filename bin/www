@@ -291,7 +291,7 @@ client_3.on('message', (topic, message) => {
       // Push Frequency data to the Power BI API      
       console.log(frequency, ' the frequency object');
       const url = `https://api.powerbi.com/beta/b740a52c-b75e-450e-84bb-7b929258459a/datasets/075b5431-b7df-43a6-b39c-5c8148f628bb/rows?experience=power-bi&key=Yze1bhmSZ7jjzMjSgQY7kW1ZF5kX2uKc8NT0pB4tiFZYOlf7h99rkvTjmCPkCWBFh3wbjSy5LmzfTScqLFu8vA%3D%3D`
-      const options = {
+      const options_2 = {
         method: "POST",
         url,
         params: {'api-version': '3.0'},
@@ -305,7 +305,7 @@ client_3.on('message', (topic, message) => {
         data: [{frequency}]
       }
       axios
-        .request(options)
+        .request(options_2)
         .then(response => {
           console.log(response.statusText, response.data, " the power bi data ");
         })
