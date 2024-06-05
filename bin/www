@@ -117,7 +117,7 @@ client_2.on('connect', () => {
         'dadinkowags/tv', 'gbaraints/pv', 'zungeru/tv', 'ugwuajits/tv',
         'zungeru/status', 'gereguGs/tv', 'lokojats/tv', 'parasenergyPs/pv',
         'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 'riversIppPs/pv',
-        'taopex/tv'
+        'taopex/tv', 'sunflag/cs', 'sagamu/tv'
     ],
     err => err ? console.log('this is the error', err) : null
   )
@@ -219,9 +219,9 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  // if (['parasenergyPs/pv'].includes(topic)) {
-  //   console.log(message.toString(), 'client 2')
-  // }
+  if (['sagamu/tv', 'sunflag/cs'].includes(topic)) {
+    console.log(message.toString(), 'client 2')
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
