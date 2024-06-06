@@ -117,7 +117,8 @@ client_2.on('connect', () => {
         'dadinkowags/tv', 'gbaraints/pv', 'zungeru/tv', 'ugwuajits/tv',
         'zungeru/status', 'gereguGs/tv', 'lokojats/tv', 'parasenergyPs/pv',
         'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 'riversIppPs/pv',
-        'taopex/tv', 'sunflag/cs', 'sagamu/tv', 'monarch/cs', 'larfarge/cs', 'topSteel/cs'
+        'taopex/tv', 'sunflag/cs', 'sagamu/tv', 'monarch/cs', 'larfarge/cs',
+         'topSteel/cs', 'pulkitSteel/cs', 'afl/cs'
     ],
     err => err ? console.log('this is the error', err) : null
   )
@@ -216,9 +217,9 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  // if (['sagamu/tv', 'sunflag/cs', 'monarch/cs', 'larfarge/cs', 'topSteel/cs'].includes(topic)) {
-  //   console.log(message.toString(), 'client 2')
-  // }
+  if (['parasenergyPs/pv'].includes(topic)) {
+    console.log(message.toString(), 'client 2')
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
@@ -287,7 +288,7 @@ client_3.on('message', (topic, message) => {
       io.sockets.emit('frequency000', { message: frequency.toString() });
       // Push Frequency data to the Power BI API      
       // console.log(frequency, ' the frequency object');
-      const url = `https://api.powerbi.com/beta/b740a52c-b75e-450e-84bb-7b929258459a/datasets/8d0966c3-292e-474e-8486-232ef04fb910/rows?experience=power-bi&key=TEfpSyjrUo5NT2GqWKMbzRHqig3PsnChQgxSAbmsEgCk4rurb2cuV7M8lNPDyhAdyj4dvR%2FOXjq%2FK0hwUJlnRw%3D%3D`
+      const url = `https://api.powerbi.com/beta/b740a52c-b75e-450e-84bb-7b929258459a/datasets/05f37e3d-b2f2-4ae9-a277-7703d28186ef/rows?experience=power-bi&key=ckmCNA%2BUOfMxcZ3ljSYhTOMnez61nJcj2haNsdrZNHe8Os3sgIno1lmnSd4%2FsLzzSAHZI3o9oiFXjULjgilEIw%3D%3D`
       const options_2 = {
         method: "POST",
         url,
