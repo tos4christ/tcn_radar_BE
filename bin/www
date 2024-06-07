@@ -300,7 +300,7 @@ client_3.on('message', (topic, message) => {
             "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
             "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With"
         },
-        data: [{frequency, time: (`${Number(hour)+1}:${Number(minute)}:${Number(seconds)}`)}]
+        data: [{frequency, time: (`${Number(hour)}:${Number(minute)}:${Number(seconds)}`)}]
       }
       axios
         .request(options_2)
