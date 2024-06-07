@@ -232,7 +232,7 @@ client_2.on('message', (topic, message) => {
       data = JSON.parse(message.toString());     
       const station = data.id;
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
-      const { lines, units } = data;
+      const { lines, units, transformers } = data;
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
       const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
       const hour = time.split(':')[0];
@@ -244,7 +244,7 @@ client_2.on('message', (topic, message) => {
       // console.log(epoch_time.getTime(), epoch_time, 'the epoch')
       let kv, mw, mvar, amp, equipment_id, line_name, variant;
       // loop over the lines or units array
-      const equip = lines ? lines : units ? units : undefined
+      const equip = lines ? lines : units ? units : transformers ? transformers : undefined;
       equip.forEach(line => {
           equipment_id = line.id;
           line_name = line.id;
