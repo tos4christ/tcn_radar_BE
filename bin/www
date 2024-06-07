@@ -118,7 +118,8 @@ client_2.on('connect', () => {
         'zungeru/status', 'gereguGs/tv', 'lokojats/tv', 'parasenergyPs/pv',
         'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 'riversIppPs/pv',
         'taopex/tv', 'sunflag/cs', 'sagamu/tv', 'monarch/cs', 'larfarge/cs',
-         'topSteel/cs', 'pulkitSteel/cs', 'afl/cs'
+         'topSteel/cs', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs',
+         'quantum/cs', 'starPipe/cs'
     ],
     err => err ? console.log('this is the error', err) : null
   )
@@ -288,7 +289,7 @@ client_3.on('message', (topic, message) => {
       io.sockets.emit('frequency000', { message: frequency.toString() });
       // Push Frequency data to the Power BI API      
       // console.log(frequency, ' the frequency object');
-      const url = `https://api.powerbi.com/beta/b740a52c-b75e-450e-84bb-7b929258459a/datasets/05f37e3d-b2f2-4ae9-a277-7703d28186ef/rows?experience=power-bi&key=ckmCNA%2BUOfMxcZ3ljSYhTOMnez61nJcj2haNsdrZNHe8Os3sgIno1lmnSd4%2FsLzzSAHZI3o9oiFXjULjgilEIw%3D%3D`
+      const url = `https://api.powerbi.com/beta/b740a52c-b75e-450e-84bb-7b929258459a/datasets/18062d9b-dec1-476f-8549-8662dd5b47e9/rows?experience=power-bi&clientSideAuth=0&key=KbQjRJ3qBLfHj1oGwdcJOQh3oYGcn26FRAuHalhLdG8gRwqKt2I82nvjoMdnc8aA%2F2ByxVzqaiOJgrXPxHQ1fQ%3D%3D`
       const options_2 = {
         method: "POST",
         url,
