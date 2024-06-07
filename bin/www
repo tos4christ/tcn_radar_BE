@@ -305,7 +305,7 @@ client_3.on('message', (topic, message) => {
       axios
         .request(options_2)
         .then(response => {
-          // console.log(response.statusText, response.data, " the power bi data ");
+          console.log(response.statusText, response.data, " the power bi data ");
         })
         .catch(err => {
           console.error(err)
