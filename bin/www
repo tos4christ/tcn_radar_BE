@@ -119,7 +119,8 @@ client_2.on('connect', () => {
         'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 'riversIppPs/pv',
         'taopex/tv', 'sunflag/cs', 'sagamu/tv', 'monarch/cs', 'larfarge/cs',
          'topSteel/cs', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs',
-         'quantum/cs', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv'
+         'quantum/cs', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
+         'pheonix/cs'
     ],
     err => err ? console.log('this is the error', err) : null
   )
