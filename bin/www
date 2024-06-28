@@ -71,6 +71,7 @@ const io = new Server(server);
 const host_1 = 'mqtt://172.16.200.9';
 const host_2 = 'mqtt://tcniot.org.ng';
 const host_3 = 'mqtt://127.0.0.1';
+const host_4 = 'mqtt://10.5.30.220';
 
 const options = {
     clientId: '',
@@ -81,6 +82,7 @@ const options = {
 const client_1 = mqtt.connect(host_1, options);
 const client_2 = mqtt.connect(host_2, options);
 const client_3 = mqtt.connect(host_3);
+const client_4 = mqtt.connect(host_4);
 // const client_4 = mqtt.connect(host_2, options);
 // const client_5 = mqtt.connect(host_3);
 
@@ -128,6 +130,12 @@ client_2.on('connect', () => {
 client_3.on('connect', () => {
   client_3.subscribe(
     [ 'frequency' ],
+    err => err ? console.log('this is the error', err) : null
+  )
+});
+client_4.on('connect', () => {
+  client_4.subscribe(
+    [ 'frequency/fv' ],
     err => err ? console.log('this is the error', err) : null
   )
 });
@@ -318,6 +326,16 @@ client_3.on('message', (topic, message) => {
           // console.log('its okay 2')
         })
         .catch(err => console.log(err))
+    } catch (e) {
+      console.error(e);
+    }
+});
+client_3.on('message', (topic, message) => {  
+  let frequency;
+  try {
+      frequency = JSON.parse(message.toString());    
+      console.log("this is the new frequency ", frequency);
+      
     } catch (e) {
       console.error(e);
     }
