@@ -330,7 +330,7 @@ client_3.on('message', (topic, message) => {
       console.error(e);
     }
 });
-client_3.on('message', (topic, message) => {  
+client_4.on('message', (topic, message) => {  
   let frequency;
   try {
       frequency = JSON.parse(message.toString());    
