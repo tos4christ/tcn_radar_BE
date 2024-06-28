@@ -334,8 +334,9 @@ client_4.on('message', (topic, message) => {
   let frequency;
   try {
       frequency = JSON.parse(message.toString());    
-      console.log("this is the new frequency ", frequency);
-      
+      //console.log("this is the new frequency ", frequency);
+      // Send Frequency data in realtime to the client      
+      io.sockets.emit('frequency001', { message: frequency.toString() });
     } catch (e) {
       console.error(e);
     }
