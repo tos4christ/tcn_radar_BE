@@ -296,7 +296,7 @@ client_3.on('message', (topic, message) => {
       const dateTemp = date.split('-');
       const time_epoch = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
       console.log("pcube frequency  ",typeof message, "  ", typeof frequency);
-      console.log("pcube freq  ",time_epoch, " dateTemp ", dateTemp);
+      console.log("pcube freq  ",time_epoch.getTime(), " dateTemp ", dateTemp, "  ", hour, " ", minute, " ", seconds);
       // Send Frequency data in realtime to the client      
       io.sockets.emit('frequency000', { message: frequency.toString() });
       // Push Frequency data to the Power BI API      
@@ -337,16 +337,18 @@ client_4.on('message', (topic, message) => {
   let frequency;
   try {
       frequency = JSON.parse(message.toString());
-      const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
+      //const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
+      const time = frequency.t.split(":");
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
       const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
-      const hour = time.split(':')[0];
-      const minute = time.split(':')[1];
-      const seconds = time.split(':')[2];
+      const hour = time[0];
+      const minute = time[1];
+      const seconds = time[2];
       const dateTemp = date.split('-');
       const time_epoch = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
       console.log("meter frequency  ",typeof message, "  ", typeof frequency, "  ", typeof hour);
-      console.log("meter freq  ",time_epoch, " dateTemp ", dateTemp, "  ", frequency.t.split(":"));
+      console.log("meter freq  ",time_epoch, " dateTemp ", dateTemp, "  ", hour, " ", minute, " ", seconds);
+      
       //console.log("this is the new frequency ", frequency);
       // Send Frequency data in realtime to the client      
       io.sockets.emit('frequency001', { message: JSON.stringify(frequency) });
