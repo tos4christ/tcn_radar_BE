@@ -345,7 +345,7 @@ client_4.on('message', (topic, message) => {
       const dateTemp = date.split('-');
       const time_epoch = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
       
-      console.log("meter freq  ",time );
+      console.log("meter freq  ",frequency.t );
       
       //console.log("this is the new frequency ", frequency);
       // Send Frequency data in realtime to the client      
