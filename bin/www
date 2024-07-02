@@ -285,8 +285,7 @@ client_2.on('message', (topic, message) => {
 client_3.on('message', (topic, message) => {  
   let frequency;
   try {
-      frequency = JSON.parse(message.toString());
-      
+      frequency = JSON.parse(message.toString());      
       const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
       const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
@@ -295,8 +294,6 @@ client_3.on('message', (topic, message) => {
       const seconds = time.split(':')[2];
       const dateTemp = date.split('-');
       const time_epoch = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
-      
-      console.log("pcube freq  ",time_epoch.getTime(), " dateTemp ", dateTemp, "  ", hour, " ", minute, " ", seconds);
       // Send Frequency data in realtime to the client      
       io.sockets.emit('frequency000', { message: frequency.toString() });
       // Push Frequency data to the Power BI API      
@@ -324,6 +321,7 @@ client_3.on('message', (topic, message) => {
       //     console.error(err)
       //   });
       // Store Frequency into the database
+      console.log(date, time, "  from the pcube");
       db.query(frequencyModel.create, [date, time, time_epoch.getTime(), frequency])
         .then( response => {
           // console.log('its okay 2')
@@ -347,11 +345,17 @@ client_4.on('message', (topic, message) => {
       const dateTemp = date.split('-');
       const time_epoch = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
       
-      console.log("meter freq  ",time_epoch.getTime(), " dateTemp ", dateTemp, "  ", hour, " ", minute, " ", seconds);
+      console.log("meter freq  ",time );
       
       //console.log("this is the new frequency ", frequency);
       // Send Frequency data in realtime to the client      
       io.sockets.emit('frequency001', { message: JSON.stringify(frequency) });
+       // Store Frequency into the database
+      // db.query(frequencyModel.create, [date, time, time_epoch.getTime(), frequency])
+      //   .then( response => {
+      //     console.log('its okay 2', response);
+      //   })
+      //   .catch(err => console.log(err))
     } catch (e) {
       console.error(e);
     }
