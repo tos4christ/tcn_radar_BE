@@ -353,7 +353,7 @@ client_4.on('message', (topic, message) => {
        // Store Frequency into the database
       db.query(frequencyModel.create, [date, frequency.t, time_epoch.getTime(), frequency.value])
         .then( response => {
-          console.log('its okay 2', response);
+          //console.log('its okay 2', response);
         })
         .catch(err => console.log(err));
     } catch (e) {
