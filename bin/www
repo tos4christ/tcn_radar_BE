@@ -296,7 +296,7 @@ client_3.on('message', (topic, message) => {
       const dateTemp = date.split('-');
       const time_epoch = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
       console.log("pcube frequency  ",typeof message, "  ", typeof frequency);
-      console.log("pcube freq  ",time_epoch.getTime(), " dateTemp ", dateTemp, "  ", hour, " ", minute, " ", seconds);
+      console.log("pcube freq  ",time_epoch, " dateTemp ", dateTemp, "  ", hour, " ", minute, " ", seconds);
       // Send Frequency data in realtime to the client      
       io.sockets.emit('frequency000', { message: frequency.toString() });
       // Push Frequency data to the Power BI API      
