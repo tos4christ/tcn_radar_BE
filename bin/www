@@ -337,6 +337,7 @@ client_4.on('message', (topic, message) => {
       frequency = JSON.parse(message.toString());
       //const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
       const time = frequency.t.split(":");
+      console.log(frequency, "  check if its the frequency bringing the error");
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
       const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
       const hour = time[0];
