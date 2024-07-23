@@ -332,15 +332,17 @@ client_2.on('message', (topic, message) => {
 //     }
 // });
 client_4.on('message', (topic, message) => {  
-  let frequency, time;
+  let frequency, time, temp_time;
   try {
       frequency = JSON.parse(message.toString());
       //const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
       if (frequency.t.length < 1) {
         time = new Date().toLocaleTimeString("en-GB").split(" ")[0].split(":");
+        temp_time = new Date().toLocaleTimeString("en-GB").split(" ")[0];
         //console.log(time, " this is the time from local");
       } else if(frequency.t.length >= 7) {
         time = frequency.t.split(":");
+        temp_time = frequency.t;
         //console.log(time, " this is the time from meter");
       }
       //console.log(time, " this is the time picked");
@@ -351,14 +353,14 @@ client_4.on('message', (topic, message) => {
       const seconds = time[2];
       const dateTemp = date.split('-');
       const time_epoch = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
-      console.log(time_epoch.getTime(), " this is the time epoch");
+      //console.log(time_epoch.getTime(), " this is the time epoch");
       // console.log("meter freq  ",frequency.t );
       
       //console.log("this is the new frequency ", frequency);
       // Send Frequency data in realtime to the client      
       io.sockets.emit('frequency001', { message: JSON.stringify(frequency) });
        // Store Frequency into the database
-      db.query(frequencyModel.create, [date, frequency.t, time_epoch.getTime(), frequency.value])
+      db.query(frequencyModel.create, [date, temp_time, time_epoch.getTime(), frequency.value])
         .then( response => {
           //console.log('its okay 2', response);
         })
