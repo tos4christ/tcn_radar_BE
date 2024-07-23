@@ -351,7 +351,7 @@ client_4.on('message', (topic, message) => {
       const seconds = time[2];
       const dateTemp = date.split('-');
       const time_epoch = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
-      console.log(time_epoch, " this is the time epoch");
+      console.log(time_epoch.getTime(), " this is the time epoch");
       // console.log("meter freq  ",frequency.t );
       
       //console.log("this is the new frequency ", frequency);
