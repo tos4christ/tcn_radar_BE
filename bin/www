@@ -332,12 +332,15 @@ client_2.on('message', (topic, message) => {
 //     }
 // });
 client_4.on('message', (topic, message) => {  
-  let frequency;
+  let frequency, time;
   try {
       frequency = JSON.parse(message.toString());
       //const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
-      const time = frequency.t.split(":");
-      console.log(frequency, "  check if its the frequency bringing the error");
+      if (frequency.t.length < 1) {
+        time = new Date().toLocaleTimeString("en-GB").split(" ")[0].split(":");
+      } else if(frequency.t.length >= 7) {
+        time = frequency.t.split(":");
+      }
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
       const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
       const hour = time[0];
