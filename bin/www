@@ -335,6 +335,7 @@ client_4.on('message', (topic, message) => {
   let frequency, time, temp_time;
   try {
       frequency = JSON.parse(message.toString());
+      console.log(frequency, " the frequency");
       //const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
       if (frequency.t.length < 1) {
         time = new Date().toLocaleTimeString("en-GB").split(" ")[0].split(":");
