@@ -335,13 +335,13 @@ client_4.on('message', (topic, message) => {
   let frequency, time, temp_time;
   try {
       frequency = JSON.parse(message.toString());
-      console.log(frequency, " the frequency");
+      //console.log(frequency, " the frequency");
       //const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
       if (frequency.t.length < 1) {
         time = new Date().toLocaleTimeString("en-GB").split(" ")[0].split(":");
         temp_time = new Date().toLocaleTimeString("en-GB").split(" ")[0];
         //console.log(time, " this is the time from local");
-      } else if(frequency.t.length >= 7) {
+      } else if(frequency.t.length >= 5) {
         time = frequency.t.split(":");
         temp_time = frequency.t;
         //console.log(time, " this is the time from meter");
