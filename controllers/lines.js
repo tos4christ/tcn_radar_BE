@@ -12,7 +12,7 @@ var PowerAdder = require('../utility/powerAdder');
 const pool_2 =  new Pool({
     user: 'postgres',
     host: '172.16.200.9',
-    database: 'postgres',
+    database: 'tcn_nas',
     password: '000000',
     port: 5432
 });
@@ -120,7 +120,7 @@ lines.getcollapse = (req, res, next) => {
     }    
     const { start, end} = timeConverter(body.startDate, body.endDate, body.startTime, body.endTime);
     // query the pool_1 for the data to use for populating the excel sheet
-    pool_1.query(get_collapse(start.getTime(), end.getTime()))
+    pool_2.query(get_collapse(start.getTime(), end.getTime()))
         .then( resp => {
             const data = resp.rows;
             const collapse_data = PowerAdder(data);
