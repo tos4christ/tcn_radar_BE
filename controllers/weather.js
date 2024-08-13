@@ -35,4 +35,17 @@ weather.getWeather = async (req, res, next) => {
       
 }
 
+weather.getWeather_report = async (req, res, next) => {
+    const { startDate } = req.body;
+    try {
+        pool_1.query(model.get_weather_data_main, [startDate])
+        .then( resp => {
+            const weather_report = resp.rows;
+            res.send({weather_report});
+        });
+    } catch (e_1) {
+        return console.error(e_1);
+    }      
+}
+
 module.exports =  weather;

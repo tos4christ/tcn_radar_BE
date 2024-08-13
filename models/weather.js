@@ -1,4 +1,4 @@
-const lines = {
+const weather = {
     create: `INSERT INTO 
                 weather_table(date, time, station_name, lon, lat, main_weather, weather_id, 
                     main_weather_description, weather_icon, main_temperature, ambient_temperature,
@@ -6,14 +6,16 @@ const lines = {
                     rain_volume_3h, cloudiness) 
                 VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) RETURNING *`,
     get_station_coords: `SELECT * from station_coords_2 order by id`,
-    get_weather_data: `select distinct id, station_name, lon, lat, main_weather, main_temperature, ambient_temperature, 
+    get_weather_data_2: `select distinct id, station_name, lon, lat, main_weather, main_temperature, ambient_temperature, 
                 main_pressure, main_humidity, wind_speed, wind_degree, wind_gust, date, time, rain_volume_1h, rain_volume_3h, 
-                cloudiness from weather_table where date='2024-06-01' order by time`
-    
+                cloudiness from weather_table where date='2024-06-01' order by time`,
+    get_weather_data_main: `select distinct station_name, lon, lat, main_weather, main_temperature, ambient_temperature, main_pressure, 
+                main_humidity, wind_speed, wind_degree, wind_gust, date, time, rain_volume_1h, rain_volume_3h, cloudiness
+                from weather_table
+                where date=$1
+                order by station_name, time, main_weather`    
 }
-
-
 // Todo list
 // add one to the month and check if needed in the hour in order to make 
 // the month and hour correspond in the view
-module.exports =  lines;
+module.exports =  weather;
