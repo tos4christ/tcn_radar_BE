@@ -2,11 +2,68 @@ const { Pool } = require("pg");
 var model = require('../models/weather');
 var pool_1 = require('../database/db');
 const { default: axios } = require('axios');
+const epochConverter = require('../utility/epochConverter');
+const stations = [
+    "Aba TS", "Afam TS", "Aja Area Control", "Ajaokuta Area Control", `Akangba 330`, "Akure 132KV TS", `Gwagwalada`, `ALAOJI PS`,
+    "Akwanga TS", `Alagbon 132`, `Alaoji TS`, `Apo 132`, `Asaba 132KV`, `Ayede`, `Bauchi`, `Benin Main`, `Ijora 132KV`, `DELTA GS`,
+    `Bida TS`, `Birnin Kebbi`, `Calabar TS`, `Delta TS`, `Egbin 330`, `Ganmo Area Control`, `Gombe Area Control`, `OMOKU PS`,
+    `Ikeja W Area Control`, `Ikorodu 132KV`, `Ilupeju 132KV TS`, `Iwo Area Control`, `Jericho 132KV TS`, `Jos Area Control`, `Katampe 330`,
+    `Katsina TS`, `Lokoja 132KV`, `Maiduguri TS`, `Minna TS`, `New haven`, `Nkalagu`, `Obajana 330KV`, `Ondo 132KV TS`, `Onitsha`,
+    `Osogbo TS`, `Papalanto TS`, `PH Main`, `Shiroro Area Control`, `Sokoto TS`, `Suleja TS`, `Tegina TS`, `GEREGU PS`, `DADINKOWA GS`, 
+    `KAINJI HYDRO`, `JEBBA HYDRO`, `SHIRORO HYDRO`, `EGBIN PS`, `OLORUNSOGO PS`, `OMOTOSHO PS`, `GBARAIN PS`, `AZURA EDO IPP`, `AFAM VI PS`
+    ];
+
+function sortWeather(weather_data=[]) {
+    // Sort all the data according to station in ascending order
+    const station_container = {};
+    stations.forEach(station => {
+        const station_data = weather_data.filter(items => [`${station}`].includes(items.station_name));
+        if(station_data[0]) {
+        const station_name = station_data[0].station_name;
+        station_container[station_name] = station_data;
+        }
+    });
+    const station_keys = Object.keys(station_container);
+    let weather_timeline = {};
+    let station_weather_report = {};
+    let start_time = '', end_time = '';
+    station_keys.forEach(station => {
+        const current_station = station_container[station].sort((a,b) => a.time < b.time);
+        current_station.sort((a,b) => a.time < b.time).forEach((item, index, array) => {
+        const next_data = array[index+1];
+        if(next_data) {      
+            // check if it starts with rainfall        
+            if(array[0].main_weather == "Rain" && index == 0) {
+            start_time = array[0].time;
+            } else if(item.main_weather !== "Rain" && next_data.main_weather == "Rain" && index > 0) {
+            // condition to pick a start
+            start_time = next_data.time;
+            }
+            // condition to pick a stop
+            if(item.main_weather == "Rain" && next_data.main_weather !== "Rain" && index > 0) {
+            end_time = next_data.time;
+            }
+            if(end_time.length > 0 && start_time.length > 0) {
+            const time_obj = epochConverter(start_time, end_time, "weather");
+            weather_timeline[start_time] = {start_date: time_obj.start_date, end_date: time_obj.end_date, start: start_time, 
+                end: end_time, date: item.date, rain_volume_1h: item.rain_volume_1h, rain_volume_3h: item.rain_volume_3h,
+                main_temp: item.main_temperature, start_time: time_obj.rainfall_start_time, end_time: time_obj.rainfall_end_time,
+                wind_degree: item.wind_degree, wind_speed: item.wind_speed, humidity: item.main_humidity};
+            start_time = '';
+            end_time = '';
+            }        
+        }
+        });
+        station_weather_report[station] = weather_timeline;
+        weather_timeline = {};
+    });
+    console.log(station_weather_report);    
+    return station_weather_report;
+}
 
 const weather = {};
 
 weather.getStations = (req, res, next) => {
-
     pool_1.query(model.get_station_coords)
         .then( resp => {
             const stations = resp.rows;
@@ -41,6 +98,8 @@ weather.getWeather_report = async (req, res, next) => {
         pool_1.query(model.get_weather_data_main, [startDate])
         .then( resp => {
             const weather_report = resp.rows;
+            const result = sortWeather(weather_report);
+            console.log(result, " this is the result");
             res.send({weather_report});
         });
     } catch (e_1) {
