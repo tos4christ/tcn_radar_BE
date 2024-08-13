@@ -99,8 +99,8 @@ weather.getWeather_report = async (req, res, next) => {
         .then( resp => {
             const weather_report = resp.rows;
             const result = sortWeather(weather_report);
-            console.log(result, " this is the result");
-            res.send({weather_report});
+            //console.log(result, " this is the result");
+            res.send({result});
         });
     } catch (e_1) {
         return console.error(e_1);
