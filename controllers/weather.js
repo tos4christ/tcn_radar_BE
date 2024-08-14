@@ -48,10 +48,10 @@ function sortWeather(weather_data=[]) {
             if(end_time.length > 0 && start_time.length > 0) {
                 const time_obj = epochConverter(start_time, end_time, "weather");
                 const duration_epoch = Math.round((end_time - start_time)/60) + " minutes";
-                const time_line_array = {start_date: time_obj.start_date, start_time: time_obj.rainfall_start_time,
-                     end_date: time_obj.end_date, end_time: time_obj.rainfall_end_time, duration_of_rainfall: duration_epoch, mw: " ",                   
-                    main_temp: item.main_temperature,  rain_volume_1h: item.rain_volume_1h, rain_volume_3h: item.rain_volume_3h,
-                    humidity: item.main_humidity, wind_speed: item.wind_speed, wind_degree: item.wind_degree, losses: " "};
+                const time_line_array = {START_DATE: time_obj.start_date, START_TIME: time_obj.rainfall_start_time,
+                    START_MW: " ", END_DATE: time_obj.end_date, END_TIME: time_obj.rainfall_end_time, END_MW: " ",
+                    duration_of_rainfall: duration_epoch, MAIN_TEMP: item.main_temperature,  RAIN_VOLUME_1H: item.rain_volume_1h,
+                    HUMIDITY: item.main_humidity, WIND_SPEED: item.wind_speed, MW_INTERRUPTED: " "};
                 weather_timeline.push(time_line_array);
                 start_time = '';
                 end_time = '';
