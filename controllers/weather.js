@@ -65,7 +65,7 @@ function sortWeather(weather_data=[]) {
     });
     console.log("station_weather_report  " , station_weather_report); 
     console.log("stations_array   ", stations_array);   
-    return station_weather_report;
+    return stations_array;
 }
 
 const weather = {};
