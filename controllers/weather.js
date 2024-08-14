@@ -25,7 +25,8 @@ function sortWeather(weather_data=[]) {
         }
     });
     const station_keys = Object.keys(station_container);
-    let weather_timeline = {};
+    const stations_array = [];
+    let weather_timeline = [];
     let station_weather_report = {};
     let start_time = '', end_time = '';
     station_keys.forEach(station => {
@@ -45,21 +46,25 @@ function sortWeather(weather_data=[]) {
             end_time = next_data.time;
             }
             if(end_time.length > 0 && start_time.length > 0) {
-            const time_obj = epochConverter(start_time, end_time, "weather");
-            const duration_epoch = end_time - start_time;
-            weather_timeline[start_time] = {start_date: time_obj.start_date, end_date: time_obj.end_date, start: start_time, 
+                const time_obj = epochConverter(start_time, end_time, "weather");
+                const duration_epoch = end_time - start_time;
+                const time_line_array = {start_date: time_obj.start_date, end_date: time_obj.end_date, start: start_time, 
                 end: end_time, date: item.date, rain_volume_1h: item.rain_volume_1h, rain_volume_3h: item.rain_volume_3h,
                 main_temp: item.main_temperature, start_time: time_obj.rainfall_start_time, end_time: time_obj.rainfall_end_time,
                 wind_degree: item.wind_degree, wind_speed: item.wind_speed, humidity: item.main_humidity, duration_epoch};
-            start_time = '';
-            end_time = '';
+                weather_timeline.push(time_line_array);
+                start_time = '';
+                end_time = '';
             }        
         }
         });
         station_weather_report[station] = weather_timeline;
-        weather_timeline = {};
+        stations_array.push(station_weather_report);
+        station_weather_report = {};
+        weather_timeline = [];
     });
-    console.log(station_weather_report);    
+    console.log("station_weather_report  " , station_weather_report); 
+    console.log("stations_array   ", stations_array);   
     return station_weather_report;
 }
 
@@ -101,17 +106,17 @@ weather.getWeather_report = async (req, res, next) => {
         .then( resp => {
             const weather_report = resp.rows;
             const result = sortWeather(weather_report);
-            //console.log(result, " this is the result");
+            console.log(result, " this is the result");
             // Create a new workbook
             const workbook = XLSX.utils.book_new();
-            const key = Object.keys(result)[0];
-            const worksheet = XLSX.utils.json_to_sheet(result[key])
-            XLSX.utils.book_append_sheet(workbook, worksheet, key);
-            // result.forEach( (temp) => {
-            //     const key = Object.keys(temp)[0];
-            //     const worksheet = XLSX.utils.json_to_sheet(temp[key])
-            //     XLSX.utils.book_append_sheet(workbook, worksheet, key);
-            // });            
+            // const key = Object.keys(result);
+            //const worksheet = XLSX.utils.json_to_sheet(result)
+            //XLSX.utils.book_append_sheet(workbook, worksheet, "key");
+            result.forEach( (temp) => {
+                const key = Object.keys(temp)[0];
+                const worksheet = XLSX.utils.json_to_sheet(temp[key])
+                XLSX.utils.book_append_sheet(workbook, worksheet, key);
+            });            
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
             const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
