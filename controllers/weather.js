@@ -104,11 +104,14 @@ weather.getWeather_report = async (req, res, next) => {
             //console.log(result, " this is the result");
             // Create a new workbook
             const workbook = XLSX.utils.book_new();
-            result.forEach( (temp) => {
-                const key = Object.keys(temp)[0];
-                const worksheet = XLSX.utils.json_to_sheet(temp[key])
-                XLSX.utils.book_append_sheet(workbook, worksheet, key);
-            });            
+            const key = Object.keys(result)[0];
+            const worksheet = XLSX.utils.json_to_sheet(result[key])
+            XLSX.utils.book_append_sheet(workbook, worksheet, key);
+            // result.forEach( (temp) => {
+            //     const key = Object.keys(temp)[0];
+            //     const worksheet = XLSX.utils.json_to_sheet(temp[key])
+            //     XLSX.utils.book_append_sheet(workbook, worksheet, key);
+            // });            
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
             const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
