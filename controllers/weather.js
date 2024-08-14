@@ -3,6 +3,7 @@ var model = require('../models/weather');
 var pool_1 = require('../database/db');
 const { default: axios } = require('axios');
 const epochConverter = require('../utility/epochConverter');
+var XLSX = require('xlsx');
 const stations = [
     "Aba TS", "Afam TS", "Aja Area Control", "Ajaokuta Area Control", `Akangba 330`, "Akure 132KV TS", `Gwagwalada`, `ALAOJI PS`,
     "Akwanga TS", `Alagbon 132`, `Alaoji TS`, `Apo 132`, `Asaba 132KV`, `Ayede`, `Bauchi`, `Benin Main`, `Ijora 132KV`, `DELTA GS`,
@@ -45,10 +46,11 @@ function sortWeather(weather_data=[]) {
             }
             if(end_time.length > 0 && start_time.length > 0) {
             const time_obj = epochConverter(start_time, end_time, "weather");
+            const duration_epoch = end_time - start_time;
             weather_timeline[start_time] = {start_date: time_obj.start_date, end_date: time_obj.end_date, start: start_time, 
                 end: end_time, date: item.date, rain_volume_1h: item.rain_volume_1h, rain_volume_3h: item.rain_volume_3h,
                 main_temp: item.main_temperature, start_time: time_obj.rainfall_start_time, end_time: time_obj.rainfall_end_time,
-                wind_degree: item.wind_degree, wind_speed: item.wind_speed, humidity: item.main_humidity};
+                wind_degree: item.wind_degree, wind_speed: item.wind_speed, humidity: item.main_humidity, duration_epoch};
             start_time = '';
             end_time = '';
             }        
@@ -100,7 +102,19 @@ weather.getWeather_report = async (req, res, next) => {
             const weather_report = resp.rows;
             const result = sortWeather(weather_report);
             //console.log(result, " this is the result");
-            res.send({result});
+            // Create a new workbook
+            const workbook = XLSX.utils.book_new();
+            result.forEach( (temp) => {
+                const key = Object.keys(temp)[0];
+                const worksheet = XLSX.utils.json_to_sheet(temp[key])
+                XLSX.utils.book_append_sheet(workbook, worksheet, key);
+            });            
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
+            const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
+            res.attachment('weather.xlsx');
+            res.send(buffer);
+            //res.send({result});
         });
     } catch (e_1) {
         return console.error(e_1);
