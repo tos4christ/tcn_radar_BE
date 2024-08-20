@@ -98,7 +98,7 @@ client_1.on('connect', () => {
           'dadinkowags/tv', 'ugwuajits/tv',
            'olorunsogo1ts/pv', 'parasenergyPs/pv',
            'olorunsogo2ts/tv','omotoshoGas/pv',
-      ],
+      ], {qos: 2},
    (err) => {
       if(err) {
           console.log('this is the error', err);
@@ -123,7 +123,7 @@ client_2.on('connect', () => {
          'topSteel/cs', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs',
          'quantum/cs', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
          'pheonix/cs'
-    ],
+    ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
 });
