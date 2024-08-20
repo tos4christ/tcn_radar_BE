@@ -135,7 +135,7 @@ client_2.on('connect', () => {
 // });
 client_4.on('connect', () => {
   client_4.subscribe(
-    [ 'frequency/fv' ],
+    [ 'frequency/fv' ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
 });
