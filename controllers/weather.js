@@ -5,13 +5,12 @@ const { default: axios } = require('axios');
 const epochConverter = require('../utility/epochConverter');
 var XLSX = require('xlsx');
 const stations = [
-    "Aba TS", "Afam TS", "Aja Area Control", "Ajaokuta Area Control", `Akangba 330`, "Akure 132KV TS", `Gwagwalada`, `ALAOJI PS`,
-    "Akwanga TS", `Alagbon 132`, `Alaoji TS`, `Apo 132`, `Asaba 132KV`, `Ayede`, `Bauchi`, `Benin Main`, `Ijora 132KV`, `DELTA GS`,
-    `Bida TS`, `Birnin Kebbi`, `Calabar TS`, `Delta TS`, `Egbin 330`, `Ganmo Area Control`, `Gombe Area Control`, `OMOKU PS`,
+    "Aba TS", "Afam TS", "Aja Area Control", "Ajaokuta Area Control", `Akangba 330`, "Akure 132KV TS", `Gwagwalada`,
+    "Akwanga TS", `Alagbon 132`, `Alaoji TS`, `Apo 132`, `Asaba 132KV`, `Ayede`, `Bauchi`, `Benin Main`, `Ijora 132KV`,
+    `Bida TS`, `Birnin Kebbi`, `Calabar TS`, `Delta TS`, `Egbin 330`, `Ganmo Area Control`, `Gombe Area Control`,
     `Ikeja W Area Control`, `Ikorodu 132KV`, `Ilupeju 132KV TS`, `Iwo Area Control`, `Jericho 132KV TS`, `Jos Area Control`, `Katampe 330`,
     `Katsina TS`, `Lokoja 132KV`, `Maiduguri TS`, `Minna TS`, `New haven`, `Nkalagu`, `Obajana 330KV`, `Ondo 132KV TS`, `Onitsha`,
-    `Osogbo TS`, `Papalanto TS`, `PH Main`, `Shiroro Area Control`, `Sokoto TS`, `Suleja TS`, `Tegina TS`, `GEREGU PS`, `DADINKOWA GS`, 
-    `KAINJI HYDRO`, `JEBBA HYDRO`, `SHIRORO HYDRO`, `EGBIN PS`, `OLORUNSOGO PS`, `OMOTOSHO PS`, `GBARAIN PS`, `AZURA EDO IPP`, `AFAM VI PS`
+    `Osogbo TS`, `Papalanto TS`, `PH Main`, `Shiroro Area Control`, `Sokoto TS`, `Suleja TS`, `Tegina TS`,
     ];
 
 function sortWeather(weather_data=[]) {
