@@ -344,7 +344,7 @@ module.exports = (data) => {
                 res_data['OLORUNSOGO NIPP'].seconds = res_data['OLORUNSOGO NIPP'].seconds ? res_data['OLORUNSOGO NIPP'].seconds : seconds;
                 res_data['OLORUNSOGO NIPP'].kv = res_data['OLORUNSOGO NIPP'].kv ? res_data['OLORUNSOGO NIPP'].kv : max_voltage;
             }
-            if (filtered_station[0].station === 'transamadiGs') {
+            if (filtered_station[0].station === 'phMain') {
                 // console.log(filtered_station, 'the filtered station for phMain')
                 let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;
                 const mw_sum = filtered_station.reduce((acc, curr) => {
