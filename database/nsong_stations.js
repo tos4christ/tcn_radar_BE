@@ -504,18 +504,44 @@ module.exports = (data) => {
             if (filtered_station[0].station === 'odukpaniNippPs') {
                 let max_voltage = 0, time = filtered_station[0].time, seconds = filtered_station[0].seconds;                
                 const mw_sum = filtered_station.reduce((acc, curr) => {
-                    max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;                   
-                    const sum = acc + Math.abs(curr.mw);
-                    return sum;                    
+                    max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv; 
+                    if (curr.line_name === 'gt1' || curr.line_name === 'gt2' || curr.line_name === 'gt3' || curr.line_name === 'gt4' || curr.line_name === 'gt5') {
+                        const sum = acc + Math.abs(curr.mw);
+                        return sum;
+                    }else {
+                        return acc
+                    }
                 },0)
-                const amp_sum = filtered_station.reduce((acc, curr) => {                    
+                const amp_sum = filtered_station.reduce((acc, curr) => {
+                    if (curr.line_name === 'gt1' || curr.line_name === 'gt2' || curr.line_name === 'gt3' || curr.line_name === 'gt4' || curr.line_name === 'gt5') {
                         const sum = acc + Math.abs(curr.amp);
-                        return sum;                    
+                        return sum;
+                    }else {
+                        return acc
+                    }
                 },0)
                 const mvar_sum = filtered_station.reduce((acc, curr) => {
+                    if (curr.line_name === 'gt1' || curr.line_name === 'gt2' || curr.line_name === 'gt3' || curr.line_name === 'gt4' || curr.line_name === 'gt5') {
                         const sum = acc + Math.abs(curr.mvar);
-                        return sum;                   
+                        return sum;
+                    }else {
+                        return acc
+                    }
                 },0)
+
+                // const mw_sum = filtered_station.reduce((acc, curr) => {
+                //     max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;                   
+                //     const sum = acc + Math.abs(curr.mw);
+                //     return sum;                    
+                // },0)
+                // const amp_sum = filtered_station.reduce((acc, curr) => {                    
+                //         const sum = acc + Math.abs(curr.amp);
+                //         return sum;                    
+                // },0)
+                // const mvar_sum = filtered_station.reduce((acc, curr) => {
+                //         const sum = acc + Math.abs(curr.mvar);
+                //         return sum;                   
+                // },0)
                 res_data['ODUKPANI NIPP (GAS)'].mw = mw_sum;                
                 res_data['ODUKPANI NIPP (GAS)'].amp = amp_sum;
                 res_data['ODUKPANI NIPP (GAS)'].mvar = mvar_sum;
