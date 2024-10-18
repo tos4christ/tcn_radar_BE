@@ -57,7 +57,7 @@ mssql.connect(config, err => {
             .then(respo => {
                 console.log(Date(), 'this is the time the query completed');
                 const data = respo.rows;  
-                // console.log(JSON.stringify(data), data.length, Hour, 'the raw data')
+                console.log(data, data.length, 'the raw data');
                 // filter the data to return only one station for each
                 const stationHold = [];
                 const filteredStationArray = data.filter( station => {
