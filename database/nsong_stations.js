@@ -788,9 +788,9 @@ module.exports = (data) => {
                     }
                 },0)
                 // turn MW, MVAR and AMPs to zero pending change
-                res_data['GEREGU NIPP (GAS)'].mw = mw_sum * 0;
-                res_data['GEREGU NIPP (GAS)'].amp = amp_sum * 0;
-                res_data['GEREGU NIPP (GAS)'].mvar = mvar_sum * 0;
+                res_data['GEREGU NIPP (GAS)'].mw = mw_sum;
+                res_data['GEREGU NIPP (GAS)'].amp = amp_sum;
+                res_data['GEREGU NIPP (GAS)'].mvar = mvar_sum;
                 res_data['GEREGU NIPP (GAS)'].time = time;
                 res_data['GEREGU NIPP (GAS)'].seconds = seconds;
                 res_data['GEREGU NIPP (GAS)'].kv = max_voltage;
