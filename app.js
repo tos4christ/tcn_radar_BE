@@ -106,6 +106,12 @@ app.use('/api/weather', weatherRouter);
 //   res.sendFile(path.join(__dirname, "ssl", "042B2D6470F726347D7B55996AA809F6.txt"))
 // })
 
+// Function to intercept disabled routes and not process them sending 404 error
+app.get('/nccnasfullpage', (req, res) => {
+  res.status(404);
+  res.end('NOT FOUND');
+})
+
 
 // Function to serve static react resources
 app.get('/*', (req, res) => {
