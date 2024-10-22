@@ -754,6 +754,6 @@ function Station_Adder(station_array) {
             }
         }
     });
-    // console.log(JSON.stringify(final_array), 'the final array');
+    console.log(JSON.stringify(final_array), 'the final array');
     return final_array;
 };
