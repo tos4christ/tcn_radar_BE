@@ -20,6 +20,8 @@ router.post('/profile', jwtCheck, controller.profile);
 
 router.post('/tem', controller.getdaily);
 
+router.post('/voltageprofile', controller.gethourlyvoltage);
+
 router.post('/collapse', controller.getcollapse);
 
 module.exports = router;

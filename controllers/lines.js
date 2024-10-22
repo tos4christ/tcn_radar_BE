@@ -5,6 +5,7 @@ var dateFormatter = require('../utility/dateFormatter');
 var timeConverter = require('../utility/timeConverter');
 // var stations = require('../database/stations');
 var temExtractor = require('../utility/temExtractor');
+var voltageProfile = require('../utility/voltageProfile');
 var XLSX = require('xlsx');
 var PowerAdder = require('../utility/powerAdder');
 
@@ -44,6 +45,14 @@ const get_daily_2 = (t1, t2)  => {
         'omokuPs1', 'ihovborNippPs', 'olorunsogo1', 'delta2', 'parasEnergyPs', 'olorunsogoPhase1Gs',
         'jebbaTs', 'okpaiGs', 'deltaGs', 'kainjiTs', 'egbinPs', 'afamIv_vPs', 'shiroroPs', 'odukpaniNippPs',
         'transamadiGs', 'afamVPs', 'zungeru', 'taopex', 'phMain'
+    ) and time between ${t1} and ${t2}
+    group by station, line_name, id, date, mw, amp, kv, level, equipment_id, mvar, variant, time order by station, line_name, time;`;
+}
+
+const get_hourly = (t1, t2)  => {
+    return `SELECT * FROM lines_table where station in 
+    (
+        'eket', 'ekim', 'phMain', 'lokojaTs', 'asaba', 'ugwuaji', 'gwagwalada', 'ikotEkpene'
     ) and time between ${t1} and ${t2}
     group by station, line_name, id, date, mw, amp, kv, level, equipment_id, mvar, variant, time order by station, line_name, time;`;
 }
@@ -88,6 +97,57 @@ lines.getdaily = (req, res) => {
                 // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
                 const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
                 res.attachment('tem.xlsx');
+                res.send(buffer);
+            })
+            .catch(err => console.log(err))
+            .finally(() => done())
+    })
+    // client.query(get_daily_2(start, end))
+    //     .then( resp => {
+    //         const data = resp.rows;
+    //         const tem_data = temExtractor(data);
+    //         // Create a new workbook
+    //         const workbook = XLSX.utils.book_new();
+    //         tem_data.forEach( (temp) => {
+    //             const key = Object.keys(temp)[0];
+    //             const worksheet = XLSX.utils.json_to_sheet(temp[key])
+    //             XLSX.utils.book_append_sheet(workbook, worksheet, key);
+    //         });            
+    //         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    //         // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
+    //         const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
+    //         res.attachment('tem.xlsx');
+    //         res.send(buffer);
+    //     });
+
+}
+
+lines.gethourlyvoltage = (req, res) => {
+    const { body } = req;
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };   
+    const today = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
+    const searchDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/.test(body.startDate) ? body.startDate : today;    
+    // query the db for the data to use for populating the excel sheet
+    let { start, end} = timeConverter(searchDate, searchDate, "00:00", "23:59");
+    start = start.getTime();
+    end = end.getTime() + 59000;
+    pool_1.connect((err, client, done) => {
+        if (err) throw err;
+        client.query(get_hourly(start, end))
+            .then( resp => {
+                const data = resp.rows;
+                const tem_data = voltageProfile(data);
+                // Create a new workbook
+                const workbook = XLSX.utils.book_new();
+                tem_data.forEach( (temp) => {
+                    const key = Object.keys(temp)[0];
+                    const worksheet = XLSX.utils.json_to_sheet(temp[key])
+                    XLSX.utils.book_append_sheet(workbook, worksheet, key);
+                });            
+                res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
+                const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
+                res.attachment('voltageProfile.xlsx');
                 res.send(buffer);
             })
             .catch(err => console.log(err))

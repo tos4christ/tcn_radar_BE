@@ -18,6 +18,11 @@ const lines = {
         'transamadiGs', 'afamVPs', 'zungeru', 'taopex', 'phMain'
     ) 
     group by station, line_name, id, date, mw, amp, kv, level, equipment_id, mvar, variant, time order by station, line_name, time`,
+    get_hourly: `SELECT * FROM lines_table where time between $1 and $2 and station in 
+    (
+        'eket', 'ekim', 'phMain', 'lokojaTs', 'asaba', 'ugwuaji', 'gwagwalada', 'ikotEkpene'
+    ) 
+    group by station, line_name, id, date, mw, amp, kv, level, equipment_id, mvar, variant, time order by station, line_name, time`,
     get_downtime: 'select * from lines_table where mw=0 and kv=0 and time between $1 and $2 and line_name=$3 and station=$4 order by time',    
     get_profile_max: (parameter, station, line, start, end) => {
         return `select hour, minute, seconds, ${parameter}, date from lines_table where station='${station}' and line_name='${line}' and time between ${start} and ${end} and 
