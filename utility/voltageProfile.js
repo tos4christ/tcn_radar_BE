@@ -140,36 +140,33 @@ function Equipment_Sorter(equipment_array) {
         let max_voltage = 0, divisor = pres_hr.length;
         // Iterate over the filtered data to recaliberate
         if (pres_hr && pres_hr.length > 0) {
-            const mw_sum = pres_hr.reduce((acc, curr) => {
-                const sum = acc + curr.mw;
-                max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
-                return sum;
-            },0)
-            const amp_sum = pres_hr.reduce((acc, curr) => {
-                const sum = acc + curr.amp;
-                return sum;
-            },0)
-            const mvar_sum = pres_hr.reduce((acc, curr) => {
-                const sum = acc + curr.mvar;
-                return sum;
-            },0);
+            // const mw_sum = pres_hr.reduce((acc, curr) => {
+            //     const sum = acc + curr.mw;
+            //     max_voltage = max_voltage > curr.kv ? max_voltage : curr.kv;
+            //     return sum;
+            // },0)
+            // const amp_sum = pres_hr.reduce((acc, curr) => {
+            //     const sum = acc + curr.amp;
+            //     return sum;
+            // },0)
+            // const mvar_sum = pres_hr.reduce((acc, curr) => {
+            //     const sum = acc + curr.mvar;
+            //     return sum;
+            // },0);
             // replace the mw, amp, mvar
             // (id, date, hour, minute, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, time)
             const date = pres_hr[0].date;
-            const equipment_id = pres_hr[0].equipment_id;
             const station = pres_hr[0].station;
-            const level = pres_hr[0].level;
             const line_name = pres_hr[0].line_name;
             const id = hour;
-            const variant = pres_hr[0].variant;
             const time = pres_hr[pres_hr.length - 1].time;
-            const kv = max_voltage;
+            const kv = pres_hr[0].kv;
             // Get the average of the mw, amp and mvar
-            const mw = mw_sum / divisor;
-            const amp = amp_sum / divisor;
-            const mvar = mvar_sum / divisor;
+            const mw = pres_hr[0].mw; //mw_sum / divisor;
+            const amp = pres_hr[0].amp; //amp_sum / divisor;
+            const mvar = pres_hr[0].mvar; //mvar_sum / divisor;
             res_data.push({
-                date, equipment_id, station, level, line_name, id, variant, time, kv, mw, amp, mvar, hour
+                date, station, line_name, id, time, kv, mw, amp, mvar, hour
             })
             // increment minute by 1 for the next iteration
             hour += 1;
