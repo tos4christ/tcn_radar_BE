@@ -538,10 +538,11 @@ function Station_Adder(station_array) {
                         if(index == 0 && temp_hold.length == 0) {
                             // Get the key of the first item
                             const key = Object.keys(equip)[0];
-                            const temp_obj = {};                            
+                            
                             // Iterate over the equipment for insertion into the temphold, this serves as the maximum amount of item that will be used
                             // for the station for this day, any time not here will not be accepted
-                            equip[key].forEach( (e) => {                                
+                            equip[key].forEach( (e) => {
+                                const temp_obj = {};
                                 temp_obj.date = e.date;
                                 temp_obj.hour = e.hour;
                                 temp_obj[e.line_name+'_kv'] = e.kv;
@@ -594,10 +595,11 @@ function Station_Adder(station_array) {
                         if(index == 0 && temp_hold.length == 0) {
                             // Get the key of the first item
                             const key = Object.keys(equip)[0];
-                            const temp_obj = {};                            
+                                                    
                             // Iterate over the equipment for insertion into the temphold, this serves as the maximum amount of item that will be used
                             // for the station for this day, any time not here will not be accepted
-                            equip[key].forEach( (e) => {                                
+                            equip[key].forEach( (e) => {
+                                const temp_obj = {};
                                 temp_obj.date = e.date;
                                 temp_obj.hour = e.hour;
                                 temp_obj[e.line_name+'_kv'] = e.kv;
