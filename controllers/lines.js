@@ -135,10 +135,9 @@ lines.gethourlyvoltage = (req, res) => {
         if (err) throw err;
         client.query(get_hourly(start, end))
             .then( resp => {
-                const data = resp.rows;
-                
+                const data = resp.rows;                
                 const tem_data = voltageProfile(data);
-                console.log("The Tem Data", tem_data);
+                //console.log("The Tem Data", tem_data);
                 // Create a new workbook
                 const workbook = XLSX.utils.book_new();
                 tem_data.forEach( (temp) => {

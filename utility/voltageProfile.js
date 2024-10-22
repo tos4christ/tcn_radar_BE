@@ -136,7 +136,8 @@ function Equipment_Sorter(equipment_array) {
     let hour = 0;
     const res_data = [];
     while( hour < 24 ) {
-        const pres_hr = equipment_array.filter(equip => equip.hour === hour);        
+        const present_hour = hour;
+        const pres_hr = equipment_array.filter(equip => equip.hour === present_hour);        
         let max_voltage = 0, divisor = pres_hr.length;
         // Iterate over the filtered data to recaliberate
         if (pres_hr && pres_hr.length > 0) {
@@ -160,7 +161,7 @@ function Equipment_Sorter(equipment_array) {
             const station = pres_hr[0].station;
             const level = pres_hr[0].level;
             const line_name = pres_hr[0].line_name;
-            const id = hour;
+            const id = present_hour;
             const variant = pres_hr[0].variant;
             const time = pres_hr[pres_hr.length - 1].time;
             const kv = max_voltage;
@@ -169,7 +170,7 @@ function Equipment_Sorter(equipment_array) {
             const amp = amp_sum / divisor;
             const mvar = mvar_sum / divisor;
             res_data.push({
-                date, equipment_id, station, level, line_name, id, variant, time, kv, mw, amp, mvar, hour
+                date, equipment_id, station, level, line_name, id, variant, time, kv, mw, amp, mvar, present_hour
             })
             // increment minute by 1 for the next iteration
             hour += 1;
@@ -754,6 +755,6 @@ function Station_Adder(station_array) {
             }
         }
     });
-    console.log(JSON.stringify(final_array), 'the final array');
+    //console.log(JSON.stringify(final_array), 'the final array');
     return final_array;
 };
