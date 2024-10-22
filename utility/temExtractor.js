@@ -1287,7 +1287,7 @@ function Station_Adder(station_array) {
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'odukpaniNippPs');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['odukpaniNippPs'].filter( sa => Object.keys(sa)[0] === 'gt1' || Object.keys(sa)[0] === 'gt2' || Object.keys(sa)[0] === 'gt3' || Object.keys(sa)[0] === 'gt4' || Object.keys(sa)[0] === 'gt5');;
+                const equipment_to_sum = station_to_add[0]['odukpaniNippPs'];
                 // run logic only if there is an equipment to iterate
                 if (equipment_to_sum.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {

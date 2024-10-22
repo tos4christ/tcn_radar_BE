@@ -3,135 +3,34 @@
 module.exports = ( data ) => {
     const station_array = [
         {
-            afamIv_vPs: [
+            gwagwalada: [
                 {
-                    gt17: []
+                    g5b: []
                 },
                 {
-                    gt18: []
+                    r3g: []
                 }
             ] 
         },
         {
-            zungeru: [
+            asaba: [
                 {
-                    z1ssX: []
+                    b3d: []
                 },
                 {
-                    z2ssX: []
+                    d3t: []
                 }
             ] 
         },
         {
-            taopex: [
+            ugwuaji: [
                 {
-                    line1: []
+                    u1a: []
+                },
+                {
+                    u2a: []
                 }
             ] 
-        },
-        {
-            shiroroPs: [
-                {
-                    '411g1': []
-                },
-                {
-                    '411g2': []
-                },
-                {
-                    '411g3': []
-                },
-                {
-                    '411g4': []
-                }
-            ]  
-        },
-        {
-            egbinPs: [
-                {
-                    st1: []
-                },
-                {
-                    st2: []
-                },
-                {
-                    st3: []
-                },
-                {
-                    st4: []
-                },
-                {
-                    st5: []
-                },
-                {
-                    st6: []
-                }
-            ]  
-        },
-        {
-            kainjiTs: [
-                {
-                    k1j: []
-                },
-                {
-                    k2j: []
-                },
-                {
-                    k3r: []
-                },
-                {
-                    k1f: []
-                }
-            ] 
-        },
-        {
-            jebbaTs: [
-                {
-                    b8j: []
-                },
-                {
-                    b9j: []
-                }
-            ]  
-        },
-        {
-            okpaiGs: [
-                {
-                    k1t: []
-                },
-                {
-                    k2t: []
-                }
-            ]  
-        },
-        {
-            deltaGs: [
-                {
-                    g3b: []
-                },
-                {
-                    s4g: []
-                }
-            ] 
-        },
-        {
-            omotosho2: [
-                {
-                    tr3: []
-                },
-                {
-                    tr4: []
-                }
-            ]
-        },
-        {
-            omotosho1: [
-                {
-                    tr1: []
-                },
-                {
-                    tr2: []
-                }
-            ]
         },
         {
             eket: [
@@ -140,16 +39,6 @@ module.exports = ( data ) => {
                 },
                 {
                     e22m: []
-                }
-            ]
-        },
-        {
-            transamadiGs: [
-                {
-                    m21p: []
-                },
-                {
-                    m22p: []
                 }
             ]
         },
@@ -164,90 +53,6 @@ module.exports = ( data ) => {
             ]
         },
         {
-            afamViTs: [
-                {
-                    ada200: []
-                },
-                {
-                    adb200: []
-                }
-            ]
-        },
-        {
-            afamVPs: [
-                {
-                    gt20: []
-                }
-            ]
-        },
-        {
-            alaoji: [
-                {
-                    l7a: []
-                },
-                {
-                    l8a: []
-                }
-            ]
-        },
-        {
-            sapeleNippPs: [
-                {
-                    st1: []
-                }, 
-                {
-                    st3: []
-                }, 
-                {
-                    gt1: []
-                }, 
-                {
-                    gt2: []
-                }, 
-                {
-                    gt3: []
-                }, 
-                {
-                    gt4: []
-                }
-            ]
-        },
-        {
-            omotoshoNippPs: [
-                {
-                    tr1: []
-                },
-                {
-                    tr2: []
-                },
-                {
-                    tr3: []
-                },
-                {
-                    tr4: []
-                }
-            ]
-        },
-        {
-            odukpaniNippPs: [
-                {
-                    gt1: []
-                },
-                {
-                    gt2: []
-                },
-                {
-                    gt3: []
-                },
-                {
-                    gt4: []
-                },
-                {
-                    gt5: []
-                }
-            ]
-        },
-        {
             ekim: [
                 {
                     ek1m: []
@@ -255,130 +60,46 @@ module.exports = ( data ) => {
             ]
         },
         {
-            gereguPs: [
+            ikotEkpene: [
                 {
-                    r1j: []
-                }, 
-                {
-                    r2j: []
-                }, 
-                {
-                    gt11: []
-                }, 
-                {
-                    gt12: []
-                }, 
-                {
-                    gt13: []
-                }
-            ]
-        },
-        {
-            riversIppPs: [
-                {
-                    gt1: []
-                }
-            ]
-        },
-        {
-            omokuPs1: [
-                {
-                    o1r: []
-                }
-            ]
-        },
-        {
-            ihovborNippPs: [
-                {
-                    ohl1: []
+                    a1k: []
                 },
                 {
-                    ohl2: []
+                    a2k: []
                 },
                 {
-                    gt1: []
+                    d1k: []
                 }, 
                 {
-                    gt2: []
+                    d2k: []
                 }, 
                 {
-                    gt3: []
+                    k1u: []
                 }, 
                 {
-                    gt4: []
+                    k2u: []
+                }, 
+                {
+                    k3u: []
+                }, 
+                {
+                    k4u: []
                 }
             ]
         },
         {
-            olorunsogo1: [
+            lokojaTs: [
                 {
-                    tr1: []
+                    j1l: []
                 }, 
                 {
-                    tr2: []
-                }
-            ]
-        },
-        {
-            delta2: [
-                {
-                    tr3: []
-                },
-                {
-                    tr4: []
-                }
-            ]
-        },
-        {
-            delta3: [
-                {
-                    tr5: []
-                },
-                {
-                    tr6: []
-                }
-            ]
-        },
-        {
-            parasEnergyPs: [
-                {
-                    '132cb': []
-                }
-            ]
-        },
-        {
-            olorunsogoPhase1Gs: [
-                {
-                    r2a: []
+                    j2l: []
                 }, 
                 {
-                    r1w: []
+                    l6g: []
                 }, 
                 {
-                    tr4: []
-                }, 
-                {
-                    tr3: []
-                }
-            ]
-        },
-        {
-            gbarain: [
-                {
-                    st1: []
-                },
-                {
-                    st2: []
-                }
-            ] 
-        },
-        {
-            dadinKowaGs: [
-                {
-                    w21b: []
-                },
-                {
-                    w23e: []
+                    l7g: []
                 }
             ]
         }
@@ -488,7 +209,7 @@ function Station_Adder(station_array) {
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['ikotEkpene'].filter( sa => Object.keys(sa)[0] === 'a1k' || Object.keys(sa)[0] === 'a2k' || Object.keys(sa)[0] === 'd1k' || Object.keys(sa)[0] === 'd2k');
-                const equipment_to_subtract = station_to_add_2[0]['ikotEkpene'].filter( sa => Object.keys(sa)[0] === 'k1u' || Object.keys(sa)[0] === 'k2u' || Object.keys(sa)[0] === 'k3u' || Object.keys(sa)[0] === 'k4u');
+                const equipment_to_subtract = station_to_add[0]['ikotEkpene'].filter( sa => Object.keys(sa)[0] === 'k1u' || Object.keys(sa)[0] === 'k2u' || Object.keys(sa)[0] === 'k3u' || Object.keys(sa)[0] === 'k4u');
                 // run logic only if there is an equipment to iterate
                 if (equipment_to_sum.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
@@ -648,7 +369,7 @@ function Station_Adder(station_array) {
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['lokojaTs'].filter( sa => Object.keys(sa)[0] === 'j1l' || Object.keys(sa)[0] === 'j2l');
-                const equipment_to_subtract = station_to_add_2[0]['lokojaTs'].filter( sa => Object.keys(sa)[0] === 'l6g' || Object.keys(sa)[0] === 'l7g'); 
+                const equipment_to_subtract = station_to_add[0]['lokojaTs'].filter( sa => Object.keys(sa)[0] === 'l6g' || Object.keys(sa)[0] === 'l7g'); 
                 // run logic only if there is an equipment to iterate
                 if (equipment_to_sum.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
