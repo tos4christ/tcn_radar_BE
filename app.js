@@ -111,6 +111,14 @@ app.get('/nccnasfullpage', (req, res) => {
   res.status(404);
   res.end('NOT FOUND');
 })
+app.get('/nccnaspageone', (req, res) => {
+  res.status(404);
+  res.end('NOT FOUND');
+})
+app.get('/nccnaspagetwo', (req, res) => {
+  res.status(404);
+  res.end('NOT FOUND');
+})
 
 
 // Function to serve static react resources
