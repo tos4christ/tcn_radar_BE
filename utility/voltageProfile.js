@@ -46,9 +46,6 @@ module.exports = ( data ) => {
             phMain: [
                 {
                     m21p: []
-                },
-                {
-                    m22p: []
                 }
             ]
         },
@@ -255,7 +252,7 @@ function Station_Adder(station_array) {
                     })
                 }
                 if (equipment_to_subtract.length > 0) {
-                    equipment_to_sum.forEach((equip, index) => {
+                    equipment_to_subtract.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
                         if(index == 0 && temp_hold.length == 0) {
@@ -269,9 +266,9 @@ function Station_Adder(station_array) {
                                 temp_obj.date = e.date;
                                 temp_obj.hour = e.hour;
                                 temp_obj[e.line_name+'_kv'] = e.kv;
-                                temp_obj.mw = Math.abs(e.mw);
-                                temp_obj.mvar = Math.abs(e.mvar);
-                                temp_obj.amp = Math.abs(e.amp);
+                                temp_obj.mw = -Math.abs(e.mw);
+                                temp_obj.mvar = -Math.abs(e.mvar);
+                                temp_obj.amp = -Math.abs(e.amp);
                                 temp_obj.station = 'IKOT EKPENE TS';
                                 temp_hold.push(temp_obj);                                
                             })
@@ -418,7 +415,7 @@ function Station_Adder(station_array) {
                     })
                 }
                 if (equipment_to_subtract.length > 0) {
-                    equipment_to_sum.forEach((equip, index) => {
+                    equipment_to_subtract.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
                         if(index == 0 && temp_hold.length == 0) {
@@ -432,9 +429,9 @@ function Station_Adder(station_array) {
                                 temp_obj.date = e.date;
                                 temp_obj.hour = e.hour;
                                 temp_obj[e.line_name+'_kv'] = e.kv;
-                                temp_obj.mw = Math.abs(e.mw);
-                                temp_obj.mvar = Math.abs(e.mvar);
-                                temp_obj.amp = Math.abs(e.amp);
+                                temp_obj.mw = -Math.abs(e.mw);
+                                temp_obj.mvar = -Math.abs(e.mvar);
+                                temp_obj.amp = -Math.abs(e.amp);
                                 temp_obj.station = 'LOKOJA TS';
                                 temp_hold.push(temp_obj);                                
                             })
