@@ -163,7 +163,7 @@ function Equipment_Sorter(equipment_array) {
             const amp = pres_hr[0].amp; //amp_sum / divisor;
             const mvar = pres_hr[0].mvar; //mvar_sum / divisor;
             res_data.push({
-                date, station, line_name, id, time, kv, mw, amp, mvar, hour
+                date, station, line_name, id, time, kv, mw, amp, mvar, hour: (hour+1)
             })
             // increment minute by 1 for the next iteration
             hour += 1;
