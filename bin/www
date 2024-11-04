@@ -483,7 +483,7 @@ client_5.on('message', (topic, message) => {
   try {
       data = JSON.parse(message.toString());
       count++;
-      console.log(message, "  this is the message  ", count, "  the counter");
+      console.log(data, "  this is the data  ", count, "  the counter");
       return;
       const station = data.id;
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
