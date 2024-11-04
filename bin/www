@@ -475,6 +475,7 @@ client_4.on('message', (topic, message) => {
 // Get weather data and store it in the database
 let count = 0;
 client_5.on('message', (topic, message) => {
+  return;
   // if (['parasenergyPs/pv'].includes(topic)) {
   //   console.log(message.toString(), 'client 1')
   // } 
@@ -495,8 +496,8 @@ client_5.on('message', (topic, message) => {
       const level = 330;
       const dateTemp = date.split('-');
       const epoch_time = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
-      console.log(data, "  this is the data  ", count, "  the counter   ", epoch_time, "  the epoch ");
-      return;
+      // console.log(data, "  this is the data  ", count, "  the counter   ", epoch_time, "  the epoch ");
+      //return;
       // console.log(epoch_time.getTime(), epoch_time, 'the epoch')
       let kv, mw, mvar, amp, equipment_id, line_name, variant;
       // loop over the lines or units array
