@@ -483,8 +483,7 @@ client_5.on('message', (topic, message) => {
   try {
       data = JSON.parse(message.toString());
       count++;
-      console.log(data, "  this is the data  ", count, "  the counter");
-      return;
+      
       const station = data.id;
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
       const { lines, units } = data;
@@ -496,6 +495,8 @@ client_5.on('message', (topic, message) => {
       const level = 330;
       const dateTemp = date.split('-');
       const epoch_time = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
+      console.log(data, "  this is the data  ", count, "  the counter   ", epoch_time, "  the epoch ");
+      return;
       // console.log(epoch_time.getTime(), epoch_time, 'the epoch')
       let kv, mw, mvar, amp, equipment_id, line_name, variant;
       // loop over the lines or units array
