@@ -563,6 +563,8 @@ client_6.on('message', (topic, message) => {
   let data;
   try {
     data = JSON.parse(message.toString());
+    console.log(data);
+    return;
     const { lines, units } = data;
     const equip = lines ? lines : units ? units : undefined
     const station = data.id;
