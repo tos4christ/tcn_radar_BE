@@ -563,13 +563,14 @@ client_6.on('message', (topic, message) => {
   let data;
   try {
     data = JSON.parse(message.toString());
-    console.log(data);
-    return;
+    
     const { lines, units } = data;
     const equip = lines ? lines : units ? units : undefined
     const station = data.id;
     const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];  
     let kv, mw = 0, mvar = 0, amp = 0, variant;
+    console.log(equip);
+    return;
     // loop over the lines or units array      
     equip.forEach(line => {
         variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
