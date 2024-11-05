@@ -490,9 +490,6 @@ client_5.on('message', (topic, message) => {
       equip.forEach(line => {
           variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
           if (variant === 'transmission') {
-            if(station == 'markudi') {
-              console.log(line.id.split());
-            }
                 const line_kv = line.td.V ? line.td.V : 0.00;
                 const line_mw = line.td.mw ? line.td.mw : 0.00;
                 const line_amp = line.td.A ? line.td.A : 0.00;
