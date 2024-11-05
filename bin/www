@@ -472,71 +472,83 @@ client_4.on('message', (topic, message) => {
 //     }
 // });
 
-// Get weather data and store it in the database
-let count = 0;
 client_5.on('message', (topic, message) => {
-  return;
   // if (['parasenergyPs/pv'].includes(topic)) {
   //   console.log(message.toString(), 'client 1')
-  // } 
-  
+  // }  
   let data;
   try {
       data = JSON.parse(message.toString());
-      count++;
-      
-      const station = data.id;
-      const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
       const { lines, units } = data;
-      var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-      const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
-      const hour = time.split(':')[0];
-      const minute = time.split(':')[1]
-      const seconds = time.split(':')[2]
-      const level = 330;
-      const dateTemp = date.split('-');
-      const epoch_time = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
-      // console.log(data, "  this is the data  ", count, "  the counter   ", epoch_time, "  the epoch ");
-      //return;
-      // console.log(epoch_time.getTime(), epoch_time, 'the epoch')
-      let kv, mw, mvar, amp, equipment_id, line_name, variant;
-      // loop over the lines or units array
       const equip = lines ? lines : units ? units : undefined
+      const station = data.id;
+      const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];      
+      // console.log(data, "  this is the data  ", count, "  the counter   ", epoch_time, "  the epoch ");
+      //return;      
+      let kv, mw = 0, mvar = 0, amp = 0, variant;
+      // loop over the lines or units array      
       equip.forEach(line => {
-          equipment_id = line.id;
-          line_name = line.id;
           variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
           if (variant === 'transmission') {
-                kv = line.td.V ? line.td.V : 0.00;
-                mw = line.td.mw ? line.td.mw : 0.00;
-                amp = line.td.A ? line.td.A : 0.00;
-                mvar = line.td.mvar ? line.td.mvar : 0.00;
-              // if (station === 'olorunsogoPhase1Gs' && line_name === 'r1w') {
-              //   // console.log(line, 'this is the olorunsogo line')
-              //   kv = line.td.V ? line.td.V : 0.00;
-              //   // uncomment this later when the CT ratio has been corrected
-              //   // mw = line.td.mw ? line.td.mw : 0.00;
-              //   // comment this out when the CT ratio has been corrected
-              //   mw = line.td.mw ? Number(line.td.mw * 1.62344817).toFixed(2) : 0.00;
-              //   amp = line.td.A ? line.td.A : 0.00;
-              //   mvar = line.td.mvar ? line.td.mvar : 0.00;
-              // } else {
-              //   kv = line.td.V ? line.td.V : 0.00;
-              //   mw = line.td.mw ? line.td.mw : 0.00;
-              //   amp = line.td.A ? line.td.A : 0.00;
-              //   mvar = line.td.mvar ? line.td.mvar : 0.00;
-              // }
+                const line_kv = line.td.V ? line.td.V : 0.00;
+                const line_mw = line.td.mw ? line.td.mw : 0.00;
+                const line_amp = line.td.A ? line.td.A : 0.00;
+                const line_mvar = line.td.mvar ? line.td.mvar : 0.00;
+                if(kv === undefined && line_kv !== 0) {
+                  kv = line_kv;
+                }
+                mw += line_mw;
+                amp += line_amp;
+                mvar += line_mvar;              
           } else if (variant === 'generation') {
-              kv = line.gd.V ? line.gd.V : 0.00;
-              mw = line.gd.mw ? line.gd.mw : 0.00;
-              amp = line.gd.A ? line.gd.A : 0.00;
-              mvar = line.gd.mvar ? line.gd.mvar : 0.00;
+              const line_kv = line.gd.V ? line.gd.V : 0.00;
+              const line_mw = line.gd.mw ? line.gd.mw : 0.00;
+              const line_amp = line.gd.A ? line.gd.A : 0.00;
+              const line_mvar = line.gd.mvar ? line.gd.mvar : 0.00;
+              if(kv === undefined && line_kv !== 0) {
+                kv = line_kv;
+              }
+              mw += line_mw;
+              amp += line_amp;
+              mvar += line_mvar;
           } else if (variant === undefined) {
               return;
           }
-          
-          
-      })   
+      });
+      const data_object = {
+        station, 
+        time,
+        kv,
+        mw,
+        amp,
+        mvar,
+        variant
+      }
+      // Send dat to API here
+      //const url = `https://power-ledger-dev-tstsldtdva-uc.a.run.app/publish_data?api-key=${process.env.POWER_LEDGER}`;
+      const url = `https://onction-power-station-data-762140739532.us-central1.run.app/power_station_data?api-key=${process.env.POWER_LEDGER}`;
+      const options = {
+        method: "POST",
+        url,
+        params: {'api-version': '3.0'},
+        //mode: "cors",
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
+            "api-key": `${process.env.POWER_LEDGER}`
+        },
+        data: data_object
+      }
+      axios
+        .request(options)
+        .then(response => {
+          console.log(response.statusText, response.data, " the POST data");
+        })
+        .catch(err => {
+          console.error(err)
+        })
   // client.end()
   } catch(err) {
       console.error(err)
@@ -599,7 +611,7 @@ client_5.on('message', (topic, message) => {
 //   }
 // });
 
-
+// Get weather data and store it in the database
 const timeout = 120000;
 async function getWeather() {
   try {
