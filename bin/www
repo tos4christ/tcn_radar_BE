@@ -487,7 +487,7 @@ client_5.on('message', (topic, message) => {
       //return;      
       let kv, mw = 0, mvar = 0, amp = 0, variant;
       // loop over the lines or units array      
-      equip.forEach(line => {
+      equip?.forEach(line => {
           variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
           if (variant === 'transmission') {
                 const line_kv = line.td.V ? line.td.V : 0.00;
@@ -569,10 +569,10 @@ client_6.on('message', (topic, message) => {
     const station = data.id;
     const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];  
     let kv, mw = 0, mvar = 0, amp = 0, variant;
-    console.log(equip);
-    return;
+    // console.log(equip);
+    // return;
     // loop over the lines or units array      
-    equip.forEach(line => {
+    equip?.forEach(line => {
         variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
         if (variant === 'transmission') {
               const line_kv = line.td.V ? line.td.V : 0.00;
