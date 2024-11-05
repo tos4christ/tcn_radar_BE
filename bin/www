@@ -472,6 +472,18 @@ client_4.on('message', (topic, message) => {
 //     }
 // });
 
+const res_data = {
+  afamViTs: 'AFAM VI (GAS|STEAM)', alaoji: 'ALAOJI NIPP (GAS)', odukpaniNippPs: 'ODUKPANI NIPP (GAS)', jebbaTs: 'JEBBA (HYDRO)', 
+  riversIppPs: 'RIVERS IPP (GAS)', omokuPs1: 'OMOKU (GAS)', kainjiTs: 'KAINJI (HYDRO)', parasEnergyPs: 'PARAS ENERGY (GAS)', 
+  omotoshoNippPs: 'OMOTOSHO NIPP (GAS)',  phMain: 'TRANS-AMADI (GAS)', egbinPs: 'EGBIN (STEAM)',  gbarain:'GBARAIN NIPP (GAS)', 
+  dadinKowaGs: 'DADINKOWA G.S (HYDRO)', okpaiGs: 'OKPAI (GAS|STEAM)', shiroroPs: 'SHIRORO (HYDRO)', zungeru: 'ZUNGERU GS', 
+  taopex: 'TAOPEX GS', markudi: 'MARKUDI TS', ugwuaji: 'UGWUAJI TS', asaba: 'ASABA TS', lokojaTs: 'LOKOJA TS', 
+  gwagwalada: 'GWAGWALADA TS'
+};
+const res_data_2 = {
+  sapeleNippPs: {1: 'SAPELE NIPP (GAS)', 2: 'SAPELE (STEAM)'}, ihovborNippPs: {1: 'AZURA-EDO IPP (GAS)', 2: 'IHOVBOR NIPP (GAS)'}, 
+  gereguPs: {1: 'GEREGU (GAS)'}
+};
 client_5.on('message', (topic, message) => {
   // if (['markudits/tv'].includes(topic)) {
   //   //console.log(message.toString(), 'client 5');
@@ -482,6 +494,7 @@ client_5.on('message', (topic, message) => {
       const { lines, units } = data;
       const equip = lines ? lines : units ? units : undefined
       const station = data.id;
+      const station_name = res_data[station] ? res_data[station] : station;
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];      
       // console.log(data, "  this is the data  ", count, "  the counter   ", epoch_time, "  the epoch ");
       //return;      
@@ -516,7 +529,7 @@ client_5.on('message', (topic, message) => {
           }
       });
       const data_object = {
-        station, 
+        station_name, 
         time,
         kv,
         mw,
@@ -558,8 +571,7 @@ client_5.on('message', (topic, message) => {
 client_6.on('message', (topic, message) => {
   // if (['zungeru/tv'].includes(topic)) {
   //   console.log(message.toString(), 'client 2');
-  // }
-  
+  // }  
   let data;
   try {
     data = JSON.parse(message.toString());
@@ -567,6 +579,7 @@ client_6.on('message', (topic, message) => {
     const { lines, units } = data;
     const equip = lines ? lines : units ? units : undefined
     const station = data.id;
+    const station_name = res_data[station] ? res_data[station] : station;
     const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];  
     let kv, mw = 0, mvar = 0, amp = 0, variant;
     // console.log(equip);
@@ -601,7 +614,7 @@ client_6.on('message', (topic, message) => {
         }
     });
     const data_object = {
-      station, 
+      station_name, 
       time,
       kv,
       mw,
