@@ -544,7 +544,7 @@ client_5.on('message', (topic, message) => {
       axios
         .request(options)
         .then(response => {
-          console.log(response.statusText, response.data, " the POST data");
+          //console.log(response.statusText, response.data, " the POST data");
         })
         .catch(err => {
           console.error(err)
