@@ -473,9 +473,9 @@ client_4.on('message', (topic, message) => {
 // });
 
 client_5.on('message', (topic, message) => {
-  // if (['parasenergyPs/pv'].includes(topic)) {
-  //   console.log(message.toString(), 'client 1')
-  // }  
+  if (['markudits/tv'].includes(topic)) {
+    console.log(message.toString(), 'client 5');
+  }  
   let data;
   try {
       data = JSON.parse(message.toString());
