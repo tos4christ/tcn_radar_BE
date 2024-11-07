@@ -510,9 +510,9 @@ client_5.on('message', (topic, message) => {
                 if(kv === undefined && line_kv !== 0) {
                   kv = line_kv;
                 }
-                mw += line_mw;
-                amp += line_amp;
-                mvar += line_mvar;              
+                mw += Math.abs(line_mw);
+                amp += Math.abs(line_amp);
+                mvar += Math.abs(line_mvar);              
           } else if (variant === 'generation') {
               const line_kv = line.gd.V ? line.gd.V : 0.00;
               const line_mw = line.gd.mw ? line.gd.mw : 0.00;
@@ -521,9 +521,9 @@ client_5.on('message', (topic, message) => {
               if(kv === undefined && line_kv !== 0) {
                 kv = line_kv;
               }
-              mw += line_mw;
-              amp += line_amp;
-              mvar += line_mvar;
+              mw += Math.abs(line_mw);
+              amp += Math.abs(line_amp);
+              mvar += Math.abs(line_mvar);
           } else if (variant === undefined) {
               return;
           }
@@ -595,9 +595,9 @@ client_6.on('message', (topic, message) => {
               if(kv === undefined && line_kv !== 0) {
                 kv = line_kv;
               }
-              mw += line_mw;
-              amp += line_amp;
-              mvar += line_mvar;              
+              mw += Math.abs(line_mw);
+              amp += Math.abs(line_amp);
+              mvar += Math.abs(line_mvar);              
         } else if (variant === 'generation') {
             const line_kv = line.gd.V ? line.gd.V : 0.00;
             const line_mw = line.gd.mw ? line.gd.mw : 0.00;
@@ -606,9 +606,9 @@ client_6.on('message', (topic, message) => {
             if(kv === undefined && line_kv !== 0) {
               kv = line_kv;
             }
-            mw += line_mw;
-            amp += line_amp;
-            mvar += line_mvar;
+            mw += Math.abs(line_mw);
+            amp += Math.abs(line_amp);
+            mvar += Math.abs(line_mvar);
         } else if (variant === undefined) {
             return;
         }
