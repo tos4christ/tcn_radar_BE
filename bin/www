@@ -478,7 +478,11 @@ const res_data = {
   omotoshoNippPs: 'OMOTOSHO NIPP (GAS)',  phMain: 'TRANS-AMADI (GAS)', egbinPs: 'EGBIN (STEAM)',  gbarain:'GBARAIN NIPP (GAS)', 
   dadinKowaGs: 'DADINKOWA G.S (HYDRO)', okpaiGs: 'OKPAI (GAS|STEAM)', shiroroPs: 'SHIRORO (HYDRO)', zungeru: 'ZUNGERU GS', 
   taopex: 'TAOPEX GS', markudi: 'MARKUDI TS', ugwuaji: 'UGWUAJI TS', asaba: 'ASABA TS', lokojaTs: 'LOKOJA TS', 
-  gwagwalada: 'GWAGWALADA TS'
+  gwagwalada: 'GWAGWALADA TS', pheonix: 'PHEONIX STEEL IKORODU', africanFoundriesLimited: 'AFRICAN FOUNDARIES LTD IKORODU',
+  monarch: 'MONARCH IKORODU', quantum: 'REAL INFRASTRUCTURE LTD IKORODU', kamSteel: 'KAM STEEL SAGAMU', larfarge: 'CEMENT FACTORY',
+  topSteel: 'TOP STEEL IKORODU', sunflag: 'SUNFLAG IRON & STEEL IKORODU', pulkitSteel: 'PULKIT ALLOY & STEEL IKORODU',
+  starPipe: 'STAR PIPE PRODUCT IKORODU', ikorodu1: 'IKORODU 132KV TS LINE_1', ikorodu2: 'IKORODU 132KV TS LINE_2',
+  sagamu: 'SAGAMU 132KV TS'
 };
 const res_data_2 = {
   sapeleNippPs: {1: 'SAPELE NIPP (GAS)', 2: 'SAPELE (STEAM)'}, ihovborNippPs: {1: 'AZURA-EDO IPP (GAS)', 2: 'IHOVBOR NIPP (GAS)'}, 
