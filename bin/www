@@ -870,7 +870,7 @@ client_5.on('message', (topic, message) => {
         return;
       }
       // Double station
-      if(station.includes('omotosho1', 'omotosho2')) {
+      if(['omotosho1', 'omotosho2'].includes(station)) {
         console.log(data);
         //return;
         // const station_name_1 = 'OMOTOSHO NIPP (GAS)';
@@ -931,7 +931,7 @@ client_5.on('message', (topic, message) => {
         // send_to_api(data_object_2);
         // return;
       }
-      if(station.includes('afamIv_vPs', 'afamVPs')) {
+      if(['afamIv_vPs', 'afamVPs'].includes(station)) {
         // return;
         // const station_name_1 = 'AFAM IV & V (GAS)';
         // const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
@@ -978,7 +978,7 @@ client_5.on('message', (topic, message) => {
         // send_to_api(data_object_1);
         // return;
       }
-      if(station.includes('eket', 'ekim')) {
+      if(['eket', 'ekim'].includes(station)) {
         // return;
         // const station_name_1 = 'IBOM POWER (GAS)';
         // const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
@@ -1025,7 +1025,7 @@ client_5.on('message', (topic, message) => {
         // send_to_api(data_object_1);
         // return;
       } 
-      if(station.includes('olorunsogo1', 'olorunsogoPhase1Gs')) {
+      if(['olorunsogo1', 'olorunsogoPhase1Gs'].includes(station)) {
         // return;
         // const station_name_1 = 'OLORUNSOGO NIPP';
         // const station_name_2 = 'OLORUNSOGO (GAS)';
@@ -1086,7 +1086,7 @@ client_5.on('message', (topic, message) => {
         // return;
       } 
       // Tripple Station
-      if(station.includes('delta2', 'delta3', 'deltaGs')) {
+      if(['delta2', 'delta3', 'deltaGs'].includes(station)) {
         // return;
         // const station_name_1 = 'DELTA (GAS)';
         // const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
