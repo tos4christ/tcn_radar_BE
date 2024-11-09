@@ -884,8 +884,8 @@ client_5.on('message', (topic, message) => {
         // If time_diff = 1 ? then do your calculations and send_to_api
         if(time_diff == 1) {
           const station_name = 'OMOTOSHO (GAS)';
-          const equip_1 = temporary_storage.data_1.equip;
-          const equip_2 = temporary_storage.data_1.equip;
+          const equip_1 = temporary_storage.data_1.equip.filter( a => ['tr1', 'tr2'].includes(a.id));
+          const equip_2 = temporary_storage.data_1.equip.filter( a => ['tr3', 'tr4'].includes(a.id));
           const time = temporary_storage.data_1.t ? temporary_storage.data_1.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
           let kv, mw_1 = 0, mw_2 = 0, mvar_1 = 0, mvar_2 = 0, amp_1 = 0, amp_2 = 0, variant;
           // loop over the lines or units array      
@@ -958,7 +958,7 @@ client_5.on('message', (topic, message) => {
           // Send dat to API here
           send_to_api(data_object_1);
           return;
-          }
+        }
         
       }
       if(['afamIv_vPs', 'afamVPs'].includes(station)) {
