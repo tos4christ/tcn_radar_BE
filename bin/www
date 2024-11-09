@@ -1289,7 +1289,7 @@ client_6.on('message', (topic, message) => {
       const equip_2 = equip.filter( a => ['r1j', 'r2j'].includes(a.id));
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
       let kv_1, kv_2, mw_1 = 0, mw_2 = 0, mvar_1 = 0, mvar_2 = 0, amp_1 = 0, amp_2 = 0, variant;
-      let mw_1_temp = 0, amp_1_temp = 0, mvar_1_temp = 0;
+      //let mw_1_temp = 0, amp_1_temp = 0, mvar_1_temp = 0;
       // loop over the lines or units array      
       equip_1?.forEach(line => {
           variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
@@ -1302,11 +1302,11 @@ client_6.on('message', (topic, message) => {
                   kv_1 = line_kv;
                 }
                 mw_1 += Math.abs(line_mw);
-                mw_1_temp += line_mw;
+                //mw_1_temp += line_mw;
                 amp_1 += Math.abs(line_amp);
-                amp_1_temp += line_amp;
+                //amp_1_temp += line_amp;
                 mvar_1 += Math.abs(line_mvar);
-                mvar_1_temp += line_mvar;
+                //mvar_1_temp += line_mvar;
           } else if (variant === 'generation') {
               const line_kv = line.gd.V ? line.gd.V : 0.00;
               const line_mw = line.gd.mw ? line.gd.mw : 0.00;
@@ -1316,11 +1316,11 @@ client_6.on('message', (topic, message) => {
                 kv_1 = line_kv;
               }
               mw_1 += Math.abs(line_mw);
-              mw_1_temp += line_mw;
+              //mw_1_temp += line_mw;
               amp_1 += Math.abs(line_amp);
-              amp_1_temp += line_amp;
+              //amp_1_temp += line_amp;
               mvar_1 += Math.abs(line_mvar);
-              mvar_1_temp += line_mvar;
+              //mvar_1_temp += line_mvar;
           } else if (variant === undefined) {
               return;
           }
@@ -1371,8 +1371,8 @@ client_6.on('message', (topic, message) => {
         mvar: (-mvar_2 - mvar_1),
         variant
       }
-      console.log(data_object_1, '   geregu 1');
-      console.log(data_object_2, '   geregu 2');
+      // console.log(data_object_1, '   geregu 1');
+      // console.log(data_object_2, '   geregu 2');
       // Send dat to API here
       send_to_api(data_object_1);
       send_to_api(data_object_2);
