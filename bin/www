@@ -1289,6 +1289,7 @@ client_6.on('message', (topic, message) => {
       const equip_2 = equip.filter( a => ['r1j', 'r2j'].includes(a.id));
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
       let kv_1, kv_2, mw_1 = 0, mw_2 = 0, mvar_1 = 0, mvar_2 = 0, amp_1 = 0, amp_2 = 0, variant;
+      let mw_1_temp = 0, amp_1_temp = 0, mvar_1_temp = 0;
       // loop over the lines or units array      
       equip_1?.forEach(line => {
           variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
@@ -1301,8 +1302,11 @@ client_6.on('message', (topic, message) => {
                   kv_1 = line_kv;
                 }
                 mw_1 += Math.abs(line_mw);
+                mw_1_temp += line_mw;
                 amp_1 += Math.abs(line_amp);
-                mvar_1 += Math.abs(line_mvar);              
+                amp_1_temp += line_amp;
+                mvar_1 += Math.abs(line_mvar);
+                mvar_1_temp += line_mvar;
           } else if (variant === 'generation') {
               const line_kv = line.gd.V ? line.gd.V : 0.00;
               const line_mw = line.gd.mw ? line.gd.mw : 0.00;
@@ -1312,8 +1316,11 @@ client_6.on('message', (topic, message) => {
                 kv_1 = line_kv;
               }
               mw_1 += Math.abs(line_mw);
+              mw_1_temp += line_mw;
               amp_1 += Math.abs(line_amp);
+              amp_1_temp += line_amp;
               mvar_1 += Math.abs(line_mvar);
+              mvar_1_temp += line_mvar;
           } else if (variant === undefined) {
               return;
           }
@@ -1328,9 +1335,9 @@ client_6.on('message', (topic, message) => {
                 if(kv_2 === undefined && line_kv !== 0) {
                   kv_2 = line_kv;
                 }
-                mw_2 += Math.abs(line_mw);
-                amp_2 += Math.abs(line_amp);
-                mvar_2 += Math.abs(line_mvar);              
+                mw_2 += line_mw;
+                amp_2 += line_amp;
+                mvar_2 += line_mvar;              
           } else if (variant === 'generation') {
               const line_kv = line.gd.V ? line.gd.V : 0.00;
               const line_mw = line.gd.mw ? line.gd.mw : 0.00;
@@ -1339,9 +1346,9 @@ client_6.on('message', (topic, message) => {
               if(kv_2 === undefined && line_kv !== 0) {
                 kv_2 = line_kv;
               }
-              mw_2 += Math.abs(line_mw);
-              amp_2 += Math.abs(line_amp);
-              mvar_2 += Math.abs(line_mvar);
+              mw_2 += line_mw;
+              amp_2 += line_amp;
+              mvar_2 += line_mvar;
           } else if (variant === undefined) {
               return;
           }
