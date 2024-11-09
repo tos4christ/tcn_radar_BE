@@ -515,7 +515,8 @@ const res_data_2 = {
   gereguPs: {1: 'GEREGU (GAS)'}
 };
 const temporary_storage = {
-
+  data_1: {},
+  data_2: {}
 }
 client_5.on('message', (topic, message) => {
   // console.log(topic, '    these are the active topics on client 1');
@@ -873,12 +874,12 @@ client_5.on('message', (topic, message) => {
       if(['omotosho1', 'omotosho2'].includes(station)) {
         let data_1, data_2;
         if(station == 'omotosho1') {
-          data_1 = data;
+          temporary_storage.data_1 = data;
         }
         if(station == 'omotosho2') {
-          data_2 = data;
+          temporary_storage.data_2 = data;
         }
-        console.log(data_1, "  the datas " ,data_2);
+        console.log(temporary_storage);
         //return;
         // const station_name_1 = 'OMOTOSHO NIPP (GAS)';
         // const station_name_2 = 'OMOTOSHO (GAS)';
