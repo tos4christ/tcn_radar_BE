@@ -871,7 +871,14 @@ client_5.on('message', (topic, message) => {
       }
       // Double station
       if(['omotosho1', 'omotosho2'].includes(station)) {
-        console.log(data);
+        let data_1, data_2;
+        if(station == 'omotosho1') {
+          data_1 = data;
+        }
+        if(station == 'omotosho2') {
+          data_2 = data;
+        }
+        console.log(data_1, "  the datas " ,data_2);
         //return;
         // const station_name_1 = 'OMOTOSHO NIPP (GAS)';
         // const station_name_2 = 'OMOTOSHO (GAS)';
