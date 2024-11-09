@@ -871,7 +871,8 @@ client_5.on('message', (topic, message) => {
       }
       // Double station
       if(station.includes('omotosho1', 'omotosho2')) {
-        // return;
+        console.log(data);
+        //return;
         // const station_name_1 = 'OMOTOSHO NIPP (GAS)';
         // const station_name_2 = 'OMOTOSHO (GAS)';
         // const equip_1 = equip.filter( a => a.id.includes('gt1', 'gt2', 'gt3', 'gt4'));
