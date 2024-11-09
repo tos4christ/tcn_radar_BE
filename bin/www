@@ -872,14 +872,14 @@ client_5.on('message', (topic, message) => {
       }
       // Double station
       if(['omotosho1', 'omotosho2'].includes(station)) {
-        let data_1, data_2;
-        if(station == 'omotosho1') {
-          temporary_storage.data_1 = data;
-        }
-        if(station == 'omotosho2') {
-          temporary_storage.data_2 = data;
-        }
-        console.log(temporary_storage);
+        // let data_1, data_2;
+        // if(station == 'omotosho1') {
+        //   temporary_storage.data_1 = data;
+        // }
+        // if(station == 'omotosho2') {
+        //   temporary_storage.data_2 = data;
+        // }
+        //console.log(temporary_storage);
         //return;
         // const station_name_1 = 'OMOTOSHO NIPP (GAS)';
         // const station_name_2 = 'OMOTOSHO (GAS)';
