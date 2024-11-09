@@ -533,8 +533,8 @@ client_5.on('message', (topic, message) => {
       if(station == 'sapeleNippPs') {
         const station_name_1 = 'SAPELE NIPP (GAS)';
         const station_name_2 = 'SAPELE (STEAM)';
-        const equip_1 = equip.filter( a => a.id.includes('gt1', 'gt2', 'gt3', 'gt4'));
-        const equip_2 = equip.filter( a => a.id.includes('st1', 'st2'));
+        const equip_1 = equip.filter( a => ['gt1', 'gt2', 'gt3', 'gt4'].includes(a.id));
+        const equip_2 = equip.filter( a => ['st1', 'st2'].includes(a.id));
         const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
         let kv_1, kv_2, mw_1 = 0, mw_2 = 0, mvar_1 = 0, mvar_2 = 0, amp_1 = 0, amp_2 = 0, variant;
         // loop over the lines or units array      
@@ -620,8 +620,8 @@ client_5.on('message', (topic, message) => {
       if(station == 'gereguPs') {
         const station_name_1 = 'GEREGU (GAS)';
         const station_name_2 = 'GEREGU NIPP (GAS)';
-        const equip_1 = equip.filter( a => a.id.includes('gt11', 'gt12', 'gt13'));
-        const equip_2 = equip.filter( a => a.id.includes('r1j', 'r2j'));
+        const equip_1 = equip.filter( a => ['gt11', 'gt12', 'gt13'].includes(a.id));
+        const equip_2 = equip.filter( a => ['r1j', 'r2j'].includes(a.id));
         const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
         let kv_1, kv_2, mw_1 = 0, mw_2 = 0, mvar_1 = 0, mvar_2 = 0, amp_1 = 0, amp_2 = 0, variant;
         // loop over the lines or units array      
@@ -709,8 +709,8 @@ client_5.on('message', (topic, message) => {
       if(station == 'ihovborNippPs') {        
         const station_name_1 = 'IHOVBOR NIPP (GAS)';
         const station_name_2 = 'AZURA-EDO IPP (GAS)';
-        const equip_1 = equip.filter( a => a.id.includes('gt1', 'gt2', 'gt3', 'gt4'));
-        const equip_2 = equip.filter( a => a.id.includes('ohl1', 'ohl2'));
+        const equip_1 = equip.filter( a => ['gt1', 'gt2', 'gt3', 'gt4'].includes(a.id));
+        const equip_2 = equip.filter( a => ['ohl1', 'ohl2'].includes(a.id));
         const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
         let kv_1, kv_2, mw_1 = 0, mw_2 = 0, mvar_1 = 0, mvar_2 = 0, amp_1 = 0, amp_2 = 0, variant;
         // loop over the lines or units array      
@@ -795,8 +795,8 @@ client_5.on('message', (topic, message) => {
       }
       if(station == 'ikotEkpene') {
         const station_name = 'IKOT EKPENE TS';
-        const equip_1 = equip.filter( a => a.id.includes('a1k', 'a2k', 'd1k', 'd2k'));
-        const equip_2 = equip.filter( a => a.id.includes('k1u', 'k2u', 'k3u', 'k4u'));
+        const equip_1 = equip.filter( a => ['a1k', 'a2k', 'd1k', 'd2k'].includes(a.id));
+        const equip_2 = equip.filter( a => ['k1u', 'k2u', 'k3u', 'k4u'].includes(a.id));
         const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
         let kv, mw = 0, mvar = 0, amp = 0, variant;
         // loop over the lines or units array      
@@ -1198,8 +1198,8 @@ client_6.on('message', (topic, message) => {
     if(station == 'sapeleNippPs') {
       const station_name_1 = 'SAPELE NIPP (GAS)';
       const station_name_2 = 'SAPELE (STEAM)';
-      const equip_1 = equip.filter( a => a.id.includes('gt1', 'gt2', 'gt3', 'gt4'));
-      const equip_2 = equip.filter( a => a.id.includes('st1', 'st2'));
+      const equip_1 = equip.filter( a => ['gt1', 'gt2', 'gt3', 'gt4'].includes(a.id));
+      const equip_2 = equip.filter( a => ['st1', 'st2'].includes(a.id));
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
       let kv_1, kv_2, mw_1 = 0, mw_2 = 0, mvar_1 = 0, mvar_2 = 0, amp_1 = 0, amp_2 = 0, variant;
       // loop over the lines or units array      
@@ -1285,8 +1285,8 @@ client_6.on('message', (topic, message) => {
     if(station == 'gereguPs') {
       const station_name_1 = 'GEREGU (GAS)';
       const station_name_2 = 'GEREGU NIPP (GAS)';
-      const equip_1 = equip.filter( a => a.id.includes('gt11', 'gt12', 'gt13'));
-      const equip_2 = equip.filter( a => a.id.includes('r1j', 'r2j'));
+      const equip_1 = equip.filter( a => ['gt11', 'gt12', 'gt13'].includes(a.id));
+      const equip_2 = equip.filter( a => ['r1j', 'r2j'].includes(a.id));
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
       let kv_1, kv_2, mw_1 = 0, mw_2 = 0, mvar_1 = 0, mvar_2 = 0, amp_1 = 0, amp_2 = 0, variant;
       // loop over the lines or units array      
@@ -1374,8 +1374,8 @@ client_6.on('message', (topic, message) => {
     if(station == 'ihovborNippPs') {        
       const station_name_1 = 'IHOVBOR NIPP (GAS)';
       const station_name_2 = 'AZURA-EDO IPP (GAS)';
-      const equip_1 = equip.filter( a => a.id.includes('gt1', 'gt2', 'gt3', 'gt4'));
-      const equip_2 = equip.filter( a => a.id.includes('ohl1', 'ohl2'));
+      const equip_1 = equip.filter( a => ['gt1', 'gt2', 'gt3', 'gt4'].includes(a.id));
+      const equip_2 = equip.filter( a => ['ohl1', 'ohl2'].includes(a.id));
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
       let kv_1, kv_2, mw_1 = 0, mw_2 = 0, mvar_1 = 0, mvar_2 = 0, amp_1 = 0, amp_2 = 0, variant;
       // loop over the lines or units array      
@@ -1462,8 +1462,8 @@ client_6.on('message', (topic, message) => {
     }
     if(station == 'ikotEkpene') {
       const station_name = 'IKOT EKPENE TS';
-      const equip_1 = equip.filter( a => a.id.includes('a1k', 'a2k', 'd1k', 'd2k'));
-      const equip_2 = equip.filter( a => a.id.includes('k1u', 'k2u', 'k3u', 'k4u'));
+      const equip_1 = equip.filter( a => ['a1k', 'a2k', 'd1k', 'd2k'].includes(a.id));
+      const equip_2 = equip.filter( a => ['k1u', 'k2u', 'k3u', 'k4u'].includes(a.id));
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
       let kv, mw = 0, mvar = 0, amp = 0, variant;
       // loop over the lines or units array      
