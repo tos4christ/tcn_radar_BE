@@ -518,7 +518,7 @@ const temporary_storage = {
 
 }
 client_5.on('message', (topic, message) => {
-  console.log(topic, '    these are the active topics on client 1');
+  // console.log(topic, '    these are the active topics on client 1');
   // if (['markudits/tv'].includes(topic)) {
   //   //console.log(message.toString(), 'client 5');
   // }  
