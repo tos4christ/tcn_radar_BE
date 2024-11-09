@@ -1364,7 +1364,8 @@ client_6.on('message', (topic, message) => {
         mvar: (-mvar_2 - mvar_1),
         variant
       }
-      
+      console.log(data_object_1, '   geregu 1');
+      console.log(data_object_2, '   geregu 2');
       // Send dat to API here
       send_to_api(data_object_1);
       send_to_api(data_object_2);
@@ -1453,8 +1454,6 @@ client_6.on('message', (topic, message) => {
         mvar: (-mvar_2),
         variant
       }
-      console.log(data_object_1, '   ihovbor 1');
-      console.log(data_object_2, '   ihovbor 2');
       // Send dat to API here
       send_to_api(data_object_1);
       send_to_api(data_object_2);
