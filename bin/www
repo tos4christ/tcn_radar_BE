@@ -1729,10 +1729,10 @@ client_6.on('message', (topic, message) => {
       // console.log(time_diff);
       //return;
       // If time_diff = 1 ? then do your calculations and send_to_api        
-      if(time_diff <= 4) {
+      if(time_diff <= 4 && time_diff > 0) {
         const station_name = 'AFAM IV & V (GAS)';
-        const equip_1 = temporary_storage.afam4_data.equip;//.filter( a => ['tr1', 'tr2'].includes(a.id));
-        const equip_2 = temporary_storage.afam5_data.equip;//.filter( a => ['tr3', 'tr4'].includes(a.id));
+        const equip_1 = temporary_storage.afam4_data.equip.filter( a => ['gt17', 'gt18'].includes(a.id));
+        const equip_2 = temporary_storage.afam5_data.equip.filter( a => ['gt20'].includes(a.id));
         const time = temporary_storage.afam4_data.t ? temporary_storage.afam4_data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
         let kv, mw_1 = 0, mw_2 = 0, mvar_1 = 0, mvar_2 = 0, amp_1 = 0, amp_2 = 0, variant;
         // loop over the lines or units array      
