@@ -1627,115 +1627,189 @@ client_6.on('message', (topic, message) => {
       return;
     }
     // Double station
-    if(station.includes('omotosho1', 'omotosho2')) {
-      // return;
-      // const station_name_1 = 'OMOTOSHO NIPP (GAS)';
-      // const station_name_2 = 'OMOTOSHO (GAS)';
-      // const equip_1 = equip.filter( a => a.id.includes('gt1', 'gt2', 'gt3', 'gt4'));
-      // const equip_2 = equip.filter( a => a.id.includes('st1', 'st2'));
-      // const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
-      // let kv, mw = 0, mvar = 0, amp = 0, variant;
-      // // loop over the lines or units array      
-      // equip?.forEach(line => {
-      //     variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
-      //     if (variant === 'transmission') {
-      //           const line_kv = line.td.V ? line.td.V : 0.00;
-      //           const line_mw = line.td.mw ? line.td.mw : 0.00;
-      //           const line_amp = line.td.A ? line.td.A : 0.00;
-      //           const line_mvar = line.td.mvar ? line.td.mvar : 0.00;
-      //           if(kv === undefined && line_kv !== 0) {
-      //             kv = line_kv;
-      //           }
-      //           mw += Math.abs(line_mw);
-      //           amp += Math.abs(line_amp);
-      //           mvar += Math.abs(line_mvar);              
-      //     } else if (variant === 'generation') {
-      //         const line_kv = line.gd.V ? line.gd.V : 0.00;
-      //         const line_mw = line.gd.mw ? line.gd.mw : 0.00;
-      //         const line_amp = line.gd.A ? line.gd.A : 0.00;
-      //         const line_mvar = line.gd.mvar ? line.gd.mvar : 0.00;
-      //         if(kv === undefined && line_kv !== 0) {
-      //           kv = line_kv;
-      //         }
-      //         mw += Math.abs(line_mw);
-      //         amp += Math.abs(line_amp);
-      //         mvar += Math.abs(line_mvar);
-      //     } else if (variant === undefined) {
-      //         return;
-      //     }
-      // });
-      // const data_object_1 = {
-      //   station_name, 
-      //   time,
-      //   kv,
-      //   mw,
-      //   amp,
-      //   mvar,
-      //   variant
-      // }
-      // const data_object_2 = {
-      //   station_name, 
-      //   time,
-      //   kv,
-      //   mw,
-      //   amp,
-      //   mvar,
-      //   variant
-      // }
-      // // Send dat to API here
-      // send_to_api(data_object_1);
-      // send_to_api(data_object_2);
-      // return;
+    if(['omotosho1', 'omotosho2'].includes(station)) {
+      if(station == 'omotosho1') {
+        temporary_storage.data_1 = {equip, t: data.t};
+      }
+      if(station == 'omotosho2') {
+        temporary_storage.data_2 = {equip, t: data.t};
+      }
+      const t1 = temporary_storage.data_1.t?.split(':');
+      const t2 = temporary_storage.data_2.t?.split(':');
+      const time_diff = ((t1[0] - t2[0])*24*60) + ((t1[1] - t2[1])*60) + (t1[2] - t2[2]);
+      // If time_diff = 1 ? then do your calculations and send_to_api
+      if(time_diff == 1) {
+        const station_name = 'OMOTOSHO (GAS)';
+        const equip_1 = temporary_storage.data_1.equip;//.filter( a => ['tr1', 'tr2'].includes(a.id));
+        const equip_2 = temporary_storage.data_2.equip;//.filter( a => ['tr3', 'tr4'].includes(a.id));
+        const time = temporary_storage.data_1.t ? temporary_storage.data_1.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
+        let kv, mw_1 = 0, mw_2 = 0, mvar_1 = 0, mvar_2 = 0, amp_1 = 0, amp_2 = 0, variant;
+        // loop over the lines or units array      
+        equip_1?.forEach(line => {
+            variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
+            if (variant === 'transmission') {
+                  const line_kv = line.td.V ? line.td.V : 0.00;
+                  const line_mw = line.td.mw ? line.td.mw : 0.00;
+                  const line_amp = line.td.A ? line.td.A : 0.00;
+                  const line_mvar = line.td.mvar ? line.td.mvar : 0.00;
+                  if(kv === undefined && line_kv !== 0) {
+                    kv = line_kv;
+                  }
+                  mw_1 += Math.abs(line_mw);
+                  amp_1 += Math.abs(line_amp);
+                  mvar_1 += Math.abs(line_mvar);              
+            } else if (variant === 'generation') {
+                const line_kv = line.gd.V ? line.gd.V : 0.00;
+                const line_mw = line.gd.mw ? line.gd.mw : 0.00;
+                const line_amp = line.gd.A ? line.gd.A : 0.00;
+                const line_mvar = line.gd.mvar ? line.gd.mvar : 0.00;
+                if(kv === undefined && line_kv !== 0) {
+                  kv = line_kv;
+                }
+                mw_1 += Math.abs(line_mw);
+                amp_1 += Math.abs(line_amp);
+                mvar_1 += Math.abs(line_mvar);
+            } else if (variant === undefined) {
+                return;
+            }
+        });
+        equip_2?.forEach(line => {
+          variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
+          if (variant === 'transmission') {
+                const line_kv = line.td.V ? line.td.V : 0.00;
+                const line_mw = line.td.mw ? line.td.mw : 0.00;
+                const line_amp = line.td.A ? line.td.A : 0.00;
+                const line_mvar = line.td.mvar ? line.td.mvar : 0.00;
+                if(kv === undefined && line_kv !== 0) {
+                  kv = line_kv;
+                }
+                mw_2 += Math.abs(line_mw);
+                amp_2 += Math.abs(line_amp);
+                mvar_2 += Math.abs(line_mvar);              
+          } else if (variant === 'generation') {
+              const line_kv = line.gd.V ? line.gd.V : 0.00;
+              const line_mw = line.gd.mw ? line.gd.mw : 0.00;
+              const line_amp = line.gd.A ? line.gd.A : 0.00;
+              const line_mvar = line.gd.mvar ? line.gd.mvar : 0.00;
+              if(kv === undefined && line_kv !== 0) {
+                kv = line_kv;
+              }
+              mw_2 += Math.abs(line_mw);
+              amp_2 += Math.abs(line_amp);
+              mvar_2 += Math.abs(line_mvar);
+          } else if (variant === undefined) {
+              return;
+          }
+        });
+        const data_object_1 = {
+          station_name, 
+          time,
+          kv,
+          mw: (mw_1 + mw_2),
+          amp: (amp_1 + amp_2),
+          mvar: (mvar_1 + mvar_2),
+          variant
+        }
+        // console.log(data_object_1, '  omotosho gas ');
+        // Send dat to API here
+        send_to_api(data_object_1);
+        return;
+      }
+      
     }
-    if(station.includes('afamIv_vPs', 'afamVPs')) {
-      // return;
-      // const station_name_1 = 'AFAM IV & V (GAS)';
-      // const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
-      // let kv, mw = 0, mvar = 0, amp = 0, variant;
-      // // loop over the lines or units array      
-      // equip?.forEach(line => {
-      //     variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
-      //     if (variant === 'transmission') {
-      //           const line_kv = line.td.V ? line.td.V : 0.00;
-      //           const line_mw = line.td.mw ? line.td.mw : 0.00;
-      //           const line_amp = line.td.A ? line.td.A : 0.00;
-      //           const line_mvar = line.td.mvar ? line.td.mvar : 0.00;
-      //           if(kv === undefined && line_kv !== 0) {
-      //             kv = line_kv;
-      //           }
-      //           mw += Math.abs(line_mw);
-      //           amp += Math.abs(line_amp);
-      //           mvar += Math.abs(line_mvar);              
-      //     } else if (variant === 'generation') {
-      //         const line_kv = line.gd.V ? line.gd.V : 0.00;
-      //         const line_mw = line.gd.mw ? line.gd.mw : 0.00;
-      //         const line_amp = line.gd.A ? line.gd.A : 0.00;
-      //         const line_mvar = line.gd.mvar ? line.gd.mvar : 0.00;
-      //         if(kv === undefined && line_kv !== 0) {
-      //           kv = line_kv;
-      //         }
-      //         mw += Math.abs(line_mw);
-      //         amp += Math.abs(line_amp);
-      //         mvar += Math.abs(line_mvar);
-      //     } else if (variant === undefined) {
-      //         return;
-      //     }
-      // });
-      // const data_object_1 = {
-      //   station_name: station_name_1, 
-      //   time,
-      //   kv,
-      //   mw,
-      //   amp,
-      //   mvar,
-      //   variant
-      // }
-      // // Send dat to API here
-      // send_to_api(data_object_1);
-      // return;
+    if(['afamIv_vPs', 'afamVPs'].includes(station)) {
+      if(station == 'afamIv_vPs') {
+        temporary_storage.afam4_data = {equip, t: data.t};
+      }
+      if(station == 'afamVPs') {
+        temporary_storage.afam5_data = {equip, t: data.t};
+      }
+      console.log(temporary_storage.afam4_data, ' the data ', temporary_storage.afam5_data);
+      return;
+      const t1 = temporary_storage.afam4_data.t?.split(':');
+      const t2 = temporary_storage.afam5_data.t?.split(':');
+      const time_diff = ((t1[0] - t2[0])*24*60) + ((t1[1] - t2[1])*60) + (t1[2] - t2[2]);
+      // If time_diff = 1 ? then do your calculations and send_to_api        
+      if(time_diff == 1) {
+        const station_name = 'AFAM IV & V (GAS)';
+        const equip_1 = temporary_storage.afam4_data.equip;//.filter( a => ['tr1', 'tr2'].includes(a.id));
+        const equip_2 = temporary_storage.afam5_data.equip;//.filter( a => ['tr3', 'tr4'].includes(a.id));
+        const time = temporary_storage.afam4_data.t ? temporary_storage.afam4_data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
+        let kv, mw_1 = 0, mw_2 = 0, mvar_1 = 0, mvar_2 = 0, amp_1 = 0, amp_2 = 0, variant;
+        // loop over the lines or units array      
+        equip_1?.forEach(line => {
+            variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
+            if (variant === 'transmission') {
+                  const line_kv = line.td.V ? line.td.V : 0.00;
+                  const line_mw = line.td.mw ? line.td.mw : 0.00;
+                  const line_amp = line.td.A ? line.td.A : 0.00;
+                  const line_mvar = line.td.mvar ? line.td.mvar : 0.00;
+                  if(kv === undefined && line_kv !== 0) {
+                    kv = line_kv;
+                  }
+                  mw_1 += line_mw;
+                  amp_1 += line_amp;
+                  mvar_1 += line_mvar;              
+            } else if (variant === 'generation') {
+                const line_kv = line.gd.V ? line.gd.V : 0.00;
+                const line_mw = line.gd.mw ? line.gd.mw : 0.00;
+                const line_amp = line.gd.A ? line.gd.A : 0.00;
+                const line_mvar = line.gd.mvar ? line.gd.mvar : 0.00;
+                if(kv === undefined && line_kv !== 0) {
+                  kv = line_kv;
+                }
+                mw_1 += line_mw;
+                amp_1 += line_amp;
+                mvar_1 += line_mvar;
+            } else if (variant === undefined) {
+                return;
+            }
+        });
+        equip_2?.forEach(line => {
+          variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
+          if (variant === 'transmission') {
+                const line_kv = line.td.V ? line.td.V : 0.00;
+                const line_mw = line.td.mw ? line.td.mw : 0.00;
+                const line_amp = line.td.A ? line.td.A : 0.00;
+                const line_mvar = line.td.mvar ? line.td.mvar : 0.00;
+                if(kv === undefined && line_kv !== 0) {
+                  kv = line_kv;
+                }
+                mw_2 += line_mw;
+                amp_2 += line_amp;
+                mvar_2 += line_mvar;              
+          } else if (variant === 'generation') {
+              const line_kv = line.gd.V ? line.gd.V : 0.00;
+              const line_mw = line.gd.mw ? line.gd.mw : 0.00;
+              const line_amp = line.gd.A ? line.gd.A : 0.00;
+              const line_mvar = line.gd.mvar ? line.gd.mvar : 0.00;
+              if(kv === undefined && line_kv !== 0) {
+                kv = line_kv;
+              }
+              mw_2 += line_mw;
+              amp_2 += line_amp;
+              mvar_2 += line_mvar;
+          } else if (variant === undefined) {
+              return;
+          }
+        });
+        const data_object_1 = {
+          station_name, 
+          time,
+          kv,
+          mw: (mw_1 + mw_2),
+          amp: (amp_1 + amp_2),
+          mvar: (mvar_1 + mvar_2),
+          variant
+        }
+        // console.log(data_object_1, '  omotosho gas ');
+        // Send dat to API here
+        send_to_api(data_object_1);
+        return;
+      }
     }
-    if(station.includes('eket', 'ekim')) {
-      // return;
+    if(['eket', 'ekim'].includes(station)) {
+      return;
       // const station_name_1 = 'IBOM POWER (GAS)';
       // const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
       // let kv, mw = 0, mvar = 0, amp = 0, variant;
@@ -1781,8 +1855,8 @@ client_6.on('message', (topic, message) => {
       // send_to_api(data_object_1);
       // return;
     } 
-    if(station.includes('olorunsogo1', 'olorunsogoPhase1Gs')) {
-      // return;
+    if(['olorunsogo1', 'olorunsogoPhase1Gs'].includes(station)) {
+      return;
       // const station_name_1 = 'OLORUNSOGO NIPP';
       // const station_name_2 = 'OLORUNSOGO (GAS)';
       // const equip_1 = equip.filter( a => a.id.includes('gt1', 'gt2', 'gt3', 'gt4'));
@@ -1842,8 +1916,8 @@ client_6.on('message', (topic, message) => {
       // return;
     } 
     // Tripple Station
-    if(station.includes('delta2', 'delta3', 'deltaGs')) {
-      // return;
+    if(['delta2', 'delta3', 'deltaGs'].includes(station)) {
+      return;
       // const station_name_1 = 'DELTA (GAS)';
       // const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
       // let kv, mw = 0, mvar = 0, amp = 0, variant;
