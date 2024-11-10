@@ -1796,12 +1796,12 @@ client_6.on('message', (topic, message) => {
           station_name, 
           time,
           kv,
-          mw: (mw_1 + mw_2),
-          amp: (amp_1 + amp_2),
-          mvar: (mvar_1 + mvar_2),
+          mw: Math.abs(mw_1 + mw_2),
+          amp: Math.abs(amp_1 + amp_2),
+          mvar: Math.abs(mvar_1 + mvar_2),
           variant
         }
-        console.log(data_object_1, '  afam 4 & 5 ');
+        // console.log(data_object_1, '  afam 4 & 5 ');
         // Send dat to API here
         send_to_api(data_object_1);
         return;
