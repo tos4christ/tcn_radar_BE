@@ -1257,7 +1257,7 @@ client_5.on('message', (topic, message) => {
           const data_object_1 = {
             station_name: station_name_1, 
             time,
-            kv,
+            kv: kv_2,
             mw: (mw_3 - (mw_1 + mw_2)),
             amp: (amp_3 - (amp_1 + amp_2)),
             mvar: (mvar_3 - (mvar_1 + mvar_2)),
@@ -1266,7 +1266,7 @@ client_5.on('message', (topic, message) => {
           const data_object_2 = {
             station_name: station_name_2, 
             time,
-            kv,
+            kv: kv_1,
             mw: (mw_1 + mw_2),
             amp: (amp_1 + amp_2),
             mvar: (mvar_1 + mvar_2),
