@@ -1236,9 +1236,9 @@ client_5.on('message', (topic, message) => {
                   if(kv_2 === undefined && line_kv !== 0) {
                     kv_2 = line_kv;
                   }
-                  mw_3 += Math.abs(line_mw);
-                  amp_3 += Math.abs(line_amp);
-                  mvar_3 += Math.abs(line_mvar);              
+                  mw_3 += line_mw;
+                  amp_3 += line_amp;
+                  mvar_3 += line_mvar;              
             } else if (variant === 'generation') {
                 const line_kv = line.gd.V ? line.gd.V : 0.00;
                 const line_mw = line.gd.mw ? line.gd.mw : 0.00;
@@ -1247,9 +1247,9 @@ client_5.on('message', (topic, message) => {
                 if(kv_2 === undefined && line_kv !== 0) {
                   kv_2 = line_kv;
                 }
-                mw_3 += Math.abs(line_mw);
-                amp_3 += Math.abs(line_amp);
-                mvar_3 += Math.abs(line_mvar);
+                mw_3 += line_mw;
+                amp_3 += line_amp;
+                mvar_3 += line_mvar;
             } else if (variant === undefined) {
                 return;
             }
