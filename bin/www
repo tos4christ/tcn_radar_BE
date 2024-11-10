@@ -1724,11 +1724,13 @@ client_6.on('message', (topic, message) => {
       if(station == 'afamVPs') {
         temporary_storage.afam5_data = {equip, t: data.t};
       }
-      console.log(temporary_storage.afam4_data, ' the data ', temporary_storage.afam5_data);
-      return;
+      
       const t1 = temporary_storage.afam4_data.t?.split(':');
       const t2 = temporary_storage.afam5_data.t?.split(':');
       const time_diff = ((t1[0] - t2[0])*24*60) + ((t1[1] - t2[1])*60) + (t1[2] - t2[2]);
+      
+      console.log(temporary_storage.afam4_data, ' the data ', temporary_storage.afam5_data);
+      return;
       // If time_diff = 1 ? then do your calculations and send_to_api        
       if(time_diff == 1) {
         const station_name = 'AFAM IV & V (GAS)';
