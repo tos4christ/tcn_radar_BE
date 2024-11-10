@@ -1157,18 +1157,17 @@ client_5.on('message', (topic, message) => {
         const t1 = temporary_storage.sogo1_data.t?.split(':');
         const t2 = temporary_storage.sogoPhase1_data.t?.split(':');
         const time_diff = ((t1[0] - t2[0])*24*60) + ((t1[1] - t2[1])*60) + (t1[2] - t2[2]);
-        console.log(temporary_storage.sogo1_data, temporary_storage.sogoPhase1_data);
-        console.log(time_diff);
-        return;
         // If time_diff = 1 ? then do your calculations and send_to_api
-        if(time_diff == 1) {
+        if(Math.abs(time_diff) <= 7) {
           const station_name_1 = 'OLORUNSOGO NIPP';
           const station_name_2 = 'OLORUNSOGO (GAS)';
-          const equip_1 = temporary_storage.sogo1_data.equip;//.filter( a => ['tr1', 'tr2'].includes(a.id));
-          const equip_2 = temporary_storage.sogoPhase1_data.equip;//.filter( a => ['tr3', 'tr4'].includes(a.id));
-          const time = temporary_storage.data_1.t ? temporary_storage.data_1.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
-          let kv, mw_1 = 0, mw_2 = 0, mvar_1 = 0, mvar_2 = 0, amp_1 = 0, amp_2 = 0, variant;
-          // loop over the lines or units array      
+          const equip_1 = temporary_storage.sogo1_data.equip.filter( a => ['tr1', 'tr2'].includes(a.id));
+          const equip_2 = temporary_storage.sogoPhase1_data.equip.filter( a => ['tr3', 'tr4'].includes(a.id));
+          const equip_3 = temporary_storage.sogoPhase1_data.equip.filter( a => ['r1w', 'r2a'].includes(a.id));
+          const time = temporary_storage.sogoPhase1_data.t ? temporary_storage.sogoPhase1_data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
+          let kv_1, kv_2, mw_1 = 0, mw_2 = 0, mw_3 = 0, mvar_1 = 0, mvar_2 = 0, mvar_3 = 0, amp_1 = 0, amp_2 = 0, amp_3 = 0, variant;
+          // loop over the lines or units array
+          // tr1 + tr2
           equip_1?.forEach(line => {
               variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
               if (variant === 'transmission') {
@@ -1176,8 +1175,8 @@ client_5.on('message', (topic, message) => {
                     const line_mw = line.td.mw ? line.td.mw : 0.00;
                     const line_amp = line.td.A ? line.td.A : 0.00;
                     const line_mvar = line.td.mvar ? line.td.mvar : 0.00;
-                    if(kv === undefined && line_kv !== 0) {
-                      kv = line_kv;
+                    if(kv_1 === undefined && line_kv !== 0) {
+                      kv_1 = line_kv;
                     }
                     mw_1 += Math.abs(line_mw);
                     amp_1 += Math.abs(line_amp);
@@ -1187,8 +1186,8 @@ client_5.on('message', (topic, message) => {
                   const line_mw = line.gd.mw ? line.gd.mw : 0.00;
                   const line_amp = line.gd.A ? line.gd.A : 0.00;
                   const line_mvar = line.gd.mvar ? line.gd.mvar : 0.00;
-                  if(kv === undefined && line_kv !== 0) {
-                    kv = line_kv;
+                  if(kv_1 === undefined && line_kv !== 0) {
+                    kv_1 = line_kv;
                   }
                   mw_1 += Math.abs(line_mw);
                   amp_1 += Math.abs(line_amp);
@@ -1197,6 +1196,7 @@ client_5.on('message', (topic, message) => {
                   return;
               }
           });
+          // tr3 + tr4
           equip_2?.forEach(line => {
             variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
             if (variant === 'transmission') {
@@ -1204,8 +1204,8 @@ client_5.on('message', (topic, message) => {
                   const line_mw = line.td.mw ? line.td.mw : 0.00;
                   const line_amp = line.td.A ? line.td.A : 0.00;
                   const line_mvar = line.td.mvar ? line.td.mvar : 0.00;
-                  if(kv === undefined && line_kv !== 0) {
-                    kv = line_kv;
+                  if(kv_2 === undefined && line_kv !== 0) {
+                    kv_2 = line_kv;
                   }
                   mw_2 += Math.abs(line_mw);
                   amp_2 += Math.abs(line_amp);
@@ -1215,8 +1215,8 @@ client_5.on('message', (topic, message) => {
                 const line_mw = line.gd.mw ? line.gd.mw : 0.00;
                 const line_amp = line.gd.A ? line.gd.A : 0.00;
                 const line_mvar = line.gd.mvar ? line.gd.mvar : 0.00;
-                if(kv === undefined && line_kv !== 0) {
-                  kv = line_kv;
+                if(kv_2 === undefined && line_kv !== 0) {
+                  kv_2 = line_kv;
                 }
                 mw_2 += Math.abs(line_mw);
                 amp_2 += Math.abs(line_amp);
@@ -1225,17 +1225,46 @@ client_5.on('message', (topic, message) => {
                 return;
             }
           });
+          // r1w + r2a
+          equip_3?.forEach(line => {
+            variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
+            if (variant === 'transmission') {
+                  const line_kv = line.td.V ? line.td.V : 0.00;
+                  const line_mw = line.td.mw ? line.td.mw : 0.00;
+                  const line_amp = line.td.A ? line.td.A : 0.00;
+                  const line_mvar = line.td.mvar ? line.td.mvar : 0.00;
+                  if(kv_2 === undefined && line_kv !== 0) {
+                    kv_2 = line_kv;
+                  }
+                  mw_3 += Math.abs(line_mw);
+                  amp_3 += Math.abs(line_amp);
+                  mvar_3 += Math.abs(line_mvar);              
+            } else if (variant === 'generation') {
+                const line_kv = line.gd.V ? line.gd.V : 0.00;
+                const line_mw = line.gd.mw ? line.gd.mw : 0.00;
+                const line_amp = line.gd.A ? line.gd.A : 0.00;
+                const line_mvar = line.gd.mvar ? line.gd.mvar : 0.00;
+                if(kv_2 === undefined && line_kv !== 0) {
+                  kv_2 = line_kv;
+                }
+                mw_3 += Math.abs(line_mw);
+                amp_3 += Math.abs(line_amp);
+                mvar_3 += Math.abs(line_mvar);
+            } else if (variant === undefined) {
+                return;
+            }
+          });
           const data_object_1 = {
-            station_name, 
+            station_name: station_name_1, 
             time,
             kv,
-            mw: (mw_1 + mw_2),
-            amp: (amp_1 + amp_2),
-            mvar: (mvar_1 + mvar_2),
+            mw: (mw_3 - (mw_1 + mw_2)),
+            amp: (amp_3 - (amp_1 + amp_2)),
+            mvar: (mvar_3 - (mvar_1 + mvar_2)),
             variant
           }
           const data_object_2 = {
-            station_name, 
+            station_name: station_name_2, 
             time,
             kv,
             mw: (mw_1 + mw_2),
@@ -1243,8 +1272,9 @@ client_5.on('message', (topic, message) => {
             mvar: (mvar_1 + mvar_2),
             variant
           }
-          // console.log(data_object_1, '  olorunsogo gas ');
-          // console.log(data_object_2, '  olorunsogo nipp ');
+          console.log(data_object_1, '  olorunsogo nipp ');
+          console.log(data_object_2, '  olorunsogo gas ');
+          return;
           // Send dat to API here
           send_to_api(data_object_1);
           send_to_api(data_object_2);
