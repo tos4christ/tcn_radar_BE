@@ -1068,16 +1068,12 @@ client_5.on('message', (topic, message) => {
         const t1 = temporary_storage.eket_data.t?.split(':');
         const t2 = temporary_storage.ekim_data.t?.split(':');
         const time_diff = ((t1[0] - t2[0])*24*60) + ((t1[1] - t2[1])*60) + (t1[2] - t2[2]);
-        console.log(temporary_storage.eket_data, temporary_storage.ekim_data);
-        console.log(time_diff);
-        return;
-        // const station_name_1 = 'IBOM POWER (GAS)';
         // If time_diff = 1 ? then do your calculations and send_to_api        
-        if(time_diff <= 4 && time_diff > 0) {
-          const station_name = 'AFAM IV & V (GAS)';
-          const equip_1 = temporary_storage.afam4_data.equip.filter( a => ['gt17', 'gt18'].includes(a.id));
-          const equip_2 = temporary_storage.afam5_data.equip.filter( a => ['gt20'].includes(a.id));
-          const time = temporary_storage.afam4_data.t ? temporary_storage.afam4_data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
+        if(time_diff <= 59) {
+          const station_name = 'IBOM POWER (GAS)';
+          const equip_1 = temporary_storage.eket_data.equip;//.filter( a => ['gt17', 'gt18'].includes(a.id));
+          const equip_2 = temporary_storage.ekim_data.equip;//.filter( a => ['gt20'].includes(a.id));
+          const time = temporary_storage.eket_data.t ? temporary_storage.eket_data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
           let kv, mw_1 = 0, mw_2 = 0, mvar_1 = 0, mvar_2 = 0, amp_1 = 0, amp_2 = 0, variant;
           // loop over the lines or units array      
           equip_1?.forEach(line => {
@@ -1140,11 +1136,12 @@ client_5.on('message', (topic, message) => {
             station_name, 
             time,
             kv,
-            mw: Math.abs(mw_1 + mw_2),
-            amp: Math.abs(amp_1 + amp_2),
-            mvar: Math.abs(mvar_1 + mvar_2),
+            mw: Math.abs(-mw_1 - mw_2),
+            amp: Math.abs(-amp_1 - amp_2),
+            mvar: Math.abs(-mvar_1 - mvar_2),
             variant
           }
+          console.log(data_object_1);
           // Send dat to API here
           send_to_api(data_object_1);
           return;
