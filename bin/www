@@ -512,17 +512,17 @@ const res_data = {
   sagamu: 'SAGAMU 132KV TS'
 };
 const temporary_storage = {
-  data_1: {},
-  data_2: {},
-  eket_data: {},
-  ekim_data: {},
-  afam4_data: {},
-  afam5_data: {},
-  sogoPhase1_data: {},
-  sogo1_data: {},
-  delta2_data: {},
-  delta3_data: {},
-  deltaGs_data: {}
+  data_1: {t: '0:0:0'},
+  data_2: {t: '0:0:0'},
+  eket_data: {t: '0:0:0'},
+  ekim_data: {t: '0:0:0'},
+  afam4_data: {t: '0:0:0'},
+  afam5_data: {t: '0:0:0'},
+  sogoPhase1_data: {t: '0:0:0'},
+  sogo1_data: {t: '0:0:0'},
+  delta2_data: {t: '0:0:0'},
+  delta3_data: {t: '0:0:0'},
+  deltaGs_data: {t: '0:0:0'}
 }
 client_5.on('message', (topic, message) => {
   // console.log(topic, '    these are the active topics on client 1');
