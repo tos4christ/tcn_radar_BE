@@ -2192,8 +2192,8 @@ client_6.on('message', (topic, message) => {
           mvar: (mvar_3 + mvar_1 + mvar_2),
           variant
         }
-        console.log(data_object_1);
-        return;
+        // console.log(data_object_1);
+        // return;
         // Send dat to API here
         send_to_api(data_object_1);
         return;
