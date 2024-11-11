@@ -2069,6 +2069,7 @@ client_6.on('message', (topic, message) => {
     } 
     // Tripple Station
     if(['delta2', 'delta3', 'deltaGs'].includes(station)) {
+      return;
       if(station == 'delta2') {
         temporary_storage.delta2_data = {equip, t: data.t};
       }
@@ -2088,7 +2089,7 @@ client_6.on('message', (topic, message) => {
       console.log(time_diff_1, time_diff_2, time_diff_3);
       return;
       // If time_diff = 1 ? then do your calculations and send_to_api
-      if(Math.abs(time_diff_1) <= 7) {
+      if((time_diff_2) < 0 && (time_diff_2) >= -5) {
         const station_name = 'DELTA (GAS)';
         const equip_1 = temporary_storage.sogo1_data.equip.filter( a => ['tr1', 'tr2'].includes(a.id));
         const equip_2 = temporary_storage.sogoPhase1_data.equip.filter( a => ['tr3', 'tr4'].includes(a.id));
