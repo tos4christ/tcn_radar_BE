@@ -2069,51 +2069,143 @@ client_6.on('message', (topic, message) => {
     } 
     // Tripple Station
     if(['delta2', 'delta3', 'deltaGs'].includes(station)) {
+      if(station == 'delta2') {
+        temporary_storage.delta2_data = {equip, t: data.t};
+      }
+      if(station == 'delta3') {
+        temporary_storage.delta3_data = {equip, t: data.t};
+      }
+      if(station == 'deltaGs') {
+        temporary_storage.deltaGs_data = {equip, t: data.t};
+      }
+      const t1 = temporary_storage.delta2_data.t?.split(':');
+      const t2 = temporary_storage.delta3_data.t?.split(':');
+      const t3 = temporary_storage.deltaGs_data.t?.split(':');
+      const time_diff_1 = ((t1[0] - t2[0])*24*60) + ((t1[1] - t2[1])*60) + (t1[2] - t2[2]);
+      const time_diff_2 = ((t1[0] - t3[0])*24*60) + ((t1[1] - t3[1])*60) + (t1[2] - t3[2]);
+      const time_diff_3 = ((t2[0] - t3[0])*24*60) + ((t2[1] - t3[1])*60) + (t2[2] - t3[2]);
+      console.log(temporary_storage.delta2_data, temporary_storage.delta3_data, temporary_storage.deltaGs_data);
+      console.log(time_diff_1, time_diff_2, time_diff_3);
       return;
-      // const station_name_1 = 'DELTA (GAS)';
-      // const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
-      // let kv, mw = 0, mvar = 0, amp = 0, variant;
-      // // loop over the lines or units array      
-      // equip?.forEach(line => {
-      //     variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
-      //     if (variant === 'transmission') {
-      //           const line_kv = line.td.V ? line.td.V : 0.00;
-      //           const line_mw = line.td.mw ? line.td.mw : 0.00;
-      //           const line_amp = line.td.A ? line.td.A : 0.00;
-      //           const line_mvar = line.td.mvar ? line.td.mvar : 0.00;
-      //           if(kv === undefined && line_kv !== 0) {
-      //             kv = line_kv;
-      //           }
-      //           mw += Math.abs(line_mw);
-      //           amp += Math.abs(line_amp);
-      //           mvar += Math.abs(line_mvar);              
-      //     } else if (variant === 'generation') {
-      //         const line_kv = line.gd.V ? line.gd.V : 0.00;
-      //         const line_mw = line.gd.mw ? line.gd.mw : 0.00;
-      //         const line_amp = line.gd.A ? line.gd.A : 0.00;
-      //         const line_mvar = line.gd.mvar ? line.gd.mvar : 0.00;
-      //         if(kv === undefined && line_kv !== 0) {
-      //           kv = line_kv;
-      //         }
-      //         mw += Math.abs(line_mw);
-      //         amp += Math.abs(line_amp);
-      //         mvar += Math.abs(line_mvar);
-      //     } else if (variant === undefined) {
-      //         return;
-      //     }
-      // });
-      // const data_object_1 = {
-      //   station_name: station_name_1, 
-      //   time,
-      //   kv,
-      //   mw,
-      //   amp,
-      //   mvar,
-      //   variant
-      // }
-      // // Send dat to API here
-      // send_to_api(data_object_1);
-      // return;
+      // If time_diff = 1 ? then do your calculations and send_to_api
+      if(Math.abs(time_diff_1) <= 7) {
+        const station_name = 'DELTA (GAS)';
+        const equip_1 = temporary_storage.sogo1_data.equip.filter( a => ['tr1', 'tr2'].includes(a.id));
+        const equip_2 = temporary_storage.sogoPhase1_data.equip.filter( a => ['tr3', 'tr4'].includes(a.id));
+        const equip_3 = temporary_storage.sogoPhase1_data.equip.filter( a => ['r1w', 'r2a'].includes(a.id));
+        const time = temporary_storage.sogoPhase1_data.t ? temporary_storage.sogoPhase1_data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
+        let kv_1, kv_2, mw_1 = 0, mw_2 = 0, mw_3 = 0, mvar_1 = 0, mvar_2 = 0, mvar_3 = 0, amp_1 = 0, amp_2 = 0, amp_3 = 0, variant;
+        // loop over the lines or units array
+        // tr1 + tr2
+        equip_1?.forEach(line => {
+            variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
+            if (variant === 'transmission') {
+                  const line_kv = line.td.V ? line.td.V : 0.00;
+                  const line_mw = line.td.mw ? line.td.mw : 0.00;
+                  const line_amp = line.td.A ? line.td.A : 0.00;
+                  const line_mvar = line.td.mvar ? line.td.mvar : 0.00;
+                  if(kv_1 === undefined && line_kv !== 0) {
+                    kv_1 = line_kv;
+                  }
+                  mw_1 += Math.abs(line_mw);
+                  amp_1 += Math.abs(line_amp);
+                  mvar_1 += Math.abs(line_mvar);              
+            } else if (variant === 'generation') {
+                const line_kv = line.gd.V ? line.gd.V : 0.00;
+                const line_mw = line.gd.mw ? line.gd.mw : 0.00;
+                const line_amp = line.gd.A ? line.gd.A : 0.00;
+                const line_mvar = line.gd.mvar ? line.gd.mvar : 0.00;
+                if(kv_1 === undefined && line_kv !== 0) {
+                  kv_1 = line_kv;
+                }
+                mw_1 += Math.abs(line_mw);
+                amp_1 += Math.abs(line_amp);
+                mvar_1 += Math.abs(line_mvar);
+            } else if (variant === undefined) {
+                return;
+            }
+        });
+        // tr3 + tr4
+        equip_2?.forEach(line => {
+          variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
+          if (variant === 'transmission') {
+                const line_kv = line.td.V ? line.td.V : 0.00;
+                const line_mw = line.td.mw ? line.td.mw : 0.00;
+                const line_amp = line.td.A ? line.td.A : 0.00;
+                const line_mvar = line.td.mvar ? line.td.mvar : 0.00;
+                if(kv_2 === undefined && line_kv !== 0) {
+                  kv_2 = line_kv;
+                }
+                mw_2 += Math.abs(line_mw);
+                amp_2 += Math.abs(line_amp);
+                mvar_2 += Math.abs(line_mvar);              
+          } else if (variant === 'generation') {
+              const line_kv = line.gd.V ? line.gd.V : 0.00;
+              const line_mw = line.gd.mw ? line.gd.mw : 0.00;
+              const line_amp = line.gd.A ? line.gd.A : 0.00;
+              const line_mvar = line.gd.mvar ? line.gd.mvar : 0.00;
+              if(kv_2 === undefined && line_kv !== 0) {
+                kv_2 = line_kv;
+              }
+              mw_2 += Math.abs(line_mw);
+              amp_2 += Math.abs(line_amp);
+              mvar_2 += Math.abs(line_mvar);
+          } else if (variant === undefined) {
+              return;
+          }
+        });
+        // r1w + r2a
+        equip_3?.forEach(line => {
+          variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
+          if (variant === 'transmission') {
+                const line_kv = line.td.V ? line.td.V : 0.00;
+                const line_mw = line.td.mw ? line.td.mw : 0.00;
+                const line_amp = line.td.A ? line.td.A : 0.00;
+                const line_mvar = line.td.mvar ? line.td.mvar : 0.00;
+                if(kv_2 === undefined && line_kv !== 0) {
+                  kv_2 = line_kv;
+                }
+                mw_3 += line_mw;
+                amp_3 += line_amp;
+                mvar_3 += line_mvar;              
+          } else if (variant === 'generation') {
+              const line_kv = line.gd.V ? line.gd.V : 0.00;
+              const line_mw = line.gd.mw ? line.gd.mw : 0.00;
+              const line_amp = line.gd.A ? line.gd.A : 0.00;
+              const line_mvar = line.gd.mvar ? line.gd.mvar : 0.00;
+              if(kv_2 === undefined && line_kv !== 0) {
+                kv_2 = line_kv;
+              }
+              mw_3 += line_mw;
+              amp_3 += line_amp;
+              mvar_3 += line_mvar;
+          } else if (variant === undefined) {
+              return;
+          }
+        });
+        const data_object_1 = {
+          station_name: station_name_1, 
+          time,
+          kv: kv_2,
+          mw: (mw_3 - (mw_1 + mw_2)),
+          amp: (amp_3 - (amp_1 + amp_2)),
+          mvar: (mvar_3 - (mvar_1 + mvar_2)),
+          variant
+        }
+        const data_object_2 = {
+          station_name: station_name_2, 
+          time,
+          kv: kv_1,
+          mw: (mw_1 + mw_2),
+          amp: (amp_1 + amp_2),
+          mvar: (mvar_1 + mvar_2),
+          variant
+        }
+        // Send dat to API here
+        send_to_api(data_object_1);
+        send_to_api(data_object_2);
+        return;
+      }
     } 
 
 
