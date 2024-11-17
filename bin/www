@@ -4,7 +4,6 @@
  * Module dependencies.
  */
 
-
 var app = require('../app');
 var debug = require('debug')('tcn-radar:server');
 var http = require('http');
@@ -184,8 +183,6 @@ client_6.on('connect', () => {
     err => err ? console.log('this is the error', err) : null
   )
 });
-
-
 
 // Client on Message
 client_1.on('message', (topic, message) => {
@@ -535,7 +532,6 @@ client_5.on('message', (topic, message) => {
       const { lines, units } = data;
       const equip = lines ? lines : units ? units : undefined
       const station = data.id;
-
       // Single stations
       if(station == 'sapeleNippPs') {
         const station_name_1 = 'SAPELE NIPP (GAS)';
@@ -1325,8 +1321,7 @@ client_5.on('message', (topic, message) => {
         // // Send dat to API here
         // send_to_api(data_object_1);
         // return;
-      } 
-
+      }
       const station_name = res_data[station] ? res_data[station] : station;
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];   
       let kv, mw = 0, mvar = 0, amp = 0, variant;
@@ -1382,12 +1377,10 @@ client_6.on('message', (topic, message) => {
   // }  
   let data;
   try {
-    data = JSON.parse(message.toString());
-    
+    data = JSON.parse(message.toString());    
     const { lines, units } = data;
     const equip = lines ? lines : units ? units : undefined
     const station = data.id;
-
     // Single stations
     if(station == 'sapeleNippPs') {
       const station_name_1 = 'SAPELE NIPP (GAS)';
@@ -2198,9 +2191,7 @@ client_6.on('message', (topic, message) => {
         send_to_api(data_object_1);
         return;
       }
-    } 
-
-
+    }
     const station_name = res_data[station] ? res_data[station] : station;
     const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];  
     let kv, mw = 0, mvar = 0, amp = 0, variant;
