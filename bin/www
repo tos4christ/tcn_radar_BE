@@ -125,7 +125,7 @@ client_2.on('connect', () => {
         'taopex/tv', 'sunflag/cs', 'sagamu/tv', 'monarch/cs', 'larfarge/cs',
          'topSteel/cs', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs',
          'quantum/cs', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
-         'pheonix/cs'
+         'pheonix/cs', 'mesl/zeberced/pd'
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
@@ -258,9 +258,9 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  // if (['zungeru/tv'].includes(topic)) {
-  //   console.log(message.toString(), 'client 2');
-  // }
+  if (['mesl/zeberced/pd'].includes(topic)) {
+    console.log(message.toString(), 'client 2');
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
