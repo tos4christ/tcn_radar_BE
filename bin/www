@@ -191,7 +191,7 @@ client_6.on('connect', () => {
 client_mesl.on('connect', () => {
   client_mesl.subscribe(
     [
-      'mesl/zeberced/pd'
+      'mesl/zeberced/pd', 'mesl/niamey/pd'
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
@@ -2259,7 +2259,7 @@ client_6.on('message', (topic, message) => {
 
  // Client on Message for Bilaterals
 client_mesl.on('message', (topic, message) => {
-  // if (['mesl/zeberced/pd'].includes(topic)) {
+  // if (['mesl/zeberced/pd', 'mesl/niamey/pd'].includes(topic)) {
   //   console.log(message.toString(), 'client mesl');
   //   return;
   // }
@@ -2288,7 +2288,7 @@ client_mesl.on('message', (topic, message) => {
       mw = data.mw ? data.mw : 0.00;
       amp = data.a ? data.a : 0.00;
       mvar = data.mx ? data.mx : 0.00;
-      // console.log({station, kv, mw, amp, mvar, time, epoch_time});
+      console.log({station, kv, mw, amp, mvar, time, epoch_time});
       return;
       db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
           .then( response => {
