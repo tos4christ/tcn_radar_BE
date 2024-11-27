@@ -191,7 +191,7 @@ client_6.on('connect', () => {
 client_mesl.on('connect', () => {
   client_mesl.subscribe(
     [
-      'mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/ineer-galaxy1/pd'
+      'mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/inner-galaxy1/pd'
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
