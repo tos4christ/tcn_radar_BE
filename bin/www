@@ -192,7 +192,7 @@ client_mesl.on('connect', () => {
   client_mesl.subscribe(
     [
       'mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/inner-galaxy1/pd', 'mesl/inner-galaxy2/pd',
-       'mesl/gazaoua/pd', 'mesl/KamIndu/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd'
+       'mesl/gazaoua/pd', 'mesl/KamIndu/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd', 'quantum/cs'
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
@@ -2260,10 +2260,10 @@ client_6.on('message', (topic, message) => {
 
  // Client on Message for Bilaterals
 client_mesl.on('message', (topic, message) => {
-  // if (['quantum/cs', 'mesl/gazaoua/pd', 'mesl/KamIndu/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd'].includes(topic)) {
-  //   console.log(message.toString(), 'client mesl');
-  //   // return;
-  //}
+  if (['quantum/cs'].includes(topic)) {
+    console.log(message.toString(), 'client mesl');
+    return;
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
