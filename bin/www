@@ -191,7 +191,7 @@ client_mesl.on('connect', () => {
   client_mesl.subscribe(
     [
       'mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/inner-galaxy1/pd', 'mesl/inner-galaxy2/pd',
-       'mesl/gazaoua/pd', 'mesl/KamIndu/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd', 'quantum/cs'
+       'mesl/gazaoua/pd', 'mesl/Kam33/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd', 'quantum/cs'
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
@@ -2259,7 +2259,7 @@ client_6.on('message', (topic, message) => {
 
  // Client on Message for Bilaterals
 client_mesl.on('message', (topic, message) => {
-  if (['mesl/KamIndu/pd'].includes(topic)) {
+  if (['mesl/Kam33/pd'].includes(topic)) {
     console.log(message.toString(), 'client mesl');
     // console.log(message, typeof message, 'client mesl');
     //return;
