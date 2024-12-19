@@ -2259,11 +2259,11 @@ client_6.on('message', (topic, message) => {
 
  // Client on Message for Bilaterals
 client_mesl.on('message', (topic, message) => {
-  if (['mesl/Kam33/pd'].includes(topic)) {
-    console.log(message.toString(), 'client mesl');
-    // console.log(message, typeof message, 'client mesl');
-    //return;
-  }
+  // if (['mesl/Kam33/pd'].includes(topic)) {
+  //   console.log(message.toString(), 'client mesl');
+  //   // console.log(message, typeof message, 'client mesl');
+  //   //return;
+  // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
