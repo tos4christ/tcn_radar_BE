@@ -148,15 +148,15 @@ client_4.on('connect', () => {
 client_5.on('connect', () => {
   client_5.subscribe(
     [
-         'gereguGs/pv', 'odukpanits/tv', 'omotoso2ts/tv',
-        'omotoso11ts/pv', 'omotoso12ts/pv',
-         'lokojats/tv',
-        'ikotekpene/tv', 'gwagwaladats/tv', 'gereguGs/tv',
-        'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 
-        'riversIppPs/pv', 'markudits/tv',
-        'dadinkowags/tv', 'ugwuajits/tv',
-         'olorunsogo1ts/pv', 'parasenergyPs/pv',
-         'olorunsogo2ts/tv','omotoshoGas/pv',
+         'gereguGs/pv', 'odukpanits/tv', 
+         'lokojats/tv', 'parasenergyPs/pv',
+        'ikotekpene/tv', 'gwagwaladats/tv', 'gereguGs/tv',         
+        'riversIppPs/pv', 'markudits/tv', 'alaojinippts/tv', 
+        'dadinkowags/tv', 'ugwuajits/tv',         
+
+        //  'omotoso2ts/tv', 'omotoso11ts/pv', 'omotoso12ts/pv', 
+        //  'omotoshoGas/pv', 'olorunsogo2ts/tv', 'olorunsogo1ts/pv',
+        //  'ekimts/tv', 'eketts/tv',
     ], {qos: 2},
  (err) => {
     if(err) {
@@ -168,20 +168,19 @@ client_6.on('connect', () => {
   client_6.subscribe(
     [
       'ikotekpene/tv', 'gwagwaladats/tv','gereguGs/pv', 'odukpanits/tv',
-      'asabats/tv', 'delta4gs/tv', 'OkpaiippGs/tv', 'jebbaTs/tv',
-       'kainjits/tv', 'egbings/pv', 'riversIppPs/pr', 'afam4gs/pv',
-       'shirorogs/pv', 'afam6ts/tv', 'delta2gs/pv', 'delta3gs/pv',
-       'omokugs/pv', 'phmains/tv', 'sapelets/pv', 'ihovborts/tv',
-       'omotoso2ts/tv', 'omotoso11ts/pv', 'omotoso12ts/pv',
-       'olorunsogo1ts/pv', 'olorunsogo2ts/tv', 'omotoshoGas/pv',
-        'odukpanits/pv', 'transamadi/tv', 'afam5gs/pv', 'markudits/tv',
+      'asabats/tv', 'OkpaiippGs/tv', 'jebbaTs/tv',
+       'kainjits/tv', 'egbings/pv', 'riversIppPs/pr', 
+       'shirorogs/pv', 'afam6ts/tv',
+       'omokugs/pv', 'phmains/tv', 'sapelets/pv', 'ihovborts/tv',       
+        'odukpanits/pv', 'transamadi/tv', 'markudits/tv',
         'dadinkowags/tv', 'gbaraints/pv', 'zungeru/tv', 'ugwuajits/tv',
-        'zungeru/status', 'gereguGs/tv', 'lokojats/tv', 'parasenergyPs/pv',
-        'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 'riversIppPs/pv',
-        'taopex/tv', 'sunflag/cs', 'sagamu/tv', 'monarch/cs', 'larfarge/cs',
-         'topSteel/cs', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs',
-         'quantum/cs', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
-         'pheonix/cs'
+        'zungeru/status', 'gereguGs/tv', 'lokojats/tv', 'parasenergyPs/pv', 
+        'alaojinippts/tv', 'riversIppPs/pv', 
+
+      //   'delta2gs/pv', 'delta3gs/pv', 'delta4gs/tv',
+      //  'olorunsogo1ts/pv', 'olorunsogo2ts/tv', 'afam5gs/pv',
+      //   'ekimts/tv', 'eketts/tv', 'afam4gs/pv',
+      //   'omotoso2ts/tv', 'omotoso11ts/pv', 'omotoso12ts/pv', 'omotoshoGas/pv',
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
