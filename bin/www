@@ -87,9 +87,10 @@ const client_4 = mqtt.connect(host_4);
 // const client_5 = mqtt.connect(host_3);
 const client_5 = mqtt.connect(host_1, options);
 const client_6 = mqtt.connect(host_2, options);
-
 // FOR BILATERALS
 const client_mesl = mqtt.connect(host_2, options);
+const client_fipl = mqtt.connect(host_2, options);
+
 
 // Client on connect
 client_1.on('connect', () => {
@@ -185,7 +186,6 @@ client_6.on('connect', () => {
     err => err ? console.log('this is the error', err) : null
   )
 });
-
 // Client on connect FOR BILATERALS
 client_mesl.on('connect', () => {
   client_mesl.subscribe(
@@ -196,6 +196,16 @@ client_mesl.on('connect', () => {
     err => err ? console.log('this is the error', err) : null
   )
 });
+client_fipl.on('connect', () => {
+  client_fipl.subscribe(
+    [
+      'fipl/fmpia/pd', 'fipl/oaui/pd'
+    ], {qos: 2},
+    err => err ? console.log('this is the error', err) : null
+  )
+});
+
+
 
 // Client on Message
 client_1.on('message', (topic, message) => {
@@ -1384,7 +1394,6 @@ client_5.on('message', (topic, message) => {
       console.error(err)
   }
 });
-
 client_6.on('message', (topic, message) => {
   // if (['zungeru/tv'].includes(topic)) {
   //   console.log(message.toString(), 'client 2');
@@ -2256,8 +2265,7 @@ client_6.on('message', (topic, message) => {
           console.error(err)
       }
 });
-
- // Client on Message for Bilaterals
+// Client on Message for Bilaterals
 client_mesl.on('message', (topic, message) => {
   // if (['mesl/Kam33/pd'].includes(topic)) {
   //   console.log(message.toString(), 'client mesl');
@@ -2268,6 +2276,49 @@ client_mesl.on('message', (topic, message) => {
   // Function to run when a client connects to the server whereever it is hosted
    
   io.sockets.emit('client_message_mesl', { message: message.toString() });
+  
+  // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
+  let data;
+  try {
+      data = JSON.parse(message.toString());     
+      const station = data.name;
+      const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
+      var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
+      const hour = time.split(':')[0];
+      const minute = time.split(':')[1]
+      const seconds = time.split(':')[2]
+      const level = 132;
+      const dateTemp = date.split('-');
+      const epoch_time = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
+      // console.log(epoch_time.getTime(), epoch_time, 'the epoch')
+      let kv, mw, mvar, amp, pf, freq;
+      kv = data.v ? data.v : 0.00;
+      mw = data.mw ? data.mw : 0.00;
+      amp = data.a ? data.a : 0.00;
+      mvar = data.mx ? data.mx : 0.00;
+      // console.log({station, kv, mw, amp, mvar, time, epoch_time});
+      return;
+      db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
+          .then( response => {
+            // console.log('its okay 2')
+          })
+          .catch(err => console.log(err))
+  } catch(err) {
+      console.error(err)
+  }
+});
+client_fipl.on('message', (topic, message) => {
+  if (['fipl/fmpia/pd', 'fipl/oaui/pd'].includes(topic)) {
+    console.log(message.toString(), 'client fipl');
+    console.log(typeof message, 'client fipl');
+    return;
+  }
+  return;
+  // broadcast the message to the client that are connected
+  // Function to run when a client connects to the server whereever it is hosted
+   
+  io.sockets.emit('client_message_fipl', { message: message.toString() });
   
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
