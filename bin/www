@@ -2309,11 +2309,11 @@ client_mesl.on('message', (topic, message) => {
   }
 });
 client_fipl.on('message', (topic, message) => {
-  if (['fipl/fmpia/pd', 'fipl/oaui/pd'].includes(topic)) {
-    console.log(message.toString(), 'client fipl');
-    console.log(typeof message, 'client fipl');
-    return;
-  }
+  // if (['fipl/fmpia/pd', 'fipl/oaui/pd'].includes(topic)) {
+  //   console.log(message.toString(), 'client fipl');
+  //   console.log(typeof message, 'client fipl');
+  //   return;
+  // }
   return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
