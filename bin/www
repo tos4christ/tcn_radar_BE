@@ -2314,7 +2314,7 @@ client_fipl.on('message', (topic, message) => {
   //   console.log(typeof message, 'client fipl');
   //   return;
   // }
-  return;
+  //return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
@@ -2340,7 +2340,7 @@ client_fipl.on('message', (topic, message) => {
       mw = data.mw ? data.mw : 0.00;
       amp = data.a ? data.a : 0.00;
       mvar = data.mx ? data.mx : 0.00;
-      // console.log({station, kv, mw, amp, mvar, time, epoch_time});
+      console.log({station, kv, mw, amp, mvar, time, epoch_time});
       return;
       db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
           .then( response => {
