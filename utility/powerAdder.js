@@ -995,11 +995,15 @@ function Station_Adder(station_array_in) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['delta2'];
                 const equipment_to_sum_1 = station_to_add_1[0]['delta3'];
+                console.log(equipment_to_sum, '   ', equipment_to_sum_1, '  this is the delta data');
                 const equipment_to_sum_2 = station_to_add_2[0]['deltaGs'];
                 const first_sum = addDissimilarEquipment_raw(equipment_to_sum, equipment_to_sum_1);
-                const second_sum = addSimilarEquipment(equipment_to_sum_2);                
+                const second_sum = addSimilarEquipment(equipment_to_sum_2, station_name);                
                 try {
-                    temp_hold.push(...addDissimilarEquipment_array(first_sum, second_sum, station_name));
+                    // Disable the normal addition temporarily
+                    // temp_hold.push(...addDissimilarEquipment_array(first_sum, second_sum, station_name));
+                    // Add similar equipment of deltaGs until other topics start coming
+                    temp_hold.push(...addSimilarEquipment(equipment_to_sum_2, station_name));
                 } catch(e) {
                     console.log(e);
                 }
