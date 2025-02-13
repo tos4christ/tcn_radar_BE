@@ -90,6 +90,7 @@ const client_4 = mqtt.connect(host_4);
 // FOR BILATERALS
 const client_mesl = mqtt.connect(host_2, options);
 const client_fipl = mqtt.connect(host_2, options);
+const client_taopex = mqtt.connect(host_2, options);
 
 
 // Client on connect
@@ -200,6 +201,14 @@ client_fipl.on('connect', () => {
   client_fipl.subscribe(
     [
       'fipl/fmpia/pd', 'fipl/oaui/pd'
+    ], {qos: 2},
+    err => err ? console.log('this is the error', err) : null
+  )
+});
+client_taopex.on('connect', () => {
+  client_taopex.subscribe(
+    [
+      'taopex/kamSteel/sagamu/pd'
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
@@ -2277,6 +2286,7 @@ client_mesl.on('message', (topic, message) => {
    
   io.sockets.emit('client_message_mesl', { message: message.toString() });
   
+  return;
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
   try {
@@ -2298,7 +2308,7 @@ client_mesl.on('message', (topic, message) => {
       amp = data.a ? data.a : 0.00;
       mvar = data.mx ? data.mx : 0.00;
       // console.log({station, kv, mw, amp, mvar, time, epoch_time});
-      return;
+      
       db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
           .then( response => {
             // console.log('its okay 2')
@@ -2320,6 +2330,7 @@ client_fipl.on('message', (topic, message) => {
    
   io.sockets.emit('client_message_fipl', { message: message.toString() });
   
+  return;
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
   try {
@@ -2341,7 +2352,48 @@ client_fipl.on('message', (topic, message) => {
       amp = data.a ? data.a : 0.00;
       mvar = data.mx ? data.mx : 0.00;
       // console.log({station, kv, mw, amp, mvar, time, epoch_time});
-      return;
+      db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
+          .then( response => {
+            // console.log('its okay 2')
+          })
+          .catch(err => console.log(err))
+  } catch(err) {
+      console.error(err)
+  }
+});
+client_taopex.on('message', (topic, message) => {
+  if (['taopex/kamSteel/sagamu/pd'].includes(topic)) {
+    console.log(message.toString(), 'client taopex');
+    return;
+  }
+  return;
+  // broadcast the message to the client that are connected
+  // Function to run when a client connects to the server whereever it is hosted
+   
+  io.sockets.emit('client_message_taopex', { message: message.toString() });
+  
+  return;
+  // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
+  let data;
+  try {
+      data = JSON.parse(message.toString());     
+      const station = data.name;
+      const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
+      var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
+      const hour = time.split(':')[0];
+      const minute = time.split(':')[1]
+      const seconds = time.split(':')[2]
+      const level = 132;
+      const dateTemp = date.split('-');
+      const epoch_time = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
+      // console.log(epoch_time.getTime(), epoch_time, 'the epoch')
+      let kv, mw, mvar, amp, pf, freq;
+      kv = data.v ? data.v : 0.00;
+      mw = data.mw ? data.mw : 0.00;
+      amp = data.a ? data.a : 0.00;
+      mvar = data.mx ? data.mx : 0.00;
+      // console.log({station, kv, mw, amp, mvar, time, epoch_time});
       db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
           .then( response => {
             // console.log('its okay 2')
@@ -2385,8 +2437,22 @@ async function getWeather() {
       const station_2 = {};
       station_2.name = name_1;
       station_2.type = type_1;
+
+      // Create the response data in order to avoid errors after subscription is exhausted
+      //response_1.data.weather = [{"id":0,"main":"","description":"","icon":""}];
+      //response_1.data.main = {"temp":0,"feels_like":0,"temp_min":0,"temp_max":0,"pressure":0,"humidity":0,"sea_level":0,"grnd_level":0};
+      //response_1.data.wind = {"speed":0,"deg":0,"gust":0};
+      //response_1.data.dt = 10000;
+      //response_1.data.clouds = {"all":0};
+      //response_1.data.rain = {};
+      //response_1.data.id = 0;
+      // All the data concluded
+      
       station_2.current_weather_data = response_1.data;
       stations_current_resolved_holder.push(station_2);
+      // Temporarily disable storing to database until subscription is renewed.
+      //return;
+
       const { coord, weather, main, wind, dt, clouds, rain } = response_1.data;
       const { lon, lat: lat_1 } = coord;
       const { id: id_1, main: main_weather, description, icon } = weather[0];
