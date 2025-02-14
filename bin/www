@@ -2363,9 +2363,9 @@ client_fipl.on('message', (topic, message) => {
   }
 });
 client_taopex.on('message', (topic, message) => {
-  if (['taopex/erKang/ilorin/pd'].includes(topic)) {
-    console.log(message.toString(), 'client taopex');
-  }
+  // if (['taopex/erKang/ilorin/pd'].includes(topic)) {
+  //   console.log(message.toString(), 'client taopex');
+  // }
   // return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
