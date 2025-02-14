@@ -2362,7 +2362,7 @@ client_fipl.on('message', (topic, message) => {
   }
 });
 client_taopex.on('message', (topic, message) => {
-  if (['taopex/kamSteel/ilorin/pd'].includes(topic)) {
+  if (['taopex/kamSteel/sagamu/pd', 'taopex/kamSteel/ilorin/pd'].includes(topic)) {
     console.log(message.toString(), 'client taopex');
   }
   return;
