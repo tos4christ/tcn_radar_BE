@@ -530,6 +530,7 @@ const send_to_api = (data_object) => {
       console.error(err)
     })
 }
+
 const res_data = {
   afamViTs: 'AFAM VI (GAS|STEAM)', alaoji: 'ALAOJI NIPP (GAS)', odukpaniNippPs: 'ODUKPANI NIPP (GAS)', jebbaTs: 'JEBBA (HYDRO)', 
   riversIppPs: 'RIVERS IPP (GAS)', omokuPs1: 'OMOKU (GAS)', kainjiTs: 'KAINJI (HYDRO)', parasEnergyPs: 'PARAS ENERGY (GAS)', 

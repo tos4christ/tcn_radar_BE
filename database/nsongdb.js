@@ -21,6 +21,33 @@ const config = {
     }
 }
 
+const send_to_api = (data_object) => {
+  // Send dat to API here
+  const url = `https://settlement.onem.gov.ng/api/power_data`;
+  const options = {
+    method: "POST",
+    url,
+    params: {'api-version': '3.0', username: 'iot@tcn.gov.ng', password: 'TCNiot@Intel@2020'},
+    //mode: "cors",
+    headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
+        "api-key": `${process.env.POWER_LEDGER}`,
+    },
+    data: data_object
+  }
+  axios
+    .request(options)
+    .then(response => {
+      //console.log(response.statusText, response.data, " the POST data");
+    })
+    .catch(err => {
+      console.error(err)
+    })
+}
+
 // Connecting to a different client
 // const db_2 =  new Pool({
 //     user: 'postgres',
@@ -76,7 +103,12 @@ mssql.connect(config, err => {
                     tempArr.push(value)
                 })  
                 const finalArray = tempArr.filter( tar => tar.seconds !== null);
+                
+                // Send data to Intel Tech
+                send_to_api(finalArray);
+                
                 console.log(finalArray, 'the final array without null');
+
                 finalArray.forEach(dt => {
                     const { station, kv, mw, amp, time, seconds, mvar } = dt;
                     // match the station name to the station id
