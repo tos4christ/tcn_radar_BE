@@ -41,7 +41,8 @@ const send_to_api = (data_object) => {
   axios
     .request(options)
     .then(response => {
-      //console.log(response.statusText, response.data, " the POST data");
+      console.log(response.statusText, response.data, " the POST data");
+      console.log(response, " the Response data");
     })
     .catch(err => {
       console.error(err)
@@ -103,7 +104,7 @@ mssql.connect(config, err => {
                     tempArr.push(value)
                 })  
                 const finalArray = tempArr.filter( tar => tar.seconds !== null);
-                
+
                 // Send data to Intel Tech
                 send_to_api(finalArray);
                 
