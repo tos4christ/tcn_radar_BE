@@ -107,7 +107,7 @@ mssql.connect(config, err => {
                 const finalArray = tempArr.filter( tar => tar.seconds !== null);
 
                 // Send data to Intel Tech
-                send_to_api(finalArray);
+                // send_to_api(finalArray);
                 
                 console.log(finalArray, 'the final array without null');
 
