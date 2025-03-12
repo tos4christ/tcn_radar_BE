@@ -108,7 +108,7 @@ mssql.connect(config, err => {
                 const finalArray = tempArr.filter( tar => tar.seconds !== null);
 
                 // Send data to Intel Tech
-                // send_to_api(finalArray);
+                send_to_api(finalArray);
                 
                 console.log(finalArray, 'the final array without null');
 
@@ -275,7 +275,7 @@ mssql.connect(config, err => {
     const Minute = time.split(':')[1];
     const Seconds = time.split(':')[2];
 
-    // nsongdb();
+    //nsongdb();
 
     // get the amount of time needed to get to 10seconds of the next hour
     const extraMinute = (62 - Number(Minute))*60*1000
