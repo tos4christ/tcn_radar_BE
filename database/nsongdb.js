@@ -35,7 +35,6 @@ const send_to_api = (data_object) => {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
-        "api-key": `${process.env.POWER_DATA}`,
         "Authorization": `Bearer ${process.env.POWER_DATA}`
     },
     data: data_object
@@ -44,7 +43,7 @@ const send_to_api = (data_object) => {
     .request(options)
     .then(response => {
       console.log(response.statusText, response.data, " the POST data");
-      console.log(response, " the Response data");
+      //console.log(response, " the Response data");
     })
     .catch(err => {
       console.error(err)
