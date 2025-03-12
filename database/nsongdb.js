@@ -28,14 +28,15 @@ const send_to_api = (data_object) => {
   const options = {
     method: "POST",
     url,
-    params: {'api-version': '3.0', username: 'iot@tcn.gov.ng', password: 'TCNiot@Intel@2020'},
+    params: {'api-version': '3.0'},
     //mode: "cors",
     headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
-        "api-key": `${process.env.POWER_LEDGER}`,
+        "api-key": `${process.env.POWER_DATA}`,
+        "Authorization": `Bearer ${process.env.POWER_DATA}`
     },
     data: data_object
   }

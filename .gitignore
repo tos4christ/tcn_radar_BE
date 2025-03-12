@@ -32,6 +32,7 @@ process.json
 /process.json
 build
 build/
+dist
 
 
 
