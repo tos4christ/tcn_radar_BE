@@ -91,6 +91,7 @@ const client_4 = mqtt.connect(host_4);
 const client_mesl = mqtt.connect(host_2, options);
 const client_fipl = mqtt.connect(host_2, options);
 const client_taopex = mqtt.connect(host_2, options);
+const client_ndphc = mqtt.connect(host_2, options);
 
 
 // Client on connect
@@ -130,7 +131,8 @@ client_2.on('connect', () => {
         'taopex/tv', 'sunflag/cs', 'sagamu/tv', 'monarch/cs', 'larfarge/cs',
          'topSteel/cs', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs',
          'quantum/cs', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
-         'pheonix/cs'
+         'pheonix/cs', 'ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
+         'ndphc/pulkit/lagos/pd'
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
@@ -210,6 +212,15 @@ client_taopex.on('connect', () => {
     [
       'taopex/kamSteel/sagamu/pd', 'taopex/kamSteel/ilorin/pd',
       'taopex/erKang/ilorin/pd'
+    ], {qos: 2},
+    err => err ? console.log('this is the error', err) : null
+  )
+});
+client_ndphc.on('connect', () => {
+  client_ndphc.subscribe(
+    [
+      'ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
+      'ndphc/pulkit/lagos/pd'
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
@@ -2372,6 +2383,48 @@ client_taopex.on('message', (topic, message) => {
   // Function to run when a client connects to the server whereever it is hosted
    
   io.sockets.emit('client_message_taopex', { message: message.toString() });
+  
+  return;
+  // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
+  let data;
+  try {
+      data = JSON.parse(message.toString());     
+      const station = data.name;
+      const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
+      var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
+      const hour = time.split(':')[0];
+      const minute = time.split(':')[1]
+      const seconds = time.split(':')[2]
+      const level = 132;
+      const dateTemp = date.split('-');
+      const epoch_time = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
+      // console.log(epoch_time.getTime(), epoch_time, 'the epoch')
+      let kv, mw, mvar, amp, pf, freq;
+      kv = data.v ? data.v : 0.00;
+      mw = data.mw ? data.mw : 0.00;
+      amp = data.a ? data.a : 0.00;
+      mvar = data.mx ? data.mx : 0.00;
+      // console.log({station, kv, mw, amp, mvar, time, epoch_time});
+      db.query(linesModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, epoch_time.getTime()])
+          .then( response => {
+            // console.log('its okay 2')
+          })
+          .catch(err => console.log(err))
+  } catch(err) {
+      console.error(err)
+  }
+});
+client_ndphc.on('message', (topic, message) => {
+  if (['ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
+      'ndphc/pulkit/lagos/pd'].includes(topic)) {
+    console.log(message.toString(), 'client taopex');
+  }
+  // return;
+  // broadcast the message to the client that are connected
+  // Function to run when a client connects to the server whereever it is hosted
+   
+  io.sockets.emit('client_message_ndphc', { message: message.toString() });
   
   return;
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
