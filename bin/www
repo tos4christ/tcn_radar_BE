@@ -335,12 +335,12 @@ client_2.on('message', (topic, message) => {
           line_name = line.id;
           variant = line.td ? 'transmission' : line.gd ? 'generation' : undefined;
           if (variant === 'transmission') {
-              kv = line.td.V ? line.td.V : 0.00;
+              kv = line.td.V ? line.td.V : line.td.v ? line.td.v : 0.00;
               mw = line.td.mw ? line.td.mw : 0.00;
               amp = line.td.A ? line.td.A : 0.00;
               mvar = line.td.mvar ? line.td.mvar : 0.00;
           } else if (variant === 'generation') {
-              kv = line.gd.V ? line.gd.V : 0.00;
+              kv = line.gd.V ? line.gd.V : line.gd.v ? line.gd.v : 0.00;
               mw = line.gd.mw ? line.gd.mw : 0.00;
               amp = line.gd.A ? line.gd.A : 0.00;
               mvar = line.gd.mvar ? line.gd.mvar : 0.00;
