@@ -316,7 +316,7 @@ client_2.on('message', (topic, message) => {
   let data;
   try {
       data = JSON.parse(message.toString());     
-      const station = data.id;
+      const station = data.id ? data.id : data.name;
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
       const { lines, units, transformers } = data;
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
