@@ -2417,7 +2417,7 @@ client_taopex.on('message', (topic, message) => {
   }
 });
 client_ndphc.on('message', (topic, message) => {
-  if (['pheonix/cs'].includes(topic)) {
+  if (['ndphc/phoenix/ogun/pd'].includes(topic)) {
     console.log(message.toString(), 'client ndphc');
   }
   // return;
