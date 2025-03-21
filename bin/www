@@ -220,7 +220,7 @@ client_ndphc.on('connect', () => {
   client_ndphc.subscribe(
     [
       'ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
-      'ndphc/pulkit/lagos/pd', 'pulkitSteel/cs', 'sunflag/cs'
+      'ndphc/pulkit/lagos/pd'
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
@@ -2416,9 +2416,10 @@ client_taopex.on('message', (topic, message) => {
   }
 });
 client_ndphc.on('message', (topic, message) => {
-  // if (['ndphc/phoenix/ogun/pd'].includes(topic)) {
-  //   console.log(message.toString(), 'client ndphc');
-  // }
+  if (['ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
+      'ndphc/pulkit/lagos/pd'].includes(topic)) {
+    console.log(message.toString(), 'client ndphc');
+  }
   // return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
