@@ -129,7 +129,7 @@ client_2.on('connect', () => {
         'zungeru/status', 'gereguGs/tv', 'lokojats/tv', 'parasenergyPs/pv',
         'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 'riversIppPs/pv',
         'taopex/tv', 'sunflag/cs', 'sagamu/tv', 'monarch/cs', 'larfarge/cs',
-         'topSteel/cs', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs',
+         'topSteel/cs', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs', 'taopex/kamSteel/sagamu/pd',
          'quantum/cs', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
          'ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
          'ndphc/pulkit/lagos/pd'
