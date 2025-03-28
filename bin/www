@@ -2303,7 +2303,7 @@ client_mesl.on('message', (topic, message) => {
       // Do not save this into the database, it is already being saved in Client_2
       return;
     }
-  return;
+  //return;
  
   let data;
   try {
@@ -2368,7 +2368,8 @@ client_fipl.on('message', (topic, message) => {
    
   io.sockets.emit('client_message_fipl', { message: message.toString() });
   
-  return;
+  //return;
+
   let data;
   try {
       data = JSON.parse(message.toString());
@@ -2433,7 +2434,8 @@ client_taopex.on('message', (topic, message) => {
    
   io.sockets.emit('client_message_taopex', { message: message.toString() });
   
-  return;
+  // return;
+  
   let data;
   try {
       data = JSON.parse(message.toString());
