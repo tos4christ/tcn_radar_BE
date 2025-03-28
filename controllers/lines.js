@@ -18,12 +18,12 @@ const pool_2 =  new Pool({
     port: 5432
 });
         
-pool_2.on('error', (err, client) => {
-    console.log(err, 'error from pool 2');
-})
-pool_2.on('connect', () => {
-    console.log('connected on pool 2')
-})
+// pool_2.on('error', (err, client) => {
+//     console.log(err, 'error from pool 2');
+// })
+// pool_2.on('connect', () => {
+//     console.log('connected on pool 2')
+// })
 
 const get_collapse = (t1, t2) => {
     return `select station, date, line_name, mw, kv, hour, minute, seconds, amp, time from lines_table where time between ${t1} and ${t2} and station in 

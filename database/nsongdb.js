@@ -1,6 +1,6 @@
 const mssql = require("mssql");
 const mydb = require("../database/db");
-const queryString = require("../models/lines");
+//const queryString = require("../models/lines");
 var model = require("../models/lines");
 var dateFormatter = require('../utility/dateFormatter');
 var refined_stations = require('../database/nsong_stations');
@@ -107,7 +107,7 @@ mssql.connect(config, err => {
                 const finalArray = tempArr.filter( tar => tar.seconds !== null);
 
                 // Send data to Intel Tech
-                send_to_api(finalArray);
+                //send_to_api(finalArray);
                 
                 console.log(finalArray, 'the final array without null');
 
