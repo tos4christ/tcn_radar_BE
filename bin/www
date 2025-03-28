@@ -302,10 +302,10 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  // if (['mesl/zeberced/pd'].includes(topic)) {
-  //   console.log(message.toString(), 'client 2');
-  //   return;
-  // }
+  if (['kamSteel/cs'].includes(topic)) {
+    console.log(message.toString(), 'client 2');
+    return;
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
