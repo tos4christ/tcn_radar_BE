@@ -2289,11 +2289,10 @@ const temporary_storage = {
 // });
 // Client on Message for Bilaterals
 client_mesl.on('message', (topic, message) => {
-  // if (['mesl/gazaoua/pd'].includes(topic)) {
-  //   console.log(message.toString(), 'client mesl');
-  //   // console.log(message, typeof message, 'client mesl');
-  //   //return;
-  // }
+  if (['mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/inner-galaxy1/pd', 'mesl/inner-galaxy2/pd',
+       'mesl/gazaoua/pd', 'mesl/Kam33/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd', 'quantum/cs'].includes(topic)) {
+    console.log(message.toString(), 'client mesl');
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
