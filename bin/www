@@ -302,10 +302,10 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  if (['kamSteel/cs'].includes(topic)) {
-    console.log(message.toString(), 'client 2');
-    return;
-  }
+  // if (['kamSteel/cs'].includes(topic)) {
+  //   console.log(message.toString(), 'client 2');
+  //   return;
+  // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
@@ -2375,9 +2375,10 @@ client_fipl.on('message', (topic, message) => {
   }
 });
 client_taopex.on('message', (topic, message) => {
-  // if (['taopex/kamSteel/ilorin/pd'].includes(topic)) {
-  //   console.log(message.toString(), 'client taopex');
-  // }
+  if (['taopex/kamSteel/sagamu/pd', 'taopex/kamSteel/ilorin/pd',
+      'taopex/erKang/ilorin/pd'].includes(topic)) {
+    console.log(message.toString(), 'client taopex');
+  }
   // return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
