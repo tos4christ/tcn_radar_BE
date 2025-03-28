@@ -1,0 +1,59 @@
+
+.switch-container {
+    max-width: 1000px;
+    text-align: center;
+    padding: 0 10px;
+    margin: 0 auto;
+    color: #e96e50;
+}
+
+.switch-wrapper {
+    position: relative;
+    display: inline-flex
+;
+    padding: 4px;
+    border: 1px solid lightgrey;
+    margin-bottom: 15px;
+    border-radius: 30px;
+    background: var(--white);
+}
+
+.switch-wrapper [type="radio"] {
+    position: absolute;
+    left: -9999px;
+}
+.switch-wrapper label {
+    font-size: 16px;
+    z-index: 1;
+    min-width: 100px;
+    line-height: 32px;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: color 0.25s ease-in-out;
+}
+
+.switch-wrapper [type="radio"]:checked#yearly ~ label[for="yearly"] {
+    color: var(--white);
+}
+
+.switch-wrapper [type="radio"]:checked#yearly + label[for="monthly"] ~ .highlighter {
+    transform: translateX(100%);
+}
+
+
+
+
+
+
+
+.switch-wrapper .highlighter {
+    position: absolute;
+    color: #e96e50;
+    top: 4px;
+    left: 4px;
+    width: calc(50% - 4px);
+    height: calc(100% - 8px);
+    border-radius: 30px;
+    background: #35a56b;
+    transition: transform 0.25s ease-in-out;
+}
