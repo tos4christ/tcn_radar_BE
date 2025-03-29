@@ -52,7 +52,7 @@ signin.post = (req, res) => {
         }
       };
       // console.log(responseBody, 'the password match');
-      res.redirect('https://tcnnas.org/home');
+      res.redirect('/home');
       // res.status(200).send(responseBody);
       //res.status(200).send(responseBody); 
       next();           
