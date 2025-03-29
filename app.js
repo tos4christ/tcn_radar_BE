@@ -123,10 +123,10 @@ app.use('/api/weather', weatherRouter);
 // })
 
 // Function to intercept disabled routes and not process them sending 404 error
-app.get('/home', (req, res) => {
-  res.status(200);
-  res.redirect('/home');
-});
+// app.get('/home', (req, res) => {
+//   res.status(200);
+//   res.redirect('/home');
+// });
 app.get('/nccnasfullpage', (req, res) => {
   res.status(404);
   res.end('NOT FOUND');
