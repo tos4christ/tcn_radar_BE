@@ -4,13 +4,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const fs = require('fs');
 var mssqlServer = require('./database/nsongdb');
 // var os = require('node:os'); 
 // os.setPriority(process.pid, os.constants.priority.PRIORITY_HIGHEST);
 
+// Set up the environment variables
 dotenv.config();
-
-// Add methods to accepts wide range of requests for the API
 
 // Import routers for tickets
 var signupRouterTickets = require('./routes/signupTickets');
@@ -52,12 +52,19 @@ http_app.use(function(req, res, next) {
 http_app.listen(80, "172.16.200.35");
 
 app.use(cors());
+
+// Create a write stream (in append mode) for logging
+const serverLogStream = fs.createWriteStream(path.join(__dirname, 'server.log'), { flags: 'a' }); 
+// Use Morgan to log requests to the server log file
+app.use(logger('combined', { stream: serverLogStream }));
 app.use(logger('dev'));
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/', express.static(path.join(__dirname, 'build')));
 
+// Add methods to accepts wide range of requests for the API
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Private-Network', true);
