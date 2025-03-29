@@ -6,7 +6,7 @@ var db = require('../database/db');
 const signin = {};
 
 signin.get = (req, res) => {
-  res.redirect('https://tcnnas.org/')
+  res.redirect('https://tcnnas.org/signin');
 }
 
 signin.post = (req, res) => {
