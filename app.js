@@ -37,6 +37,7 @@ var changePasswordRouter = require('./routes/changePassword');
 
 // Import routers for Frequency
 var frequencyRouter = require('./routes/freq');
+var verifyTokenRouter = require('./routes/verifyToken');
 
 var app = express();
 var http_app = express();
@@ -116,7 +117,7 @@ app.use('/ticketsignin', signinRouterTickets);
 app.use('/ticketsignup', signupRouterTickets);
 app.use('/tickets', ticketsRouter);
 app.use('/api/weather', weatherRouter);
-
+app.use('/verifytoken', verifyTokenRouter);
 
 // app.get('/.well-known/pki-validation/042B2D6470F726347D7B55996AA809F6.txt', (req, res) => {
 //   res.sendFile(path.join(__dirname, "ssl", "042B2D6470F726347D7B55996AA809F6.txt"))

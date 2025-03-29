@@ -42,6 +42,7 @@ signin.post = (req, res) => {
         sub: name
       }, process.env.TOKENKEY, { expiresIn: "240h" });
       // the body to send to front end
+      // const valid_token_time = Date.now() + (24 * 60 * 60 * 1000);
       const responseBody = {
         status: 'Success',
         data: {
