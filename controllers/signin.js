@@ -55,7 +55,7 @@ signin.post = (req, res) => {
       res.redirect('/home');
       // res.status(200).send(responseBody);
       //res.status(200).send(responseBody); 
-      // next();           
+      next();           
     }
   })
     .catch((e) => e.message);
