@@ -40,7 +40,7 @@ signin.post = (req, res) => {
       // inside the database operation, store the jwt
       const token = jwt.sign({
         sub: name
-      }, process.env.TOKENKEY, { expiresIn: "30s" });
+      }, process.env.TOKENKEY, { expiresIn: "4h" });
       // the body to send to front end
       // const valid_token_time = Date.now() + (24 * 60 * 60 * 1000);
       const responseBody = {
