@@ -52,11 +52,19 @@ http_app.use(function(req, res, next) {
 http_app.listen(80, "172.16.200.35");
 
 app.use(cors());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cookieParser());
+app.use('/', express.static(path.join(__dirname, 'build')));
 
 // Create a write stream (in append mode) for logging
 const serverLogStream = fs.createWriteStream(path.join(__dirname, 'server.log'), { flags: 'a' });
 // Use Morgan to log requests to the server log file
-app.use(logger('combined', { stream: serverLogStream }));
+
+// Custom token to capture the body of the request
+logger.token('body', (req) => JSON.stringify(req.body));
+app.use(logger(':date[iso] :remote-addr :method :url :status :res[content-length] - :response-time ms - :body', { stream: serverLogStream }));
+// app.use(logger('combined', { stream: serverLogStream }));
 app.use(logger('dev'));
 // Creating a rotating file stream for logging
 // const rfs = require('rotating-file-stream');
@@ -64,11 +72,6 @@ app.use(logger('dev'));
 //   interval: '1d', // rotate daily
 //   path: path.join(__dirname, 'log')
 // }); });
-
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(cookieParser());
-app.use('/', express.static(path.join(__dirname, 'build')));
 
 // Add methods to accepts wide range of requests for the API
 app.use((req, res, next) => {
