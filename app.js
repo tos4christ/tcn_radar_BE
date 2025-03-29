@@ -54,7 +54,7 @@ http_app.listen(80, "172.16.200.35");
 app.use(cors());
 
 // Create a write stream (in append mode) for logging
-const serverLogStream = fs.createWriteStream(path.join(__dirname, 'server.log'), { flags: 'a' }); 
+const serverLogStream = fs.createWriteStream(path.join(__dirname, 'server.log'), { flags: 'a' });
 // Use Morgan to log requests to the server log file
 app.use(logger('combined', { stream: serverLogStream }));
 app.use(logger('dev'));

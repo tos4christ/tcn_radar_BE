@@ -33,6 +33,8 @@ process.json
 build
 build/
 dist
+build/asset-manifest.json
+build/index.html
 
 
 
