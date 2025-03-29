@@ -21,7 +21,7 @@ const verifyToken = {};
 verifyToken.post = (req, res, next) => {
     const { token } = req.body;
     const decodedToken = decodeToken(token);
-    console.log(decodedToken, 'the decoded token');
+    // console.log(decodedToken, 'the decoded token');
     if (decodedToken) {
       res.status(200).send({
         status: 'Success',
