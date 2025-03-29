@@ -31,6 +31,14 @@ verifyToken.post = (req, res, next) => {
           isLoggedIn: true
         }
       });
+    } else {
+      res.status(401).send({
+        status: 'Error',
+        data: {
+          message: 'Token is invalid',
+          isLoggedIn: false
+        }
+      });
     }
 }
 
