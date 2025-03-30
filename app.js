@@ -64,7 +64,8 @@ const serverLogStream = fs.createWriteStream(path.join(__dirname, 'server.log'),
 
 // Custom token to capture the body of the request
 logger.token('body', (req) => JSON.stringify(req.body));
-app.use(logger(':date[iso] :remote-addr :method :url :status :res[content-length] - :response-time ms - :body', { stream: serverLogStream }));
+logger.token('auth', (req) => req.headers['authorization'] || 'No Authorization Header');
+app.use(logger(':date[clf] - :user-agent :req[host] - :referrer - :remote-user - :remote-addr :method - :auth - :url :status - :res[content-length] - :response-time ms - :total-time ms - :body', { stream: serverLogStream }));
 // app.use(logger('combined', { stream: serverLogStream }));
 app.use(logger('dev'));
 // Creating a rotating file stream for logging
