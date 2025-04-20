@@ -45,6 +45,16 @@ var server = https.createServer(httpsOptions, app);
 // var server = http.createServer(app);
 
 const io = new Server(server);
+
+io.use((socket, next) => {
+  const token = socket.handshake.auth.token;
+  console.log(token, 'the token from the client');
+  // if (isValidToken(token)) {
+  //     next();
+  // } else {
+  //     next(new Error("Unauthorized"));
+  // }
+});
 // io.on("connection", socket => {
 //   console.log(socket.data, 'the socket data');
 //   socket.on("connected", data => {
