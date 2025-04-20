@@ -70,11 +70,9 @@ io.use((socket, next) => {
   if (decodedToken.exp * 1000 > Date.now()) {
       console.log('valid token');
       next();
+  } else {
+      next(new Error("Unauthorized"));
   }
-  next();
-  // } else {
-  //     next(new Error("Unauthorized"));
-  // }
 });
 // io.on("connection", socket => {
 //   console.log(socket.data, 'the socket data');
