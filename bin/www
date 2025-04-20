@@ -62,7 +62,7 @@ const io = new Server(server);
 io.use((socket, next) => {
   //const token = socket.handshake.auth.token;
   //const decodedToken = decodeToken(token);
-  // console.log(decodedToken, 'the token from the client');
+  console.log(socket, 'the socket from the client');
   next();
   // if (isValidToken(token)) {
   //     next();
