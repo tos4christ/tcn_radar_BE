@@ -65,11 +65,11 @@ io.use((socket, next) => {
   console.log(token, 'the token from the client');
   console.log(decodedToken, 'the decoded token from the client');
   next();
-  if (isValidToken(token)) {
-      next();
-  } else {
-      next(new Error("Unauthorized"));
-  }
+  // if (isValidToken(token)) {
+  //     next();
+  // } else {
+  //     next(new Error("Unauthorized"));
+  // }
 });
 // io.on("connection", socket => {
 //   console.log(socket.data, 'the socket data');
