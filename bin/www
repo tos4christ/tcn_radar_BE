@@ -59,20 +59,20 @@ var server = https.createServer(httpsOptions, app);
 
 const io = new Server(server);
 
-// io.use((socket, next) => {
-//   const token = socket.handshake.auth.token;
-//   const decodedToken = decodeToken(token);
-//   console.log(token, 'the token from the client');
-//   console.log(decodedToken, 'the decoded token from the client');
-//   console.log(isValidToken(token), 'the isvalid token from the client');
-//   console.log(isValidToken(decodedToken), 'the isvalid decoded token from the client');
-//   next();
-//   // if (isValidToken(token)) {
-//   //     next();
-//   // } else {
-//   //     next(new Error("Unauthorized"));
-//   // }
-// });
+io.use((socket, next) => {
+  const token = socket.handshake.auth.token;
+  const decodedToken = decodeToken(token);
+  console.log(token, 'the token from the client');
+  console.log(decodedToken, 'the decoded token from the client');
+  //console.log(isValidToken(token), 'the isvalid token from the client');
+  //console.log(isValidToken(decodedToken), 'the isvalid decoded token from the client');
+  next();
+  // if (isValidToken(token)) {
+  //     next();
+  // } else {
+  //     next(new Error("Unauthorized"));
+  // }
+});
 // io.on("connection", socket => {
 //   console.log(socket.data, 'the socket data');
 //   socket.on("connected", data => {
