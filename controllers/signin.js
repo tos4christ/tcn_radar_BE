@@ -20,7 +20,7 @@ signin.post = (req, res) => {
   }
   db.query(model.get, [email])
   .then((result) => {
-    console.log(result.rows, 'the result from the database');
+    // console.log(result.rows, 'the result from the database');
     // check to see if the user has ever changed their password before and then redirect them to change password
     if(result.rows.length === 0) {
       const responseBody = {
