@@ -67,8 +67,9 @@ io.use((socket, next) => {
   //console.log(isValidToken(token), 'the isvalid token from the client');
   //console.log(isValidToken(decodedToken), 'the isvalid decoded token from the client');
   
-  if (decodedToken.exp * 1000 > Date.now()) {
-      console.log('valid token');
+  // if (decodedToken.exp * 1000 > Date.now()) {
+  if (token) {
+      //console.log('valid token');
       next();
   } else {
       next(new Error("Unauthorized"));
