@@ -64,7 +64,7 @@ io.use((socket, next) => {
   const token = socket.handshake.auth.token;
   const decodedToken = decodeToken(token);
   // console.log(token, 'the token from the client');
-  console.log(decodedToken.payload, 'the decoded token from the client');
+  // console.log(decodedToken.payload, 'the decoded token from the client');
   const authorized_subs = [
     "Abba Terab","Engr Abdulmumini", "Engr Bawa", "Engr Adeyemo Abidemi", "Engr Amos Jacob", "Engr B. A. Ishola",
     "Engr AG Balarabe", "Chidi Ike", "Dennis Dankaka", "Engr Dimeji Otesanya", "Musa H. A.", "Emeka Aziagba", 
