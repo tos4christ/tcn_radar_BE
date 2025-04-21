@@ -78,7 +78,7 @@ io.use((socket, next) => {
   // List the array of subs that should be acceptable in order to connect to the socket
   // if (decodedToken.exp * 1000 > Date.now()) {
   // if (sub_exists && special_secret === process.env.SPECIAL_SECRET) {
-  if (sub_exists) {
+  if (true) {
       //console.log('valid token');
       next();
   } else {
