@@ -65,10 +65,18 @@ io.use((socket, next) => {
   const decodedToken = decodeToken(token);
   // console.log(token, 'the token from the client');
   console.log(decodedToken.payload.sub, 'the decoded token from the client');
-  
+  const authorized_subs = [
+    "Abba Terab","Engr Abdulmumini", "Engr Bawa", "Engr Adeyemo Abidemi", "Engr Amos Jacob", "Engr B. A. Ishola",
+    "Engr AG Balarabe", "Chidi Ike", "Dennis Dankaka", "Engr Dimeji Otesanya", "Musa H. A.", "Emeka Aziagba", 
+    "Fabian Wende", "Fetuga Oluwatosin", "Grid Controller", "Mogah John", "Jude Agupusi", "Engr Umoh",
+    "Engr. Lawal", "Dr Seun Amoda", "Ojo Adebiyi", "Olufemi Tosin", "Olusegun Babarinde", "Anibaba Olawale",
+    "NCC DATA ROOM", "Engr Patrick Obe", "System Planning", "Admin", "TDP", "Tunde Azeez", "Yusuf Ali"
+  ];
+  const current_sub = decodedToken.payload.sub;
+  const sub_exists = authorized_subs.includes(current_sub);
   // List the array of subs that should be acceptable in order to connect to the socket
   // if (decodedToken.exp * 1000 > Date.now()) {
-  if (decodedToken) {
+  if (sub_exists) {
       //console.log('valid token');
       next();
   } else {
