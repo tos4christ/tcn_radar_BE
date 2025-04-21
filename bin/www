@@ -26,7 +26,8 @@ const decodeToken = (token) => {
     try {
       // Verify and Decode the token
       // jwt.decode(token); 
-      const decoded = jwt.verify(token, process.env.TOKENKEY);    
+      //const decoded = jwt.verify(token, process.env.TOKENKEY);
+      const decoded = jwt.decode(token, { complete: true });  
       return decoded;
     } catch (error) {
       console.error("Error decoding token:", error);
@@ -61,9 +62,9 @@ const io = new Server(server);
 
 io.use((socket, next) => {
   const token = socket.handshake.auth.token;
-  // const decodedToken = decodeToken(token);
-  // console.log(token, 'the token from the client');
-  // console.log(decodedToken, 'the decoded token from the client');
+  const decodedToken = decodeToken(token);
+  console.log(token, 'the token from the client');
+  console.log(decodedToken, 'the decoded token from the client');
   
   // if (decodedToken.exp * 1000 > Date.now()) {
   if (token) {
