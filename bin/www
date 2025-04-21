@@ -70,7 +70,7 @@ io.use((socket, next) => {
     "Engr AG Balarabe", "Chidi Ike", "Dennis Dankaka", "Engr Dimeji Otesanya", "Musa H. A.", "Emeka Aziagba", 
     "Fabian Wende", "Fetuga Oluwatosin", "Grid Controller", "Mogah John", "Jude Agupusi", "Engr Umoh",
     "Engr. Lawal", "Dr Seun Amoda", "Ojo Adebiyi", "Olufemi Tosin", "Olusegun Babarinde", "Anibaba Olawale",
-    "NCC DATA ROOM", "Engr Patrick Obe", "System Planning", "Admin", "TDP", "Tunde Azeez", "Yusuf Ali"
+    "NCC DATA ROOM", "Engr Patrick Obe", "System Planning", "Admin", "TDP", "Tunde Azeez", "Yusuf Ali", ""
   ];
   const current_sub = decodedToken.payload.sub ? decodedToken.payload.sub : null;
   const special_secret = decodedToken.payload.special_secret ? decodedToken.payload.special_secret : null;
