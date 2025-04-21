@@ -59,6 +59,16 @@ signin.post = (req, res) => {
       // res.status(200).send(responseBody);
       res.status(200).send(responseBody); 
       next();           
+    } else {
+      const responseBody = {
+        status: 'Error',
+        data: {
+          message: 'Password does not match',
+          isLoggedIn: false
+        }
+      };
+      res.status(401).send(responseBody);
+      next();
     }
   })
     .catch((e) => e.message);
