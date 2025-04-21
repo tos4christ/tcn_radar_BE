@@ -72,8 +72,8 @@ io.use((socket, next) => {
     "Engr. Lawal", "Dr Seun Amoda", "Ojo Adebiyi", "Olufemi Tosin", "Olusegun Babarinde", "Anibaba Olawale",
     "NCC DATA ROOM", "Engr Patrick Obe", "System Planning", "Admin", "TDP", "Tunde Azeez", "Yusuf Ali"
   ];
-  const current_sub = decodedToken.payload.sub;
-  const special_secret = decodedToken.payload.special_secret;
+  const current_sub = decodedToken.payload.sub ? decodedToken.payload.sub : null;
+  const special_secret = decodedToken.payload.special_secret ? decodedToken.payload.special_secret : null;
   const sub_exists = authorized_subs.includes(current_sub);
   // List the array of subs that should be acceptable in order to connect to the socket
   // if (decodedToken.exp * 1000 > Date.now()) {
