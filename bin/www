@@ -64,8 +64,9 @@ io.use((socket, next) => {
   const token = socket.handshake.auth.token;
   const decodedToken = decodeToken(token);
   // console.log(token, 'the token from the client');
-  // console.log(decodedToken, 'the decoded token from the client');
+  console.log(decodedToken.payload.sub, 'the decoded token from the client');
   
+  // List the array of subs that should be acceptable in order to connect to the socket
   // if (decodedToken.exp * 1000 > Date.now()) {
   if (decodedToken) {
       //console.log('valid token');
