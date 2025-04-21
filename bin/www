@@ -62,10 +62,8 @@ const io = new Server(server);
 io.use((socket, next) => {
   const token = socket.handshake.auth.token;
   const decodedToken = decodeToken(token);
-  console.log(token, 'the token from the client');
-  console.log(decodedToken, 'the decoded token from the client');
-  //console.log(isValidToken(token), 'the isvalid token from the client');
-  //console.log(isValidToken(decodedToken), 'the isvalid decoded token from the client');
+  // console.log(token, 'the token from the client');
+  // console.log(decodedToken, 'the decoded token from the client');
   
   // if (decodedToken.exp * 1000 > Date.now()) {
   if (token) {
