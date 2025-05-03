@@ -18,7 +18,12 @@ var weatherModel = require("../models/weather");
 var frequencyModel = require("../models/frequency");
 var { Server } = require("socket.io");
 const { Pool } = require('pg');
-// var os = require('node:os');
+var os = require('node:os');
+var cluster = require('cluster');
+
+// Decalre the number of cores to use
+const numCPUs = os.cpus().length;
+
 // os.setPriority(process.pid, os.constants.priority.PRIORITY_HIGHEST);
 var jwt = require('jsonwebtoken');
 
@@ -54,11 +59,32 @@ const httpsOptions = {
   ca: ca
 }
 
+// To start clustered worker disable this line
 var server = https.createServer(httpsOptions, app);
 
-// var server = http.createServer(app);
-
 const io = new Server(server);
+
+if (cluster.isMaster) {
+  // console.log(`Master process ${process.pid} is running`);
+  // Fork workers.
+  for (let i = 0; i < numCPUs; i++) {
+    // cluster.fork();
+  }
+  cluster.on('exit', (worker, code, signal) => {
+    // console.log(`Worker ${worker.process.pid} died, restarting...`);
+    // cluster.fork();
+  });
+} else {
+  // console.log(`Worker process ${process.pid} started`);
+  
+  // Another option is to declare the server outside the cluster block and only
+  // listen to it in the worker processes so that the websocket function can 
+  // use the same server instance
+  // server.listen(port, "172.16.200.35");
+  // server.on('error', onError);
+  // server.on('listening', onListening);
+}
+
 
 // io.use((socket, next) => {
 //   const token = socket.handshake.auth.token;
@@ -2753,6 +2779,7 @@ setInterval(()=> {
 
 /**
  * Listen on provided port, on all network interfaces.
+ * Listen inside the cluster block and disable here
  */
 server.listen(port, "172.16.200.35");
 server.on('error', onError);
