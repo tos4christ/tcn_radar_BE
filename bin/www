@@ -495,8 +495,9 @@ client_4.on('message', (topic, message) => {
         temp_time = new Date().toLocaleTimeString("en-GB").split(" ")[0];
         //console.log(time, " this is the time from local");
       } else if(frequency.t.length >= 5) {
-        time = frequency.t.split(":");
-        temp_time = frequency.t;
+        // Uncomment this line to default back to the contract time
+        // time = frequency.t.split(":");
+        // temp_time = frequency.t;
         //console.log(time, " this is the time from meter");
       }
       //console.log(time, " this is the time picked");
