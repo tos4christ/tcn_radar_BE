@@ -490,12 +490,13 @@ client_4.on('message', (topic, message) => {
       frequency = JSON.parse(message.toString());
       //console.log(frequency, " the frequency");
       //const time = new Date().toLocaleTimeString("en-GB").split(' ')[0];
-      const test_time = new Date().toLocaleTimeString("en-GB").split(" ")[0].split(":");
-      const test_temp_time = new Date().toLocaleTimeString("en-GB").split(" ")[0];
+      //const test_time = new Date().toLocaleTimeString("en-GB").split(" ")[0].split(":");
+      //const test_temp_time = new Date().toLocaleTimeString("en-GB").split(" ")[0];
       //console.log(time, " this is the time from local");
-      console.log(test_time, " this is the time from local");
-      console.log(test_temp_time, " this is the temp time from local");
-      if (frequency.t.length < 1) {
+      //console.log(test_time, " this is the time from local");
+      //console.log(test_temp_time, " this is the temp time from local");
+      if (true) {
+      //if (frequency.t.length < 1) {
         time = new Date().toLocaleTimeString("en-GB").split(" ")[0].split(":");
         temp_time = new Date().toLocaleTimeString("en-GB").split(" ")[0];
         //console.log(time, " this is the time from local");
@@ -505,8 +506,8 @@ client_4.on('message', (topic, message) => {
         // Uncomment this line to default back to the controller time
         time = frequency.t.split(":");
         temp_time = frequency.t;
-        console.log(time, " this is the time from meter");
-        console.log(temp_time, " this is the temp time from meter");
+        // console.log(time, " this is the time from meter");
+        // console.log(temp_time, " this is the temp time from meter");
       }
       //console.log(time, " this is the time picked");
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
