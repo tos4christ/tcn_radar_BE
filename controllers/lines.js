@@ -72,6 +72,7 @@ lines.nari = (req, res) => {
 }
 
 lines.getdaily = (req, res) => {
+    return res.end();
     const { body } = req;
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };   
     const today = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
@@ -123,6 +124,7 @@ lines.getdaily = (req, res) => {
 }
 
 lines.gethourlyvoltage = (req, res) => {
+    return res.end();
     const { body } = req;
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };   
     const today = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
@@ -175,7 +177,7 @@ lines.gethourlyvoltage = (req, res) => {
 }
 
 lines.getcollapse = (req, res, next) => {
-    return;
+    return res.end();
     const { body } = req;
     if(!body.startDate || !body.endDate || !body.startTime || !body.endTime) {
         res.end({data: 'Please supply necessary inputs'})
@@ -239,6 +241,7 @@ lines.downtime = (req, res, next) => {
 }
 
 lines.history = (req, res, next) => {
+    return res.end();
     const { body } = req;
     let { station, equipment, startDate, endDate, startTime, endTime } = body;    
     const {start, end} = timeConverter(startDate, endDate, startTime, endTime);
@@ -260,8 +263,7 @@ lines.history = (req, res, next) => {
 }
 
 lines.average = (req, res, next) => {
-    console.log('i got here')
-    return;
+    return res.end();
     const { body } = req;
     let { station, equipment, checkDate} = body;
     // console.log(station, equipment, checkDate, 'the station')
