@@ -175,6 +175,7 @@ lines.gethourlyvoltage = (req, res) => {
 }
 
 lines.getcollapse = (req, res, next) => {
+    return;
     const { body } = req;
     if(!body.startDate || !body.endDate || !body.startTime || !body.endTime) {
         res.end({data: 'Please supply necessary inputs'})
