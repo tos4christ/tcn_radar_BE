@@ -99,7 +99,7 @@ weather.getWeather = async (req, res, next) => {
 }
 
 weather.getWeather_report = async (req, res, next) => {
-    return res.end();
+    // return res.end();
     const { startDate } = req.body;
     try {
         pool_1.query(model.get_weather_data_main, [startDate])

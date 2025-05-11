@@ -12,7 +12,7 @@ const freq = {};
 // Controller first checks to see if the particular row exists or not, this determines
 // If the row will be created or displayed.
 freq.getFrequency = (req, res, next) => {
-    return res.end();
+    // return res.end();
     // use current_id, equipment_name and level to recognize a current item
     const { body } = req;    
     var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
