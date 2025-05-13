@@ -59,7 +59,7 @@ app.use(cookieParser());
 app.use('/', express.static(path.join(__dirname, 'build')));
 
 // Create a write stream (in append mode) for logging
-const serverLogStream = fs.createWriteStream(path.join(__dirname, 'server_1.log'), { flags: 'a' });
+const serverLogStream = fs.createWriteStream(path.join(__dirname, 'server_2.log'), { flags: 'a' });
 // Use Morgan to log requests to the server log file
 
 // Custom token to capture the body of the request
