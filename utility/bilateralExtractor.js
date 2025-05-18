@@ -289,7 +289,7 @@ function Station_Adder(station_array) {
         'Obafemi Awolowo University Ile-Ife', 'ZEBERCED', 'NIAMEY', 'INNER GALAXY 1', 'INNER GALAXY 2', 'PRISM', 'ATVL','GAZAOUA', 'KAM',
         'Quantum', 'kam Steel Shagamu', 'Kam Steel Integrated Ilorin', 'ER-KANG Limited', 'Ikeja West - Sakete 330kV Line 1',
     ];
-    console.log(station_array[0]['ATVL'][0], 'the station array');
+    console.log(JSON.stringify(station_array), 'the station array');
     return;
     const final_array = [];
     // (id, date, hour, minute, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, time)
