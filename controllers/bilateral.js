@@ -18,11 +18,18 @@ const pool_2 =  new Pool({
 const get_daily_2 = (t1, t2)  => {
     return `SELECT * FROM bilateral_table where name in 
     (
-        'phoenix', 'pulkitSteel', 'sunflag', 'ikejaWest-sakate', 'First Maximum Point Industries Akure', 'Obafemi Awolowo University Ile-Ife',
+        'ikejaWest-sakate', 'First Maximum Point Industries Akure', 'Obafemi Awolowo University Ile-Ife',
         'zeberced', 'Niamey', 'Inner_Galaxy1', 'Inner_Galaxy2', 'PSML', 'ATVL', 'KamInd33kV', 'Gazaoua', 'quantum',
         'kamSteel', 'Er-Kang', 'kamSteel-Ilorin'
     ) and time between ${t1} and ${t2}
     group by name, date, line_name, mw, amp, kv, mvar, pf, f, hour, minute, seconds, time, id order by name, line_name, time;`;
+}
+const get_daily_2_1 = (t1, t2)  => {
+    return `SELECT station as name, date, line_name, mw, amp, kv, mvar, hour, minute, seconds, time, id FROM lines_table where station in 
+    (
+        'phoenix', 'pulkitSteel', 'sunflag'
+    ) and time between ${t1} and ${t2}
+    group by name, date, line_name, mw, amp, kv, mvar, hour, minute, seconds, time, id order by name, line_name, time;`;
 }
 
 
@@ -43,24 +50,32 @@ bilateral.hourly = (req, res) => {
     pool_1.connect((err, client, done) => {
         if (err) throw err;
         client.query(get_daily_2(start, end))
-            .then( resp => {
-                const data = resp.rows;
-                const bilateral_data = bilateralExtractor(data);
-                //console.log(bilateral_data, "  bilateral_data");
-                //return res.end();
-                // Create a new workbook
-                const workbook = XLSX.utils.book_new();
-                bilateral_data.forEach( (temp) => {
-                    const key = Object.keys(temp)[0];
-                    const worksheet = XLSX.utils.json_to_sheet(temp[key])
-                    XLSX.utils.book_append_sheet(workbook, worksheet, key);
-                });            
-                res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
-                const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
-                res.attachment('bilateral.xlsx');
-                res.send(buffer);
-            })
+            .then( resp_1 => {
+                client.query(get_daily_2_1(start, end))
+                    .then( resp => {
+                        const data = resp.rows ? resp.rows : [];
+                        const data_2 = resp_1.rows ? resp_1.rows : [];
+                        console.log(data_2, '  data_2');
+                        return;
+                        const bilateral_data = bilateralExtractor([...data, ...data_2]);
+                        //console.log(bilateral_data, "  bilateral_data");
+                        //return res.end();
+                        // Create a new workbook
+                        const workbook = XLSX.utils.book_new();
+                        bilateral_data.forEach( (temp) => {
+                            const key = Object.keys(temp)[0];
+                            const worksheet = XLSX.utils.json_to_sheet(temp[key])
+                            XLSX.utils.book_append_sheet(workbook, worksheet, key);
+                        });            
+                        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                        // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
+                        const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
+                        res.attachment('bilateral.xlsx');
+                        res.send(buffer);
+                    })
+                    .catch(err => console.log(err))
+                    .finally(() => done())
+            })            
             .catch(err => console.log(err))
             .finally(() => done())
     })
