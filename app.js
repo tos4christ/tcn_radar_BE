@@ -34,6 +34,11 @@ var mxRouter = require('./routes/mx');
 var sllRouter = require('./routes/station_line_load');
 var linesRouter = require('./routes/lines');
 var changePasswordRouter = require('./routes/changePassword');
+var bilateralRouter = require('./routes/bilateral');
+var sp_signinRouter = require('./routes/sp_signin');
+var sp_signupRouter = require('./routes/sp_signup');
+var sp_changePasswordRouter = require('./routes/changePassword_bilateral');
+
 
 // Import routers for Frequency
 var frequencyRouter = require('./routes/freq');
@@ -119,6 +124,11 @@ app.use('/ticketsignup', signupRouterTickets);
 app.use('/tickets', ticketsRouter);
 app.use('/api/weather', weatherRouter);
 app.use('/verifytoken', verifyTokenRouter);
+// Routes for the bilateral
+app.use('/bilateral', bilateralRouter);
+app.use('/sp_signin', sp_signinRouter);
+app.use('/sp_signup', sp_signupRouter);
+app.use('/changepassword_bilateral', sp_changePasswordRouter);
 
 // app.get('/.well-known/pki-validation/042B2D6470F726347D7B55996AA809F6.txt', (req, res) => {
 //   res.sendFile(path.join(__dirname, "ssl", "042B2D6470F726347D7B55996AA809F6.txt"))

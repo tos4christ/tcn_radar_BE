@@ -1,5 +1,6 @@
 const bilateral = {
     create: 'INSERT INTO bilateral_table(date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, time, pf, f) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *',
+    getAll: 'SELECT * FROM bilateral_table',
 }
 
 // Todo list
