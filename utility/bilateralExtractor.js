@@ -461,7 +461,7 @@ function Station_Adder(station_array) {
                             // Iterate over the equipment for insertion into the temphold, this serves as the maximum amount of item that will be used
                             // for the station for this day, any time not here will not be accepted
                             equip[key].forEach( (e) => {
-                                temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: Math.abs(e.mw), mvar: Math.abs(e.mvar), amp: Math.abs(e.amp), station: 'First Maximum Point Industries Akure'})                                
+                                temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: Math.abs(e.mw), mvar: Math.abs(e.mvar), amp: Math.abs(e.amp), station: 'First Maximum Point Industries'})
                             })
                         } else {
                             // Get the key for the next elements
@@ -509,7 +509,7 @@ function Station_Adder(station_array) {
                             // Iterate over the equipment for insertion into the temphold, this serves as the maximum amount of item that will be used
                             // for the station for this day, any time not here will not be accepted
                             equip[key].forEach( (e) => {
-                                temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: Math.abs(e.mw), mvar: Math.abs(e.mvar), amp: Math.abs(e.amp), station: 'Obafemi Awolowo University Ile-Ife'})
+                                temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: Math.abs(e.mw), mvar: Math.abs(e.mvar), amp: Math.abs(e.amp), station: 'Obafemi Awolowo University Ife'})
                             })
                         } else {
                             // Get the key for the next elements
@@ -1091,7 +1091,7 @@ function Station_Adder(station_array) {
                             // Iterate over the equipment for insertion into the temphold, this serves as the maximum amount of item that will be used
                             // for the station for this day, any time not here will not be accepted
                             equip[key].forEach( (e) => {
-                                temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: Math.abs(e.mw), mvar: Math.abs(e.mvar), amp: Math.abs(e.amp), station: 'Ikeja West - Sakete 330kV Line 1'})                                
+                                temp_hold.push({date: e.date, hour: e.hour, minute: e.minute, kv: e.kv, mw: Math.abs(e.mw), mvar: Math.abs(e.mvar), amp: Math.abs(e.amp), station: 'Ikeja West-Sakete 330kV Line1'})                                
                             })
                         } else {
                             // Get the key for the next elements
