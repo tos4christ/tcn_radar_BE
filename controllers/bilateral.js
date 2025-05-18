@@ -48,36 +48,42 @@ bilateral.hourly = (req, res) => {
     start = start.getTime();
     end = end.getTime() + 59000;
     pool_1.connect((err, client, done) => {
-        if (err) throw err;
-        client.query(get_daily_2(start, end))
-            .then( resp_1 => {
-                client.query(get_daily_2_1(start, end))
-                    .then( resp => {
-                        const data = resp.rows ? resp.rows : [];
-                        const data_2 = resp_1.rows ? resp_1.rows : [];
-                        console.log(data_2, '  data_2');
-                        return;
-                        const bilateral_data = bilateralExtractor([...data, ...data_2]);
-                        //console.log(bilateral_data, "  bilateral_data");
-                        //return res.end();
-                        // Create a new workbook
-                        const workbook = XLSX.utils.book_new();
-                        bilateral_data.forEach( (temp) => {
-                            const key = Object.keys(temp)[0];
-                            const worksheet = XLSX.utils.json_to_sheet(temp[key])
-                            XLSX.utils.book_append_sheet(workbook, worksheet, key);
-                        });            
-                        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                        // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
-                        const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
-                        res.attachment('bilateral.xlsx');
-                        res.send(buffer);
-                    })
-                    .catch(err => console.log(err))
-                    .finally(() => done())
-            })            
-            .catch(err => console.log(err))
-            //.finally(() => done())
+        if (err) {
+            console.log(err);
+            done();
+        }
+        client.query(get_daily_2(start, end), (err, response_1) => {
+            if (err) {
+                console.log(err);
+                done();
+            }
+            client.query(get_daily_2_1(start, end), (err, response_2) => {
+                if (err) {
+                    console.log(err);
+                    done();
+                }
+                const data = response_1.rows ? response_1.rows : [];
+                const data_2 = response_2.rows ? response_2.rows : [];
+                // console.log(data_2, '  data_2');
+                // return;
+                const bilateral_data = bilateralExtractor([...data, ...data_2]);
+                //console.log(bilateral_data, "  bilateral_data");
+                //return res.end();
+                // Create a new workbook
+                const workbook = XLSX.utils.book_new();
+                bilateral_data.forEach( (temp) => {
+                    const key = Object.keys(temp)[0];
+                    const worksheet = XLSX.utils.json_to_sheet(temp[key])
+                    XLSX.utils.book_append_sheet(workbook, worksheet, key);
+                });            
+                res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                // res.setHeader("Content-Disposition", "attachment; filename=" + 'tem');
+                const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
+                res.attachment('bilateral.xlsx');
+                res.send(buffer);
+                done();
+            })
+        })
     })
 }
 
