@@ -285,12 +285,10 @@ function Equipment_Sorter(equipment_array) {
 
 function Station_Adder(station_array) {
     const res_data = [
-        'PHEONIX STEEL IKORODU', 'PULKIT ALLOY & STEEL IKORODU', 'SUNFLAG IRON & STEEL IKORODU', 'First Maximum Point Industries Akure',
-        'Obafemi Awolowo University Ile-Ife', 'ZEBERCED', 'NIAMEY', 'INNER GALAXY 1', 'INNER GALAXY 2', 'PRISM', 'ATVL','GAZAOUA', 'KAM',
-        'Quantum', 'kam Steel Shagamu', 'Kam Steel Integrated Ilorin', 'ER-KANG Limited', 'Ikeja West - Sakete 330kV Line 1',
+        'PHEONIX STEEL IKORODU', 'PULKIT ALLOY & STEEL IKORODU', 'SUNFLAG IRON & STEEL IKORODU', 'First Maximum Point Industries',
+        'Obafemi Awolowo University Ife', 'ZEBERCED', 'NIAMEY', 'INNER GALAXY 1', 'INNER GALAXY 2', 'PRISM', 'ATVL','GAZAOUA', 'KAM',
+        'Quantum', 'kam Steel Shagamu', 'Kam Steel Integrated Ilorin', 'ER-KANG Limited', 'Ikeja West-Sakete 330kV Line1',
     ];
-    //console.log(station_array[0], 'the station array');
-    // return;
     const final_array = [];
     // (id, date, hour, minute, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, time)
     res_data.forEach(station_name => {
@@ -444,7 +442,7 @@ function Station_Adder(station_array) {
                     final_array.push(obj)
                 }
             }
-            if (station_name === 'First Maximum Point Industries Akure') {
+            if (station_name === 'First Maximum Point Industries') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'First Maximum Point Industries Akure');
                 // Get the list of equipment objects from the stations
@@ -492,7 +490,7 @@ function Station_Adder(station_array) {
                     final_array.push(obj)
                 }
             }
-            if (station_name === 'Obafemi Awolowo University Ile-Ife') {
+            if (station_name === 'Obafemi Awolowo University Ife') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'Obafemi Awolowo University Ile-Ife');
                 // Get the list of equipment objects from the stations
@@ -1074,7 +1072,7 @@ function Station_Adder(station_array) {
                     final_array.push(obj)
                 }
             }
-            if (station_name === 'Ikeja West - Sakete 330kV Line 1') {
+            if (station_name === 'Ikeja West-Sakete 330kV Line1') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'ikejaWest-sakate');
                 // Get the list of equipment objects from the stations
