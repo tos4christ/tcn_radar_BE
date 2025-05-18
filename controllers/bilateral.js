@@ -16,7 +16,7 @@ const pool_2 =  new Pool({
 });
 
 const get_daily_2 = (t1, t2)  => {
-    return `SELECT * FROM bilateral_table where station in 
+    return `SELECT * FROM bilateral_table where name in 
     (
         'phoenix', 'pulkitSteel', 'sunflag', 'ikejaWest-sakate', 'First Maximum Point Industries Akure', 'Obafemi Awolowo University Ile-Ife',
         'zeberced', 'Niamey', 'Inner_Galaxy1', 'Inner_Galaxy2', 'PSML', 'ATVL', 'KamInd33kV', 'Gazaoua', 'quantum',
