@@ -296,6 +296,7 @@ function Station_Adder(station_array) {
             if (station_name === 'PHEONIX STEEL IKORODU') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'phoenix');
+                console.log(JSON.stringify(station_to_add), ' the station to add phoenix');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['phoenix'][0]['pt1'];
@@ -346,6 +347,7 @@ function Station_Adder(station_array) {
             if (station_name === 'PULKIT ALLOY & STEEL IKORODU') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'pulkitSteel');
+                console.log(JSON.stringify(station_to_add), ' the station to add pulkitSteel');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['pulkitSteel'][0]['psl1'];                
@@ -394,6 +396,7 @@ function Station_Adder(station_array) {
             if (station_name === 'SUNFLAG IRON & STEEL IKORODU') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'sunflag');
+                console.log(JSON.stringify(station_to_add), ' the station to add sunflag');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['sunflag'][0]['sl1'];                
