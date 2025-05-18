@@ -159,6 +159,7 @@ module.exports = ( data ) => {
     // const writeStream = fs.createWriteStream('logger.txt');
     // writeStream.write(station_array);
     // writeStream.end()
+    console.log(JSON.stringify(station_array), '  the station array');
     return Station_Adder(station_array);
 };
 
