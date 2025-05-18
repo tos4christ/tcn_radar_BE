@@ -2625,7 +2625,7 @@ client_sakete.on('message', (topic, message) => {
   // Function to run when a client connects to the server whereever it is hosted
    
   io.sockets.emit('client_message_sakete', { message: message.toString() });
-
+  console.log(message.toString(), '  client sakete');
   let data;
   try {
     data = JSON.parse(message.toString());
