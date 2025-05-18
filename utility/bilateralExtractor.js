@@ -289,8 +289,8 @@ function Station_Adder(station_array) {
         'Obafemi Awolowo University Ile-Ife', 'ZEBERCED', 'NIAMEY', 'INNER GALAXY 1', 'INNER GALAXY 2', 'PRISM', 'ATVL','GAZAOUA', 'KAM',
         'Quantum', 'kam Steel Shagamu', 'Kam Steel Integrated Ilorin', 'ER-KANG Limited', 'Ikeja West - Sakete 330kV Line 1',
     ];
-    console.log(station_array[0], 'the station array');
-    return;
+    //console.log(station_array[0], 'the station array');
+    // return;
     const final_array = [];
     // (id, date, hour, minute, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, time)
     res_data.forEach(station_name => {
@@ -302,7 +302,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['pt1'];
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
+                if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -352,7 +352,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['psl1'];                
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
+                if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -400,7 +400,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['sl1'];                
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
+                if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -451,7 +451,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['First Maximum Point Industries Akure'];                
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
+                if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -499,7 +499,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['Obafemi Awolowo University Ile-Ife'];                
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
+                if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -547,7 +547,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['zeberced'];                
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
+                if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -595,7 +595,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['Niamey'];                
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
+                if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -643,7 +643,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['Inner_Galaxy1'];
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
+                if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -693,7 +693,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['Inner_Galaxy2'];                
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
+                if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -741,7 +741,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['PSML'];                
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
+                if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -789,7 +789,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['ATVL'];                
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
+                if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -837,7 +837,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['Gazaoua'];
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) { 
+                if (equipment_to_sum?.length > 0) { 
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -885,7 +885,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['KamInd33kV'];
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
+                if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -933,7 +933,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['qt1'];
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
+                if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -981,7 +981,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['kamSteel'];
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
+                if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -1031,7 +1031,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0].filter( sa => Object.keys(sa)[0] === 'l1' || Object.keys(sa)[0] === 'l2');
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
+                if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
@@ -1081,7 +1081,7 @@ function Station_Adder(station_array) {
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['Ikeja West - Sakete 330kV Line 1'];
                 // run logic only if there is an equipment to iterate
-                if (equipment_to_sum.length > 0) {
+                if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
                         // Insert all the first items into the temp hold container, 
                         // Then on the next iteration start adding to it
