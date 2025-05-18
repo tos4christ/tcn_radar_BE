@@ -298,7 +298,7 @@ function Station_Adder(station_array) {
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'phoenix');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['pt1'];
+                const equipment_to_sum = station_to_add[0]['phoenix'].filter( sa => Object.keys(sa)[0] === 'pt1');
                 // run logic only if there is an equipment to iterate
                 if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
@@ -348,7 +348,7 @@ function Station_Adder(station_array) {
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'pulkitSteel');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['psl1'];                
+                const equipment_to_sum = station_to_add[0]['pulkitSteel'].filter( sa => Object.keys(sa)[0] === 'psl1');                
                 // run logic only if there is an equipment to iterate
                 if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
@@ -396,7 +396,7 @@ function Station_Adder(station_array) {
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'sunflag');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
-                const equipment_to_sum = station_to_add[0]['sl1'];                
+                const equipment_to_sum = station_to_add[0]['sunflag'].filter( sa => Object.keys(sa)[0] === 'sl1');                
                 // run logic only if there is an equipment to iterate
                 if (equipment_to_sum?.length > 0) {
                     equipment_to_sum.forEach((equip, index) => {
