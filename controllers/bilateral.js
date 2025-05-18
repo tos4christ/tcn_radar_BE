@@ -46,8 +46,8 @@ bilateral.hourly = (req, res) => {
             .then( resp => {
                 const data = resp.rows;
                 const bilateral_data = bilateralExtractor(data);
-                console.log(bilateral_data, "  bilateral_data");
-                return res.end();
+                //console.log(bilateral_data, "  bilateral_data");
+                //return res.end();
                 // Create a new workbook
                 const workbook = XLSX.utils.book_new();
                 bilateral_data.forEach( (temp) => {
