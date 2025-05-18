@@ -287,7 +287,7 @@ function Station_Adder(station_array) {
     const res_data = [
         'PHEONIX STEEL IKORODU', 'PULKIT ALLOY & STEEL IKORODU', 'SUNFLAG IRON & STEEL IKORODU', 'First Maximum Point Industries',
         'Obafemi Awolowo University Ife', 'ZEBERCED', 'NIAMEY', 'INNER GALAXY 1', 'INNER GALAXY 2', 'PRISM', 'ATVL','GAZAOUA', 'KAM',
-        'Quantum', 'kam Steel Shagamu', 'Kam Steel Integrated Ilorin', 'ER-KANG Limited', 'Ikeja West-Sakete 330kV Line1',
+        'Quantum', 'kam Steel Shagamu', 'Kam Steel Integrated Ilorin', 'ER-KANG Limited', 'Ikeja West-Sakete 330kV Line1'
     ];
     const final_array = [];
     // (id, date, hour, minute, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant, time)
@@ -1075,7 +1075,7 @@ function Station_Adder(station_array) {
             if (station_name === 'Ikeja West-Sakete 330kV Line1') {
                 const temp_hold = [];
                 const station_to_add = station_array.filter( sa => Object.keys(sa)[0] === 'ikejaWest-sakate');
-                //console.log(JSON.stringify(station_to_add), '  the station to add ikeja west');
+                console.log(JSON.stringify(station_to_add), '  the station to add ikeja west');
                 // Get the list of equipment objects from the stations
                 // remember to filter equipment in the cases where not all is required
                 const equipment_to_sum = station_to_add[0]['l1'];
