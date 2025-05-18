@@ -137,7 +137,7 @@ module.exports = ( data ) => {
     station_array.forEach(station => {
         let equipment_array;
         // Filter the station data for all the equipment
-        const station_data = data.filter( sdat => sdat.station === Object.keys(station)[0] );
+        const station_data = data.filter( sdat => sdat.name === Object.keys(station)[0] );
         //// IF THE NAME OF THE STATION IS kamSteel-Ilorin, THEN CREATE TWO OBJECTS FOR THE EQUIPMENT
 
         // check if there is a station data there, then get the equipment array to filter and store the equipment values
