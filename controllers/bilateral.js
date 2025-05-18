@@ -77,7 +77,7 @@ bilateral.hourly = (req, res) => {
                     .finally(() => done())
             })            
             .catch(err => console.log(err))
-            .finally(() => done())
+            //.finally(() => done())
     })
 }
 
