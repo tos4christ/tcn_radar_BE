@@ -13,6 +13,17 @@ const decodeToken = (token) => {
       return null;
     }
   };
+  const decodeToken_bilateral = (token) => {
+    try {
+      // Verify and Decode the token
+      // jwt.decode(token); 
+      const decoded = jwt.verify(token, process.env.TOKENKEY_BILATERAL);    
+      return decoded;
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      return null;
+    }
+  };
 
 const verifyToken = {};
 // Controller first checks to see if the particular row exists or not, this determines
@@ -22,6 +33,29 @@ verifyToken.post = (req, res, next) => {
     const { token } = req.body;
     const decodedToken = decodeToken(token);
     // console.log(decodedToken, 'the decoded token');
+    if (decodedToken) {
+      res.status(200).send({
+        status: 'Success',
+        data: {
+          message: 'Token is valid',
+          decodedToken,
+          isLoggedIn: true
+        }
+      });
+    } else {
+      res.status(401).send({
+        status: 'Error',
+        data: {
+          message: 'Token is invalid',
+          isLoggedIn: false
+        }
+      });
+    }
+}
+
+verifyToken.post_bilateral = (req, res, next) => {
+    const { token } = req.body;
+    const decodedToken = decodeToken_bilateral(token);
     if (decodedToken) {
       res.status(200).send({
         status: 'Success',
