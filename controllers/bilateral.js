@@ -1,6 +1,5 @@
 const { Pool } = require("pg");
 var pool_1 = require('../database/db');
-var dateFormatter = require('../utility/dateFormatter');
 var timeConverter = require('../utility/timeConverter');
 var bilateralExtractor = require('../utility/bilateralExtractor');
 var XLSX = require('xlsx');

@@ -1,4 +1,3 @@
-var jwt = require('jsonwebtoken');
 var encoder = require('../utility/passwordEnc');
 var model = require('../models/changePassword');
 var db = require('../database/db');

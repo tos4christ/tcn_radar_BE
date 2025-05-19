@@ -42,7 +42,7 @@ signin.post = (req, res) => {
       const token = jwt.sign({
         sub: name,
         special_secret: process.env.SPECIAL_SECRET,
-      }, process.env.TOKENKEY, { expiresIn: "1h" });
+      }, process.env.TOKENKEY_BILATERAL, { expiresIn: "1h" });
       // the body to send to front end
       // const valid_token_time = Date.now() + (24 * 60 * 60 * 1000);
       const responseBody = {
