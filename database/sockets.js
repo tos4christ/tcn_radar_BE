@@ -11,7 +11,11 @@ module.exports = {
         return io;
     },
     getIO: () => {
-        if (!io) return console.log("Socket.IO has not been initialized!");
-        return io;
+        setTimeout(() => {
+            if (!io) {
+                console.error("Socket.IO instance is not initialized. Please call init() first.");
+            }
+            return io;
+        }, 2000);        
     }
 };

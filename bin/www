@@ -20,7 +20,7 @@ var { Server } = require("socket.io");
 const { Pool } = require('pg');
 var os = require('node:os');
 var cluster = require('cluster');
-var socket = require('../database/sockets');
+// var socket = require('../database/sockets');
 
 // Decalre the number of cores to use
 const numCPUs = os.cpus().length;
@@ -63,7 +63,9 @@ const httpsOptions = {
 // To start clustered worker disable this line
 var server = https.createServer(httpsOptions, app);
 
-const io = socket.init(server);
+const io = new Server(server);
+
+app.set('socketio', io);
 
 if (cluster.isMaster) {
   // console.log(`Master process ${process.pid} is running`);
