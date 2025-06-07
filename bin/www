@@ -20,6 +20,7 @@ var { Server } = require("socket.io");
 const { Pool } = require('pg');
 var os = require('node:os');
 var cluster = require('cluster');
+var socket = require('../database/sockets');
 
 // Decalre the number of cores to use
 const numCPUs = os.cpus().length;
@@ -62,7 +63,7 @@ const httpsOptions = {
 // To start clustered worker disable this line
 var server = https.createServer(httpsOptions, app);
 
-const io = new Server(server);
+const io = socket.init(server);
 
 if (cluster.isMaster) {
   // console.log(`Master process ${process.pid} is running`);
@@ -2785,9 +2786,6 @@ getWeather();
 setInterval(()=> {
   return getWeather();
 }, timeout);
-
-
-module.exports = {io, server}; // Export io for use in other modules
 
 /**
  * Listen on provided port, on all network interfaces.
