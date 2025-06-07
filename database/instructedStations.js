@@ -1,5 +1,4 @@
-let stations = [ 
-        {instructedLoad: null, lastInstructionTime: null, name: 'ZUNGERU', id: 29, currentTimer: '00:00:00', status: 'Online', alias: 'zungeru_gs', reserve: 0, declaration: 0},
+let stations = [         
         {instructedLoad: null, lastInstructionTime: null, name: 'TAOPEX', id: 1, currentTimer: '00:00:00', status: 'Online', alias: 'taopex_gs', reserve: 0, declaration: 0},
         {instructedLoad: null, lastInstructionTime: null, name: 'SHIRORO (HYDRO)', id: 2, currentTimer: '00:00:00', status: 'Online', alias: 'shiroro_gs', reserve: 0, declaration: 0},
         {instructedLoad: null, lastInstructionTime: null, name: 'AFAM IV & V (GAS)', id: 3, currentTimer: '00:00:00', status: 'Online', alias: 'afam4_gs', reserve: 0, declaration: 0},
@@ -28,6 +27,7 @@ let stations = [
         {instructedLoad: null, lastInstructionTime: null, name: 'GBARAIN NIPP (GAS)', id: 26, currentTimer: '00:00:00', status: 'Online', alias: 'gbarain_gs', reserve: 0, declaration: 0},
         {instructedLoad: null, lastInstructionTime: null, name: 'OLORUNSOGO (GAS)', id: 27, currentTimer: '00:00:00', status: 'Online', alias: 'olorunsogogas_gs', reserve: 0, declaration: 0},
         {instructedLoad: null, lastInstructionTime: null, name: 'DADINKOWA G.S (HYDRO)', id: 28, currentTimer: '00:00:00', status: 'Online', alias: 'dadinkowa_gs', reserve: 0, declaration: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'ZUNGERU', id: 29, currentTimer: '00:00:00', status: 'Online', alias: 'zungeru_gs', reserve: 0, declaration: 0},
 ];
 
 module.exports = stations;
