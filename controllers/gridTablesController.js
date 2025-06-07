@@ -3,7 +3,7 @@ var timeConverter = require('../utility/timeConverter');
 var stations = require('../database/instructedStations');
 var app = require('../app');
 
-console.log(app.get('socketio'), "  the app request");
+console.log(app.request, "  the app request");
 
 const gridInstructions = {};
 
