@@ -40,36 +40,36 @@ gridInstructions.getStations = (req, res) => {
 }
 
 // Handle GridTable connections
-try {
-    io.on('connection', (socket) => {
-    console.log('New GridTable client connected');
+// try {
+//     io.on('connection', (socket) => {
+//     console.log('New GridTable client connected');
     
-    // Send initial data to new client
-    socket.emit('initial_data', stations);
+//     // Send initial data to new client
+//     socket.emit('initial_data', stations);
     
-    // Timer update handler
-    const timerInterval = setInterval(() => {
-        stations.forEach(station => {
-        if (station.lastInstructionTime) {
-            const diff = new Date() - new Date(station.lastInstructionTime);
-            const hours = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, '0');
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-            station.currentTimer = `${hours}:${minutes}:${seconds}`;
-        }
-        });
-        socket.emit('timer_update', stations);
-    }, 1000);
+//     // Timer update handler
+//     const timerInterval = setInterval(() => {
+//         stations.forEach(station => {
+//         if (station.lastInstructionTime) {
+//             const diff = new Date() - new Date(station.lastInstructionTime);
+//             const hours = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, '0');
+//             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+//             const seconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+//             station.currentTimer = `${hours}:${minutes}:${seconds}`;
+//         }
+//         });
+//         socket.emit('timer_update', stations);
+//     }, 1000);
 
-    socket.on('disconnect', () => {
-        console.log('GridTable client disconnected');
-        clearInterval(timerInterval);
-    });
-    });
-}
-catch(err)  {
-    console.error("Error in GridTable connection handler:", err)
-};
+//     socket.on('disconnect', () => {
+//         console.log('GridTable client disconnected');
+//         clearInterval(timerInterval);
+//     });
+//     });
+// }
+// catch(err)  {
+//     console.error("Error in GridTable connection handler:", err)
+// };
 
 
 
