@@ -1,0 +1,33 @@
+let stations = [ 
+        {instructedLoad: null, lastInstructionTime: null, name: 'IKOT EKPENE', id: 1, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'SHIRORO (HYDRO)', id: 2, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'AFAM IV & V (GAS)', id: 3, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'KAINJI (HYDRO)', id: 4, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'EGBIN (STEAM)', id: 5, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'OKPAI (GAS/STEAM)', id: 6, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'DELTA (GAS)', id: 7, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'JEBBA (HYDRO)', id: 8, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'AFAM VI (GAS/STEAM)', id: 9, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'ALAOJI NIPP (GAS)', id: 10, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'SAPELE (STEAM)', id: 11, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'SAPELE NIPP (GAS)', id: 12, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'ODUKPANI NIPP (GAS)', id: 13, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'OMOTOSHO (GAS)', id: 14, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'GEREGU (GAS)', id: 15, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'RIVERS IPP (GAS)', id: 16, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'OMOKU (GAS)', id: 17, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'IHOVBOR NIPP (GAS)', id: 18, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'OLORUNSOGO NIPP', id: 19, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'PARAS ENERGY (GAS)', id: 20, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'OMOTOSHO NIPP (GAS)', id: 21, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'GEREGU NIPP (GAS)', id: 22, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'AZURA-EDO IPP (GAS)', id: 23, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'TRANS-AMADI (GAS)', id: 24, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'IBOM POWER (GAS)', id: 25, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'GBARAIN NIPP (GAS)', id: 26, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'OLORUNSOGO (GAS)', id: 27, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+        {instructedLoad: null, lastInstructionTime: null, name: 'DADINKOWA G.S (HYDRO)', id: 28, currentTimer: '00:00:00', status: 'Online', declaration: 'Pending', reserve: 0},
+];
+
+module.exports = stations;
+// This module exports an array of station objects, each with properties for instructed load, last instruction time, station name, ID, and current timer.
