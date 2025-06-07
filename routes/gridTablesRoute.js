@@ -3,8 +3,8 @@ var router = express.Router();
 var controller = require('../controllers/gridTablesController');
 
 /* GET users listing. */
-router.post('/', controller.updateGridTable);
+router.post('/instruction', controller.updateGridTable);
 
-router.get('/', controller.getStations);
+router.get('/stations', controller.getStations);
 
 module.exports = router;
