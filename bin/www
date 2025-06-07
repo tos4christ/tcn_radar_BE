@@ -49,9 +49,9 @@ app.station_holder = [];
 /**
  * Create HTTPS server.
  */
-const cert = fs.readFileSync('./ssl/tcnnas.org.crt');
-const key = fs.readFileSync('./ssl/tcnnas.org.key');
-const ca = fs.readFileSync('./ssl/tcnnas.org.ca-bundle');
+const cert = fs.readFileSync('./ssl/2025 ssl/tcnnas.org.crt');
+const key = fs.readFileSync('./ssl/2025 ssl/tcnnas.org.key');
+const ca = fs.readFileSync('./ssl/2025 ssl/tcnnas.org.ca-bundle');
 
 const httpsOptions = {
   cert: cert,
