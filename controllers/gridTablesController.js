@@ -1,7 +1,7 @@
 var dateFormatter = require('../utility/dateFormatter');
 var timeConverter = require('../utility/timeConverter');
 var stations = require('../database/instructedStations');
-var io = require('../bin/www');
+var {io} = require('../bin/www');
 
 console.log(io, "  the io object");
 const gridInstructions = {};

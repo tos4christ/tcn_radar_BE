@@ -64,10 +64,6 @@ var server = https.createServer(httpsOptions, app);
 
 const io = new Server(server);
 
-app.set('io', io); // Make io accessible globally
-module.exports = io; // Export io for use in other modules
-
-
 if (cluster.isMaster) {
   // console.log(`Master process ${process.pid} is running`);
   // Fork workers.
@@ -2790,6 +2786,8 @@ setInterval(()=> {
   return getWeather();
 }, timeout);
 
+
+module.exports = {io, server}; // Export io for use in other modules
 
 /**
  * Listen on provided port, on all network interfaces.
