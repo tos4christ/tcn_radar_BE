@@ -5,6 +5,6 @@ var controller = require('../controllers/gridTablesController');
 /* GET users listing. */
 router.post('/', controller.updateGridTable);
 
-router.get('/', controller.updateGridTable);
+router.get('/', controller.getStations);
 
 module.exports = router;
