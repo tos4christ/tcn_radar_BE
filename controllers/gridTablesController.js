@@ -41,6 +41,7 @@ gridInstructions.getStations = (req, res) => {
 
 // Handle GridTable connections
 try {
+    return;
     io.on('connection', (socket) => {
     console.log('New GridTable client connected');
     
