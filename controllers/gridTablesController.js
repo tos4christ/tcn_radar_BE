@@ -1,7 +1,7 @@
 var dateFormatter = require('../utility/dateFormatter');
 var timeConverter = require('../utility/timeConverter');
 var stations = require('../database/instructedStations');
-import app from '../app';
+var app = require('../app');
 
 console.log(app.get('socketio'), "  the app request");
 
