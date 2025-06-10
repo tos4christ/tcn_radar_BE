@@ -2718,13 +2718,13 @@ async function getWeather() {
       station_2.type = type_1;
 
       // Create the response data in order to avoid errors after subscription is exhausted
-      //response_1.data.weather = [{"id":0,"main":"","description":"","icon":""}];
-      //response_1.data.main = {"temp":0,"feels_like":0,"temp_min":0,"temp_max":0,"pressure":0,"humidity":0,"sea_level":0,"grnd_level":0};
-      //response_1.data.wind = {"speed":0,"deg":0,"gust":0};
-      //response_1.data.dt = 10000;
-      //response_1.data.clouds = {"all":0};
-      //response_1.data.rain = {};
-      //response_1.data.id = 0;
+      response_1.data.weather = [{"id":0,"main":"","description":"","icon":""}];
+      response_1.data.main = {"temp":0,"feels_like":0,"temp_min":0,"temp_max":0,"pressure":0,"humidity":0,"sea_level":0,"grnd_level":0};
+      response_1.data.wind = {"speed":0,"deg":0,"gust":0};
+      response_1.data.dt = 10000;
+      response_1.data.clouds = {"all":0};
+      response_1.data.rain = {};
+      response_1.data.id = 0;
       // All the data concluded
       
       station_2.current_weather_data = response_1.data;
@@ -2732,24 +2732,24 @@ async function getWeather() {
       // Temporarily disable storing to database until subscription is renewed.
       //return;
 
-      const { coord, weather, main, wind, dt, clouds, rain } = response_1.data;
-      const { lon, lat: lat_1 } = coord;
-      const { id: id_1, main: main_weather, description, icon } = weather[0];
-      const { speed, deg, gust } = wind;
-      const { temp, feels_like, pressure, humidity } = main;
-      const { "1h": rain_volume_1h, "3h" : rain_volume_3h} = rain ? rain : { "1h" : null, "3h" : null};
-      const {all: cloudiness} = clouds ? clouds : { all : null};
-      var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-      const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
+      // const { coord, weather, main, wind, dt, clouds, rain } = response_1.data;
+      // const { lon, lat: lat_1 } = coord;
+      // const { id: id_1, main: main_weather, description, icon } = weather[0];
+      // const { speed, deg, gust } = wind;
+      // const { temp, feels_like, pressure, humidity } = main;
+      // const { "1h": rain_volume_1h, "3h" : rain_volume_3h} = rain ? rain : { "1h" : null, "3h" : null};
+      // const {all: cloudiness} = clouds ? clouds : { all : null};
+      // var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      // const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
       // Save data into the database 
-      db.query(weatherModel.create, [
-        date, dt, name_1, lon, lat_1, main_weather, id_1, description, 
-        icon, temp, feels_like, pressure, humidity, speed, deg, gust ? gust : 0,
-        rain_volume_1h, rain_volume_3h, cloudiness
-      ])
-        .then(response_2 => {
-        })
-        .catch(e => console.error(e));
+    //   db.query(weatherModel.create, [
+    //     date, dt, name_1, lon, lat_1, main_weather, id_1, description, 
+    //     icon, temp, feels_like, pressure, humidity, speed, deg, gust ? gust : 0,
+    //     rain_volume_1h, rain_volume_3h, cloudiness
+    //   ])
+    //     .then(response_2 => {
+    //     })
+    //     .catch(e => console.error(e));
     }));
 
     // Use the  hourly and daily forecast for requests only
