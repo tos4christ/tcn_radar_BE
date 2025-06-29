@@ -2377,9 +2377,9 @@ const temporary_storage = {
 // });
 // Client on Message for Bilaterals
 client_mesl.on('message', (topic, message) => {
-  if (['mesl/hydropolis/pd'].includes(topic)) {
-    console.log(message.toString(), 'client mesl hydropolis');
-  }
+  // if (['mesl/hydropolis/pd'].includes(topic)) {
+  //   console.log(message.toString(), 'client mesl hydropolis');
+  // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
