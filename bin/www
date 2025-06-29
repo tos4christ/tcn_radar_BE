@@ -264,7 +264,7 @@ client_mesl.on('connect', () => {
   client_mesl.subscribe(
     [
       'mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/inner-galaxy1/pd', 'mesl/inner-galaxy2/pd',
-       'mesl/gazaoua/pd', 'mesl/Kam33/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd', 'quantum/cs'
+       'mesl/gazaoua/pd', 'mesl/Kam33/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd', 'quantum/cs', 'mesl/hydropolis/pd'
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
@@ -2377,10 +2377,9 @@ const temporary_storage = {
 // });
 // Client on Message for Bilaterals
 client_mesl.on('message', (topic, message) => {
-  // if (['mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/inner-galaxy1/pd', 'mesl/inner-galaxy2/pd',
-  //      'mesl/gazaoua/pd', 'mesl/Kam33/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd', 'quantum/cs'].includes(topic)) {
-  //   console.log(message.toString(), 'client mesl');
-  // }
+  if (['mesl/hydropolis/pd'].includes(topic)) {
+    console.log(message.toString(), 'client mesl hydropolis');
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
