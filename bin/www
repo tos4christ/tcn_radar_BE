@@ -2782,10 +2782,10 @@ async function getWeather() {
     return console.error(e_1);
   }
 }
-getWeather();
-setInterval(()=> {
-  return getWeather();
-}, timeout);
+// getWeather();
+// setInterval(()=> {
+//   return getWeather();
+// }, timeout);
 
 /**
  * Listen on provided port, on all network interfaces.

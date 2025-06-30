@@ -133,7 +133,6 @@ app.use('/sp_signin', sp_signinRouter);
 app.use('/sp_signup', sp_signupRouter);
 app.use('/changepassword_bilateral', sp_changePasswordRouter);
 app.use('/api', gridTablesRouter);
-app.use('/api', gridTablesRouter);
 
 // app.get('/.well-known/pki-validation/042B2D6470F726347D7B55996AA809F6.txt', (req, res) => {
 //   res.sendFile(path.join(__dirname, "ssl", "042B2D6470F726347D7B55996AA809F6.txt"))

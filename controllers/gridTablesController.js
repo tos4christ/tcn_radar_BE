@@ -10,8 +10,8 @@ gridInstructions.updateGridTable = (req, res) => {
   const { instructedLoad, stationIds } = req.body;
   const instructionTime = new Date();
 
-  console.log(instructedLoad, "  the instructed Load");
-  console.log(stationIds, "  the station Ids");
+  // console.log(instructedLoad, "  the instructed Load");
+  // console.log(stationIds, "  the station Ids");
 
   // Update selected stations
   stationIds.forEach(id => {
@@ -23,7 +23,7 @@ gridInstructions.updateGridTable = (req, res) => {
     }
   });
 
-  console.log(`New instruction for stations ${stationIds.join(', ')}: ${instructedLoad} MW`);
+  // console.log(`New instruction for stations ${stationIds.join(', ')}: ${instructedLoad} MW`);
 
   // Broadcast to all connected GridTable clients
   io.emit('station_update', stations);
@@ -44,7 +44,7 @@ async function handleGridTableConnection() {
     try {
         const io = socketio.getIO();
         io.on('connection', (socket) => {
-        console.log('New GridTable client connected');
+        // console.log('New GridTable client connected');
         
         // Send initial data to new client
         socket.emit('initial_data', stations);
@@ -64,7 +64,7 @@ async function handleGridTableConnection() {
         }, 1000);
 
         socket.on('disconnect', () => {
-            console.log('GridTable client disconnected');
+            // console.log('GridTable client disconnected');
             clearInterval(timerInterval);
         });
         });
@@ -76,7 +76,7 @@ async function handleGridTableConnection() {
 
 setTimeout(() => {
     handleGridTableConnection();
-    console.log("GridTable connection handler initialized");
+    // console.log("GridTable connection handler initialized");
 }, 2000);
 
 module.exports =  gridInstructions;
