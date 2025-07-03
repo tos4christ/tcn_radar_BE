@@ -2378,9 +2378,9 @@ const temporary_storage = {
 // });
 // Client on Message for Bilaterals
 client_mesl.on('message', (topic, message) => {
-  if (['mesl/yongxing/pd'].includes(topic)) {
-    console.log(message.toString(), 'client mesl yongxing');
-  }
+  // if (['mesl/yongxing/pd'].includes(topic)) {
+  //   console.log(message.toString(), 'client mesl yongxing');
+  // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
