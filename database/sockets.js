@@ -6,7 +6,7 @@ module.exports = {
     init: (server) => {
         io = new Server(server);
         io.on('connection', (socket) => {
-            console.log('Client connected to global Socket.IO instance');
+            // console.log('Client connected to global Socket.IO instance');
         });
         return io;
     },
