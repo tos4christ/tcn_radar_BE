@@ -24,17 +24,18 @@ gridInstructions.updateGridTable = (req, res) => {
   // console.log(`New instruction for stations ${stationIds.join(', ')}: ${instructedLoad} MW`);
 
   // Broadcast to all connected GridTable clients
-  io.emit('station_update', stations);
+  // io.emit('station_update', stations);
 
   res.status(200).json({ 
     message: 'Instruction broadcasted',
-    updatedStations: stationIds
+    updatedStations: [] // stationIds
   });
 };
 
 gridInstructions.getStations = (req, res) => {
   // Send the current state of stations
-  res.status(200).json(stations);
+  // res.status(200).json(stations);
+  res.end(200);
 }
 
 // Handle GridTable connections
@@ -73,7 +74,7 @@ async function handleGridTableConnection() {
 }
 
 setTimeout(() => {
-    handleGridTableConnection();
+    // handleGridTableConnection();
     // console.log("GridTable connection handler initialized");
 }, 2000);
 

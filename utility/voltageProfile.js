@@ -758,5 +758,10 @@ function Station_Adder(station_array) {
         }
     });
     //console.log(JSON.stringify(final_array), 'the final array');
+
+    // Remove this line if you want it to work
+    const temp_array = [];
+    return temp_array;
     return final_array;
+    //
 };
