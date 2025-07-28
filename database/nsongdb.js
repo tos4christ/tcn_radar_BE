@@ -77,12 +77,12 @@ mssql.connect(config, err => {
     // Create the function that will be supplied to setTimeout as an input to setInterval
     const nsongdb = () => {
         console.log( Date(), 'the nsong function just activated now');
-        const {date, Hour} = dateFormatter();     
+        const {date, Hour, Minute} = dateFormatter();     
         // connect to my local db to get items to save on the nsong platform
         // get all the data for the given time and order them by station  
         mydb.connect((err, client, done) => {
             if (err) throw err;
-            client.query(model.get_nsong_2, [ date, Number(Hour), 0, 5, 0, 59])
+            client.query(model.get_nsong_2, [ date, Number(Hour), Number(Minute), (Number(Minute) + 5), 0, 59])
             .then(respo => {
                 console.log(Date(), 'this is the time the query completed');
                 const data = respo.rows;  
@@ -106,6 +106,9 @@ mssql.connect(config, err => {
                 })  
                 const finalArray = tempArr.filter( tar => tar.seconds !== null);
 
+                // Inspect data before sending to nsong
+                console.log(finalArray, "   this is the final Array");
+                return;
                 // Send data to Intel Tech
                 //send_to_api(finalArray);
                 
@@ -287,7 +290,8 @@ mssql.connect(config, err => {
         return setInterval(            
                     () => {
                         nsongdb();
+                        // Changed the timing from 1 hour (3600000) to 15 mins (900000)
                     }
-                    , 3600000)},
+                    , 900000)},
                 totalTimeOut);
 })
