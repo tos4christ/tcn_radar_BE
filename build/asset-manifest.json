@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.9cca4183.css",
-    "main.js": "/static/js/main.00b15800.js",
-    "static/js/787.5749edc8.chunk.js": "/static/js/787.5749edc8.chunk.js",
+    "main.css": "/static/css/main.24328d63.css",
+    "main.js": "/static/js/main.66bdfa28.js",
+    "static/js/27.d7f41ef6.chunk.js": "/static/js/27.d7f41ef6.chunk.js",
     "static/media/icofont.svg?v=1.0.0-beta": "/static/media/icofont.9999a483fca7c18fdec0.svg",
     "static/media/counter-bg.jpg": "/static/media/counter-bg.43612e980473b26eba5f.jpg",
     "static/media/footer-bg.jpg": "/static/media/footer-bg.43612e980473b26eba5f.jpg",
@@ -32,13 +32,10 @@
     "static/media/niso_logo_main_small.jpg": "/static/media/niso_logo_main_small.a19561f13e44858bb109.jpg",
     "static/media/feature.png": "/static/media/feature.a8a562522d86af92505e.png",
     "static/media/responderLogo.JPG": "/static/media/responderLogo.a0304269844fbb8484f1.JPG",
-    "index.html": "/index.html",
-    "main.9cca4183.css.map": "/static/css/main.9cca4183.css.map",
-    "main.00b15800.js.map": "/static/js/main.00b15800.js.map",
-    "787.5749edc8.chunk.js.map": "/static/js/787.5749edc8.chunk.js.map"
+    "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.9cca4183.css",
-    "static/js/main.00b15800.js"
+    "static/css/main.24328d63.css",
+    "static/js/main.66bdfa28.js"
   ]
 }
