@@ -78,6 +78,7 @@ mssql.connect(config, err => {
     const nsongdb = () => {
         console.log( Date(), 'the nsong function just activated now');
         const {date, Hour, Minute} = dateFormatter();     
+        // console.log(date, Hour, Minute, " this is the timing")
         // connect to my local db to get items to save on the nsong platform
         // get all the data for the given time and order them by station  
         mydb.connect((err, client, done) => {
@@ -107,8 +108,8 @@ mssql.connect(config, err => {
                 const finalArray = tempArr.filter( tar => tar.seconds !== null);
 
                 // Inspect data before sending to nsong
-                console.log(finalArray, "   this is the final Array");
-                return;
+                // console.log(finalArray, "   this is the final Array");
+                // return;
                 // Send data to Intel Tech
                 //send_to_api(finalArray);
                 
@@ -277,11 +278,15 @@ mssql.connect(config, err => {
     const Minute = time.split(':')[1];
     const Seconds = time.split(':')[2];
 
-    nsongdb();
+    // nsongdb();
 
     // get the amount of time needed to get to 10seconds of the next hour
-    const extraMinute = (62 - Number(Minute))*60*1000
-    const extraSeconds = (90 - Number(Seconds))*1000;
+    // const extraMinute = (62 - Number(Minute))*60*1000
+    // const extraSeconds = (90 - Number(Seconds))*1000;
+    // const totalTimeOut = extraMinute + extraSeconds;
+    // get the amount of time needed to get to 10seconds of the next 15 mins
+    const extraMinute = (15 - (Number(Minute)%15))*60*1000
+    const extraSeconds = Number(Seconds)*1000;
     const totalTimeOut = extraMinute + extraSeconds;
     console.log(totalTimeOut, 'the total timeout');
     setTimeout(
