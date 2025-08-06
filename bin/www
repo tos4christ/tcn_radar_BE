@@ -315,9 +315,9 @@ client_1.on('message', (topic, message) => {
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
-  setInterval(() => {
+  // setInterval(() => {
     io.sockets.emit('client_message_111', { message: message.toString() }); 
-  }, 60000);
+  // }, 60000);
    
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
@@ -389,9 +389,9 @@ client_2.on('message', (topic, message) => {
   // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  setInterval(() => {
+  // setInterval(() => {
     io.sockets.emit('client_message_222', { message: message.toString() });
-  }, 60000); 
+  // }, 60000); 
   
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
@@ -2387,9 +2387,9 @@ client_mesl.on('message', (topic, message) => {
   // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  setInterval(() => {
+  // setInterval(() => {
     io.sockets.emit('client_message_mesl', { message: message.toString() });
-  }, 60000); 
+  // }, 60000); 
   
   
   if (['quantum/cs'].includes(topic)) {
@@ -2458,9 +2458,9 @@ client_fipl.on('message', (topic, message) => {
   //return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  setInterval(() => {
+  // setInterval(() => {
     io.sockets.emit('client_message_fipl', { message: message.toString() });
-  }, 60000); 
+  // }, 60000); 
   
   
   //return;
@@ -2526,9 +2526,9 @@ client_taopex.on('message', (topic, message) => {
   // return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  setInterval(() => {
+  // setInterval(() => {
     io.sockets.emit('client_message_taopex', { message: message.toString() });
-  }, 60000); 
+  // }, 60000); 
   
   
   // return;
@@ -2594,9 +2594,9 @@ client_ndphc.on('message', (topic, message) => {
   // return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  setInterval(() => {
+  // setInterval(() => {
     io.sockets.emit('client_message_ndphc', { message: message.toString() });
-  }, 60000); 
+  // }, 60000); 
   
   
   return;
@@ -2637,9 +2637,9 @@ client_sakete.on('message', (topic, message) => {
   // return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  setInterval(() => {
+  // setInterval(() => {
     io.sockets.emit('client_message_sakete', { message: message.toString() });
-  }, 60000); 
+  // }, 60000); 
   
   // console.log(message.toString(), '  client sakete');
   let data;
