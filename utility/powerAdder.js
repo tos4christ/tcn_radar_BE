@@ -1074,6 +1074,6 @@ function Station_Adder(station_array_in) {
 
     // Remove this line if you want it to work
     const temp_array = [];
-    return temp_array;
+    // return temp_array;
     return final_array;
 };

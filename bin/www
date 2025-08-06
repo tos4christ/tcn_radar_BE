@@ -315,8 +315,10 @@ client_1.on('message', (topic, message) => {
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
-   io.sockets.emit('client_message_111', { message: message.toString() }); 
-  
+  setInterval(() => {
+    io.sockets.emit('client_message_111', { message: message.toString() }); 
+  }, 60000);
+   
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
   try {
@@ -387,8 +389,9 @@ client_2.on('message', (topic, message) => {
   // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-   
-  io.sockets.emit('client_message_222', { message: message.toString() });
+  setInterval(() => {
+    io.sockets.emit('client_message_222', { message: message.toString() });
+  }, 60000); 
   
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
@@ -524,7 +527,8 @@ client_4.on('message', (topic, message) => {
       // console.log("meter freq  ",frequency.t );
       
       //console.log("this is the new frequency ", frequency);
-      // Send Frequency data in realtime to the client      
+      // Send Frequency data in realtime to the client
+
       io.sockets.emit('frequency001', { message: JSON.stringify(frequency) });
        // Store Frequency into the database
       db.query(frequencyModel.create, [date, temp_time, time_epoch.getTime(), frequency.value])
@@ -2383,8 +2387,10 @@ client_mesl.on('message', (topic, message) => {
   // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-   
-  io.sockets.emit('client_message_mesl', { message: message.toString() });
+  setInterval(() => {
+    io.sockets.emit('client_message_mesl', { message: message.toString() });
+  }, 60000); 
+  
   
   if (['quantum/cs'].includes(topic)) {
       // Do not save this into the database, it is already being saved in Client_2
@@ -2452,8 +2458,10 @@ client_fipl.on('message', (topic, message) => {
   //return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-   
-  io.sockets.emit('client_message_fipl', { message: message.toString() });
+  setInterval(() => {
+    io.sockets.emit('client_message_fipl', { message: message.toString() });
+  }, 60000); 
+  
   
   //return;
 
@@ -2518,8 +2526,10 @@ client_taopex.on('message', (topic, message) => {
   // return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-   
-  io.sockets.emit('client_message_taopex', { message: message.toString() });
+  setInterval(() => {
+    io.sockets.emit('client_message_taopex', { message: message.toString() });
+  }, 60000); 
+  
   
   // return;
   
@@ -2584,8 +2594,10 @@ client_ndphc.on('message', (topic, message) => {
   // return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-   
-  io.sockets.emit('client_message_ndphc', { message: message.toString() });
+  setInterval(() => {
+    io.sockets.emit('client_message_ndphc', { message: message.toString() });
+  }, 60000); 
+  
   
   return;
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
@@ -2625,8 +2637,10 @@ client_sakete.on('message', (topic, message) => {
   // return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-   
-  io.sockets.emit('client_message_sakete', { message: message.toString() });
+  setInterval(() => {
+    io.sockets.emit('client_message_sakete', { message: message.toString() });
+  }, 60000); 
+  
   // console.log(message.toString(), '  client sakete');
   let data;
   try {
