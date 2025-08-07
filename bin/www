@@ -390,10 +390,27 @@ client_1.on('message', (topic, message) => {
   }
 });
 client_2.on('message', (topic, message) => {
-  // if (['kamSteel/cs'].includes(topic)) {
-  //   console.log(message.toString(), 'client 2');
-  //   return;
-  // }
+  if ([
+      'ikotekpene/tv', 'gwagwaladats/tv','gereguGs/pv', 'odukpanits/tv',
+      'asabats/tv', 'delta4gs/tv', 'OkpaiippGs/tv', 'jebbaTs/tv',
+       'kainjits/tv', 'egbings/pv', 'riversIppPs/pr', 'afam4gs/pv',
+       'shirorogs/pv', 'afam6ts/tv', 'delta2gs/pv', 'delta3gs/pv',
+       'omokugs/pv', 'phmains/tv', 'sapelets/pv', 'ihovborts/tv',
+       'omotoso2ts/tv', 'omotoso11ts/pv', 'omotoso12ts/pv',
+       'olorunsogo1ts/pv', 'olorunsogo2ts/tv', 'omotoshoGas/pv',
+        'odukpanits/pv', 'transamadi/tv', 'afam5gs/pv', 'markudits/tv',
+        'dadinkowags/tv', 'gbaraints/pv', 'zungeru/tv', 'ugwuajits/tv',
+        'zungeru/status', 'gereguGs/tv', 'lokojats/tv', 'parasenergyPs/pv',
+        'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 'riversIppPs/pv',
+        'taopex/tv', 'sunflag/cs', 'sagamu/tv', 'monarch/cs', 'larfarge/cs',
+         'topSteel/cs', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs', 
+         'quantum/cs', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
+         'ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
+         'ndphc/pulkit/lagos/pd'
+  ].includes(topic)) {
+    console.log(message.toString(), 'client 2');
+    // return;
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
 
