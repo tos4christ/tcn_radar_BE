@@ -306,18 +306,25 @@ client_sakete.on('connect', () => {
 });
 
 
-
 // Client on Message
 client_1.on('message', (topic, message) => {
-  // if (['parasenergyPs/pv'].includes(topic)) {
-  //   console.log(message.toString(), 'client 1')
-  // } 
+  if ([
+          'gereguGs/pv', 'odukpanits/tv', 'omotoso2ts/tv',
+          'omotoso11ts/pv', 'omotoso12ts/pv',
+           'lokojats/tv',
+          'ikotekpene/tv', 'gwagwaladats/tv', 'gereguGs/tv',
+          'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 
+          'riversIppPs/pv', 'markudits/tv',
+          'dadinkowags/tv', 'ugwuajits/tv',
+           'olorunsogo1ts/pv', 'parasenergyPs/pv',
+           'olorunsogo2ts/tv','omotoshoGas/pv',
+  ].includes(topic)) {
+    console.log(message.toString(), 'client 1')
+  } 
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
    
-  // setInterval(() => {
     io.sockets.emit('client_message_111', { message: message.toString() }); 
-  // }, 60000);
    
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
@@ -389,9 +396,8 @@ client_2.on('message', (topic, message) => {
   // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  // setInterval(() => {
+
     io.sockets.emit('client_message_222', { message: message.toString() });
-  // }, 60000); 
   
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
@@ -2387,16 +2393,13 @@ client_mesl.on('message', (topic, message) => {
   // }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  // setInterval(() => {
-    io.sockets.emit('client_message_mesl', { message: message.toString() });
-  // }, 60000); 
-  
+
+    io.sockets.emit('client_message_mesl', { message: message.toString() }); 
   
   if (['quantum/cs'].includes(topic)) {
       // Do not save this into the database, it is already being saved in Client_2
       return;
     }
-  //return;
  
   let data;
   try {
@@ -2458,12 +2461,8 @@ client_fipl.on('message', (topic, message) => {
   //return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  // setInterval(() => {
-    io.sockets.emit('client_message_fipl', { message: message.toString() });
-  // }, 60000); 
-  
-  
-  //return;
+
+    io.sockets.emit('client_message_fipl', { message: message.toString() });  
 
   let data;
   try {
@@ -2526,12 +2525,8 @@ client_taopex.on('message', (topic, message) => {
   // return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  // setInterval(() => {
+
     io.sockets.emit('client_message_taopex', { message: message.toString() });
-  // }, 60000); 
-  
-  
-  // return;
   
   let data;
   try {
@@ -2594,10 +2589,8 @@ client_ndphc.on('message', (topic, message) => {
   // return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  // setInterval(() => {
-    io.sockets.emit('client_message_ndphc', { message: message.toString() });
-  // }, 60000); 
-  
+
+    io.sockets.emit('client_message_ndphc', { message: message.toString() }); 
   
   return;
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
@@ -2637,11 +2630,9 @@ client_sakete.on('message', (topic, message) => {
   // return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  // setInterval(() => {
+
     io.sockets.emit('client_message_sakete', { message: message.toString() });
-  // }, 60000); 
-  
-  // console.log(message.toString(), '  client sakete');
+ 
   let data;
   try {
     data = JSON.parse(message.toString());
@@ -2696,6 +2687,10 @@ client_sakete.on('message', (topic, message) => {
   }
  
 });
+
+setInterval(() => {
+
+}, 60 * 1000);
 
 // Get weather data and store it in the database
 const timeout = 120000;
