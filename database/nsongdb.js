@@ -179,7 +179,9 @@ mssql.connect(config, err => {
                 });
             })
             .catch(err => console.log(err))
-            .finally(() => done())
+            .finally(() => {
+                client.release();
+            })
         }) 
         // mydb.query(model.get_nsong_2, [ date, Number(Hour), 0, 5, 0, 59])
         //     .then(respo => {
