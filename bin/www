@@ -2411,7 +2411,7 @@ client_mesl.on('message', (topic, message) => {
        'mesl/hydropolis/pd', 'mesl/yongxing/pd'
 
   ].includes(topic)) {
-    console.log(message.toString(), 'client mesl');
+    console.log(message.toString(), '  client mesl  ', topic);
   }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
@@ -2478,7 +2478,7 @@ client_mesl.on('message', (topic, message) => {
 });
 client_fipl.on('message', (topic, message) => {
   if (['fipl/fmpia/pd', 'fipl/oaui/pd'].includes(topic)) {
-      console.log(message.toString(), 'client fipl');
+      // console.log(message.toString(), 'client fipl');
   }
   //return;
   // broadcast the message to the client that are connected
@@ -2542,7 +2542,7 @@ client_fipl.on('message', (topic, message) => {
 client_taopex.on('message', (topic, message) => {
   if (['taopex/kamSteel/sagamu/pd', 'taopex/kamSteel/ilorin/pd',
       'taopex/erKang/ilorin/pd'].includes(topic)) {
-    console.log(message.toString(), 'client taopex');
+    // console.log(message.toString(), 'client taopex');
   }
   // return;
   // broadcast the message to the client that are connected
@@ -2606,7 +2606,7 @@ client_taopex.on('message', (topic, message) => {
 client_ndphc.on('message', (topic, message) => {
   if (['ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
       'ndphc/pulkit/lagos/pd'].includes(topic)) {
-      console.log(message.toString(), 'client ndphc');
+      // console.log(message.toString(), 'client ndphc');
   }
   // return;
   // broadcast the message to the client that are connected
@@ -2647,7 +2647,7 @@ client_ndphc.on('message', (topic, message) => {
 });
 client_sakete.on('message', (topic, message) => {
   if (['bilateral/ikejaWest-sakate/lagos/pd'].includes(topic)) {
-      console.log(message.toString(), 'client sakete');
+      // console.log(message.toString(), 'client sakete');
   }
   // return;
   // broadcast the message to the client that are connected
