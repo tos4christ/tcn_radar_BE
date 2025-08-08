@@ -319,7 +319,7 @@ client_1.on('message', (topic, message) => {
            'olorunsogo1ts/pv', 'parasenergyPs/pv',
            'olorunsogo2ts/tv','omotoshoGas/pv',
   ].includes(topic)) {
-    console.log(message.toString(), 'client 1')
+    // console.log(message.toString(), 'client 1')
   } 
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
@@ -408,7 +408,7 @@ client_2.on('message', (topic, message) => {
          'ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
          'ndphc/pulkit/lagos/pd'
   ].includes(topic)) {
-    console.log(message.toString(), 'client 2');
+    // console.log(message.toString(), 'client 2');
     // return;
   }
   // broadcast the message to the client that are connected
@@ -2405,9 +2405,14 @@ const temporary_storage = {
 // });
 // Client on Message for Bilaterals
 client_mesl.on('message', (topic, message) => {
-  // if (['mesl/yongxing/pd'].includes(topic)) {
-  //   console.log(message.toString(), 'client mesl yongxing');
-  // }
+  if ([
+    'mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/inner-galaxy1/pd', 'mesl/inner-galaxy2/pd',
+       'mesl/gazaoua/pd', 'mesl/Kam33/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd', 'quantum/cs', 
+       'mesl/hydropolis/pd', 'mesl/yongxing/pd'
+
+  ].includes(topic)) {
+    console.log(message.toString(), 'client mesl');
+  }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
 
@@ -2472,9 +2477,9 @@ client_mesl.on('message', (topic, message) => {
   }
 });
 client_fipl.on('message', (topic, message) => {
-  // if (['fipl/fmpia/pd', 'fipl/oaui/pd'].includes(topic)) {
-  //     console.log(message.toString(), 'client fipl');
-  // }
+  if (['fipl/fmpia/pd', 'fipl/oaui/pd'].includes(topic)) {
+      console.log(message.toString(), 'client fipl');
+  }
   //return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
@@ -2535,10 +2540,10 @@ client_fipl.on('message', (topic, message) => {
   }
 });
 client_taopex.on('message', (topic, message) => {
-  // if (['taopex/kamSteel/sagamu/pd', 'taopex/kamSteel/ilorin/pd',
-  //     'taopex/erKang/ilorin/pd'].includes(topic)) {
-  //   console.log(message.toString(), 'client taopex');
-  // }
+  if (['taopex/kamSteel/sagamu/pd', 'taopex/kamSteel/ilorin/pd',
+      'taopex/erKang/ilorin/pd'].includes(topic)) {
+    console.log(message.toString(), 'client taopex');
+  }
   // return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
@@ -2599,10 +2604,10 @@ client_taopex.on('message', (topic, message) => {
   }
 });
 client_ndphc.on('message', (topic, message) => {
-  // if (['ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
-  //     'ndphc/pulkit/lagos/pd'].includes(topic)) {
-  //     console.log(message.toString(), 'client ndphc');
-  // }
+  if (['ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
+      'ndphc/pulkit/lagos/pd'].includes(topic)) {
+      console.log(message.toString(), 'client ndphc');
+  }
   // return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
@@ -2641,9 +2646,9 @@ client_ndphc.on('message', (topic, message) => {
   }
 });
 client_sakete.on('message', (topic, message) => {
-  // if (['bilateral/ikejaWest-sakate/lagos/pd'].includes(topic)) {
-  //     console.log(message.toString(), 'client sakete');
-  // }
+  if (['bilateral/ikejaWest-sakate/lagos/pd'].includes(topic)) {
+      console.log(message.toString(), 'client sakete');
+  }
   // return;
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
