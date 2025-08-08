@@ -2411,7 +2411,7 @@ client_mesl.on('message', (topic, message) => {
        'mesl/hydropolis/pd', 'mesl/yongxing/pd'
 
   ].includes(topic)) {
-    console.log(message.toString(), '  client mesl  ', topic);
+    // console.log(message.toString(), '  client mesl  ', topic);
   }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
