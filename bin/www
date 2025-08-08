@@ -2880,7 +2880,7 @@ setInterval(() => {
   // Client Sakete
   io.sockets.emit('client_message_sakete', { message: bilateralIkejaWestSakateLagosPd });
 
-}, 60 * 1000);
+}, 30 * 1000);
 
 // Get weather data and store it in the database
 const timeout = 120000;
