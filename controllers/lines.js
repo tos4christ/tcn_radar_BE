@@ -101,9 +101,9 @@ lines.getdaily = (req, res) => {
                 res.send(buffer);
             })
             .catch(err => console.log(err))
-            .finally(() => {
-                client.release();
-            })
+            // .finally(() => {
+            //     client.release();
+            // })
     })
     // client.query(get_daily_2(start, end))
     //     .then( resp => {
@@ -156,9 +156,9 @@ lines.gethourlyvoltage = (req, res) => {
                 res.send(buffer);
             })
             .catch(err => console.log(err))
-            .finally(() => {
-                client.release();
-            })
+            // .finally(() => {
+            //     client.release();
+            // })
     })
     // client.query(get_daily_2(start, end))
     //     .then( resp => {
