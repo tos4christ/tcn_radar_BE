@@ -343,7 +343,7 @@ client_1.on('message', (topic, message) => {
            'olorunsogo1ts/pv', 'parasenergyPs/pv',
            'olorunsogo2ts/tv','omotoshoGas/pv',
   ].includes(topic)) {
-    console.log(message.toString(), ' TOPIC ', topic,  '  client 1')
+    // console.log(message.toString(), ' TOPIC ', topic,  '  client 1')
   } 
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
@@ -432,7 +432,7 @@ client_2.on('message', (topic, message) => {
          'ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
          'ndphc/pulkit/lagos/pd'
   ].includes(topic)) {
-    // console.log(message.toString(), 'client 2');
+    console.log(message.toString(), ' TOPIC ', topic,   'client 2');
     // return;
   }
   // broadcast the message to the client that are connected
