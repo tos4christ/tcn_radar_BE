@@ -305,6 +305,30 @@ client_sakete.on('connect', () => {
   )
 });
 
+// Declare a global variable to hold data for better streaming
+let gereguGsPv, odukpanitsTv, omotoso2tsTv,
+    omotoso11tsPv, omotoso12tsPv, lokojatsTv,
+    ikotekpeneTv, gwagwaladatsTv, gereguGsTv,
+    ekimtsTv, ekettsTv, alaojinipptsTv,
+    riversIppPsPv, markuditsTv, dadinkowagsTv,
+    ugwuajitsTv, olorunsogo1tsPv, parasenergyPsPv,
+    olorunsogo2tsTv, omotoshoGasPv, 
+    asabatsTv, delta4gsTv, okpaiippGsTv,
+    jebbaTsTv, kainjitsTv, egbingsPv, riversIppPsPr,
+    afam4gsPv, shirorogsPv, afam6tsTv, delta2gsPv,
+    delta3gsPv, omokugsPv, phmainsTv, sapeletsPv,
+    ihovbortsTv, odukpanitsPv, transamadiTv,
+    afam5gsPv, gbaraintsPv, zungeruTv, zungeruStatus,
+    taopexTv, sunflagCs, sagamuTv, monarchCs, larfargeCs,
+    topSteelCs, pulkitSteelCs, aflCs, kamSteelCs, 
+    quantumCs, starPipeCs, ikorodu1Tv, ikorodu2Tv, 
+    ndphcSunflagLagosPd, ndphcPhoenixOgunPd, ndphcPulkitLagosPd,
+    meslZebercedPd, meslNiameyPd, meslInnerGalaxy1Pd, meslInnerGalaxy2Pd,
+    meslGazaouaPd, meslKam33Pd, meslPSMLPd, meslATVLPd, 
+    meslHydropolisPd, meslYongxingPd,
+    fiplFmpiaPd, fiplOauiPd,
+    taopexKamSteelSagamuPd, taopexKamSteelIlorinPd, taopexErKangIlorinPd,
+    bilateralIkejaWestSakateLagosPd;
 
 // Client on Message
 client_1.on('message', (topic, message) => {
@@ -319,7 +343,7 @@ client_1.on('message', (topic, message) => {
            'olorunsogo1ts/pv', 'parasenergyPs/pv',
            'olorunsogo2ts/tv','omotoshoGas/pv',
   ].includes(topic)) {
-    // console.log(message.toString(), 'client 1')
+    console.log(message.toString(), ' TOPIC ', topic,  '  client 1')
   } 
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
