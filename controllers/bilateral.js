@@ -80,9 +80,12 @@ bilateral.hourly = (req, res) => {
                 const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
                 res.attachment('bilateral.xlsx');
                 res.send(buffer);
-                done();
             })
+            .catch(e => console.error(e))
+            .finally(() => done());
         })
+        .catch(e => console.error(e))
+        .finally(() => done());
     })
 }
 

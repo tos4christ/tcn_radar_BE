@@ -101,9 +101,7 @@ lines.getdaily = (req, res) => {
                 res.send(buffer);
             })
             .catch(err => console.log(err))
-            // .finally(() => {
-            //     client.release();
-            // })
+            .finally(() => done());
     })
     // client.query(get_daily_2(start, end))
     //     .then( resp => {
@@ -156,9 +154,7 @@ lines.gethourlyvoltage = (req, res) => {
                 res.send(buffer);
             })
             .catch(err => console.log(err))
-            // .finally(() => {
-            //     client.release();
-            // })
+            .finally(() => done());
     })
     // client.query(get_daily_2(start, end))
     //     .then( resp => {
@@ -202,7 +198,9 @@ lines.getcollapse = (req, res, next) => {
             const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
             res.attachment('IoT.xlsx');
             res.send(buffer);
-        });
+        })
+        .catch(e => console.error(e))
+        .finally(() => done());
 }
 
 lines.downtime = (req, res, next) => {
