@@ -83,6 +83,7 @@ mssql.connect(config, err => {
         // get all the data for the given time and order them by station  
         mydb.connect((err, client, done) => {
             if (err) throw err;
+            // client.query({text: model.get_nsong_2, values: [data, hour, minute, number....], timeout: 5000 //5s})
             client.query(model.get_nsong_2, [ date, Number(Hour), Number(Minute), (Number(Minute) + 5), 0, 59])
             .then(respo => {
                 console.log(Date(), 'this is the time the query completed');
@@ -180,7 +181,7 @@ mssql.connect(config, err => {
             })
             .catch(err => console.log(err))
             .finally(() => {
-                client.release();
+                done();
             })
         }) 
         // mydb.query(model.get_nsong_2, [ date, Number(Hour), 0, 5, 0, 59])
