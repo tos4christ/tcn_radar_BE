@@ -2808,77 +2808,149 @@ client_sakete.on('message', (topic, message) => {
 
 setInterval(() => {
   // Client 1
-  io.sockets.emit('client_message_111', { message: ekettsTv });
-  io.sockets.emit('client_message_111', { message: alaojinipptsTv }); 
-  io.sockets.emit('client_message_111', { message: markuditsTv }); 
-  io.sockets.emit('client_message_111', { message: ugwuajitsTv }); 
-  io.sockets.emit('client_message_111', { message: olorunsogo1tsPv }); 
-  io.sockets.emit('client_message_111', { message: olorunsogo2tsTv }); 
-  io.sockets.emit('client_message_111', { message: omotoso2tsTv }); 
-  io.sockets.emit('client_message_111', { message: omotoso11tsPv }); 
-  io.sockets.emit('client_message_111', { message: omotoso12tsPv }); 
-  io.sockets.emit('client_message_111', { message: lokojatsTv }); 
+  if(ekettsTv) io.sockets.emit('client_message_111', { message: ekettsTv });
+  if(alaojinipptsTv) io.sockets.emit('client_message_111', { message: alaojinipptsTv }); 
+  if(markuditsTv) io.sockets.emit('client_message_111', { message: markuditsTv }); 
+  if(ugwuajitsTv) io.sockets.emit('client_message_111', { message: ugwuajitsTv }); 
+  if(olorunsogo1tsPv) io.sockets.emit('client_message_111', { message: olorunsogo1tsPv }); 
+  if(olorunsogo2tsTv) io.sockets.emit('client_message_111', { message: olorunsogo2tsTv }); 
+  if(omotoso2tsTv) io.sockets.emit('client_message_111', { message: omotoso2tsTv }); 
+  if(omotoso11tsPv) io.sockets.emit('client_message_111', { message: omotoso11tsPv }); 
+  if(omotoso12tsPv) io.sockets.emit('client_message_111', { message: omotoso12tsPv }); 
+  if(lokojatsTv) io.sockets.emit('client_message_111', { message: lokojatsTv }); 
  
   // Client 2
-  io.sockets.emit('client_message_222', { message: gereguGsPv });
-  io.sockets.emit('client_message_222', { message: odukpanitsTv });
-  io.sockets.emit('client_message_222', { message: ikotekpeneTv });
-  io.sockets.emit('client_message_222', { message: gwagwaladatsTv });
-  io.sockets.emit('client_message_222', { message: dadinkowagsTv });
-  io.sockets.emit('client_message_222', { message: parasenergyPsPv });
-  io.sockets.emit('client_message_222', { message: asabatsTv });
-  io.sockets.emit('client_message_222', { message: delta4gsTv });
-  io.sockets.emit('client_message_222', { message: okpaiippGsTv });
-  io.sockets.emit('client_message_222', { message: jebbaTsTv });
-  io.sockets.emit('client_message_222', { message: kainjitsTv });
-  io.sockets.emit('client_message_222', { message: egbingsPv });
-  io.sockets.emit('client_message_222', { message: riversIppPsPr });
-  io.sockets.emit('client_message_222', { message: afam4gsPv });
-  io.sockets.emit('client_message_222', { message: ikorodu2Tv });
-  io.sockets.emit('client_message_222', { message: starPipeCs });
-  io.sockets.emit('client_message_222', { message: quantumCs });
-  io.sockets.emit('client_message_222', { message: aflCs });
-  io.sockets.emit('client_message_222', { message: ndphcPulkitLagosPd });
-  io.sockets.emit('client_message_222', { message: ndphcSunflagLagosPd });
-  io.sockets.emit('client_message_222', { message: taopexTv });
-  io.sockets.emit('client_message_222', { message: zungeruTv });
-  io.sockets.emit('client_message_222', { message: odukpanitsPv });
-  io.sockets.emit('client_message_222', { message: ihovbortsTv });
-  io.sockets.emit('client_message_222', { message: sapeletsPv });
-  io.sockets.emit('client_message_222', { message: omokugsPv });
-  io.sockets.emit('client_message_222', { message: delta2gsPv });
-  io.sockets.emit('client_message_222', { message: afam6tsTv });
-  io.sockets.emit('client_message_222', { message: shirorogsPv });
+  if(gereguGsPv) io.sockets.emit('client_message_222', { message: gereguGsPv });
+  if(odukpanitsTv) io.sockets.emit('client_message_222', { message: odukpanitsTv });
+  if(ikotekpeneTv) io.sockets.emit('client_message_222', { message: ikotekpeneTv });
+  if(gwagwaladatsTv) io.sockets.emit('client_message_222', { message: gwagwaladatsTv });
+  if(dadinkowagsTv) io.sockets.emit('client_message_222', { message: dadinkowagsTv });
+  if(parasenergyPsPv) io.sockets.emit('client_message_222', { message: parasenergyPsPv });
+  if(asabatsTv) io.sockets.emit('client_message_222', { message: asabatsTv });
+  if(delta4gsTv) io.sockets.emit('client_message_222', { message: delta4gsTv });
+  if(okpaiippGsTv) io.sockets.emit('client_message_222', { message: okpaiippGsTv });
+  if(jebbaTsTv) io.sockets.emit('client_message_222', { message: jebbaTsTv });
+  if(kainjitsTv) io.sockets.emit('client_message_222', { message: kainjitsTv });
+  if(egbingsPv) io.sockets.emit('client_message_222', { message: egbingsPv });
+  if(riversIppPsPr) io.sockets.emit('client_message_222', { message: riversIppPsPr });
+  if(afam4gsPv) io.sockets.emit('client_message_222', { message: afam4gsPv });
+  if(ikorodu2Tv) io.sockets.emit('client_message_222', { message: ikorodu2Tv });
+  if(starPipeCs) io.sockets.emit('client_message_222', { message: starPipeCs });
+  if(quantumCs) io.sockets.emit('client_message_222', { message: quantumCs });
+  if(aflCs) io.sockets.emit('client_message_222', { message: aflCs });
+  if(ndphcPulkitLagosPd) io.sockets.emit('client_message_222', { message: ndphcPulkitLagosPd });
+  if(ndphcSunflagLagosPd) io.sockets.emit('client_message_222', { message: ndphcSunflagLagosPd });
+  if(taopexTv) io.sockets.emit('client_message_222', { message: taopexTv });
+  if(zungeruTv) io.sockets.emit('client_message_222', { message: zungeruTv });
+  if(odukpanitsPv) io.sockets.emit('client_message_222', { message: odukpanitsPv });
+  if(ihovbortsTv) io.sockets.emit('client_message_222', { message: ihovbortsTv });
+  if(sapeletsPv) io.sockets.emit('client_message_222', { message: sapeletsPv });
+  if(omokugsPv) io.sockets.emit('client_message_222', { message: omokugsPv });
+  if(delta2gsPv) io.sockets.emit('client_message_222', { message: delta2gsPv });
+  if(afam6tsTv) io.sockets.emit('client_message_222', { message: afam6tsTv });
+  if(shirorogsPv) io.sockets.emit('client_message_222', { message: shirorogsPv });
 
   // Client Mesl
-  io.sockets.emit('client_message_mesl', { message: meslNiameyPd });
-  io.sockets.emit('client_message_mesl', { message: meslZebercedPd });
-  io.sockets.emit('client_message_mesl', { message: meslInnerGalaxy1Pd });
-  io.sockets.emit('client_message_mesl', { message: meslInnerGalaxy2Pd });
-  io.sockets.emit('client_message_mesl', { message: meslGazaouaPd });
-  io.sockets.emit('client_message_mesl', { message: meslKam33Pd });
-  io.sockets.emit('client_message_mesl', { message: meslPSMLPd });
-  io.sockets.emit('client_message_mesl', { message: meslATVLPd });
-  io.sockets.emit('client_message_mesl', { message: quantumCs });
-  io.sockets.emit('client_message_mesl', { message: meslHydropolisPd });
-  io.sockets.emit('client_message_mesl', { message: meslYongxingPd });
+  if(meslNiameyPd) io.sockets.emit('client_message_mesl', { message: meslNiameyPd });
+  if(meslZebercedPd) io.sockets.emit('client_message_mesl', { message: meslZebercedPd });
+  if(meslInnerGalaxy1Pd) io.sockets.emit('client_message_mesl', { message: meslInnerGalaxy1Pd });
+  if(meslInnerGalaxy2Pd) io.sockets.emit('client_message_mesl', { message: meslInnerGalaxy2Pd });
+  if(meslGazaouaPd) io.sockets.emit('client_message_mesl', { message: meslGazaouaPd });
+  if(meslKam33Pd) io.sockets.emit('client_message_mesl', { message: meslKam33Pd });
+  if(meslPSMLPd) io.sockets.emit('client_message_mesl', { message: meslPSMLPd });
+  if(meslATVLPd) io.sockets.emit('client_message_mesl', { message: meslATVLPd });
+  if(quantumCs) io.sockets.emit('client_message_mesl', { message: quantumCs });
+  if(meslHydropolisPd) io.sockets.emit('client_message_mesl', { message: meslHydropolisPd });
+  if(meslYongxingPd) io.sockets.emit('client_message_mesl', { message: meslYongxingPd });
 
   // Client Fipl
-  io.sockets.emit('client_message_fipl', { message: fiplFmpiaPd });  
-  io.sockets.emit('client_message_fipl', { message: fiplOauiPd });  
+  if(fiplFmpiaPd) io.sockets.emit('client_message_fipl', { message: fiplFmpiaPd });  
+  if(fiplOauiPd) io.sockets.emit('client_message_fipl', { message: fiplOauiPd });  
 
   // Client Taopex  
-  io.sockets.emit('client_message_taopex', { message: taopexErKangIlorinPd });
-  io.sockets.emit('client_message_taopex', { message: taopexKamSteelIlorinPd });
-  io.sockets.emit('client_message_taopex', { message: taopexKamSteelSagamuPd });
+  if(taopexErKangIlorinPd) io.sockets.emit('client_message_taopex', { message: taopexErKangIlorinPd });
+  if(taopexKamSteelIlorinPd) io.sockets.emit('client_message_taopex', { message: taopexKamSteelIlorinPd });
+  if(taopexKamSteelSagamuPd) io.sockets.emit('client_message_taopex', { message: taopexKamSteelSagamuPd });
 
   // Client NDPHC    
-  io.sockets.emit('client_message_ndphc', { message: ndphcSunflagLagosPd });
-  io.sockets.emit('client_message_ndphc', { message: ndphcPhoenixOgunPd }); 
-  io.sockets.emit('client_message_ndphc', { message: ndphcPulkitLagosPd }); 
+  if(ndphcSunflagLagosPd) io.sockets.emit('client_message_ndphc', { message: ndphcSunflagLagosPd });
+  if(ndphcPhoenixOgunPd) io.sockets.emit('client_message_ndphc', { message: ndphcPhoenixOgunPd }); 
+  if(ndphcPulkitLagosPd) io.sockets.emit('client_message_ndphc', { message: ndphcPulkitLagosPd }); 
 
   // Client Sakete
-  io.sockets.emit('client_message_sakete', { message: bilateralIkejaWestSakateLagosPd });
+  if(bilateralIkejaWestSakateLagosPd) io.sockets.emit('client_message_sakete', { message: bilateralIkejaWestSakateLagosPd });
+
+
+  // Reset all global variables to zero for the next round
+    gereguGsPv = null; 
+    odukpanitsTv = null; 
+    omotoso2tsTv = null;
+    omotoso11tsPv = null; 
+    omotoso12tsPv = null; 
+    lokojatsTv = null;
+    ikotekpeneTv = null; 
+    gwagwaladatsTv = null; 
+    gereguGsTv = null;
+    ekimtsTv = null; 
+    ekettsTv = null; 
+    alaojinipptsTv = null;
+    markuditsTv = null; 
+    dadinkowagsTv = null;
+    ugwuajitsTv = null; 
+    olorunsogo1tsPv = null; 
+    parasenergyPsPv = null;
+    olorunsogo2tsTv = null; 
+    omotoshoGasPv = null; 
+    asabatsTv = null; 
+    delta4gsTv = null; 
+    okpaiippGsTv = null;
+    jebbaTsTv = null; 
+    kainjitsTv = null; 
+    egbingsPv = null; 
+    riversIppPsPr = null;
+    afam4gsPv = null; 
+    shirorogsPv = null; 
+    afam6tsTv = null; 
+    delta2gsPv = null;
+    delta3gsPv = null; 
+    omokugsPv = null; 
+    phmainsTv = null; 
+    sapeletsPv = null;
+    ihovbortsTv = null; 
+    odukpanitsPv = null; 
+    transamadiTv = null;
+    afam5gsPv = null; 
+    gbaraintsPv = null; 
+    zungeruTv = null; 
+    zungeruStatus = null;
+    taopexTv = null; 
+    sagamuTv = null; 
+    monarchCs = null; 
+    larfargeCs = null; 
+    aflCs = null; 
+    quantumCs = null; 
+    starPipeCs = null; 
+    ikorodu1Tv = null; 
+    ikorodu2Tv = null; 
+    ndphcSunflagLagosPd = null; 
+    ndphcPhoenixOgunPd = null; 
+    ndphcPulkitLagosPd = null;
+    meslZebercedPd = null; 
+    meslNiameyPd = null; 
+    meslInnerGalaxy1Pd = null; 
+    meslInnerGalaxy2Pd = null;
+    meslGazaouaPd = null; 
+    meslKam33Pd = null; 
+    meslPSMLPd = null; 
+    meslATVLPd = null; 
+    meslHydropolisPd = null; 
+    meslYongxingPd = null;
+    fiplFmpiaPd = null; 
+    fiplOauiPd = null;
+    taopexKamSteelSagamuPd = null; 
+    taopexKamSteelIlorinPd = null; 
+    taopexErKangIlorinPd = null;
+    bilateralIkejaWestSakateLagosPd = null;
 
 }, 30 * 1000);
 
