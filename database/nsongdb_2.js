@@ -191,6 +191,7 @@ async function runOnce() {
     console.log('[Debug] Query:', model.get_nsong_2);
 
     const respo = await pgClient.query(model.get_nsong_2, params);
+    console.log(respo, " response from the database");
     console.log(`[Job] PG query complete, rows=${respo.rows.length}`);
 
     // 2) Transform: unique station/line, refine, map to array, filter valid seconds
