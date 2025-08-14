@@ -186,6 +186,10 @@ async function runOnce() {
     });
 
     const params = [date, Number(Hour), Number(Minute), (Number(Minute) + 5), 0, 59];
+    
+    console.log('[Debug] Params to get_nsong_2:', params);
+    console.log('[Debug] Query:', model.get_nsong_2);
+
     const respo = await pgClient.query(model.get_nsong_2, params);
     console.log(`[Job] PG query complete, rows=${respo.rows.length}`);
 
