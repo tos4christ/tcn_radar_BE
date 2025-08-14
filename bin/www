@@ -2959,6 +2959,8 @@ setInterval(() => {
 // async function getWeather() {
 //   try {
 //     // const response = await db.query(weatherModel.get_station_coords);
+
+
 //     // Separate for generation and transmission
 //     // Add the type to the station data before sending it to the frontend
 //     let stations_current_resolved_holder = [];
