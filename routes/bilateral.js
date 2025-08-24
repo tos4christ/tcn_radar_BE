@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var controller = require('../controllers/bilateral');
+var controller = require('../controllers/bilateral_2');
 var jwtCheck = require('../utility/jwtCheck_bilateral');
 
 /* GET users listing. */
