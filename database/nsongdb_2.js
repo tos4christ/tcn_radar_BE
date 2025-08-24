@@ -294,6 +294,7 @@ async function schedulerLoop() {
 // --------------------------
 // Startup
 // --------------------------
+
 (async function start() {
   console.log('[App] Booting...');
   try {
@@ -310,7 +311,7 @@ async function schedulerLoop() {
   if (missing.length) {
     console.warn('[Env] Missing variables:', missing.join(', '));
   }
-
+  await runOnce();
   schedulerLoop();
 })();
 
