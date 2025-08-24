@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var controller = require('../controllers/lines');
+var controller = require('../controllers/lines_2');
 var jwtCheck = require('../utility/jwtCheck');
 
 /* GET users listing. */

@@ -10,13 +10,13 @@ var XLSX = require('xlsx');
 var PowerAdder = require('../utility/powerAdder');
 
 // Connecting to a different client
-const pool_2 =  new Pool({
-    user: 'postgres',
-    host: '172.16.200.9',
-    database: 'tcn_nas',
-    password: '000000',
-    port: 5432
-});
+// const pool_2 =  new Pool({
+//     user: 'postgres',
+//     host: '172.16.200.9',
+//     database: 'tcn_nas',
+//     password: '000000',
+//     port: 5432
+// });
         
 // pool_2.on('error', (err, client) => {
 //     console.log(err, 'error from pool 2');

@@ -1,4 +1,4 @@
-const { Pool } = require("pg");
+// const { Pool } = require("pg");
 var pool_1 = require('../database/db');
 var timeConverter = require('../utility/timeConverter');
 var bilateralExtractor = require('../utility/bilateralExtractor');
@@ -6,13 +6,13 @@ var XLSX = require('xlsx');
 //const bilateral = require("../models/bilateral");
 
 // Connecting to a different client
-const pool_2 =  new Pool({
-    user: 'postgres',
-    host: '172.16.200.9',
-    database: 'tcn_nas',
-    password: '000000',
-    port: 5432
-});
+// const pool_2 =  new Pool({
+//     user: 'postgres',
+//     host: '172.16.200.9',
+//     database: 'tcn_nas',
+//     password: '000000',
+//     port: 5432
+// });
 
 const get_daily_2 = (t1, t2)  => {
     return `SELECT * FROM bilateral_table where name in 

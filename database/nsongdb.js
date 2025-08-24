@@ -22,33 +22,33 @@ const config = {
     }
 }
 
-const send_to_api = (data_object) => {
-  // Send dat to API here
-  const url = `https://settlement.onem.gov.ng/api/power_data`;
-  const options = {
-    method: "POST",
-    url,
-    params: {'api-version': '3.0'},
-    //mode: "cors",
-    headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
-        "Authorization": `Bearer ${process.env.POWER_DATA}`
-    },
-    data: data_object
-  }
-  axios
-    .request(options)
-    .then(response => {
-      console.log(response.statusText, response.data, " the POST data");
-      //console.log(response, " the Response data");
-    })
-    .catch(err => {
-      console.error(err)
-    })
-}
+// const send_to_api = (data_object) => {
+//   // Send dat to API here
+//   const url = `https://settlement.onem.gov.ng/api/power_data`;
+//   const options = {
+//     method: "POST",
+//     url,
+//     params: {'api-version': '3.0'},
+//     //mode: "cors",
+//     headers: {
+//         "Content-Type": "application/json",
+//         "Access-Control-Allow-Origin": "*",
+//         "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+//         "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
+//         "Authorization": `Bearer ${process.env.POWER_DATA}`
+//     },
+//     data: data_object
+//   }
+//   axios
+//     .request(options)
+//     .then(response => {
+//       console.log(response.statusText, response.data, " the POST data");
+//       //console.log(response, " the Response data");
+//     })
+//     .catch(err => {
+//       console.error(err)
+//     })
+// }
 
 // Connecting to a different client
 // const db_2 =  new Pool({
