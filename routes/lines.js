@@ -4,17 +4,17 @@ var controller = require('../controllers/lines_2');
 var jwtCheck = require('../utility/jwtCheck');
 
 /* GET users listing. */
-router.post('/uptime', jwtCheck, controller.uptime);
+// router.post('/uptime', jwtCheck, controller.uptime);
 
-router.post('/nari', controller.nari);
+// router.post('/nari', controller.nari);
 
-router.post('/downtime', jwtCheck, controller.downtime);
+// router.post('/downtime', jwtCheck, controller.downtime);
 
-router.post('/history', jwtCheck, controller.history);
+// router.post('/history', jwtCheck, controller.history);
 
-router.post('/average', jwtCheck, controller.average);
+// router.post('/average', jwtCheck, controller.average);
 
-router.post('/profile', jwtCheck, controller.profile);
+// router.post('/profile', jwtCheck, controller.profile);
 
 // router.get('/all', jwtCheck, controller.all);
 
