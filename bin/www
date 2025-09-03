@@ -265,7 +265,7 @@ client_mesl.on('connect', () => {
     [
       'mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/inner-galaxy1/pd', 'mesl/inner-galaxy2/pd',
        'mesl/gazaoua/pd', 'mesl/Kam33/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd', 'quantum/cs', 
-       'mesl/hydropolis/pd', 'mesl/yongxing/pd'
+       'mesl/hydropolis/pd', 'mesl/yongxing/pd', 'mesl/amil/pd', 'mesl/aenl/pd'
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
@@ -2472,12 +2472,9 @@ const temporary_storage = {
 
 client_mesl.on('message', (topic, message) => {
   if ([
-    'mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/inner-galaxy1/pd', 'mesl/inner-galaxy2/pd',
-       'mesl/gazaoua/pd', 'mesl/Kam33/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd', 'quantum/cs', 
-       'mesl/hydropolis/pd', 'mesl/yongxing/pd'
-
+      'mesl/amil/pd', 'mesl/aenl/pd'
   ].includes(topic)) {
-    // console.log(message.toString(), '  client mesl  ', topic);
+    console.log(message.toString(), '  client mesl  ', topic);
   }
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
