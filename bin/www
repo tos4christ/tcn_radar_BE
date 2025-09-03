@@ -2472,7 +2472,7 @@ const temporary_storage = {
 
 client_mesl.on('message', (topic, message) => {
   if ([
-      'mesl/amil/pd', 'mesl/aenl/pd'
+      'mesl/aenl/pd'
   ].includes(topic)) {
     console.log(message.toString(), '  client mesl  ', topic);
   }
