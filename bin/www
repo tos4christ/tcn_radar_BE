@@ -346,19 +346,19 @@ client_1.on('message', (topic, message) => {
   } 
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
-  const payload = message.toString();
-  if (topic === 'eketts/tv') ekettsTv = payload; //-- client 1
-  else if (topic === 'alaojinippts/tv') alaojinipptsTv = payload;  //-- client 1  
-  else if (topic === 'markudits/tv') markuditsTv = payload; //-- client 1  
-  else if (topic === 'ugwuajits/tv') ugwuajitsTv = payload;  //-- client 1
-  else if (topic === 'olorunsogo1ts/pv') olorunsogo1tsPv = payload;  //-- client 1  
-  else if (topic === 'olorunsogo2ts/tv') olorunsogo2tsTv = payload; //-- client 1
-  else if (topic === 'omotoso2ts/tv') omotoso2tsTv = payload; //-- client 1
-  else if (topic === 'omotoso11ts/pv') omotoso11tsPv = payload; //-- client 1
-  else if (topic === 'omotoso12ts/pv') omotoso12tsPv = payload; //-- client 1
-  else if (topic === 'lokojats/tv') lokojatsTv = payload; //-- client 1
+  // const payload = message.toString();
+  // if (topic === 'eketts/tv') ekettsTv = payload; //-- client 1
+  // else if (topic === 'alaojinippts/tv') alaojinipptsTv = payload;  //-- client 1  
+  // else if (topic === 'markudits/tv') markuditsTv = payload; //-- client 1  
+  // else if (topic === 'ugwuajits/tv') ugwuajitsTv = payload;  //-- client 1
+  // else if (topic === 'olorunsogo1ts/pv') olorunsogo1tsPv = payload;  //-- client 1  
+  // else if (topic === 'olorunsogo2ts/tv') olorunsogo2tsTv = payload; //-- client 1
+  // else if (topic === 'omotoso2ts/tv') omotoso2tsTv = payload; //-- client 1
+  // else if (topic === 'omotoso11ts/pv') omotoso11tsPv = payload; //-- client 1
+  // else if (topic === 'omotoso12ts/pv') omotoso12tsPv = payload; //-- client 1
+  // else if (topic === 'lokojats/tv') lokojatsTv = payload; //-- client 1
     
-  // io.sockets.emit('client_message_111', { message: message.toString() }); 
+  io.sockets.emit('client_message_111', { message: message.toString() }); 
    
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
@@ -448,38 +448,38 @@ client_2.on('message', (topic, message) => {
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
 
-  const payload = message.toString();
-  if (topic === 'gereguGs/pv') gereguGsPv = payload; //-- client 2
-  else if (topic === 'odukpanits/tv') odukpanitsTv = payload; //-- client 2
-  else if (topic === 'ikotekpene/tv') ikotekpeneTv = payload; //-- client 2
-  else if (topic === 'gwagwaladats/tv') gwagwaladatsTv = payload; //-- client 2  
-  else if (topic === 'dadinkowags/tv') dadinkowagsTv = payload; //-- client 2
-  else if (topic === 'parasenergyPs/pv') parasenergyPsPv = payload;  //-- client 2  
-  else if (topic === 'asabats/tv') asabatsTv = payload; //-- client 2
-  else if (topic === 'delta4gs/tv') delta4gsTv = payload; //-- client 2
-  else if (topic === 'OkpaiippGs/tv') okpaiippGsTv = payload; //-- client 2
-  else if (topic === 'jebbaTs/tv') jebbaTsTv = payload; //-- client 2
-  else if (topic === 'kainjits/tv') kainjitsTv = payload; //-- client 2
-  else if (topic === 'egbings/pv') egbingsPv = payload; //-- client 2
-  else if (topic === 'riversIppPs/pr') riversIppPsPr = payload; //-- client 2
-  else if (topic === 'afam4gs/pv') afam4gsPv = payload; //-- client 2
-  else if (topic === 'shirorogs/pv') shirorogsPv = payload; //-- client 2
-  else if (topic === 'afam6ts/tv') afam6tsTv = payload; //-- client 2
-  else if (topic === 'delta2gs/pv') delta2gsPv = payload; //-- client 2  
-  else if (topic === 'omokugs/pv') omokugsPv = payload; //-- client 2  
-  else if (topic === 'sapelets/pv') sapeletsPv = payload; //-- client 2
-  else if (topic === 'ihovborts/tv') ihovbortsTv = payload; //-- client 2
-  else if (topic === 'odukpanits/pv') odukpanitsPv = payload; //-- client 2  
-  else if (topic === 'zungeru/tv') zungeruTv = payload;  //-- client 2
-  else if (topic === 'taopex/tv') taopexTv = payload; //-- client 2
-  else if (topic === 'ndphc/sunflag/lagos/pd') ndphcSunflagLagosPd = payload; //-- client 2  
-  else if (topic === 'ndphc/pulkit/lagos/pd') ndphcPulkitLagosPd = payload; //-- client 2
-  else if (topic === 'afl/cs') aflCs = payload; //-- client 2  
-  else if (topic === 'quantum/cs') quantumCs = payload; //-- client 2
-  else if (topic === 'starPipe/cs') starPipeCs = payload; //-- client 2  
-  else if (topic === 'ikorodu2/tv') ikorodu2Tv = payload; //-- client 2
+  // const payload = message.toString();
+  // if (topic === 'gereguGs/pv') gereguGsPv = payload; //-- client 2
+  // else if (topic === 'odukpanits/tv') odukpanitsTv = payload; //-- client 2
+  // else if (topic === 'ikotekpene/tv') ikotekpeneTv = payload; //-- client 2
+  // else if (topic === 'gwagwaladats/tv') gwagwaladatsTv = payload; //-- client 2  
+  // else if (topic === 'dadinkowags/tv') dadinkowagsTv = payload; //-- client 2
+  // else if (topic === 'parasenergyPs/pv') parasenergyPsPv = payload;  //-- client 2  
+  // else if (topic === 'asabats/tv') asabatsTv = payload; //-- client 2
+  // else if (topic === 'delta4gs/tv') delta4gsTv = payload; //-- client 2
+  // else if (topic === 'OkpaiippGs/tv') okpaiippGsTv = payload; //-- client 2
+  // else if (topic === 'jebbaTs/tv') jebbaTsTv = payload; //-- client 2
+  // else if (topic === 'kainjits/tv') kainjitsTv = payload; //-- client 2
+  // else if (topic === 'egbings/pv') egbingsPv = payload; //-- client 2
+  // else if (topic === 'riversIppPs/pr') riversIppPsPr = payload; //-- client 2
+  // else if (topic === 'afam4gs/pv') afam4gsPv = payload; //-- client 2
+  // else if (topic === 'shirorogs/pv') shirorogsPv = payload; //-- client 2
+  // else if (topic === 'afam6ts/tv') afam6tsTv = payload; //-- client 2
+  // else if (topic === 'delta2gs/pv') delta2gsPv = payload; //-- client 2  
+  // else if (topic === 'omokugs/pv') omokugsPv = payload; //-- client 2  
+  // else if (topic === 'sapelets/pv') sapeletsPv = payload; //-- client 2
+  // else if (topic === 'ihovborts/tv') ihovbortsTv = payload; //-- client 2
+  // else if (topic === 'odukpanits/pv') odukpanitsPv = payload; //-- client 2  
+  // else if (topic === 'zungeru/tv') zungeruTv = payload;  //-- client 2
+  // else if (topic === 'taopex/tv') taopexTv = payload; //-- client 2
+  // else if (topic === 'ndphc/sunflag/lagos/pd') ndphcSunflagLagosPd = payload; //-- client 2  
+  // else if (topic === 'ndphc/pulkit/lagos/pd') ndphcPulkitLagosPd = payload; //-- client 2
+  // else if (topic === 'afl/cs') aflCs = payload; //-- client 2  
+  // else if (topic === 'quantum/cs') quantumCs = payload; //-- client 2
+  // else if (topic === 'starPipe/cs') starPipeCs = payload; //-- client 2  
+  // else if (topic === 'ikorodu2/tv') ikorodu2Tv = payload; //-- client 2
     
-  // io.sockets.emit('client_message_222', { message: message.toString() });
+  io.sockets.emit('client_message_222', { message: message.toString() });
   
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
@@ -2479,20 +2479,20 @@ client_mesl.on('message', (topic, message) => {
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
 
-  const payload = message.toString();
-  if (topic === 'mesl/niamey/pd') meslNiameyPd = payload; //-- mesl
-  else if (topic === 'mesl/zeberced/pd') meslZebercedPd = payload;  //-- mesl  
-  else if (topic === 'mesl/inner-galaxy1/pd') meslInnerGalaxy1Pd = payload; //-- mesl  
-  else if (topic === 'mesl/inner-galaxy2/pd') meslInnerGalaxy2Pd = payload;  //-- mesl
-  else if (topic === 'mesl/gazaoua/pd') meslGazaouaPd = payload;  //-- mesl  
-  else if (topic === 'mesl/Kam33/pd') meslKam33Pd = payload; //-- mesl
-  else if (topic === 'mesl/PSML/pd') meslPSMLPd = payload; //-- mesl
-  else if (topic === 'mesl/ATVL/pd') meslATVLPd = payload; //-- mesl
-  else if (topic === 'quantum/cs') quantumCs = payload; //-- mesl
-  else if (topic === 'mesl/hydropolis/pd') meslHydropolisPd = payload; //-- mesl
-  else if (topic === 'mesl/yongxing/pd') meslYongxingPd = payload; //-- mesl
+  // const payload = message.toString();
+  // if (topic === 'mesl/niamey/pd') meslNiameyPd = payload; //-- mesl
+  // else if (topic === 'mesl/zeberced/pd') meslZebercedPd = payload;  //-- mesl  
+  // else if (topic === 'mesl/inner-galaxy1/pd') meslInnerGalaxy1Pd = payload; //-- mesl  
+  // else if (topic === 'mesl/inner-galaxy2/pd') meslInnerGalaxy2Pd = payload;  //-- mesl
+  // else if (topic === 'mesl/gazaoua/pd') meslGazaouaPd = payload;  //-- mesl  
+  // else if (topic === 'mesl/Kam33/pd') meslKam33Pd = payload; //-- mesl
+  // else if (topic === 'mesl/PSML/pd') meslPSMLPd = payload; //-- mesl
+  // else if (topic === 'mesl/ATVL/pd') meslATVLPd = payload; //-- mesl
+  // else if (topic === 'quantum/cs') quantumCs = payload; //-- mesl
+  // else if (topic === 'mesl/hydropolis/pd') meslHydropolisPd = payload; //-- mesl
+  // else if (topic === 'mesl/yongxing/pd') meslYongxingPd = payload; //-- mesl
     
-  // io.sockets.emit('client_message_mesl', { message: message.toString() }); 
+  io.sockets.emit('client_message_mesl', { message: message.toString() }); 
   
   if (['quantum/cs'].includes(topic)) {
       // Do not save this into the database, it is already being saved in Client_2
@@ -2560,11 +2560,11 @@ client_fipl.on('message', (topic, message) => {
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
 
-  const payload = message.toString();
-  if (topic === 'fipl/fmpia/pd') fiplFmpiaPd = payload; //-- fipl
-  else if (topic === 'fipl/oaui/pd') fiplOauiPd = payload;  //-- fipl  
+  // const payload = message.toString();
+  // if (topic === 'fipl/fmpia/pd') fiplFmpiaPd = payload; //-- fipl
+  // else if (topic === 'fipl/oaui/pd') fiplOauiPd = payload;  //-- fipl  
     
-  // io.sockets.emit('client_message_fipl', { message: message.toString() });  
+  io.sockets.emit('client_message_fipl', { message: message.toString() });  
 
   let data;
   try {
@@ -2628,13 +2628,13 @@ client_taopex.on('message', (topic, message) => {
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
 
-  const payload = message.toString();
-  if (topic === 'taopex/kamSteel/sagamu/pd') taopexKamSteelSagamuPd = payload; //-- taopex
-  else if (topic === 'taopex/kamSteel/ilorin/pd') taopexKamSteelIlorinPd = payload;  //-- taopex  
-  else if (topic === 'taopex/erKang/ilorin/pd') taopexErKangIlorinPd = payload; //-- taopex  
+  // const payload = message.toString();
+  // if (topic === 'taopex/kamSteel/sagamu/pd') taopexKamSteelSagamuPd = payload; //-- taopex
+  // else if (topic === 'taopex/kamSteel/ilorin/pd') taopexKamSteelIlorinPd = payload;  //-- taopex  
+  // else if (topic === 'taopex/erKang/ilorin/pd') taopexErKangIlorinPd = payload; //-- taopex  
   
   
-  // io.sockets.emit('client_message_taopex', { message: message.toString() });
+  io.sockets.emit('client_message_taopex', { message: message.toString() });
   
   let data;
   try {
@@ -2698,12 +2698,12 @@ client_ndphc.on('message', (topic, message) => {
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
 
-  const payload = message.toString();
-  if (topic === 'ndphc/sunflag/lagos/pd') ndphcSunflagLagosPd = payload;  //-- nhdpc
-  else if (topic === 'ndphc/phoenix/ogun/pd') ndphcPhoenixOgunPd = payload;  //-- nhdpc  
-  else if (topic === 'ndphc/pulkit/lagos/pd') ndphcPulkitLagosPd = payload; //-- nhdpc
+  // const payload = message.toString();
+  // if (topic === 'ndphc/sunflag/lagos/pd') ndphcSunflagLagosPd = payload;  //-- nhdpc
+  // else if (topic === 'ndphc/phoenix/ogun/pd') ndphcPhoenixOgunPd = payload;  //-- nhdpc  
+  // else if (topic === 'ndphc/pulkit/lagos/pd') ndphcPulkitLagosPd = payload; //-- nhdpc
     
-  // io.sockets.emit('client_message_ndphc', { message: message.toString() }); 
+  io.sockets.emit('client_message_ndphc', { message: message.toString() }); 
   
   return;
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
@@ -2744,10 +2744,10 @@ client_sakete.on('message', (topic, message) => {
   // broadcast the message to the client that are connected
   // Function to run when a client connects to the server whereever it is hosted
 
-  const payload = message.toString();
-  if (topic === 'bilateral/ikejaWest-sakate/lagos/pd') bilateralIkejaWestSakateLagosPd = payload; //-- sakete
+  // const payload = message.toString();
+  // if (topic === 'bilateral/ikejaWest-sakate/lagos/pd') bilateralIkejaWestSakateLagosPd = payload; //-- sakete
     
-  // io.sockets.emit('client_message_sakete', { message: message.toString() });
+  io.sockets.emit('client_message_sakete', { message: message.toString() });
  
   let data;
   try {
@@ -2804,153 +2804,153 @@ client_sakete.on('message', (topic, message) => {
  
 });
 
-setInterval(() => {
-  // Client 1
-  if(ekettsTv) io.sockets.emit('client_message_111', { message: ekettsTv });
-  if(alaojinipptsTv) io.sockets.emit('client_message_111', { message: alaojinipptsTv }); 
-  if(markuditsTv) io.sockets.emit('client_message_111', { message: markuditsTv }); 
-  if(ugwuajitsTv) io.sockets.emit('client_message_111', { message: ugwuajitsTv }); 
-  if(olorunsogo1tsPv) io.sockets.emit('client_message_111', { message: olorunsogo1tsPv }); 
-  if(olorunsogo2tsTv) io.sockets.emit('client_message_111', { message: olorunsogo2tsTv }); 
-  if(omotoso2tsTv) io.sockets.emit('client_message_111', { message: omotoso2tsTv }); 
-  if(omotoso11tsPv) io.sockets.emit('client_message_111', { message: omotoso11tsPv }); 
-  if(omotoso12tsPv) io.sockets.emit('client_message_111', { message: omotoso12tsPv }); 
-  if(lokojatsTv) io.sockets.emit('client_message_111', { message: lokojatsTv }); 
+// setInterval(() => {
+//   // Client 1
+//   if(ekettsTv) io.sockets.emit('client_message_111', { message: ekettsTv });
+//   if(alaojinipptsTv) io.sockets.emit('client_message_111', { message: alaojinipptsTv }); 
+//   if(markuditsTv) io.sockets.emit('client_message_111', { message: markuditsTv }); 
+//   if(ugwuajitsTv) io.sockets.emit('client_message_111', { message: ugwuajitsTv }); 
+//   if(olorunsogo1tsPv) io.sockets.emit('client_message_111', { message: olorunsogo1tsPv }); 
+//   if(olorunsogo2tsTv) io.sockets.emit('client_message_111', { message: olorunsogo2tsTv }); 
+//   if(omotoso2tsTv) io.sockets.emit('client_message_111', { message: omotoso2tsTv }); 
+//   if(omotoso11tsPv) io.sockets.emit('client_message_111', { message: omotoso11tsPv }); 
+//   if(omotoso12tsPv) io.sockets.emit('client_message_111', { message: omotoso12tsPv }); 
+//   if(lokojatsTv) io.sockets.emit('client_message_111', { message: lokojatsTv }); 
  
-  // Client 2
-  if(gereguGsPv) io.sockets.emit('client_message_222', { message: gereguGsPv });
-  if(odukpanitsTv) io.sockets.emit('client_message_222', { message: odukpanitsTv });
-  if(ikotekpeneTv) io.sockets.emit('client_message_222', { message: ikotekpeneTv });
-  if(gwagwaladatsTv) io.sockets.emit('client_message_222', { message: gwagwaladatsTv });
-  if(dadinkowagsTv) io.sockets.emit('client_message_222', { message: dadinkowagsTv });
-  if(parasenergyPsPv) io.sockets.emit('client_message_222', { message: parasenergyPsPv });
-  if(asabatsTv) io.sockets.emit('client_message_222', { message: asabatsTv });
-  if(delta4gsTv) io.sockets.emit('client_message_222', { message: delta4gsTv });
-  if(okpaiippGsTv) io.sockets.emit('client_message_222', { message: okpaiippGsTv });
-  if(jebbaTsTv) io.sockets.emit('client_message_222', { message: jebbaTsTv });
-  if(kainjitsTv) io.sockets.emit('client_message_222', { message: kainjitsTv });
-  if(egbingsPv) io.sockets.emit('client_message_222', { message: egbingsPv });
-  if(riversIppPsPr) io.sockets.emit('client_message_222', { message: riversIppPsPr });
-  if(afam4gsPv) io.sockets.emit('client_message_222', { message: afam4gsPv });
-  if(ikorodu2Tv) io.sockets.emit('client_message_222', { message: ikorodu2Tv });
-  if(starPipeCs) io.sockets.emit('client_message_222', { message: starPipeCs });
-  if(quantumCs) io.sockets.emit('client_message_222', { message: quantumCs });
-  if(aflCs) io.sockets.emit('client_message_222', { message: aflCs });
-  if(ndphcPulkitLagosPd) io.sockets.emit('client_message_222', { message: ndphcPulkitLagosPd });
-  if(ndphcSunflagLagosPd) io.sockets.emit('client_message_222', { message: ndphcSunflagLagosPd });
-  if(taopexTv) io.sockets.emit('client_message_222', { message: taopexTv });
-  if(zungeruTv) io.sockets.emit('client_message_222', { message: zungeruTv });
-  if(odukpanitsPv) io.sockets.emit('client_message_222', { message: odukpanitsPv });
-  if(ihovbortsTv) io.sockets.emit('client_message_222', { message: ihovbortsTv });
-  if(sapeletsPv) io.sockets.emit('client_message_222', { message: sapeletsPv });
-  if(omokugsPv) io.sockets.emit('client_message_222', { message: omokugsPv });
-  if(delta2gsPv) io.sockets.emit('client_message_222', { message: delta2gsPv });
-  if(afam6tsTv) io.sockets.emit('client_message_222', { message: afam6tsTv });
-  if(shirorogsPv) io.sockets.emit('client_message_222', { message: shirorogsPv });
+//   // Client 2
+//   if(gereguGsPv) io.sockets.emit('client_message_222', { message: gereguGsPv });
+//   if(odukpanitsTv) io.sockets.emit('client_message_222', { message: odukpanitsTv });
+//   if(ikotekpeneTv) io.sockets.emit('client_message_222', { message: ikotekpeneTv });
+//   if(gwagwaladatsTv) io.sockets.emit('client_message_222', { message: gwagwaladatsTv });
+//   if(dadinkowagsTv) io.sockets.emit('client_message_222', { message: dadinkowagsTv });
+//   if(parasenergyPsPv) io.sockets.emit('client_message_222', { message: parasenergyPsPv });
+//   if(asabatsTv) io.sockets.emit('client_message_222', { message: asabatsTv });
+//   if(delta4gsTv) io.sockets.emit('client_message_222', { message: delta4gsTv });
+//   if(okpaiippGsTv) io.sockets.emit('client_message_222', { message: okpaiippGsTv });
+//   if(jebbaTsTv) io.sockets.emit('client_message_222', { message: jebbaTsTv });
+//   if(kainjitsTv) io.sockets.emit('client_message_222', { message: kainjitsTv });
+//   if(egbingsPv) io.sockets.emit('client_message_222', { message: egbingsPv });
+//   if(riversIppPsPr) io.sockets.emit('client_message_222', { message: riversIppPsPr });
+//   if(afam4gsPv) io.sockets.emit('client_message_222', { message: afam4gsPv });
+//   if(ikorodu2Tv) io.sockets.emit('client_message_222', { message: ikorodu2Tv });
+//   if(starPipeCs) io.sockets.emit('client_message_222', { message: starPipeCs });
+//   if(quantumCs) io.sockets.emit('client_message_222', { message: quantumCs });
+//   if(aflCs) io.sockets.emit('client_message_222', { message: aflCs });
+//   if(ndphcPulkitLagosPd) io.sockets.emit('client_message_222', { message: ndphcPulkitLagosPd });
+//   if(ndphcSunflagLagosPd) io.sockets.emit('client_message_222', { message: ndphcSunflagLagosPd });
+//   if(taopexTv) io.sockets.emit('client_message_222', { message: taopexTv });
+//   if(zungeruTv) io.sockets.emit('client_message_222', { message: zungeruTv });
+//   if(odukpanitsPv) io.sockets.emit('client_message_222', { message: odukpanitsPv });
+//   if(ihovbortsTv) io.sockets.emit('client_message_222', { message: ihovbortsTv });
+//   if(sapeletsPv) io.sockets.emit('client_message_222', { message: sapeletsPv });
+//   if(omokugsPv) io.sockets.emit('client_message_222', { message: omokugsPv });
+//   if(delta2gsPv) io.sockets.emit('client_message_222', { message: delta2gsPv });
+//   if(afam6tsTv) io.sockets.emit('client_message_222', { message: afam6tsTv });
+//   if(shirorogsPv) io.sockets.emit('client_message_222', { message: shirorogsPv });
 
-  // Client Mesl
-  if(meslNiameyPd) io.sockets.emit('client_message_mesl', { message: meslNiameyPd });
-  if(meslZebercedPd) io.sockets.emit('client_message_mesl', { message: meslZebercedPd });
-  if(meslInnerGalaxy1Pd) io.sockets.emit('client_message_mesl', { message: meslInnerGalaxy1Pd });
-  if(meslInnerGalaxy2Pd) io.sockets.emit('client_message_mesl', { message: meslInnerGalaxy2Pd });
-  if(meslGazaouaPd) io.sockets.emit('client_message_mesl', { message: meslGazaouaPd });
-  if(meslKam33Pd) io.sockets.emit('client_message_mesl', { message: meslKam33Pd });
-  if(meslPSMLPd) io.sockets.emit('client_message_mesl', { message: meslPSMLPd });
-  if(meslATVLPd) io.sockets.emit('client_message_mesl', { message: meslATVLPd });
-  if(quantumCs) io.sockets.emit('client_message_mesl', { message: quantumCs });
-  if(meslHydropolisPd) io.sockets.emit('client_message_mesl', { message: meslHydropolisPd });
-  if(meslYongxingPd) io.sockets.emit('client_message_mesl', { message: meslYongxingPd });
+//   // Client Mesl
+//   if(meslNiameyPd) io.sockets.emit('client_message_mesl', { message: meslNiameyPd });
+//   if(meslZebercedPd) io.sockets.emit('client_message_mesl', { message: meslZebercedPd });
+//   if(meslInnerGalaxy1Pd) io.sockets.emit('client_message_mesl', { message: meslInnerGalaxy1Pd });
+//   if(meslInnerGalaxy2Pd) io.sockets.emit('client_message_mesl', { message: meslInnerGalaxy2Pd });
+//   if(meslGazaouaPd) io.sockets.emit('client_message_mesl', { message: meslGazaouaPd });
+//   if(meslKam33Pd) io.sockets.emit('client_message_mesl', { message: meslKam33Pd });
+//   if(meslPSMLPd) io.sockets.emit('client_message_mesl', { message: meslPSMLPd });
+//   if(meslATVLPd) io.sockets.emit('client_message_mesl', { message: meslATVLPd });
+//   if(quantumCs) io.sockets.emit('client_message_mesl', { message: quantumCs });
+//   if(meslHydropolisPd) io.sockets.emit('client_message_mesl', { message: meslHydropolisPd });
+//   if(meslYongxingPd) io.sockets.emit('client_message_mesl', { message: meslYongxingPd });
 
-  // Client Fipl
-  if(fiplFmpiaPd) io.sockets.emit('client_message_fipl', { message: fiplFmpiaPd });  
-  if(fiplOauiPd) io.sockets.emit('client_message_fipl', { message: fiplOauiPd });  
+//   // Client Fipl
+//   if(fiplFmpiaPd) io.sockets.emit('client_message_fipl', { message: fiplFmpiaPd });  
+//   if(fiplOauiPd) io.sockets.emit('client_message_fipl', { message: fiplOauiPd });  
 
-  // Client Taopex  
-  if(taopexErKangIlorinPd) io.sockets.emit('client_message_taopex', { message: taopexErKangIlorinPd });
-  if(taopexKamSteelIlorinPd) io.sockets.emit('client_message_taopex', { message: taopexKamSteelIlorinPd });
-  if(taopexKamSteelSagamuPd) io.sockets.emit('client_message_taopex', { message: taopexKamSteelSagamuPd });
+//   // Client Taopex  
+//   if(taopexErKangIlorinPd) io.sockets.emit('client_message_taopex', { message: taopexErKangIlorinPd });
+//   if(taopexKamSteelIlorinPd) io.sockets.emit('client_message_taopex', { message: taopexKamSteelIlorinPd });
+//   if(taopexKamSteelSagamuPd) io.sockets.emit('client_message_taopex', { message: taopexKamSteelSagamuPd });
 
-  // Client NDPHC    
-  if(ndphcSunflagLagosPd) io.sockets.emit('client_message_ndphc', { message: ndphcSunflagLagosPd });
-  if(ndphcPhoenixOgunPd) io.sockets.emit('client_message_ndphc', { message: ndphcPhoenixOgunPd }); 
-  if(ndphcPulkitLagosPd) io.sockets.emit('client_message_ndphc', { message: ndphcPulkitLagosPd }); 
+//   // Client NDPHC    
+//   if(ndphcSunflagLagosPd) io.sockets.emit('client_message_ndphc', { message: ndphcSunflagLagosPd });
+//   if(ndphcPhoenixOgunPd) io.sockets.emit('client_message_ndphc', { message: ndphcPhoenixOgunPd }); 
+//   if(ndphcPulkitLagosPd) io.sockets.emit('client_message_ndphc', { message: ndphcPulkitLagosPd }); 
 
-  // Client Sakete
-  if(bilateralIkejaWestSakateLagosPd) io.sockets.emit('client_message_sakete', { message: bilateralIkejaWestSakateLagosPd });
+//   // Client Sakete
+//   if(bilateralIkejaWestSakateLagosPd) io.sockets.emit('client_message_sakete', { message: bilateralIkejaWestSakateLagosPd });
 
 
-  // Reset all global variables to zero for the next round
-    gereguGsPv = null; 
-    odukpanitsTv = null; 
-    omotoso2tsTv = null;
-    omotoso11tsPv = null; 
-    omotoso12tsPv = null; 
-    lokojatsTv = null;
-    ikotekpeneTv = null; 
-    gwagwaladatsTv = null; 
-    gereguGsTv = null;
-    ekimtsTv = null; 
-    ekettsTv = null; 
-    alaojinipptsTv = null;
-    markuditsTv = null; 
-    dadinkowagsTv = null;
-    ugwuajitsTv = null; 
-    olorunsogo1tsPv = null; 
-    parasenergyPsPv = null;
-    olorunsogo2tsTv = null; 
-    omotoshoGasPv = null; 
-    asabatsTv = null; 
-    delta4gsTv = null; 
-    okpaiippGsTv = null;
-    jebbaTsTv = null; 
-    kainjitsTv = null; 
-    egbingsPv = null; 
-    riversIppPsPr = null;
-    afam4gsPv = null; 
-    shirorogsPv = null; 
-    afam6tsTv = null; 
-    delta2gsPv = null;
-    delta3gsPv = null; 
-    omokugsPv = null; 
-    phmainsTv = null; 
-    sapeletsPv = null;
-    ihovbortsTv = null; 
-    odukpanitsPv = null; 
-    transamadiTv = null;
-    afam5gsPv = null; 
-    gbaraintsPv = null; 
-    zungeruTv = null; 
-    zungeruStatus = null;
-    taopexTv = null; 
-    sagamuTv = null; 
-    monarchCs = null; 
-    larfargeCs = null; 
-    aflCs = null; 
-    quantumCs = null; 
-    starPipeCs = null; 
-    ikorodu1Tv = null; 
-    ikorodu2Tv = null; 
-    ndphcSunflagLagosPd = null; 
-    ndphcPhoenixOgunPd = null; 
-    ndphcPulkitLagosPd = null;
-    meslZebercedPd = null; 
-    meslNiameyPd = null; 
-    meslInnerGalaxy1Pd = null; 
-    meslInnerGalaxy2Pd = null;
-    meslGazaouaPd = null; 
-    meslKam33Pd = null; 
-    meslPSMLPd = null; 
-    meslATVLPd = null; 
-    meslHydropolisPd = null; 
-    meslYongxingPd = null;
-    fiplFmpiaPd = null; 
-    fiplOauiPd = null;
-    taopexKamSteelSagamuPd = null; 
-    taopexKamSteelIlorinPd = null; 
-    taopexErKangIlorinPd = null;
-    bilateralIkejaWestSakateLagosPd = null;
+//   // Reset all global variables to zero for the next round
+//     gereguGsPv = null; 
+//     odukpanitsTv = null; 
+//     omotoso2tsTv = null;
+//     omotoso11tsPv = null; 
+//     omotoso12tsPv = null; 
+//     lokojatsTv = null;
+//     ikotekpeneTv = null; 
+//     gwagwaladatsTv = null; 
+//     gereguGsTv = null;
+//     ekimtsTv = null; 
+//     ekettsTv = null; 
+//     alaojinipptsTv = null;
+//     markuditsTv = null; 
+//     dadinkowagsTv = null;
+//     ugwuajitsTv = null; 
+//     olorunsogo1tsPv = null; 
+//     parasenergyPsPv = null;
+//     olorunsogo2tsTv = null; 
+//     omotoshoGasPv = null; 
+//     asabatsTv = null; 
+//     delta4gsTv = null; 
+//     okpaiippGsTv = null;
+//     jebbaTsTv = null; 
+//     kainjitsTv = null; 
+//     egbingsPv = null; 
+//     riversIppPsPr = null;
+//     afam4gsPv = null; 
+//     shirorogsPv = null; 
+//     afam6tsTv = null; 
+//     delta2gsPv = null;
+//     delta3gsPv = null; 
+//     omokugsPv = null; 
+//     phmainsTv = null; 
+//     sapeletsPv = null;
+//     ihovbortsTv = null; 
+//     odukpanitsPv = null; 
+//     transamadiTv = null;
+//     afam5gsPv = null; 
+//     gbaraintsPv = null; 
+//     zungeruTv = null; 
+//     zungeruStatus = null;
+//     taopexTv = null; 
+//     sagamuTv = null; 
+//     monarchCs = null; 
+//     larfargeCs = null; 
+//     aflCs = null; 
+//     quantumCs = null; 
+//     starPipeCs = null; 
+//     ikorodu1Tv = null; 
+//     ikorodu2Tv = null; 
+//     ndphcSunflagLagosPd = null; 
+//     ndphcPhoenixOgunPd = null; 
+//     ndphcPulkitLagosPd = null;
+//     meslZebercedPd = null; 
+//     meslNiameyPd = null; 
+//     meslInnerGalaxy1Pd = null; 
+//     meslInnerGalaxy2Pd = null;
+//     meslGazaouaPd = null; 
+//     meslKam33Pd = null; 
+//     meslPSMLPd = null; 
+//     meslATVLPd = null; 
+//     meslHydropolisPd = null; 
+//     meslYongxingPd = null;
+//     fiplFmpiaPd = null; 
+//     fiplOauiPd = null;
+//     taopexKamSteelSagamuPd = null; 
+//     taopexKamSteelIlorinPd = null; 
+//     taopexErKangIlorinPd = null;
+//     bilateralIkejaWestSakateLagosPd = null;
 
-}, 30 * 1000);
+// }, 30 * 1000);
 
 // Get weather data and store it in the database
 // const timeout = 120000;
