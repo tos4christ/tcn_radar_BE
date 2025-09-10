@@ -6,7 +6,7 @@
 
 var app = require('../app');
 var debug = require('debug')('tcn-radar:server');
-var http = require('http');
+// var http = require('http');
 const fs = require('fs');
 var https = require('https');
 var mqtt = require("mqtt");
@@ -14,7 +14,8 @@ var mqtt = require("mqtt");
 var db = require("../database/db");
 var linesModel = require("../models/lines");
 var bilateralModel = require('../models/bilateral');
-var weatherModel = require("../models/weather");
+var gencosModel = require('../models/gencos');
+// var weatherModel = require("../models/weather");
 var frequencyModel = require("../models/frequency");
 var { Server } = require("socket.io");
 const { Pool } = require('pg');
@@ -163,6 +164,7 @@ const client_fipl = mqtt.connect(host_2, options);
 const client_taopex = mqtt.connect(host_2, options);
 const client_ndphc = mqtt.connect(host_2, options);
 const client_sakete = mqtt.connect(host_2, options);
+const generator_units = mqtt.connect(host_2, options);
 
 // Client on connect
 client_1.on('connect', () => {
@@ -304,6 +306,15 @@ client_sakete.on('connect', () => {
     err => err ? console.log('this is the error', err) : null
   )
 });
+generator_units.on('connect', () => {
+  generator_units.subscribe(
+    [
+      'ps/sapele/gas', 'ps/sapele-nipp', 'ps/sapele/steam', 'ps/egbin/steam/lagos/pd'
+    ], {qos: 2},
+    err => err ? console.log('this is the error', err) : null
+  )
+});
+
 
 // Declare a global variable to hold data for better streaming
 let gereguGsPv, odukpanitsTv, omotoso2tsTv,
@@ -2798,6 +2809,60 @@ client_sakete.on('message', (topic, message) => {
       })
       .catch(err => console.log(err));
     } 
+  } catch(err) {
+      console.error(err)
+  }
+ 
+});
+generator_units.on('message', (topic, message) => {
+  if (['ps/sapele/gas', 'ps/sapele-nipp', 'ps/sapele/steam', 'ps/egbin/steam/lagos/pd'].includes(topic)) {
+      // console.log(message.toString(), 'generator units');
+  }
+  // return;
+  // broadcast the message to the client that are connected
+  // Function to run when a client connects to the server whereever it is hosted
+
+  // const payload = message.toString();
+  // if (topic === 'bilateral/ikejaWest-sakate/lagos/pd') bilateralIkejaWestSakateLagosPd = payload; //-- sakete
+    
+  io.sockets.emit('generator_units', { message: message.toString() });
+ 
+  let data;
+  try {
+    data = JSON.parse(message.toString());
+    // const name = data.id ? data.id : data.name;
+    const genco_name = data.id;
+    const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
+    const { lines, transformers, units } = data;
+    var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
+    const hour = time.split(':')[0];
+    const minute = time.split(':')[1];
+    const seconds = time.split(':')[2];
+    const dateTemp = date.split('-');
+    const epoch_time = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
+    // console.log(epoch_time.getTime(), epoch_time, 'the epoch')
+    let voltage, active_power, reactive_power, current, power_factor, frequency, unit_name;
+
+    // loop over the lines or transformers array if it exists, else we deal with single units logic
+    const equip = lines ? lines : transformers ? transformers : units ? units : undefined;
+    if(equip) {
+      equip.forEach(line => {
+        unit_name = line.id;          
+        voltage = line.pd.v ? line.pd.v : 0.00;
+        active_power = line.pd.mw ? line.pd.mw : 0.00;
+        current = line.pd.a ? line.pd.a : 0.00;
+        reactive_power = line.pd.mx ? line.pd.mx : 0.00;
+        power_factor = line.pd.pf && isNaN(line.pd.pf) == false ? line.pd.pf  : 0.00;
+        frequency = line.pd.f && isNaN(line.pd.f) == false ? line.pd.f  : 0.00;
+        // (date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, time, pf, f)
+        db.query(gencosModel.create, [date, hour, minute, seconds, voltage, active_power, reactive_power, current, genco_name, unit_name, epoch_time.getTime(), power_factor, frequency])
+        .then( response => {
+          // console.log('its okay 2')
+        })
+        .catch(err => console.log(err))
+      }) 
+    }
   } catch(err) {
       console.error(err)
   }
