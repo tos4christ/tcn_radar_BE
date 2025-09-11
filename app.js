@@ -136,7 +136,7 @@ app.use('/changepassword_bilateral', sp_changePasswordRouter);
 // app.use('/api', gridTablesRouter);
 
 app.get('/.well-known/pki-validation/14910CB436084B06C059CE124EB7ACC6.txt', (req, res) => {
-  res.sendFile(path.join(__dirname, "ssl", "14910CB436084B06C059CE124EB7ACC6.txt"))
+  res.sendFile(path.join(__dirname, "nisossl", "14910CB436084B06C059CE124EB7ACC6.txt"))
 })
 
 // Function to intercept disabled routes and not process them sending 404 error
