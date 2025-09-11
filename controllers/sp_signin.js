@@ -6,7 +6,7 @@ var db = require('../database/db');
 const signin = {};
 
 signin.get = (req, res) => {
-  res.redirect('https://tcnnas.org/bilateral_signin');
+  res.redirect('https://nisonas.org/bilateral_signin');
 }
 
 signin.post = (req, res) => {

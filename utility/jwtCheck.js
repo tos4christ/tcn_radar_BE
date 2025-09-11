@@ -4,7 +4,7 @@ const jwtCheck = (req, res, next) => {
   
   if (!req.headers.authorization) {
     // console.log(req.headers, 'the request token')
-    // return res.redirect('http://tcnnas.org');
+    // return res.redirect('http://nisonas.org');
     return res.status(401).json({
       status: 'error',
       error: 'Unauthorized access, you need to be logged in as a registered user'
