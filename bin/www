@@ -2839,6 +2839,10 @@ generator_units.on('message', (topic, message) => {
  
   let data;
   try {
+    if(message[0] === '"') {
+      message = '{' + message;
+      message = message.replace(/.(?=\])/g, '')
+    }
     data = JSON.parse(message.toString());
     // const name = data.id ? data.id : data.name;
     const genco_name = data.id ? data.id : data.name ? data.name : null;
