@@ -312,7 +312,9 @@ client_sakete.on('connect', () => {
 generator_units.on('connect', () => {
   generator_units.subscribe(
     [
-      'ps/sapele/gas', 'ps/sapele-nipp', 'ps/sapele/steam', 'ps/egbin/steam/lagos/pd'
+      'ps/sapele/gas', 'ps/sapele-nipp', 'ps/sapele/steam', 'ps/egbin/steam/lagos/pd',
+      "ps/delta2/gas/delta/pd", "ps/delta3/gas/Delta/pd", "ps/delta4-1/gas/Delta/pd",
+      "ps/delta4-2/gas/Delta/pd",
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
@@ -2839,7 +2841,7 @@ generator_units.on('message', (topic, message) => {
   try {
     data = JSON.parse(message.toString());
     // const name = data.id ? data.id : data.name;
-    const genco_name = data.id;
+    const genco_name = data.id ? data.id : data.name ? data.name : null;
     const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
     const { lines, transformers, units } = data;
     var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -2857,12 +2859,12 @@ generator_units.on('message', (topic, message) => {
     if(equip) {
       equip.forEach(line => {
         unit_name = line.id;          
-        voltage = line.pd.v ? line.pd.v : 0.00;
-        active_power = line.pd.mw ? line.pd.mw : 0.00;
-        current = line.pd.a ? line.pd.a : 0.00;
-        reactive_power = line.pd.mx ? line.pd.mx : 0.00;
-        power_factor = line.pd.pf && isNaN(line.pd.pf) == false ? line.pd.pf  : 0.00;
-        frequency = line.pd.f && isNaN(line.pd.f) == false ? line.pd.f  : 0.00;
+        voltage = line.pd.v ? line.pd.v : line.td.v ? line.td.v : 0.00;
+        active_power = line.pd.mw ? line.pd.mw : line.td.mw ? line.td.mw : 0.00;
+        current = line.pd.a ? line.pd.a : line.td.a ? line.td.a : 0.00;
+        reactive_power = line.pd.mx ? line.pd.mx : line.td.mx ? line.td.mx : 0.00;
+        power_factor = line.pd.pf && isNaN(line.pd.pf) == false ? line.pd.pf : line.td.pf && isNaN(line.td.pf) == false ? line.td.pf : 0.00;
+        frequency = line.pd.f && isNaN(line.pd.f) == false ? line.pd.f  : line.td.f && isNaN(line.td.f) == false ? line.td.f : 0.00;
         // (date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, time, pf, f)
         db.query(gencosModel.create, [date, hour, minute, seconds, voltage, active_power, reactive_power, current, genco_name, unit_name, epoch_time.getTime(), power_factor, frequency])
         .then( response => {
