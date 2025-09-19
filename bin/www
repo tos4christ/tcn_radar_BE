@@ -503,6 +503,9 @@ client_2.on('message', (topic, message) => {
   try {
       data = JSON.parse(message.toString());     
       const station = data.id ? data.id : data.name;
+      if(station === "egbinPs") {
+        data.t = new Date().toLocaleTimeString("en-GB").split(' ')[0];
+      }
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
       const { lines, units, transformers } = data;
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -2847,6 +2850,9 @@ generator_units.on('message', (topic, message) => {
     data = JSON.parse(message.toString());
     // const name = data.id ? data.id : data.name;
     const genco_name = data.id ? data.id : data.name ? data.name : null;
+    if(genco_name === "egbinPs") {
+        data.t = new Date().toLocaleTimeString("en-GB").split(' ')[0];
+      }
     const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
     const { lines, transformers, units } = data;
     var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
