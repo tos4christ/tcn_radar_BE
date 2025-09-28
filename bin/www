@@ -315,7 +315,7 @@ generator_units.on('connect', () => {
       'ps/sapele/gas/pd', 'ps/sapele-nipp', 'ps/sapele/steam', 'ps/egbin/steam/lagos/pd',
       "ps/delta2/gas/delta/pd", "ps/delta3/gas/Delta/pd", "ps/delta4-1/gas/Delta/pd",
       "ps/delta4-2/gas/Delta/pd", "ps/afam5/gas/rivers/pd", "ps/afam3/gas/rivers/pd",
-      "ps/afam6/gas/rivers/pd"
+      "ps/afam6/gas/rivers/pd", "ps/dadinkowa/hydro/gombe/pd"
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
