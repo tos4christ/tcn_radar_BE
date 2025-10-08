@@ -155,8 +155,8 @@ lines.createRows = (req, res) => {
         if (err) throw err;
         client.query(lines_model.create, [date, mw, amp, time])
             .then( resp => {
-                const log = resp.rows;
-                console.log(log, 'the log')
+                // const log = resp.rows;
+                // console.log(log, 'the log')
                 res.send("Rows added successfully");
             })
             .catch(err => console.log(err))
