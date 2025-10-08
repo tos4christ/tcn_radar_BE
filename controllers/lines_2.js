@@ -44,6 +44,10 @@ const get_hourly = (t1, t2) => `
     ORDER BY station, line_name, time;
 `;
 
+const lines_model = {
+    create: 'INSERT INTO feeder_rows(date, mw, amp, time) VALUES($1, $2, $3, $4) RETURNING *',
+}
+
 const lines = {};
 
 lines.getdaily = async (req, res) => {
@@ -136,5 +140,28 @@ lines.getcollapse = async (req, res) => {
         res.status(500).send("Server error");
     }
 };
+
+
+lines.createRows = (req, res) => {    
+    const { body } = req;
+    let { date, mw, amp, time } = body;
+    
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };   
+    const today = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
+    date = date ? date : today;
+    time = time ? time : new Date().toLocaleTimeString('en-GB', { hour12: false });
+
+    pool.connect((err, client, done) => {
+        if (err) throw err;
+        client.query(lines_model.create, [date, mw, amp, time])
+            .then( resp => {
+                const log = resp.rows;
+                console.log(log, 'the log')
+                res.send("Rows added successfully");
+            })
+            .catch(err => console.log(err))
+            .finally(() => done());
+    })
+}
 
 module.exports = lines;

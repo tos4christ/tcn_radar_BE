@@ -24,4 +24,7 @@ router.post('/voltageprofile', controller.gethourlyvoltage);
 
 router.post('/collapse', controller.getcollapse);
 
+// Testing endpoint to create rows in the feeder_rows table
+router.post('/create', controller.createRows);
+
 module.exports = router;
