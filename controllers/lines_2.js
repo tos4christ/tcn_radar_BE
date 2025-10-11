@@ -3,6 +3,7 @@ var model = require('../models/lines');
 var pool = require('../database/db');
 var dateFormatter = require('../utility/dateFormatter');
 var timeConverter = require('../utility/timeConverter');
+var epochToHms = require('../utility/epochToHMS');
 var temExtractor = require('../utility/temExtractor');
 var voltageProfile = require('../utility/voltageProfile');
 var XLSX = require('xlsx');
@@ -45,7 +46,7 @@ const get_hourly = (t1, t2) => `
 `;
 
 const lines_model = {
-    create: 'INSERT INTO feeder_rows(date, mw, amp, time) VALUES($1, $2, $3, $4) RETURNING *',
+    create: 'INSERT INTO feeder_rows(date, mw, amp, time, hours) VALUES($1, $2, $3, $4, $5) RETURNING *',
 }
 
 const lines = {};
@@ -150,14 +151,15 @@ lines.createRows = (req, res) => {
     const today = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
     date = date ? date : today;
     time = time ? time : new Date().toLocaleTimeString('en-GB', { hour12: false });
+    const hours = epochToHms(time);
 
     pool.connect((err, client, done) => {
         if (err) throw err;
-        client.query(lines_model.create, [date, mw, amp, time])
+        client.query(lines_model.create, [date, mw, amp, time, hours])
             .then( resp => {
                 // const log = resp.rows;
                 // console.log(log, 'the log')
-                res.send("Rows added successfully");
+                res.send({ message: 'Row created successfully', time: hours });
             })
             .catch(err => console.log(err))
             .finally(() => done());
