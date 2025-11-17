@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.24328d63.css",
-    "main.js": "/static/js/main.66bdfa28.js",
-    "static/js/27.d7f41ef6.chunk.js": "/static/js/27.d7f41ef6.chunk.js",
+    "main.css": "/static/css/main.bb8a3512.css",
+    "main.js": "/static/js/main.b7766068.js",
+    "static/js/27.66165101.chunk.js": "/static/js/27.66165101.chunk.js",
     "static/media/icofont.svg?v=1.0.0-beta": "/static/media/icofont.9999a483fca7c18fdec0.svg",
     "static/media/counter-bg.jpg": "/static/media/counter-bg.43612e980473b26eba5f.jpg",
     "static/media/footer-bg.jpg": "/static/media/footer-bg.43612e980473b26eba5f.jpg",
@@ -27,15 +27,14 @@
     "static/media/signup-head.JPG": "/static/media/signup-head.b42187c6306d22a2fd30.JPG",
     "static/media/login-head.JPG": "/static/media/login-head.a39c63d6bb059b03247c.JPG",
     "static/media/loader.gif": "/static/media/loader.e71ecf3500b3a584a5c2.gif",
-    "static/media/tcnLogo.png": "/static/media/tcnLogo.80725f895248129bc57c.png",
     "static/media/logo.JPG": "/static/media/logo.0a7dff4f3be7d0f92b12.JPG",
-    "static/media/niso_logo_main_small.jpg": "/static/media/niso_logo_main_small.a19561f13e44858bb109.jpg",
     "static/media/feature.png": "/static/media/feature.a8a562522d86af92505e.png",
     "static/media/responderLogo.JPG": "/static/media/responderLogo.a0304269844fbb8484f1.JPG",
+    "static/media/niso_logo_main.jpg": "/static/media/niso_logo_main.f5f83409a02955b5b584.jpg",
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.24328d63.css",
-    "static/js/main.66bdfa28.js"
+    "static/css/main.bb8a3512.css",
+    "static/js/main.b7766068.js"
   ]
 }
