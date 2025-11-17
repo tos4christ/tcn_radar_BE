@@ -46,7 +46,7 @@ const get_hourly = (t1, t2) => `
 `;
 
 const lines_model = {
-    create: 'INSERT INTO feeder_rows(date, mw, amp, time, hours) VALUES($1, $2, $3, $4, $5) RETURNING *',
+    create: 'INSERT INTO feeder_rows(date, timestamp, mw, amp, time, hours) VALUES($1, $2, $3, $4, $5, $6) RETURNING *',
 }
 
 const lines = {};
@@ -145,8 +145,8 @@ lines.getcollapse = async (req, res) => {
 
 lines.createRows = (req, res) => {    
     const { body } = req;
-    let { date, mw, amp, time } = body;
-    
+    let { date, timestamp, mw, amp, time } = body;
+    // console.log(body);
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };   
     const today = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
     date = date ? date : today;
@@ -155,11 +155,11 @@ lines.createRows = (req, res) => {
 
     pool.connect((err, client, done) => {
         if (err) throw err;
-        client.query(lines_model.create, [date, mw, amp, time, hours])
+        client.query(lines_model.create, [date, timestamp, mw, amp, time, hours])
             .then( resp => {
                 // const log = resp.rows;
                 // console.log(log, 'the log')
-                res.send({ message: 'Row created successfully', time: hours });
+                res.send({ message: 'Row created successfully', time: hours, timestamp });
             })
             .catch(err => console.log(err))
             .finally(() => done());
