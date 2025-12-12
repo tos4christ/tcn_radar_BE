@@ -339,7 +339,8 @@ generator_units.on('connect', () => {
       "ps/delta2/gas/delta/pd", "ps/delta3/gas/Delta/pd", "ps/delta4-1/gas/Delta/pd",
       "ps/delta4-2/gas/Delta/pd", "ps/afam5/gas/rivers/pd", "ps/afam3/gas/rivers/pd",
       "ps/afam6/gas/rivers/pd", "ps/dadinkowa/hydro/gombe/pd", "ps/okpai_1/gas/delta/pd",
-      "ps/okpai_2/steam/delta/pd", "ps/paras_1/gas/lagos/pd", "ps/paras_2/gas/lagos/pd"
+      "ps/okpai_2/steam/delta/pd", "ps/paras_1/gas/lagos/pd", "ps/paras_2/gas/lagos/pd",
+      "ps/shiroro/hydro/niger/pd"
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
