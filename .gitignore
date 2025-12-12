@@ -8,6 +8,7 @@ lerna-debug.log*
 build/asset-manifest.json
 /build/
 build
+build.zip
 build/index.html
 ./build/*
 build/asset-manifest.json
