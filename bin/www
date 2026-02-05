@@ -401,7 +401,7 @@ client_1.on('message', (topic, message) => {
   // else if (topic === 'omotoso12ts/pv') omotoso12tsPv = payload; //-- client 1
   // else if (topic === 'lokojats/tv') lokojatsTv = payload; //-- client 1
     
-  io.sockets.emit('client_message_111', { message: message.toString() }); 
+  // io.sockets.emit('client_message_111', { message: message.toString() }); 
    
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
@@ -522,7 +522,7 @@ client_2.on('message', (topic, message) => {
   // else if (topic === 'starPipe/cs') starPipeCs = payload; //-- client 2  
   // else if (topic === 'ikorodu2/tv') ikorodu2Tv = payload; //-- client 2
     
-  io.sockets.emit('client_message_222', { message: message.toString() });
+  // io.sockets.emit('client_message_222', { message: message.toString() });
   
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
   let data;
@@ -668,7 +668,8 @@ client_4.on('message', (topic, message) => {
       //console.log("this is the new frequency ", frequency);
       // Send Frequency data in realtime to the client
 
-      io.sockets.emit('frequency001', { message: JSON.stringify(frequency) });
+      // io.sockets.emit('frequency001', { message: JSON.stringify(frequency) });
+
        // Store Frequency into the database
       db.query(frequencyModel.create, [date, temp_time, time_epoch.getTime(), frequency.value])
         .then( response => {
@@ -2543,7 +2544,7 @@ client_mesl.on('message', (topic, message) => {
   // else if (topic === 'mesl/hydropolis/pd') meslHydropolisPd = payload; //-- mesl
   // else if (topic === 'mesl/yongxing/pd') meslYongxingPd = payload; //-- mesl
     
-  io.sockets.emit('client_message_mesl', { message: message.toString() }); 
+  // io.sockets.emit('client_message_mesl', { message: message.toString() }); 
   
   if (['quantum/cs'].includes(topic)) {
       // Do not save this into the database, it is already being saved in Client_2
@@ -2615,7 +2616,7 @@ client_fipl.on('message', (topic, message) => {
   // if (topic === 'fipl/fmpia/pd') fiplFmpiaPd = payload; //-- fipl
   // else if (topic === 'fipl/oaui/pd') fiplOauiPd = payload;  //-- fipl  
     
-  io.sockets.emit('client_message_fipl', { message: message.toString() });  
+  // io.sockets.emit('client_message_fipl', { message: message.toString() });  
 
   let data;
   try {
@@ -2685,7 +2686,7 @@ client_taopex.on('message', (topic, message) => {
   // else if (topic === 'taopex/erKang/ilorin/pd') taopexErKangIlorinPd = payload; //-- taopex  
   
   
-  io.sockets.emit('client_message_taopex', { message: message.toString() });
+  // io.sockets.emit('client_message_taopex', { message: message.toString() });
   
   let data;
   try {
@@ -2754,7 +2755,7 @@ client_ndphc.on('message', (topic, message) => {
   // else if (topic === 'ndphc/phoenix/ogun/pd') ndphcPhoenixOgunPd = payload;  //-- nhdpc  
   // else if (topic === 'ndphc/pulkit/lagos/pd') ndphcPulkitLagosPd = payload; //-- nhdpc
     
-  io.sockets.emit('client_message_ndphc', { message: message.toString() }); 
+  // io.sockets.emit('client_message_ndphc', { message: message.toString() }); 
   
   return;
   // line model data => date, hour, minute, seconds, kv, mw, mvar, amp, equipment_id, station, level, line_name, variant
@@ -2798,7 +2799,7 @@ client_sakete.on('message', (topic, message) => {
   // const payload = message.toString();
   // if (topic === 'bilateral/ikejaWest-sakate/lagos/pd') bilateralIkejaWestSakateLagosPd = payload; //-- sakete
     
-  io.sockets.emit('client_message_sakete', { message: message.toString() });
+  // io.sockets.emit('client_message_sakete', { message: message.toString() });
  
   let data;
   try {
@@ -2865,7 +2866,7 @@ generator_units.on('message', (topic, message) => {
   // const payload = message.toString();
   // if (topic === 'bilateral/ikejaWest-sakate/lagos/pd') bilateralIkejaWestSakateLagosPd = payload; //-- sakete
     
-  io.sockets.emit('generator_units', { message: message.toString() });
+  // io.sockets.emit('generator_units', { message: message.toString() });
  
   let data;
   try {
