@@ -191,6 +191,7 @@ const client_taopex = mqtt.connect(host_2, options);
 const client_ndphc = mqtt.connect(host_2, options);
 const client_sakete = mqtt.connect(host_2, options);
 const generator_units = mqtt.connect(host_2, options);
+const client_wewood = mqtt.connect(host_2, options);
 
 // Client on connect
 client_1.on('connect', () => {
@@ -332,6 +333,14 @@ client_sakete.on('connect', () => {
     err => err ? console.log('this is the error', err) : null
   )
 });
+client_wewood.on('connect', () => {
+  client_wewood.subscribe(
+    [
+      'bilateral/ndphc/weewood/ondo/pd'
+    ], {qos: 2},
+    err => err ? console.log('this is the error', err) : null
+  )
+});
 generator_units.on('connect', () => {
   generator_units.subscribe(
     [
@@ -340,7 +349,7 @@ generator_units.on('connect', () => {
       "ps/delta4-2/gas/Delta/pd", "ps/afam5/gas/rivers/pd", "ps/afam3/gas/rivers/pd",
       "ps/afam6/gas/rivers/pd", "ps/dadinkowa/hydro/gombe/pd", "ps/okpai_1/gas/delta/pd",
       "ps/okpai_2/steam/delta/pd", "ps/paras_1/gas/lagos/pd", "ps/paras_2/gas/lagos/pd",
-      "ps/shiroro/hydro/niger/pd", 
+      "ps/shiroro/hydro/niger/pd",
       "ps/jebba/hydro/niger/pd", "ps/zungeru/hydro/niger/pd", "ps/kainji/hydro/niger/pd",
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
@@ -2916,6 +2925,75 @@ generator_units.on('message', (topic, message) => {
   }
  
 });
+client_wewood.on('message', (topic, message) => {
+  if (['bilateral/ndphc/weewood/ondo/pd'].includes(topic)) {
+      // console.log(message.toString(), 'client wewood');
+  }
+  // return;
+  // broadcast the message to the client that are connected
+  // Function to run when a client connects to the server whereever it is hosted
+
+  // const payload = message.toString();
+  // if (topic === 'bilateral/ikejaWest-sakate/lagos/pd') bilateralIkejaWestSakateLagosPd = payload; //-- sakete
+    
+  io.sockets.emit('client_message_wewood', { message: message.toString() });
+ 
+  let data;
+  try {
+    data = JSON.parse(message.toString());
+    // const name = data.id ? data.id : data.name;
+    const {name} = data;
+    const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
+    const { lines, transformers } = data;
+    var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
+    const hour = time.split(':')[0];
+    const minute = time.split(':')[1];
+    const seconds = time.split(':')[2];
+    const dateTemp = date.split('-');
+    const epoch_time = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
+    // console.log(epoch_time.getTime(), epoch_time, 'the epoch')
+    let kv, mw, mvar, amp, pf, freq, line_name=name;
+
+    // loop over the lines or transformers array if it exists, else we deal with single units logic
+    const equip = lines ? lines : transformers ? transformers : undefined;
+    if(equip) {
+      equip.forEach(line => {
+        line_name = line.id;          
+        kv = line.td.v ? line.td.v : 0.00;
+        mw = line.td.mw ? line.td.mw : 0.00;
+        amp = line.td.a ? line.td.a : 0.00;
+        mvar = line.td.mx ? line.td.mx : 0.00;
+        pf = data.pf && isNaN(data.pf) == false ? data.pf  : 0.00;
+        freq = data.f && isNaN(data.f) == false ? data.f  : 0.00;
+        // (date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, time, pf, f)
+        db.query(bilateralModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, epoch_time.getTime(), pf, freq])
+        .then( response => {
+          // console.log('its okay 2')
+        })
+        .catch(err => console.log(err))
+      }) 
+    } else {
+      kv = data.v ? data.v : 0.00;
+      mw = data.mw ? data.mw : 0.00;
+      amp = data.a ? data.a : 0.00;
+      mvar = data.mx ? data.mx : 0.00;
+      pf = data.pf && isNaN(data.pf) == false ? data.pf  : 0.00;
+      freq = data.f && isNaN(data.f) == false ? data.f  : 0.00;
+      // (date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, time, pf, f)
+      db.query(bilateralModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, epoch_time.getTime(), pf, freq])
+      .then( response => {
+        // console.log('its okay 2')
+      })
+      .catch(err => console.log(err));
+    } 
+  } catch(err) {
+      console.error(err)
+  }
+ 
+});
+
+
 
 // setInterval(() => {
 //   // Client 1
