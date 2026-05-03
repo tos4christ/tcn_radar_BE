@@ -294,7 +294,7 @@ client_mesl.on('connect', () => {
     [
       'mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/inner-galaxy1/pd', 'mesl/inner-galaxy2/pd',
        'mesl/gazaoua/pd', 'mesl/Kam33/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd', 'quantum/cs', 
-       'mesl/hydropolis/pd', 'mesl/yongxing/pd', 'mesl/amil/pd', 'mesl/AENL/pd'
+       'mesl/hydropolis/pd', 'mesl/yongxing/pd', 'mesl/amil/pd', 'mesl/AENL/pd', 'mesl/ganfeng/nasarawa/pd'
     ], {qos: 2},
     err => err ? console.log('this is the error', err) : null
   )
@@ -2563,10 +2563,10 @@ client_mesl.on('message', (topic, message) => {
   let data;
   try {
       data = JSON.parse(message.toString());
-      // const name = data.id ? data.id : data.name;
-      const name = data.name;
+      const name = data.id ? data.id : data.name;
+      // const name = data.name;
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
-      // const { lines, transformers } = data;
+      const { lines, transformers } = data;
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
       const date = new Date().toLocaleDateString("en-GB", options).split('/').reverse().join('-');
       const hour = time.split(':')[0];
@@ -2578,8 +2578,8 @@ client_mesl.on('message', (topic, message) => {
       let kv, mw, mvar, amp, pf, freq, line_name=name;
 
       // loop over the lines or transformers array if it exists, else we deal with single units logic
-      // const equip = lines ? lines : transformers ? transformers : undefined;
-      if(false) {
+      const equip = lines ? lines : transformers ? transformers : undefined;
+      if(equip && equip.length > 0) {
         equip.forEach(line => {
           line_name = line.id;          
           kv = line.td.v ? line.td.v : 0.00;
@@ -2591,7 +2591,7 @@ client_mesl.on('message', (topic, message) => {
           // (date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, time, pf, f)
           db.query(bilateralModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, epoch_time.getTime(), pf, freq])
           .then( response => {
-            // console.log('its okay 2')
+            console.log('MESL Bilateral data saved successfully')
           })
           .catch(err => console.log(err))
         }) 
