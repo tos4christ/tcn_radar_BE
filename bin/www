@@ -2586,8 +2586,8 @@ client_mesl.on('message', (topic, message) => {
           mw = line.td.mw ? line.td.mw : 0.00;
           amp = line.td.a ? line.td.a : 0.00;
           mvar = line.td.mx ? line.td.mx : 0.00;
-          pf = data.pf && isNaN(data.pf) == false ? data.pf  : 0.00;
-          freq = data.f && isNaN(data.f) == false ? data.f  : 0.00;
+          pf = line.td.pf && isNaN(line.td.pf) == false ? line.td.pf  : 0.00;
+          freq = line.td.f && isNaN(line.td.f) == false ? line.td.f  : 0.00;
           // (date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, time, pf, f)
           if(name === 'phedc') {re_name = line_name;} else {re_name = name;}
           db.query(bilateralModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, re_name, line_name, epoch_time.getTime(), pf, freq])
@@ -2654,8 +2654,8 @@ client_fipl.on('message', (topic, message) => {
           mw = line.td.mw ? line.td.mw : 0.00;
           amp = line.td.a ? line.td.a : 0.00;
           mvar = line.td.mx ? line.td.mx : 0.00;
-          pf = data.pf && isNaN(data.pf) == false ? data.pf  : 0.00;
-          freq = data.f && isNaN(data.f) == false ? data.f  : 0.00;
+          pf = line.td.pf && isNaN(line.td.pf) == false ? line.td.pf  : 0.00;
+          freq = line.td.f && isNaN(line.td.f) == false ? line.td.f  : 0.00;
           // (date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, time, pf, f)
           db.query(bilateralModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, epoch_time.getTime(), pf, freq])
           .then( response => {
@@ -2724,8 +2724,8 @@ client_taopex.on('message', (topic, message) => {
           mw = line.td.mw ? line.td.mw : 0.00;
           amp = line.td.a ? line.td.a : 0.00;
           mvar = line.td.mx ? line.td.mx : 0.00;
-          pf = data.pf && isNaN(data.pf) == false ? data.pf  : 0.00;
-          freq = data.f && isNaN(data.f) == false ? data.f  : 0.00;
+          pf = line.td.pf && isNaN(line.td.pf) == false ? line.td.pf  : 0.00;
+          freq = line.td.f && isNaN(line.td.f) == false ? line.td.f  : 0.00;
           // (date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, time, pf, f)
           db.query(bilateralModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, epoch_time.getTime(), pf, freq])
           .then( response => {
