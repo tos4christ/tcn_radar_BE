@@ -292,7 +292,7 @@ client_4.on('connect', () => {
 client_mesl.on('connect', () => {
   client_mesl.subscribe(
     [
-      'mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/inner-galaxy1/pd', 'mesl/inner-galaxy2/pd',
+      'mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/inner-galaxy1/pd', 'mesl/inner-galaxy2/pd', 'mesl/phedc/port-harcourt/pd',
        'mesl/gazaoua/pd', 'mesl/Kam33/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd', 'mesl/quantum/lagos/pd', 
        'mesl/hydropolis/pd', 'mesl/yongxing/pd', 'mesl/amil/pd', 'mesl/AENL/pd', 'mesl/ganfeng/nasarawa/pd'
     ], {qos: 2},
