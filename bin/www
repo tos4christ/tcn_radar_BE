@@ -2575,7 +2575,7 @@ client_mesl.on('message', (topic, message) => {
       const dateTemp = date.split('-');
       const epoch_time = new Date(Number(dateTemp[0]), Number(dateTemp[1]-1), Number(dateTemp[2]), Number(hour)+1, Number(minute), Number(seconds));
       // console.log(epoch_time.getTime(), epoch_time, 'the epoch')
-      let kv, mw, mvar, amp, pf, freq, line_name=name;
+      let kv, mw, mvar, amp, pf, freq, line_name=name, re_name;
 
       // loop over the lines or transformers array if it exists, else we deal with single units logic
       const equip = lines ? lines : transformers ? transformers : undefined;
@@ -2589,8 +2589,8 @@ client_mesl.on('message', (topic, message) => {
           pf = data.pf && isNaN(data.pf) == false ? data.pf  : 0.00;
           freq = data.f && isNaN(data.f) == false ? data.f  : 0.00;
           // (date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, time, pf, f)
-          if(name === 'phedc') name = line_name;
-          db.query(bilateralModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, epoch_time.getTime(), pf, freq])
+          if(name === 'phedc') re_name = line_name;
+          db.query(bilateralModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, re_name, line_name, epoch_time.getTime(), pf, freq])
           .then( response => {
             // console.log('MESL Bilateral data saved successfully')
           })
