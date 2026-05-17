@@ -2589,6 +2589,7 @@ client_mesl.on('message', (topic, message) => {
           pf = data.pf && isNaN(data.pf) == false ? data.pf  : 0.00;
           freq = data.f && isNaN(data.f) == false ? data.f  : 0.00;
           // (date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, time, pf, f)
+          if(name === 'phedc') name = line_name;
           db.query(bilateralModel.create, [date, hour, minute, seconds, kv, mw, mvar, amp, name, line_name, epoch_time.getTime(), pf, freq])
           .then( response => {
             // console.log('MESL Bilateral data saved successfully')
