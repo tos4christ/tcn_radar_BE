@@ -229,7 +229,7 @@ client_2.on('connect', () => {
         'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 'riversIppPs/pv',
         'taopex/tv', 'sunflag/cs', 'sagamu/tv', 'monarch/cs', 'larfarge/cs',
          'topSteel/cs', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs', 
-         'quantum/cs', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
+         'mesl/quantum/lagos/pd', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
          'ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
          'ndphc/pulkit/lagos/pd', 'ps/egbin/steam/lagos/pd'
     ], {qos: 2},
@@ -292,7 +292,7 @@ client_4.on('connect', () => {
 client_mesl.on('connect', () => {
   client_mesl.subscribe(
     [
-      'mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/inner-galaxy1/pd', 'mesl/inner-galaxy2/pd',
+      'mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/inner-galaxy1/pd', 'mesl/inner-galaxy2/pd', 'mesl/phedc/port-harcourt/pd',
        'mesl/gazaoua/pd', 'mesl/Kam33/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd', 'mesl/quantum/lagos/pd', 
        'mesl/hydropolis/pd', 'mesl/yongxing/pd', 'mesl/amil/pd', 'mesl/AENL/pd', 'mesl/ganfeng/nasarawa/pd'
     ], {qos: 2},
@@ -490,7 +490,7 @@ client_2.on('message', (topic, message) => {
         'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 'riversIppPs/pv',
         'taopex/tv', 'sunflag/cs', 'sagamu/tv', 'monarch/cs', 'larfarge/cs',
          'topSteel/cs', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs', 
-         'quantum/cs', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
+         'mesl/quantum/lagos/pd', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
          'ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
          'ndphc/pulkit/lagos/pd'
   ].includes(topic)) {
@@ -2555,7 +2555,7 @@ client_mesl.on('message', (topic, message) => {
     
   io.sockets.emit('client_message_mesl', { message: message.toString() }); 
   
-  if (['quantum/cs'].includes(topic)) {
+  if (['mesl/quantum/lagos/pd'].includes(topic)) {
       // Do not save this into the database, it is already being saved in Client_2
       return;
     }
