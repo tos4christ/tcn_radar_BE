@@ -2632,8 +2632,8 @@ client_fipl.on('message', (topic, message) => {
   let data;
   try {
       data = JSON.parse(message.toString());
-      // const name = data.id ? data.id : data.name;
-      const name = data.name;
+      const name = data.id ? data.id : data.name;
+      // const name = data.name;
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
       // const { lines, transformers } = data;
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -2702,8 +2702,8 @@ client_taopex.on('message', (topic, message) => {
   let data;
   try {
       data = JSON.parse(message.toString());
-      // const name = data.id ? data.id : data.name;
-      const name = data.name;
+      const name = data.id ? data.id : data.name;
+      // const name = data.name;
       const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
       const { lines, transformers } = data;
       var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -2815,8 +2815,8 @@ client_sakete.on('message', (topic, message) => {
   let data;
   try {
     data = JSON.parse(message.toString());
-    // const name = data.id ? data.id : data.name;
-    const name = data.name;
+    const name = data.id ? data.id : data.name;
+    // const name = data.name;
     const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
     const { lines, transformers } = data;
     var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -2943,8 +2943,8 @@ client_wewood.on('message', (topic, message) => {
   let data;
   try {
     data = JSON.parse(message.toString());
-    // const name = data.id ? data.id : data.name;
-    const {name} = data;
+    const name = data.id ? data.id : data.name;
+    // const {name} = data;
     const time = data.t ? data.t : new Date().toLocaleTimeString("en-GB").split(' ')[0];
     const { lines, transformers } = data;
     var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
