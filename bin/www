@@ -318,7 +318,7 @@ client_taopex.on('connect', () => {
 client_ndphc.on('connect', () => {
   client_ndphc.subscribe(
     [
-      'ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
+      'ndphc/sunflag/lagos/pd', 'ndphc/pheonix/ogun/pd',
       'ndphc/pulkit/lagos/pd'
     ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
