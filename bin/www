@@ -206,7 +206,7 @@ client_1.on('connect', () => {
           'dadinkowags/tv', 'ugwuajits/tv',
            'olorunsogo1ts/pv', 'parasenergyPs/pv',
            'olorunsogo2ts/tv','omotoshoGas/pv',
-      ], {qos: 2},
+      ], {qos: 1},
    (err) => {
       if(err) {
           console.log('this is the error', err);
@@ -227,12 +227,11 @@ client_2.on('connect', () => {
         'dadinkowags/tv', 'gbaraints/pv', 'zungeru/tv', 'ugwuajits/tv',
         'zungeru/status', 'gereguGs/tv', 'lokojats/tv', 'parasenergyPs/pv',
         'ekimts/tv', 'eketts/tv', 'alaojinippts/tv', 'riversIppPs/pv',
-        'taopex/tv', 'sunflag/cs', 'sagamu/tv', 'bilateral/ogun/monarch/pd', 'bilateral/ogun/larfarge/pd',
+        'taopex/tv', 'sunflag/cs', 'sagamu/tv', 'bilateral/ogun/monarch/pd', 
          'bilateral/lagos/topsteel/pd', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs', 
          'mesl/quantum/lagos/pd', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
-         'ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
-         'ndphc/pulkit/lagos/pd', 'ps/egbin/steam/lagos/pd'
-    ], {qos: 2},
+         'ps/egbin/steam/lagos/pd','bilateral/ogun/larfarge/pd',
+    ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
 });
@@ -244,7 +243,7 @@ client_2.on('connect', () => {
 // });
 client_4.on('connect', () => {
   client_4.subscribe(
-    [ 'frequency/fv' ], {qos: 2},
+    [ 'frequency/fv' ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
 });
@@ -295,7 +294,7 @@ client_mesl.on('connect', () => {
       'mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/inner-galaxy1/pd', 'mesl/inner-galaxy2/pd', 'mesl/phedc/port-harcourt/pd',
        'mesl/gazaoua/pd', 'mesl/Kam33/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd', 'mesl/quantum/lagos/pd', 
        'mesl/hydropolis/pd', 'mesl/yongxing/pd', 'mesl/amil/pd', 'mesl/AENL/pd', 'mesl/ganfeng/nasarawa/pd'
-    ], {qos: 2},
+    ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
 });
@@ -303,7 +302,7 @@ client_fipl.on('connect', () => {
   client_fipl.subscribe(
     [
       'fipl/fmpia/pd', 'fipl/oaui/pd'
-    ], {qos: 2},
+    ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
 });
@@ -312,7 +311,7 @@ client_taopex.on('connect', () => {
     [
       'taopex/kamSteel/sagamu/pd', 'taopex/kamSteel/ilorin/pd',
       'taopex/erKang/ilorin/pd'
-    ], {qos: 2},
+    ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
 });
@@ -321,7 +320,7 @@ client_ndphc.on('connect', () => {
     [
       'ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
       'ndphc/pulkit/lagos/pd'
-    ], {qos: 2},
+    ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
 });
@@ -329,7 +328,7 @@ client_sakete.on('connect', () => {
   client_sakete.subscribe(
     [
       'bilateral/ikejaWest-sakate/lagos/pd'
-    ], {qos: 2},
+    ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
 });
@@ -337,7 +336,7 @@ client_wewood.on('connect', () => {
   client_wewood.subscribe(
     [
       'bilateral/ndphc/weewood/ondo/pd'
-    ], {qos: 2},
+    ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
 });
@@ -352,7 +351,7 @@ generator_units.on('connect', () => {
       "ps/shiroro/hydro/niger/pd", "ps/geometric/plant1/gas/aba/pd", "ps/geometric/plant2/gas/aba/pd",
       "ps/jebba/hydro/niger/pd", "ps/zungeru/hydro/niger/pd", "ps/kainji/hydro/niger/pd",
       "ps/geometric/plant3/gas/aba/pd", "ps/ibom/gas/akwaibom/pd", "ps/cnl/gas/rivers/pd"
-    ], {qos: 2},
+    ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
 });
