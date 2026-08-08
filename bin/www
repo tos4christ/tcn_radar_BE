@@ -230,7 +230,7 @@ client_2.on('connect', () => {
         'taopex/tv', 'sunflag/cs', 'sagamu/tv', 'bilateral/ogun/monarch/pd', 
          'bilateral/lagos/topsteel/pd', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs', 
          'mesl/quantum/lagos/pd', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
-         'ps/egbin/steam/lagos/pd','bilateral/ogun/larfarge/pd',
+         'ps/egbin/steam/lagos/pd','bilateral/ogun/larfarge/pd', 'ndphc/pheonix/ogun/pd',
     ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
