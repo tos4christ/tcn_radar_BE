@@ -231,6 +231,7 @@ client_2.on('connect', () => {
          'bilateral/lagos/topsteel/pd', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs', 
          'mesl/quantum/lagos/pd', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
          'ps/egbin/steam/lagos/pd','bilateral/ogun/larfarge/pd', 'ndphc/pheonix/ogun/pd',
+         'bilateral/ogun/shongai/pd'
     ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
@@ -492,7 +493,7 @@ client_2.on('message', (topic, message) => {
          'topSteel/cs', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs', 
          'mesl/quantum/lagos/pd', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
          'ndphc/sunflag/lagos/pd', 'ndphc/phoenix/ogun/pd',
-         'ndphc/pulkit/lagos/pd'
+         'ndphc/pulkit/lagos/pd', 'bilateral/ogun/shongai/pd'
   ].includes(topic)) {
     // console.log(message.toString(), ' TOPIC ', topic,   'client 2');
     // return;
