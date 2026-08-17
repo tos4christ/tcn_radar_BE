@@ -29,25 +29,25 @@ require('dotenv').config();
 const numCPUs = os.cpus().length;
 
 // Connect to the mssql database
-const mssql_config = {
-    user: process.env.MSSQL_USER_LOCAL,
-    password: process.env.MSSQL_PASSWORD_LOCAL,
-    server: process.env.MSSQL_SERVER_LOCAL,
-    database: process.env.MSSQL_DATABASE_LOCAL,
-    options: {
-        port: Number(process.env.MSSQL_PORT_LOCAL),
-        encrypt: true,
-        trustServerCertificate: true,
-        rowCollectionOnRequestCompletion: true
-    }
-};
+// const mssql_config = {
+//     user: process.env.MSSQL_USER_LOCAL,
+//     password: process.env.MSSQL_PASSWORD_LOCAL,
+//     server: process.env.MSSQL_SERVER_LOCAL,
+//     database: process.env.MSSQL_DATABASE_LOCAL,
+//     options: {
+//         port: Number(process.env.MSSQL_PORT_LOCAL),
+//         encrypt: true,
+//         trustServerCertificate: true,
+//         rowCollectionOnRequestCompletion: true
+//     }
+// };
 
-const mssql_pool = new mssql.ConnectionPool(mssql_config);
-const poolConnect = mssql_pool.connect();
+// const mssql_pool = new mssql.ConnectionPool(mssql_config);
+// const poolConnect = mssql_pool.connect();
 
-poolConnect.then(() => {
-  console.log('Connected to SQL Server');
-}).catch(err => console.error('Connection failed:', err));
+// poolConnect.then(() => {
+//   console.log('Connected to SQL Server');
+// }).catch(err => console.error('Connection failed:', err));
 
 // os.setPriority(process.pid, os.constants.priority.PRIORITY_HIGHEST);
 var jwt = require('jsonwebtoken');
