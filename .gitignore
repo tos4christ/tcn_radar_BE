@@ -5,14 +5,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
-build/asset-manifest.json
-/build/
-build
-build.zip
-build/index.html
-./build/*
-build/asset-manifest.json
-build/index.html
+!build/
+!build
+!build/*
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
