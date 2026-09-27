@@ -295,7 +295,7 @@ client_mesl.on('connect', () => {
       'mesl/zeberced/pd', 'mesl/niamey/pd', 'mesl/inner-galaxy1/pd', 'mesl/inner-galaxy2/pd', 'mesl/phedc/port-harcourt/pd',
        'mesl/gazaoua/pd', 'mesl/Kam33/pd', 'mesl/PSML/pd', 'mesl/ATVL/pd', 'mesl/quantum/lagos/pd', 
        'mesl/hydropolis/pd', 'mesl/yongxing/pd', 'mesl/amil/pd', 'mesl/AENL/pd', 'mesl/ganfeng/nasarawa/pd',
-      //  'mesl/phedc-bao-yao/calabar/pd', 'mesl/phedc-olam/calabar/pd', 'mesl/phedc-gph/port-harcourt/pd'
+       'mesl/phedc-bao-yao/calabar/pd', 'mesl/phedc-olam/calabar/pd', 'mesl/phedc-gph/port-harcourt/pd'
     ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
@@ -2557,7 +2557,7 @@ client_mesl.on('message', (topic, message) => {
     
   io.sockets.emit('client_message_mesl', { message: message.toString() }); 
   
-  if (['mesl/quantum/lagos/pd'].includes(topic)) {
+  if (['mesl/phedc-bao-yao/calabar/pd', 'mesl/phedc-olam/calabar/pd', 'mesl/phedc-gph/port-harcourt/pd'].includes(topic)) {
       // Do not save this into the database, it is already being saved in Client_2
       return;
     }
