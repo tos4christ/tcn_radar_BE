@@ -231,8 +231,7 @@ client_2.on('connect', () => {
          'bilateral/lagos/topsteel/pd', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs', 
          'mesl/quantum/lagos/pd', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
          'ps/egbin/steam/lagos/pd','bilateral/ogun/larfarge/pd', 'ndphc/pheonix/ogun/pd',
-         'bilateral/ogun/shongai/pd', 'ps/mepp/gas/maidugri/pd', 'ps/afam3/gas/delta1/pd',
-         'ps/afam3/gas/delta1/pd'
+         'bilateral/ogun/shongai/pd',
     ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
@@ -353,7 +352,9 @@ generator_units.on('connect', () => {
       "ps/okpai_2/steam/delta/pd", "ps/paras_1/gas/lagos/pd", "ps/paras_2/gas/lagos/pd",
       "ps/shiroro/hydro/niger/pd", "ps/geometric/plant1/gas/aba/pd", "ps/geometric/plant2/gas/aba/pd",
       "ps/jebba/hydro/niger/pd", "ps/zungeru/hydro/niger/pd", "ps/kainji/hydro/niger/pd",
-      "ps/geometric/plant3/gas/aba/pd", "ps/ibom/gas/akwaibom/pd", "ps/cnl/gas/rivers/pd"
+      "ps/geometric/plant3/gas/aba/pd", "ps/ibom/gas/akwaibom/pd", "ps/cnl/gas/rivers/pd",
+      'ps/mepp/gas/maidugri/pd', 'ps/afam3/gas/delta1/pd',
+      'ps/afam3/gas/delta1/pd',
     ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
