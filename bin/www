@@ -354,7 +354,7 @@ generator_units.on('connect', () => {
       "ps/jebba/hydro/niger/pd", "ps/zungeru/hydro/niger/pd", "ps/kainji/hydro/niger/pd",
       "ps/geometric/plant3/gas/aba/pd", "ps/ibom/gas/akwaibom/pd", "ps/cnl/gas/rivers/pd",
       'ps/mepp/gas/maidugri/pd', 'ps/afam3/gas/delta1/pd',
-      'ps/afam3/gas/delta1/pd',
+      'ps/afam3/gas/delta2/pd',
     ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
