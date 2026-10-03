@@ -2559,7 +2559,7 @@ client_mesl.on('message', (topic, message) => {
     
   io.sockets.emit('client_message_mesl', { message: message.toString() }); 
   
-  if (['mesl/phedc-bao-yao/calabar/pd', 'mesl/phedc-olam/calabar/pd', 'mesl/phedc-gph/port-harcourt/pd'].includes(topic)) {
+  if (['mesl/phedc-bao-yao/calabar/pd', 'mesl/phedc-olam/calabar/pd'].includes(topic)) {
       // Do not save this into the database, it is already being saved in Client_2
       return;
     }
