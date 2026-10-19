@@ -35,6 +35,10 @@
   },
   "entrypoints": [
     "static/css/main.bb8a3512.css",
+<<<<<<< HEAD
     "static/js/main.a5a85f61.js"
+=======
+    "static/js/main.e013b5da.js"
+>>>>>>> 6eb566f8cb0346886f07a1a0ce1977de7a7ed393
   ]
 }
