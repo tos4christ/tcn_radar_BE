@@ -353,8 +353,9 @@ generator_units.on('connect', () => {
       "ps/shiroro/hydro/niger/pd", "ps/geometric/plant1/gas/aba/pd", "ps/geometric/plant2/gas/aba/pd",
       "ps/jebba/hydro/niger/pd", "ps/zungeru/hydro/niger/pd", "ps/kainji/hydro/niger/pd",
       "ps/geometric/plant3/gas/aba/pd", "ps/ibom/gas/akwaibom/pd", "ps/cnl/gas/rivers/pd",
-      'ps/mepp/gas/maidugri/pd', 'ps/afam3/gas/delta1/pd',
-      'ps/afam3/gas/delta2/pd',
+      'ps/mepp/gas/maidugri/pd', 'ps/afam3/gas/delta1/pd', 'ps/olorunsogo_1/gas/ogun/pd',
+      'ps/afam3/gas/delta2/pd', 'ps/olorunsogo_3/gas/ogun/pd', 'ps/olorunsogo_5/gas/ogun/pd',
+      'ps/olorunsogo_7/gas/ogun/pd'
     ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
@@ -2561,7 +2562,7 @@ client_mesl.on('message', (topic, message) => {
   
   if (['mesl/phedc-bao-yao/calabar/pd', 'mesl/phedc-olam/calabar/pd'].includes(topic)) {
       // Do not save this into the database, it is already being saved in Client_2
-      return;
+      // return;
     }
  
   let data;
