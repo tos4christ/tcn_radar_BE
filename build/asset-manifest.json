@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.3da62165.css",
-    "main.js": "/static/js/main.dbcd3fec.js",
+    "main.js": "/static/js/main.a27237cb.js",
     "static/js/27.66165101.chunk.js": "/static/js/27.66165101.chunk.js",
     "static/media/icofont.svg?v=1.0.0-beta": "/static/media/icofont.9999a483fca7c18fdec0.svg",
     "static/media/counter-bg.jpg": "/static/media/counter-bg.43612e980473b26eba5f.jpg",
@@ -35,6 +35,6 @@
   },
   "entrypoints": [
     "static/css/main.3da62165.css",
-    "static/js/main.dbcd3fec.js"
+    "static/js/main.a27237cb.js"
   ]
 }
