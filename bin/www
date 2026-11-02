@@ -303,7 +303,7 @@ client_mesl.on('connect', () => {
 client_fipl.on('connect', () => {
   client_fipl.subscribe(
     [
-      'fipl/fmpia/pd', 'fipl/oaui/pd'
+      'fipl/fmpia/pd', 'fipl/oaui/pd', 'bilateral/osun/oau/pd'
     ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
@@ -2621,7 +2621,7 @@ client_mesl.on('message', (topic, message) => {
   }
 });
 client_fipl.on('message', (topic, message) => {
-  if (['fipl/fmpia/pd', 'fipl/oaui/pd'].includes(topic)) {
+  if (['fipl/fmpia/pd', 'fipl/oaui/pd', 'bilateral/osun/oau/pd'].includes(topic)) {
       // console.log(message.toString(), 'client fipl');
   }
   //return;
@@ -2630,7 +2630,8 @@ client_fipl.on('message', (topic, message) => {
 
   // const payload = message.toString();
   // if (topic === 'fipl/fmpia/pd') fiplFmpiaPd = payload; //-- fipl
-  // else if (topic === 'fipl/oaui/pd') fiplOauiPd = payload;  //-- fipl  
+  // else if (topic === 'fipl/oaui/pd') fiplOauiPd = payload;  //-- fipl 
+  if (topic === 'bilateral/osun/oau/pd') return; // harmonics stay on the device for now 
     
   io.sockets.emit('client_message_fipl', { message: message.toString() });  
 
