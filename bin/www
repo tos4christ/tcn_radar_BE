@@ -2631,9 +2631,10 @@ client_fipl.on('message', (topic, message) => {
   // const payload = message.toString();
   // if (topic === 'fipl/fmpia/pd') fiplFmpiaPd = payload; //-- fipl
   // else if (topic === 'fipl/oaui/pd') fiplOauiPd = payload;  //-- fipl 
-  if (topic === 'bilateral/osun/oau/pd') return; // harmonics stay on the device for now 
     
   io.sockets.emit('client_message_fipl', { message: message.toString() });  
+
+  if (topic === 'bilateral/osun/oau/pd') return; // harmonics stay on the device for now 
 
   let data;
   try {
