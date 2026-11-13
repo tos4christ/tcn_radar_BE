@@ -1,8 +1,28 @@
 {
   "files": {
-    "main.css": "/static/css/main.4618eebb.css",
-    "main.js": "/static/js/main.97e39598.js",
+    "main.css": "/static/css/main.25283732.css",
+    "main.js": "/static/js/main.d8923755.js",
+    "static/js/973.9bcea95a.chunk.js": "/static/js/973.9bcea95a.chunk.js",
+    "static/js/248.a4a127ed.chunk.js": "/static/js/248.a4a127ed.chunk.js",
+    "static/js/776.fca8d8c7.chunk.js": "/static/js/776.fca8d8c7.chunk.js",
+    "static/js/369.78a2f310.chunk.js": "/static/js/369.78a2f310.chunk.js",
+    "static/js/132.7ca5cc2a.chunk.js": "/static/js/132.7ca5cc2a.chunk.js",
+    "static/js/114.ed5313d6.chunk.js": "/static/js/114.ed5313d6.chunk.js",
+    "static/js/727.82990af5.chunk.js": "/static/js/727.82990af5.chunk.js",
+    "static/js/805.16d199b8.chunk.js": "/static/js/805.16d199b8.chunk.js",
+    "static/js/451.5f764b47.chunk.js": "/static/js/451.5f764b47.chunk.js",
+    "static/js/993.ea48af2e.chunk.js": "/static/js/993.ea48af2e.chunk.js",
+    "static/js/646.a759600e.chunk.js": "/static/js/646.a759600e.chunk.js",
+    "static/js/843.8138d867.chunk.js": "/static/js/843.8138d867.chunk.js",
+    "static/js/582.eb6e2784.chunk.js": "/static/js/582.eb6e2784.chunk.js",
+    "static/js/49.36305a44.chunk.js": "/static/js/49.36305a44.chunk.js",
+    "static/js/47.c35be417.chunk.js": "/static/js/47.c35be417.chunk.js",
+    "static/js/943.44cc6f7e.chunk.js": "/static/js/943.44cc6f7e.chunk.js",
+    "static/js/637.cb428a2b.chunk.js": "/static/js/637.cb428a2b.chunk.js",
+    "static/js/467.d479a169.chunk.js": "/static/js/467.d479a169.chunk.js",
+    "static/js/254.1b52624a.chunk.js": "/static/js/254.1b52624a.chunk.js",
     "static/js/27.66165101.chunk.js": "/static/js/27.66165101.chunk.js",
+    "static/js/781.ed328339.chunk.js": "/static/js/781.ed328339.chunk.js",
     "static/media/icofont.svg?v=1.0.0-beta": "/static/media/icofont.9999a483fca7c18fdec0.svg",
     "static/media/counter-bg.jpg": "/static/media/counter-bg.43612e980473b26eba5f.jpg",
     "static/media/footer-bg.jpg": "/static/media/footer-bg.43612e980473b26eba5f.jpg",
@@ -34,7 +54,7 @@
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.4618eebb.css",
-    "static/js/main.97e39598.js"
+    "static/css/main.25283732.css",
+    "static/js/main.d8923755.js"
   ]
 }
