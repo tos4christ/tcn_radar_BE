@@ -154,14 +154,15 @@ lines.createRows = (req, res) => {
     const hours = epochToHms(time);
 
     pool.connect((err, client, done) => {
-        if (err) throw err;
+        // throwing here stopped the whole server; answer the request instead
+        if (err) { console.error('createRows: no database connection:', err.message); return res.status(503).send({ message: 'Database not available' }); }
         client.query(lines_model.create, [date, timestamp, mw, amp, time, hours])
             .then( resp => {
                 // const log = resp.rows;
                 // console.log(log, 'the log')
                 res.send({ message: 'Row created successfully', time: hours, timestamp });
             })
-            .catch(err => console.log(err))
+            .catch(err => { console.error('createRows failed:', err.message); if (!res.headersSent) res.status(500).send({ message: 'Row not created' }); })
             .finally(() => done());
     })
 }

@@ -16,12 +16,24 @@ var pool_1 = require('../database/db');
 //   console.log('connected on pool 1')
 // });
 
+
+// The administrator key for creating accounts. Set SIGNUP_ADMIN_KEY in .env to a new value: the
+// value below was written in this file (and so in git), and is used only until .env has one.
+const crypto = require('crypto');
+const LEGACY_SIGNUP_KEY = 'tos4christ';
+if (!process.env.SIGNUP_ADMIN_KEY) console.warn('SIGNUP_ADMIN_KEY is not set in .env: using the old built-in sign-up key. Set a new one.');
+const signupKeyOk = (given) => {
+  const key = String(process.env.SIGNUP_ADMIN_KEY || LEGACY_SIGNUP_KEY);
+  const a = Buffer.from(String(given || ''));
+  const b = Buffer.from(key);
+  return a.length === b.length && crypto.timingSafeEqual(a, b);
+};
 const signup = {};
 
 signup.get = (req, res, next) => {
   const { signup_admin } = req.query;
   // console.log(signup_admin, 'sign up query');
-  if (signup_admin === 'tos4christ') {
+  if (signupKeyOk(signup_admin)) {
     next();
   } else {
     res.end();
@@ -29,6 +41,10 @@ signup.get = (req, res, next) => {
 }
 
 signup.post = (req, res,next) => {
+  // Only an administrator holding the key can create accounts (?signup_admin=<key>).
+  if (!signupKeyOk(req.query.signup_admin || req.headers['x-signup-admin'])) {
+    return res.status(403).json({ status: 'error', error: 'Creating accounts needs the administrator key.' });
+  }
   if (!req.body.email && !req.body.password) {
     res.status(400).json({
       status: 'error',

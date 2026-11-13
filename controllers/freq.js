@@ -39,7 +39,7 @@ freq.getFrequency = (req, res, next) => {
             res.attachment('frequency.xlsx');
             res.send(buffer);
         })
-        .catch(err => console);        
+        .catch((err) => { console.error('getFrequency failed:', err.message); if (!res.headersSent) res.status(500).json({ status: 'error', error: 'The frequency sheet could not be made.' }); });        
 }
 
 freq.get = (req, res) => {

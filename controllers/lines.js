@@ -293,13 +293,13 @@ lines.profile = (req, res, next) => {
     }
     // check if the data exists then switch between posting and updating
     if(!queryStatus) {
-        return res.end({notice: 'the data sent is invalid'})
+        return res.status(400).send({notice: 'the data sent is invalid'})
     }
     pool_1.query(queryStatus)
         .then(respo => {
             return res.send({res: respo.rows})
         })
-        .catch(err => console.log(err))
+        .catch(err => { console.error('profile failed:', err.message); if (!res.headersSent) res.status(500).send({notice: 'could not read the profile'}); })
 }
 
 module.exports =  lines;

@@ -4,6 +4,8 @@ var signin = require('../controllers/sp_signin');
 
 /* GET users listing. */
 
-router.post('/', signin.post);
+var signinLimiter = require('../utility/signinLimiter');
+// at most 10 failed attempts per address and e-mail in 15 minutes
+router.post('/', signinLimiter, signin.post);
 
 module.exports = router;

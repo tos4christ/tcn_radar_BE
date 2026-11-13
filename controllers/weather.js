@@ -74,7 +74,9 @@ weather.getStations = (req, res, next) => {
         .then( resp => {
             const stations = resp.rows;
             res.send({stations});
-        });
+        })
+        // without this, a database error stopped the whole server
+        .catch((err) => { console.error('getStations failed:', err.message); if (!res.headersSent) res.status(500).send({ stations: [], error: 'Could not read the stations.' }); });
 }
 
 weather.getWeather = async (req, res, next) => {
@@ -118,7 +120,9 @@ weather.getWeather_report = async (req, res, next) => {
             const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' }); 
             res.attachment('weather.xlsx');
             res.send(buffer);
-        });
+        })
+        // without this, a database error stopped the whole server
+        .catch((err) => { console.error('getWeather_report failed:', err.message); if (!res.headersSent) res.status(500).json({ status: 'error', error: 'The weather report could not be made.' }); });
     } catch (e_1) {
         return console.error(e_1);
     }      

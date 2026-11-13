@@ -11,7 +11,7 @@ signin.get = (req, res) => {
 
 signin.post = (req, res) => {
   const { email, password } = req.body;
-  if (!email && !password) {
+  if (!email || !password) {
     return res.status(400).json({
       status: 'error',
       error: 'Email and password field cannot be empty'
@@ -31,7 +31,6 @@ signin.post = (req, res) => {
         }
       };
       res.status(401).send(responseBody);
-      next();
       return;
     }
     const passwordMatch = encoder.decode(password, result.rows[0].password);
@@ -41,7 +40,8 @@ signin.post = (req, res) => {
       // inside the database operation, store the jwt
       const token = jwt.sign({
         sub: name,
-        special_secret: process.env.SPECIAL_SECRET,
+        // no server secret in the token (anyone holding it can read it); the e-mail identifies the account
+        email: result.rows[0].email,
       }, process.env.TOKENKEY, { expiresIn: "1h" });
       // the body to send to front end
       // const valid_token_time = Date.now() + (24 * 60 * 60 * 1000);
@@ -58,7 +58,6 @@ signin.post = (req, res) => {
       // res.redirect('/home');
       // res.status(200).send(responseBody);
       res.status(200).send(responseBody); 
-      next();           
     } else {
       const responseBody = {
         status: 'Error',
@@ -68,10 +67,13 @@ signin.post = (req, res) => {
         }
       };
       res.status(401).send(responseBody);
-      next();
     }
   })
-    .catch((e) => e.message);
+    .catch((e) => {
+      // used to be swallowed, leaving the browser waiting with no answer
+      console.error('signin failed:', e.message);
+      if (!res.headersSent) res.status(500).json({ status: 'error', error: 'Sign-in is not available at the moment. Please try again.' });
+    });
 };
 
 module.exports = signin;

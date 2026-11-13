@@ -72,11 +72,15 @@ const serverLogStream = fs.createWriteStream(path.join(__dirname, 'server_2.log'
 // Use Morgan to log requests to the server log file
 
 // Custom token to capture the body of the request
-logger.token('body', (req) => JSON.stringify(req.body));
-logger.token('auth', (req) => req.headers['authorization'] || 'No Authorization Header');
-app.use(logger(':date[clf] - :user-agent :req[host] - :referrer - :remote-user - :remote-addr :method - :auth - :url :status - :res[content-length] - :response-time ms - :body', { stream: serverLogStream }));
+// Passwords, sign-in tokens and the sign-up key are not written to the log (server_2.log used to
+// hold them in plain text). Everything else is logged as before.
+const SECRET_FIELDS = /pass|token|secret|key|signup_admin/i;
+logger.token('body', (req) => JSON.stringify(req.body, (k, v) => (k && SECRET_FIELDS.test(k) ? '[hidden]' : v)));
+logger.token('auth', (req) => (req.headers['authorization'] ? 'Authorization header present' : 'No Authorization Header'));
+logger.token('safeurl', (req) => String(req.originalUrl || req.url).replace(/([?&](?:signup_admin|token|password)=)[^&]*/gi, '$1[hidden]'));
+app.use(logger(':date[clf] - :user-agent :req[host] - :referrer - :remote-user - :remote-addr :method - :auth - :safeurl :status - :res[content-length] - :response-time ms - :body', { stream: serverLogStream }));
 // app.use(logger('combined', { stream: serverLogStream }));
-app.use(logger('dev'));
+app.use(logger(':method :safeurl :status :response-time ms - :res[content-length]')); // was 'dev', which printed the sign-up key in the URL
 // Creating a rotating file stream for logging
 // const rfs = require('rotating-file-stream');
 // const accessLogStream = rfs.createStream('access.log', {
@@ -134,6 +138,15 @@ app.use('/sp_signin', sp_signinRouter);
 app.use('/sp_signup', sp_signupRouter);
 app.use('/changepassword_bilateral', sp_changePasswordRouter);
 // app.use('/api', gridTablesRouter);
+// Server-side sign-in, sign-out and audit trail, and the data behind the *_fix pages.
+// New routes only: nothing above changes. Tables: database/migrations/001_nas_auth_audit.sql
+app.use('/auth2', require('./routes/auth2'));
+app.use('/api2', require('./routes/api2'));
+// Several controllers run pool.query(...).then(...) with no .catch() (weather.js, bilateral_2.js,
+// lines_2.js). On Node 15+ one database error there (a timeout, a bad date sent to the public
+// /api/weather, a table missing during maintenance) stopped the whole server, MQTT and live data
+// included. Log it and keep running instead. Remove this line to go back to the old behaviour.
+process.on('unhandledRejection', (err) => console.error(new Date().toISOString(), 'Unhandled promise rejection (server kept running):', err && err.message ? err.message : err));
 
 // app.get('/.well-known/pki-validation/14910CB436084B06C059CE124EB7ACC6.txt', (req, res) => {
 //   res.sendFile(path.join(__dirname, "nisossl", "14910CB436084B06C059CE124EB7ACC6.txt"))
