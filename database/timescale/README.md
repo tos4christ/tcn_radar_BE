@@ -84,7 +84,8 @@ Both servers run side by side until the old one is retired, and tcn_nas already 
 > Windows build for 18 (`timescaledb-postgresql-18-windows-amd64.zip`), and these files use nothing
 > specific to 17. Everywhere below read 18 for 17: `C:\Program Files\PostgreSQL\18\bin`, service
 > `postgresql-x64-18`, its own port instead of 5433, and the 18 `pg_config`, `pg_dump`, `psql`.
-> Be on the latest 18.x minor. If that server also holds the v2 database `niso_nas`, nothing
+> PostgreSQL must be on the minor release the TimescaleDB build was made for (18.6 for
+> TimescaleDB 2.32.0, see step 3 if `CREATE EXTENSION` fails). If that server also holds the v2 database `niso_nas`, nothing
 > conflicts: TimescaleDB is enabled per database, and `tcn_nas_ts` is a separate database.
 
 1. Download the PostgreSQL **17** Windows installer (EDB) from postgresql.org, latest 17.x.
@@ -102,7 +103,7 @@ Both servers run side by side until the old one is retired, and tcn_nas already 
 2. From the TimescaleDB releases page on GitHub (`timescale/timescaledb`), take the latest 2.x
    **Windows zip for PostgreSQL 17**. Unzip it.
 3. Run `setup.exe` **as Administrator**. When asked for `pg_config`, give
-   `C:\Program Files\PostgreSQL\17\bin\pg_config.exe` (not the 14 one).
+   `C:\Program Files\PostgreSQL\18\bin\pg_config.exe` (not the 14 one).
 4. It offers to run `timescaledb-tune`: accept. Then open the 17 `postgresql.conf` (in the data
    directory chosen in step 2) and check or set:
 
@@ -134,6 +135,13 @@ Both servers run side by side until the old one is retired, and tcn_nas already 
 
    The licence must say `timescale`. If it says `apache`, add `timescaledb.license = 'timescale'`
    to `postgresql.conf`, restart, check again (compression needs it).
+
+   **`could not load library ... timescaledb-2.xx.x.dll: The specified procedure could not be
+   found`**: the Windows build of TimescaleDB is compiled against the newest PostgreSQL minor
+   release and does not load on an older one (GitHub issues #10155, #10348). 2.32.0 needs
+   PostgreSQL 18.6 / 17.11 / 16.15 (and no newer: for a later minor, first take TimescaleDB 2.32.1+,
+   as its release notes say). Update PostgreSQL to that minor with the EDB installer of the same
+   major version (it upgrades in place, data kept), run TimescaleDB's `setup.exe` again, restart.
 
 7. **Same date style on both servers.** The sign-up page stored dates as e.g. `14/11/2026`
    (fixed in the code now, but check anyway). A server reading dates month-first refuses that

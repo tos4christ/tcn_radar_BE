@@ -142,6 +142,9 @@ app.use('/changepassword_bilateral', sp_changePasswordRouter);
 // New routes only: nothing above changes. Tables: database/migrations/001_nas_auth_audit.sql
 app.use('/auth2', require('./routes/auth2'));
 app.use('/api2', require('./routes/api2'));
+// Weather engine of /nccweather_fix (weather2/, new files only). It starts 20 s after the server and
+// works in the background; set WEATHER2_ENABLED=false in .env to turn it off.
+setTimeout(() => { require('./weather2/engine').start().catch((err) => console.error('[weather2] start failed:', err.message)); }, 20000).unref();
 // Several controllers run pool.query(...).then(...) with no .catch() (weather.js, bilateral_2.js,
 // lines_2.js). On Node 15+ one database error there (a timeout, a bad date sent to the public
 // /api/weather, a table missing during maintenance) stopped the whole server, MQTT and live data
