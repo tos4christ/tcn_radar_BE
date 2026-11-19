@@ -6,7 +6,7 @@ const XLSX = require('xlsx');
 const engine = require('./engine');
 const repo = require('./repository');
 const cfg = require('./config');
-const { fmtParts } = require('./rainfall');
+const { fmtParts, observedRainEvents } = require('./rainfall');
 const { LABELS, THRESHOLDS } = require('./risk');
 const S = require('../utility/nasSession');
 
@@ -165,7 +165,54 @@ async function forecastReport(req, res) {
   res.send(buf);
 }
 
+/* ------------------------------------------------------------------ observed weather report */
+const EVENT_COLUMNS = ['START_DATE', 'START_TIME', 'START_MW', 'END_DATE', 'END_TIME', 'END_MW', 'duration_of_rainfall',
+  'MAIN_TEMP', 'RAIN_VOLUME_1H', 'HUMIDITY', 'WIND_SPEED', 'MW_INTERRUPTED', 'PEAK_RAIN_1H', 'STATUS'];
+
+/** Excel sheet names: at most 31 characters, none of \ / ? * [ ] :, and unique. */
+function sheetName(name, used) {
+  const base = String(name).replace(/[\\/?*[\]:]/g, '-').trim().slice(0, 31) || 'Station';
+  let out = base;
+  for (let i = 2; used.has(out.toLowerCase()); i += 1) out = `${base.slice(0, 31 - String(i).length - 1)}~${i}`;
+  used.add(out.toLowerCase());
+  return out;
+}
+
+/**
+ * "Weather report" of /weather_download_fix: rainfall events per station for one day, from the
+ * observations this engine records (and the old weather_table for earlier days). Same columns
+ * as the old report. Called through POST /api2/download/weather (controllers/analytics2.js).
+ */
+async function observedReport(req, res) {
+  const day = String((req.body || {}).startDate || '');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) throw new HttpError(400, 'Choose a date.');
+  const { rows, sources } = await repo.observationsForDay(day, cfg.timezone);
+  if (!rows.length) {
+    let why = `No weather observations were recorded for ${day}.`;
+    if (!cfg.openWeatherKey) why += ' Live observations are off because WEATHER_API (the OpenWeatherMap key) is not set in the backend .env.';
+    else if (!sources.engineTable) why += ' The weather2_observations table does not exist yet: run database/migrations/002_weather2.sql.';
+    else why += ` The weather engine records them every ${cfg.nowcastRefreshMin} minutes from when it started, so earlier days have none.`;
+    throw new HttpError(404, why);
+  }
+  const order = engine.stations.map((s) => s.name);
+  const extra = [...new Set(rows.map((r) => r.station_name))].filter((n) => !order.includes(n)).sort();
+  const events = observedRainEvents(rows, { timeZone: cfg.timezone, stationOrder: [...order, ...extra] });
+  const wb = XLSX.utils.book_new();
+  const used = new Set();
+  events.forEach((entry) => {
+    const name = Object.keys(entry)[0];
+    const list = entry[name];
+    const ws = list.length ? XLSX.utils.json_to_sheet(list, { header: EVENT_COLUMNS }) : XLSX.utils.aoa_to_sheet([EVENT_COLUMNS, ['No rainfall recorded']]);
+    XLSX.utils.book_append_sheet(wb, ws, sheetName(name, used));
+  });
+  const buf = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
+  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  res.setHeader('Content-Disposition', `attachment; filename="weather_${day}.xlsx"`);
+  res.send(buf);
+}
+
 module.exports = {
+  observedReport: wrap(observedReport),
   overview: wrap(overview),
   station: wrap(station),
   alerts: wrap(alerts),

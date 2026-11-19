@@ -212,7 +212,46 @@ async function alertHistory(days = 14) {
   }, []);
 }
 
+/* ------------------------------------------------------------------ observed weather report */
+/**
+ * Observations for one local day, in the row shape observedRainEvents() takes.
+ * New readings come from weather2_observations (written by this engine). The old collector's
+ * weather_table is read as well, for days before the switch; a station uses the old rows only on
+ * a day the engine has nothing for it, so the two sources are never interleaved.
+ * Tables that do not exist are skipped. Returns { rows, sources }.
+ */
+async function observationsForDay(day, timeZone = config.timezone) {
+  const { rows: [have] } = await db.query(
+    "SELECT to_regclass('public.weather2_observations') IS NOT NULL AS new_t, to_regclass('public.weather_table') IS NOT NULL AS old_t",
+  );
+  let fresh = [];
+  if (have.new_t) {
+    ({ rows: fresh } = await db.query(
+      `SELECT station_name, EXTRACT(EPOCH FROM observed_at)::bigint AS time, condition AS main_weather,
+              temperature AS main_temperature, rain_1h AS rain_volume_1h, humidity AS main_humidity, wind_speed
+         FROM weather2_observations
+        WHERE observed_at >= ($1::date::timestamp AT TIME ZONE $2)
+          AND observed_at <  (($1::date + 1)::timestamp AT TIME ZONE $2)
+        ORDER BY station_name, observed_at`,
+      [day, timeZone],
+    ));
+  }
+  let old = [];
+  if (have.old_t) {
+    ({ rows: old } = await db.query(
+      `SELECT DISTINCT station_name, time, main_weather, main_temperature, rain_volume_1h, main_humidity, wind_speed
+         FROM weather_table WHERE date = $1`,
+      [day],
+    ));
+    const covered = new Set(fresh.map((r) => r.station_name));
+    old = old.filter((r) => !covered.has(r.station_name) && Number.isFinite(Number(r.time)));
+  }
+  const rows = [...fresh, ...old].map((r) => ({ ...r, time: Number(r.time) }));
+  return { rows, sources: { engine: fresh.length, legacy: old.length, engineTable: have.new_t, legacyTable: have.old_t } };
+}
+
 module.exports = {
+  observationsForDay,
   ensureTables, tablesReady: () => tablesOk,
   listStations, listCustomNodes, createNode, deleteNode,
   saveObservations, saveVerification, recentVerification, verificationStats, pruneVerification,

@@ -15,7 +15,7 @@ const timeConverter = require('../utility/timeConverter');
 const S = require('../utility/nasSession');
 const lines2 = require('./lines_2');
 const freq = require('./freq');
-const weather = require('./weather');
+const weatherReport = require('../weather2/controller');
 const bilateral2 = require('./bilateral_2');
 
 const DAY = 86400000;
@@ -290,7 +290,9 @@ const downloads = {
   tem: (req, res) => lines2.getdaily(req, res),
   voltageprofile: (req, res) => lines2.gethourlyvoltage(req, res),
   frequency: (req, res, next) => freq.getFrequency(req, res, next),
-  weather: (req, res, next) => weather.getWeather_report(req, res, next),
+  // Rainfall events from the weather engine's observations (and the old weather_table for earlier
+  // days). The old report read only weather_table, which nothing writes any more.
+  weather: (req, res) => weatherReport.observedReport(req, res),
   bilateral: (req, res) => bilateral2.hourly(req, res),
   collapse: (req, res) => lines2.getcollapse(req, res),
 };
