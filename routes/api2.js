@@ -38,5 +38,6 @@ router.get('/axis/layout', axis.getLayout);
 router.post('/axis/unlock', S.requireAppHeader, axis.unlock);
 router.post('/axis/lock', S.requireAppHeader, axis.lock);
 router.put('/axis/layout', S.requireAppHeader, axis.requireUnlock, axis.saveLayout);
+router.post('/axis/password', S.requireAppHeader, axis.changePassword);
 
 module.exports = router;

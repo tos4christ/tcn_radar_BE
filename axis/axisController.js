@@ -1,5 +1,5 @@
 /**
- * /api2/axis/* - arrangement of the Ikorodu-Sagamu axis flow diagram on /bilaterals_fix.
+ * /api2/axis/* - arrangement of the Ikorodu-Sagamu axis flow diagram on /bilaterals and /bilaterals_fix.
  *
  * The page is public (no sign-in), so:
  *  - anyone can READ the saved arrangement (GET /api2/axis/layout);
@@ -8,6 +8,8 @@
  *    see utility/makeAxisLockHash.js), compares in constant time, rate-limits wrong attempts, and on
  *    success gives an HttpOnly cookie that unlocks for UNLOCK_MINUTES. Every unlock, failure and save
  *    goes to the audit log.
+ *  - the password can be changed on the page (old password + new one twice). The new hash is kept in
+ *    nas_axis_lock (migration 005) and then wins over AXIS_LOCK_HASH and the built-in hash.
  */
 const crypto = require('crypto');
 const fs = require('fs');
@@ -24,6 +26,9 @@ const UNLOCK_MINUTES = 30;
 const FAIL_WINDOW_MS = 15 * 60000;
 const MAX_FAILS_PER_IP = 5;
 const MAX_FAILS_TOTAL = 30;
+const MIN_PASSWORD = 8;
+const MAX_PASSWORD = 100;
+const HASH_RE = /^scrypt\$[0-9a-f]{32}\$[0-9a-f]{64}$/;
 
 /** Every meter the diagram knows. Keep in step with NODES in the frontend (Fix/axis/axisModel.js). */
 const NODE_KEYS = [
@@ -69,19 +74,57 @@ function cleanLayout(input) {
 }
 
 /* ------------------------------------------------------------------ password and unlock */
-function expectedHash() {
+const SCRYPT = { N: 16384, r: 8, p: 1 };
+const scrypt = (password, salt, len) => new Promise((resolve, reject) => {
+  crypto.scrypt(String(password), salt, len, SCRYPT, (err, key) => (err ? reject(err) : resolve(key)));
+});
+
+/** The hash from .env or the built-in one: used while no password has been changed on the page. */
+function configuredHash() {
   const v = String(process.env.AXIS_LOCK_HASH || '').trim();
-  return /^scrypt\$[0-9a-f]{32}\$[0-9a-f]{64}$/.test(v) ? v : BUILT_IN_HASH;
+  return HASH_RE.test(v) ? v : BUILT_IN_HASH;
 }
 
-function passwordMatches(given) {
-  const [, saltHex, hashHex] = expectedHash().split('$');
+/**
+ * The hash in force. A password changed on the page (nas_axis_lock) wins. If that table does not
+ * exist yet, no password was ever changed, so the configured one applies. Any other database error
+ * throws: falling back then could let an old, replaced password back in.
+ */
+async function expectedHash() {
+  try {
+    const { rows } = await db.query('SELECT hash FROM nas_axis_lock WHERE name = $1', [LAYOUT_NAME]);
+    if (rows[0] && HASH_RE.test(rows[0].hash)) return rows[0].hash;
+    return configuredHash();
+  } catch (err) {
+    if (err.code === '42P01') return configuredHash(); // undefined_table
+    throw err;
+  }
+}
+
+async function passwordMatches(given, hash) {
+  const [, saltHex, hashHex] = (hash || await expectedHash()).split('$');
   const want = Buffer.from(hashHex, 'hex');
-  return new Promise((resolve) => {
-    crypto.scrypt(String(given), Buffer.from(saltHex, 'hex'), want.length, { N: 16384, r: 8, p: 1 }, (err, got) => {
-      resolve(!err && got.length === want.length && crypto.timingSafeEqual(got, want));
-    });
-  });
+  try {
+    const got = await scrypt(given, Buffer.from(saltHex, 'hex'), want.length);
+    return got.length === want.length && crypto.timingSafeEqual(got, want);
+  } catch (e) {
+    return false;
+  }
+}
+
+async function makeHash(password) {
+  const salt = crypto.randomBytes(16);
+  const key = await scrypt(password, salt, 32);
+  return `scrypt$${salt.toString('hex')}$${key.toString('hex')}`;
+}
+
+let lockTableReady = null;
+function ensureLockTable() {
+  if (!lockTableReady) {
+    const sql = fs.readFileSync(path.join(__dirname, '..', 'database', 'migrations', '005_axis_lock.sql'), 'utf8');
+    lockTableReady = db.query(sql).catch((err) => { lockTableReady = null; throw err; });
+  }
+  return lockTableReady;
 }
 
 const failures = new Map(); // ip -> [timestamps]
@@ -137,8 +180,15 @@ async function unlock(req, res) {
     return fail(res, 429, 'Too many wrong attempts. Try again in 15 minutes.');
   }
   const password = (req.body || {}).password;
-  if (typeof password !== 'string' || !password || password.length > 100) return fail(res, 400, 'Enter the password.');
-  if (!(await passwordMatches(password))) {
+  if (typeof password !== 'string' || !password || password.length > MAX_PASSWORD) return fail(res, 400, 'Enter the password.');
+  let ok;
+  try {
+    ok = await passwordMatches(password);
+  } catch (err) {
+    console.error('axis unlock: password could not be read:', err.message);
+    return fail(res, 503, 'The password could not be checked right now. Try again.');
+  }
+  if (!ok) {
     noteFailure(ip);
     S.audit(req, null, 'axis_unlock_failed', { realm: 'public' });
     return fail(res, 401, 'Wrong password.');
@@ -199,4 +249,57 @@ async function saveLayout(req, res) {
   }
 }
 
-module.exports = { getLayout, unlock, lock, requireUnlock, saveLayout, cleanLayout, passwordMatches, NODE_KEYS };
+/**
+ * POST /api2/axis/password { oldPassword, newPassword, confirmPassword }. Needs the current password
+ * (same rate limit as unlocking). Afterwards every other unlocked browser is locked again.
+ */
+async function changePassword(req, res) {
+  const ip = S.clientIp(req) || 'unknown';
+  if (blocked(ip)) {
+    S.audit(req, null, 'axis_password_blocked', { realm: 'public' });
+    return fail(res, 429, 'Too many wrong attempts. Try again in 15 minutes.');
+  }
+  const { oldPassword, newPassword, confirmPassword } = req.body || {};
+  if (typeof oldPassword !== 'string' || !oldPassword || oldPassword.length > MAX_PASSWORD) return fail(res, 400, 'Enter the current password.');
+  if (typeof newPassword !== 'string' || newPassword.length < MIN_PASSWORD || newPassword.length > MAX_PASSWORD) {
+    return fail(res, 400, `The new password must be ${MIN_PASSWORD} to ${MAX_PASSWORD} characters.`);
+  }
+  if (newPassword.trim() !== newPassword) return fail(res, 400, 'The new password cannot start or end with a space.');
+  if (newPassword !== confirmPassword) return fail(res, 400, 'The two new passwords do not match.');
+  if (newPassword === oldPassword) return fail(res, 400, 'The new password is the same as the current one.');
+  let ok;
+  try {
+    ok = await passwordMatches(oldPassword);
+  } catch (err) {
+    console.error('axis changePassword: password could not be read:', err.message);
+    return fail(res, 503, 'The password could not be checked right now. Try again.');
+  }
+  if (!ok) {
+    noteFailure(ip);
+    S.audit(req, null, 'axis_password_change_failed', { realm: 'public' });
+    return fail(res, 401, 'The current password is wrong.');
+  }
+  try {
+    await ensureLockTable();
+    const hash = await makeHash(newPassword);
+    await db.query(
+      `INSERT INTO nas_axis_lock (name, hash, updated_at, updated_ip) VALUES ($1, $2, now(), $3)
+       ON CONFLICT (name) DO UPDATE SET hash = EXCLUDED.hash, updated_at = now(), updated_ip = EXCLUDED.updated_ip`,
+      [LAYOUT_NAME, hash, ip],
+    );
+  } catch (err) {
+    console.error('axis changePassword failed:', err.message);
+    return fail(res, 503, 'The new password could not be saved, so the old one still applies. If this keeps happening, run database/migrations/005_axis_lock.sql on the database.');
+  }
+  // Lock every other browser that was unlocked with the old password; keep this one as it was.
+  const raw = req.cookies && req.cookies[COOKIE];
+  const mine = raw && typeof raw === 'string' ? tokenHash(raw) : null;
+  const myExp = mine ? unlocks.get(mine) : null;
+  unlocks.clear();
+  if (mine && myExp && myExp > Date.now()) unlocks.set(mine, myExp);
+  failures.delete(ip);
+  S.audit(req, null, 'axis_password_change', { realm: 'public' });
+  return res.json({ status: 'Success', data: { changed: true } });
+}
+
+module.exports = { getLayout, unlock, lock, requireUnlock, saveLayout, changePassword, cleanLayout, passwordMatches, makeHash, NODE_KEYS };
