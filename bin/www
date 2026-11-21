@@ -231,7 +231,10 @@ client_2.on('connect', () => {
          'bilateral/lagos/topsteel/pd', 'pulkitSteel/cs', 'afl/cs', 'kamSteel/cs', 
          'mesl/quantum/lagos/pd', 'starPipe/cs', 'ikorodu1/tv', 'ikorodu2/tv', 
          'ps/egbin/steam/lagos/pd','bilateral/ogun/larfarge/pd', 'ndphc/pheonix/ogun/pd',
-         'bilateral/ogun/shongai/pd', 'bilateral/osun/oau/pd'
+         'bilateral/ogun/shongai/pd', 'bilateral/osun/oau/pd',
+         // Ikorodu-Sagamu axis, added 2026-11 (shown on /bilaterals_fix)
+         'bilateral/ogun/monarch-alloy/pd', 'bilateral/lagos/monarch-alloy/pd',
+         'ts/odogunyan/lagos/td', 'bilateral/ogun/sagamusteel/pd'
     ], {qos: 1},
     err => err ? console.log('this is the error', err) : null
   )
@@ -481,7 +484,12 @@ client_1.on('message', (topic, message) => {
       console.error(err)
   }
 });
+// Ikorodu-Sagamu axis meters added 2026-11. Some send NaN, sometimes bare (not valid JSON): it is made
+// null before the message is sent to the pages, and their rows without a real MW are not stored as 0.
+const AXIS_TOPICS = new Set(['bilateral/ogun/monarch-alloy/pd', 'bilateral/lagos/monarch-alloy/pd', 'ts/odogunyan/lagos/td', 'bilateral/ogun/sagamusteel/pd']);
 client_2.on('message', (topic, message) => {
+  const axisMessage = AXIS_TOPICS.has(topic);
+  if (axisMessage) message = Buffer.from(message.toString().replace(/(:\s*)-?(NaN|Infinity)\b/g, '$1null'));
   if ([
       'ikotekpene/tv', 'gwagwaladats/tv','gereguGs/pv', 'odukpanits/tv',
       'asabats/tv', 'delta4gs/tv', 'OkpaiippGs/tv', 'jebbaTs/tv',
@@ -565,6 +573,8 @@ client_2.on('message', (topic, message) => {
           equipment_id = line.id;
           line_name = line.id;
           variant = line.td ? 'transmission' : line.gd ? 'generation' : line.pd ? 'generation_units' : undefined;
+          // axis meters: a NaN / missing MW is no reading, not 0 MW
+          if (axisMessage && !(line.td && line.td.mw !== null && line.td.mw !== '' && Number.isFinite(Number(line.td.mw)))) return;
           if (variant === 'transmission') {
               kv = line.td.V ? line.td.V : line.td.v ? line.td.v : 0.00;
               mw = line.td.mw ? line.td.mw : 0.00;

@@ -31,4 +31,12 @@ router.delete('/weather/nodes/:id', S.requireAppHeader, nccAdmin, weather.delete
 router.post('/download/bilateral', S.requireAppHeader, bilateralOrNcc, (req, res, next) => { req.params.kind = 'bilateral'; controller.download(req, res, next); });
 router.post('/download/:kind', S.requireAppHeader, ncc, controller.download);
 
+// Ikorodu-Sagamu axis flow diagram of /bilaterals_fix (axis/). Public page: anyone reads the
+// arrangement; changing it needs the lock password (checked on the server only).
+var axis = require('../axis/axisController');
+router.get('/axis/layout', axis.getLayout);
+router.post('/axis/unlock', S.requireAppHeader, axis.unlock);
+router.post('/axis/lock', S.requireAppHeader, axis.lock);
+router.put('/axis/layout', S.requireAppHeader, axis.requireUnlock, axis.saveLayout);
+
 module.exports = router;
