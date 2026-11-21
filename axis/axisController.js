@@ -70,7 +70,12 @@ function cleanLayout(input) {
     if (!DIRS.includes(n.dir)) return { error: `${key}: unknown direction.` };
     nodes[key] = { line, pos, dir: n.dir, include: n.include !== false };
   }
-  return { layout: { tlfPct: Math.round(tlf * 100) / 100, nodes } };
+  // Ikorodu bus coupler between Line 1 and Line 2 (set by hand; open unless saved closed).
+  const c = input.coupler;
+  if (c !== undefined && (c === null || typeof c !== 'object' || Array.isArray(c) || (c.closed !== undefined && typeof c.closed !== 'boolean'))) {
+    return { error: 'Bus coupler state must be open or closed.' };
+  }
+  return { layout: { tlfPct: Math.round(tlf * 100) / 100, nodes, coupler: { closed: Boolean(c && c.closed === true) } } };
 }
 
 /* ------------------------------------------------------------------ password and unlock */
