@@ -50,26 +50,22 @@ freq.get = (req, res) => {
 }
 
 freq.getWeather = (req, res, next) => {
-    // use current_id, equipment_name and level to recognize a current item
-    const { body } = req;    
-    const url = body.url;
-    fetch(url, {
-        method: "GET",
-        mode: "cors",
-        headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With"
-        },
-        })
+    // Security fix: this fetched any address sent in the body (the server could be made to call
+    // internal machines) and never answered, so each call hung. Only OpenWeatherMap addresses are
+    // fetched now, and the result is returned. No page of the app calls this endpoint.
+    const { body } = req;
+    let target = null;
+    try { target = new URL(String((body && body.url) || '')); } catch (e) { target = null; }
+    if (!target || target.protocol !== 'https:' || target.hostname !== 'api.openweathermap.org') {
+        return res.status(400).json({ status: 'error', error: 'Only https://api.openweathermap.org addresses are allowed.' });
+    }
+    fetch(target.href, { method: "GET", headers: { "Content-Type": "application/json" } })
         .then(response => response.json())
-        .then(resp => {
-            // console.log(resp, " this is the final response");
-            //res.send({weather: resp});
-        })
-        .catch(e => console.error(e))
-
+        .then(resp => res.send({ weather: resp }))
+        .catch(e => {
+            console.error(e);
+            if (!res.headersSent) res.status(502).json({ status: 'error', error: 'The weather provider did not answer.' });
+        });
 }
 
 module.exports =  freq;

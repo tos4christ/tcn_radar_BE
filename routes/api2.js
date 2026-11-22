@@ -17,6 +17,9 @@ router.get('/lines/export.csv', ncc, controller.exportCsv);
 // Weather centre of /nccweather_fix (weather2/). Reading: NCC users; nodes and refresh: administrators.
 var weather = require('../weather2/controller');
 const nccAdmin = S.requireSession({ realms: ['ncc'], admin: true });
+// While an administrator has suspended weather (subscription expired), every /api2/weather call
+// answers 503 { code: 'weather_suspended' } (utility/serviceSettings.js).
+router.use('/weather', require('../utility/serviceSettings').weatherGuard);
 router.get('/weather/overview', ncc, weather.overview);
 router.get('/weather/meta', ncc, weather.meta);
 router.get('/weather/status', ncc, weather.status);
@@ -39,5 +42,11 @@ router.post('/axis/unlock', S.requireAppHeader, axis.unlock);
 router.post('/axis/lock', S.requireAppHeader, axis.lock);
 router.put('/axis/layout', S.requireAppHeader, axis.requireUnlock, axis.saveLayout);
 router.post('/axis/password', S.requireAppHeader, axis.changePassword);
+
+// Service switches: anyone reads the status (pages show the "weather expired" notice); administrators change it.
+var services = require('../controllers/serviceAdmin');
+router.get('/service-status', services.status);
+router.get('/admin/services', nccAdmin, services.adminView);
+router.put('/admin/services/weather', S.requireAppHeader, nccAdmin, services.setWeather);
 
 module.exports = router;

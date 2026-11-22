@@ -9,6 +9,7 @@ router.get('/getallstations', controller.getStations);
 // the weather report download needs a sign-in; the station list and live weather stay public
 router.post('/getweatherreport', requireSignedIn(), controller.getWeather_report);
 
-router.post('/getweather', controller.getWeather);
+// live OpenWeatherMap call: answers 503 while an administrator has suspended weather (subscription expired)
+router.post('/getweather', require('../utility/serviceSettings').weatherGuard, controller.getWeather);
 
 module.exports = router;
