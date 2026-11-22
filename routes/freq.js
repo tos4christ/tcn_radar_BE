@@ -9,6 +9,7 @@ router.post('/', requireSignedIn(), controller.getFrequency);
 
 router.get('/', controller.get);
 
-router.post('/weather', controller.getWeather);
+// answers 503 while an administrator has suspended weather (subscription expired)
+router.post('/weather', require('../utility/serviceSettings').weatherGuard, controller.getWeather);
 
 module.exports = router;

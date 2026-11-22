@@ -19,6 +19,8 @@ const { fuseStation, isNum } = require('./fusion');
 const { applyCorrections, learnBias, valueAt } = require('./corrections');
 const { buildStationProduct, compact } = require('./products');
 const log = require('./log').child('weather2');
+// Admin switch "Weather API subscription expired" (utility/serviceSettings.js): no provider calls while on.
+const serviceSettings = require('../utility/serviceSettings');
 
 class WeatherEngine {
   constructor() {
@@ -84,6 +86,21 @@ class WeatherEngine {
     if (cfg.openWeatherKey) every(cfg.nowcastRefreshMin, () => this.nowcastCycle());
     else log.warn('WEATHER_API (OpenWeatherMap key) not set - live observation correction off');
     await this.forecastCycle();
+    if (cfg.openWeatherKey) this.nowcastCycle().catch((e) => log.error(e.message));
+  }
+
+  /** True while an administrator has suspended weather (subscription expired). */
+  async paused() {
+    const suspended = await serviceSettings.weatherSuspended();
+    this.status.suspended = suspended;
+    return suspended;
+  }
+
+  /** Called when an administrator turns weather back on: refresh now instead of at the next interval. */
+  resume() {
+    this.status.suspended = false;
+    if (!this.started || !cfg.enabled || !this.timers.length) return;
+    this.forecastCycle().catch((e) => log.error(e.message));
     if (cfg.openWeatherKey) this.nowcastCycle().catch((e) => log.error(e.message));
   }
 
@@ -175,6 +192,8 @@ class WeatherEngine {
   }
 
   async forecastCycle() {
+    // checked first: the running test and flag below must stay together with no await between them
+    if (await this.paused()) return;
     if (this.running.forecast || !this.stations.length) return;
     this.running.forecast = true;
     const t0 = Date.now();
@@ -200,6 +219,8 @@ class WeatherEngine {
 
   /* ------------------------------------------------------------------- nowcast */
   async nowcastCycle() {
+    // checked first: the running test and flag below must stay together with no await between them
+    if (await this.paused()) return;
     if (this.running.nowcast || !this.stations.length || !cfg.openWeatherKey) return;
     this.running.nowcast = true;
     try {
