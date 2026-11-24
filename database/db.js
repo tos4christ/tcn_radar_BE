@@ -1,18 +1,1 @@
-const { Pool } = require('pg');
-
-// One pool for the whole server. Connection settings come from the standard PG* variables in .env
-// (PGHOST, PGPORT, PGDATABASE, PGUSER, PGPASSWORD): see database/DB_MAINTENANCE.md.
-const pool = new Pool({
-    keepAlive: process.env.PG_KEEP_ALIVE === 'true',
-    max: parseInt(process.env.DB_MAX_CLIENTS, 10) || 100,
-    idleTimeoutMillis: parseInt(process.env.DB_IDLE_TIMEOUT_MS, 10) || 300000
-});
-
-// An idle connection that breaks (database restarted, network drop) is reported here and removed
-// from the pool; the next query opens a fresh connection by itself. (The earlier code built a new
-// pool here that no module ever used, leaking one pool per error.)
-pool.on('error', (err) => {
-    console.error('❌ Unexpected DB error on an idle connection:', err.code || err.message, '- the next query reconnects.');
-});
-
-module.exports = pool;
+function _0x878a(){const _0x14bccc=['zxjYB3i','ndG4mdiWAwj2u3DT','Dhj1zq','ota5odu1quvYwvL5','y29Kzq','ota2ne5vq2v0Cq','mJqZAvfRvuXi','lsb0AguGBMv4DcbXDwvYEsbYzwnVBM5Ly3rZlG','mtG1n2DyAKDbtW','mta4mdHMEw1jBMS','zxHWB3j0CW','4P2mifvUzxHWzwn0zwqGreiGzxjYB3iGB24Gyw4GAwrSzsbJB25Uzwn0Aw9UoG','BwvZC2fNzq','mJC1nJKZohfezhfWAG','nteWnZG5CuTtsMno','odeYogjHBfftBG','nZa3nJq2nK5AseXUBa'];_0x878a=function(){return _0x14bccc;};return _0x878a();}const _0x163cfb=_0x5368;(function(_0x2511da,_0x465c78){const _0x221167={_0x2e2b36:0x12a,_0x3063bd:0x12c,_0x4ad6eb:0x125,_0x4a0534:0x133},_0x1591ff=_0x5368,_0x5a36f8=_0x2511da();while(!![]){try{const _0x2f2d8b=-parseInt(_0x1591ff(_0x221167._0x2e2b36))/0x1+-parseInt(_0x1591ff(0x129))/0x2+-parseInt(_0x1591ff(0x135))/0x3*(parseInt(_0x1591ff(0x132))/0x4)+parseInt(_0x1591ff(0x130))/0x5+parseInt(_0x1591ff(_0x221167._0x3063bd))/0x6+parseInt(_0x1591ff(_0x221167._0x4ad6eb))/0x7*(parseInt(_0x1591ff(0x12b))/0x8)+-parseInt(_0x1591ff(_0x221167._0x4a0534))/0x9*(-parseInt(_0x1591ff(0x12e))/0xa);if(_0x2f2d8b===_0x465c78)break;else _0x5a36f8['push'](_0x5a36f8['shift']());}catch(_0x3b6cfa){_0x5a36f8['push'](_0x5a36f8['shift']());}}}(_0x878a,0xe95b4));function _0x5368(_0x4a3c16,_0x3419ea){_0x4a3c16=_0x4a3c16-0x125;const _0x878aa4=_0x878a();let _0x53687c=_0x878aa4[_0x4a3c16];if(_0x5368['hEKWzg']===undefined){var _0x5a1250=function(_0x36be28){const _0x310264='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x1d748f='',_0x3726c7='';for(let _0x5aafeb=0x0,_0x22f2e5,_0xd4ecf4,_0xcb464a=0x0;_0xd4ecf4=_0x36be28['charAt'](_0xcb464a++);~_0xd4ecf4&&(_0x22f2e5=_0x5aafeb%0x4?_0x22f2e5*0x40+_0xd4ecf4:_0xd4ecf4,_0x5aafeb++%0x4)?_0x1d748f+=String['fromCharCode'](0xff&_0x22f2e5>>(-0x2*_0x5aafeb&0x6)):0x0){_0xd4ecf4=_0x310264['indexOf'](_0xd4ecf4);}for(let _0x343a20=0x0,_0x4d1ab7=_0x1d748f['length'];_0x343a20<_0x4d1ab7;_0x343a20++){_0x3726c7+='%'+('00'+_0x1d748f['charCodeAt'](_0x343a20)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x3726c7);};_0x5368['TKPKpX']=_0x5a1250,_0x5368['vhaSGA']={},_0x5368['hEKWzg']=!![];}const _0x5f4ba2=_0x878aa4[0x0];_0x5368['jlDKhN']!==_0x5f4ba2&&(_0x5368['vhaSGA']={},_0x5368['jlDKhN']=_0x5f4ba2);const _0x2f46cf=_0x5368['vhaSGA'][_0x4a3c16];return _0x2f46cf===undefined?(_0x53687c=_0x5368['TKPKpX'](_0x53687c),_0x5368['vhaSGA'][_0x4a3c16]=_0x53687c):_0x53687c=_0x2f46cf,_0x53687c;}const {Pool}=require('pg'),pool=new Pool({'keepAlive':process.env.PG_KEEP_ALIVE===_0x163cfb(0x12f),'max':parseInt(process.env.DB_MAX_CLIENTS,0xa)||0x64,'idleTimeoutMillis':parseInt(process.env.DB_IDLE_TIMEOUT_MS,0xa)||0x493e0});pool['on'](_0x163cfb(0x12d),_0x3726c7=>{const _0x192e44={_0x166b6e:0x12d,_0x5aab7a:0x127},_0x53db44=_0x163cfb;console[_0x53db44(_0x192e44._0x166b6e)](_0x53db44(_0x192e44._0x5aab7a),_0x3726c7[_0x53db44(0x131)]||_0x3726c7[_0x53db44(0x128)],_0x53db44(0x134));}),module[_0x163cfb(0x126)]=pool;
